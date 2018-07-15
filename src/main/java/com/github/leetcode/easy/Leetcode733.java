@@ -43,7 +43,7 @@ public class Leetcode733 {
 
 
     private void floodSubFill(int[][] image, int sr, int sc, int newColor, int oldColor) {
-        if (sr >= 0 && sr < image.length && sc >= 0 && sc < image[0].length && image[sr][sc] == oldColor&& oldColor != newColor) {
+        if (sr >= 0 && sr < image.length && sc >= 0 && sc < image[0].length && image[sr][sc] == oldColor && oldColor != newColor) {
             image[sr][sc] = newColor;
             //left up right down
             floodSubFill(image, sr, sc - 1, newColor, oldColor);
