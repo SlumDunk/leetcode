@@ -1,0 +1,29 @@
+package com.github.leetcode.easy;
+
+/**
+ * There are 1000 buckets, one and only one of them contains poison, the rest are filled with water. They all look the same. If a pig drinks that poison it will die within 15 minutes. What is the minimum amount of pigs you need to figure out which bucket contains the poison within one hour.
+ * <p>
+ * Answer this question, and write an algorithm for the follow-up general case.
+ * <p>
+ * Follow-up:
+ * <p>
+ * If there are n buckets and a pig drinking poison will die within m minutes, how many pigs (x) you need to figure out the "poison" bucket within p minutes? There is exact one bucket with poison.
+ */
+public class Leetcode458 {
+
+    public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+        if (buckets == 1) {
+            return 0;
+        } else {
+            int length = minutesToTest / minutesToDie + 1;
+            int pigNum = 1;
+            int total = length;
+            while (total < buckets) {
+                total = total * length;
+                pigNum++;
+            }
+            return pigNum;
+
+        }
+    }
+}
