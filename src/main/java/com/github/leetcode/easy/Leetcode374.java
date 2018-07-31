@@ -15,4 +15,8 @@ public class Leetcode374 {
         }
         return -1;
     }
+
+    private int guess(int mid) {
+        return 0;
+    }
 }
