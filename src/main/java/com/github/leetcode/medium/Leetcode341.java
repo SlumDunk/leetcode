@@ -1,0 +1,58 @@
+package com.github.leetcode.medium;
+
+import com.github.leetcode.vo.NestedInteger;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * @Author: zerongliu
+ * @Date: 11/1/18 22:11
+ * @Description: Given a nested list of integers, implement an iterator to flatten it.
+ * <p>
+ * Each element is either an integer, or a list -- whose elements may also be integers or other lists.
+ * <p>
+ * Example 1:
+ * <p>
+ * Input: [[1,1],2,[1,1]]
+ * Output: [1,1,2,1,1]
+ * Explanation: By calling next repeatedly until hasNext returns false,
+ * the order of elements returned by next should be: [1,1,2,1,1].
+ * Example 2:
+ * <p>
+ * Input: [1,[4,[6]]]
+ * Output: [1,4,6]
+ * Explanation: By calling next repeatedly until hasNext returns false,
+ * the order of elements returned by next should be: [1,4,6].
+ */
+public class Leetcode341 {
+    public class NestedIterator implements Iterator<Integer> {
+        List<NestedInteger> nestedList;
+        int data;
+
+        public NestedIterator(List<NestedInteger> nestedList) {
+            this.nestedList = nestedList;
+        }
+
+        @Override
+        public Integer next() {
+            return data;
+        }
+
+        @Override
+        public boolean hasNext() {
+            while (nestedList != null && nestedList.size() > 0) {
+                NestedInteger tmpInt = nestedList.remove(0);
+                if (tmpInt.isInteger()) {
+                    data = tmpInt.getInteger();
+                    return true;
+                } else {
+                    nestedList.addAll(0, tmpInt.getList());
+                }
+            }
+            return false;
+        }
+
+    }
+}
