@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.*;
+
 /**
  * @Author: zerongliu
  * @Date: 11/2/18 17:14
@@ -28,4 +30,28 @@ package com.github.leetcode.medium;
  * Explanation: All possible pairs are returned from the sequence: [1,3],[2,3]
  */
 public class Leetcode373 {
+    public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        List<int[]> result = new LinkedList<>();
+        Queue<int[]> queue = new PriorityQueue<>(k, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                int tmp1 = o1[0] + o1[1];
+                int tmp2 = o2[0] + o2[1];
+                return tmp1 - tmp2;
+            }
+        });
+        for (int i = 0; i < nums1.length; i++) {
+            for (int j = 0; j < nums2.length; j++) {
+                queue.add(new int[]{nums1[i], nums2[j]});
+            }
+        }
+
+        while (k-- > 0) {
+            int[] tmp = queue.poll();
+            if (tmp == null)
+                break;
+            result.add(tmp);
+        }
+        return result;
+    }
 }
