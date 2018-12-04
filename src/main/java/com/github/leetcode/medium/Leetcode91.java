@@ -22,7 +22,7 @@ package com.github.leetcode.medium;
  * Output: 3
  * Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
  */
-public class Leetcoe91 {
+public class Leetcode91 {
     public int numDecodings(String s) {
         if (s.length() == 0) return 0;
         int[] count = new int[s.length() + 1];      //count[i]记录从开始到i-1点有count[i]中可能的编码方式
