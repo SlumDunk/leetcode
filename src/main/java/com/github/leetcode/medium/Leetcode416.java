@@ -40,18 +40,33 @@ public class Leetcode416 {
 
     private boolean dp(int[] nums, int target) {
         boolean[][] dp = new boolean[nums.length + 1][target + 1];
+        //查找前i-1个数是否有组合的和等于target-nums[i]
         dp[0][0] = true;
         for (int i = 1; i <= nums.length; i++) {
-            for (int j = 0; j <= target; j++) {
+            for (int j = 1; j <= target; j++) {
                 dp[i][j] = dp[i - 1][j];
-                if (j - nums[i - 1] >= 0) {
-                    if (dp[i - 1][j - nums[i - 1]] == true) {
-                        dp[i][j] = true;
-                    }
+                int sum = j - nums[i-1];
+                System.out.println(sum);
+                if (sum >= 0 && Boolean.TRUE == dp[i - 1][sum]) {
+                    dp[i][j] = true;
                 }
             }
         }
         return dp[nums.length][target];
+
+//        boolean[][] dp = new boolean[nums.length + 1][target + 1];
+//        dp[0][0] = true;
+//        for (int i = 1; i <= nums.length; i++) {
+//            for (int j = 0; j <= target; j++) {
+//                dp[i][j] = dp[i - 1][j];
+//                if (j - nums[i - 1] >= 0) {
+//                    if (dp[i - 1][j - nums[i - 1]] == true) {
+//                        dp[i][j] = true;
+//                    }
+//                }
+//            }
+//        }
+//        return dp[nums.length][target];
     }
 
 }

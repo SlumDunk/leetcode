@@ -2,6 +2,7 @@ package com.github.leetcode.medium;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * @Author: zerongliu
@@ -21,6 +22,12 @@ import java.util.List;
  * n does not exceed 1690.
  */
 public class Leetcode264 {
+    public static void main(String[] args) {
+        Leetcode264 leetcode264 = new Leetcode264();
+        System.out.println(leetcode264.heapNthUglyNumber(
+                40));
+    }
+
     public int nthUglyNumber(int n) {
         int u = 0;
         List<Integer> l1 = new LinkedList<Integer>();
@@ -44,4 +51,22 @@ public class Leetcode264 {
         return u;
     }
 
+    public int heapNthUglyNumber(int n) {
+        if (n == 1) return 1;
+        PriorityQueue<Long> heapQueue = new PriorityQueue<>();
+        heapQueue.add(1l);
+
+        while (n > 1) {
+            Long tmp = heapQueue.poll();
+            while (!heapQueue.isEmpty() && heapQueue.peek().longValue() == tmp.longValue()) {
+                heapQueue.poll();
+            }
+            System.out.println(tmp);
+            heapQueue.add(tmp * 2);
+            heapQueue.add(tmp * 3);
+            heapQueue.add(tmp * 5);
+            n--;
+        }
+        return heapQueue.poll().intValue();
+    }
 }

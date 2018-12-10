@@ -17,7 +17,18 @@ public class Leetcode53 {
         if (nums == null || nums.length == 0) {
             return 0;
         } else {
-            return maxSubArraySum(nums, 0, nums.length - 1);
+            int len = nums.length;
+            //[][0]加上第n-1个数的累积和，[][1]不加上第n-1个数的累积和
+            int[][] dp = new int[len][2];
+            dp[0][0] = nums[0];
+            dp[0][1] = nums[0];
+            int max = Math.max(dp[0][0], dp[0][1]);
+            for (int i = 1; i < len; i++) {
+                dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]) + nums[i];
+                dp[i][1] = nums[i];
+                max = Math.max(dp[i][1],Math.max(dp[i][0], max));
+            }
+            return max;
         }
     }
 

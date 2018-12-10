@@ -18,14 +18,32 @@ package com.github.leetcode.easy;
  * Every cost[i] will be an integer in the range [0, 999].
  */
 public class Leetcode746 {
+    public static void main(String[] args) {
+        Leetcode746 leetcode746 = new Leetcode746();
+        int[] cost = {10, 15, 20};
+        leetcode746.minCostClimbingStairs(cost);
+    }
+
     public int minCostClimbingStairs(int[] cost) {
-        int length = cost.length + 1;
-        int[] dp = new int[length];
-        dp[0] = 0;
-        dp[1] = 0;
-        for (int i = 2; i < length; i++) {
-            dp[i] = Math.min(dp[i - 2] + cost[i - 2], dp[i - 1] + cost[i - 1]);
+//        int length = cost.length + 1;
+//        int[] dp = new int[length];
+//        dp[0] = 0;
+//        dp[1] = 0;
+//        for (int i = 2; i < length; i++) {
+//            dp[i] = Math.min(dp[i - 2] + cost[i - 2], dp[i - 1] + cost[i - 1]);
+//        }
+//        return dp[length - 1];
+        int len = cost.length;
+        //[][0]走这一步的代价，[][1]不走这一步的代价
+        int[][] dp = new int[len + 1][2];
+        dp[0][0] = 0;
+        dp[0][1] = 0;
+        dp[1][0] = cost[0];
+        dp[1][1] = 0;
+        for (int i = 2; i <= len; i++) {
+            dp[i][0] = Math.min(dp[i - 2][0] + cost[i-1], dp[i - 1][0] + cost[i-1]);
+            dp[i][1] = dp[i - 1][0];
         }
-        return dp[length - 1];
+        return Math.min(dp[len][0], dp[len][1]);
     }
 }

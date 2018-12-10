@@ -15,6 +15,9 @@ package com.github.leetcode.medium;
  * 1 0 0 1 0
  * <p>
  * Output: 4
+ * 找最大正方形的边长
+ * 元素值为0， 则包含它的正方形边长是0
+ * 元素值为1，则包含它的正方形边长为左上、正上、左边最小值+1
  */
 public class Leetcode221 {
     public int maximalSquare(char[][] matrix) {

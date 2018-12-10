@@ -30,14 +30,31 @@ package com.github.leetcode.medium;
  */
 public class Leetcode413 {
     public int numberOfArithmeticSlices(int[] A) {
-        int curr = 0, sum = 0;
-        for (int i = 2; i < A.length; i++)
+//        int curr = 0, sum = 0;
+//        for (int i = 2; i < A.length; i++)
+//            if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
+//                curr += 1;
+//                sum += curr;
+//            } else {
+//                curr = 0;
+//            }
+//        return sum;
+        //存储到子串(0...n)包含的arithmetic 子串的数量 子串要求是连续的
+        if (A.length < 2) {
+            return 0;
+        }
+        int[] dp = new int[A.length];
+        dp[0] = 0;
+        dp[1] = 0;
+        int result = 0;
+        for (int i = 2; i < A.length; i++) {
             if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
-                curr += 1;
-                sum += curr;
+                dp[i] = dp[i - 1] + 1;
             } else {
-                curr = 0;
+                dp[i] = 0;
             }
-        return sum;
+            result += dp[i];
+        }
+        return result;
     }
 }

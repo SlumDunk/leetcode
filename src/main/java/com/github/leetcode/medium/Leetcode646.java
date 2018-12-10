@@ -1,6 +1,7 @@
 package com.github.leetcode.medium;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * @Author: zerongliu
@@ -20,18 +21,42 @@ import java.util.Arrays;
  */
 public class Leetcode646 {
     public static void main(String[] args) {
-
+        Leetcode646 leetcode646 = new Leetcode646();
+        int[][] pairs = {{3, 4}, {2, 3}, {1, 2}};
+        leetcode646.findLongestChain(pairs);
     }
 
     public int findLongestChain(int[][] pairs) {
-        Arrays.sort(pairs, (a, b) -> a[1] - b[1]);
-        int count = 0, end = Integer.MIN_VALUE;
-        for (int[] pair : pairs) {
-            if (pair[0] > end) {
-                count++;
-                end = pair[1];
+//        Arrays.sort(pairs, (a, b) -> a[1] - b[1]);
+//        int count = 0, end = Integer.MIN_VALUE;
+//        for (int[] pair : pairs) {
+//            if (pair[0] > end) {
+//                count++;
+//                end = pair[1];
+//            }
+//        }
+//        return count;
+        //保证按pairs[][1]递增顺序排列，保证最优子结构
+        Arrays.sort(pairs, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] a, int[] b) {
+                return a[1] - b[1];
             }
+        });
+        int[] dp = new int[pairs.length];
+        for (int i = 0; i < pairs.length; i++) {
+            dp[i] = 1;
         }
-        return count;
+        int max = 1;
+        for (int i = 0; i < pairs.length; i++) {
+            for (int j = 0; j < pairs.length; j++) {
+                if (i != j && pairs[i][0] > pairs[j][1]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+
+            }
+            max = Math.max(max, dp[i]);
+        }
+        return max;
     }
 }

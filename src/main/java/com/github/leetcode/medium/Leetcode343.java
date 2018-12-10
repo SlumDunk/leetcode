@@ -27,17 +27,29 @@ public class Leetcode343 {
         if (n <= 1) {
             return 0;
         }
-        int[] maxProduct = new int[n + 1];
-        maxProduct[0] = 1;
-        maxProduct[1] = 1;
+//        int[] maxProduct = new int[n + 1];
+//        maxProduct[0] = 1;
+//        maxProduct[1] = 1;
+//        for (int i = 2; i <= n; i++) {
+//            int product = 1;
+//            for (int j = 1; j <= i - 1; j++) {
+//                product = Math.max(product, Math.max(j, maxProduct[j]) * Math.max(i - j, maxProduct[i - j]));
+//            }
+//            maxProduct[i] = product;
+//        }
+//
+//        return maxProduct[n];
+        //存储第n个数可以分解成的最大的积
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
         for (int i = 2; i <= n; i++) {
-            int product = 1;
-            for (int j = 1; j <= i - 1; j++) {
-                product = Math.max(product, Math.max(j, maxProduct[j]) * Math.max(i - j, maxProduct[i - j]));
+            dp[i] = 1;
+            for (int j = 1; j < i; j++) {
+                //分成两部分，每部分看情况决定要不要继续分解，只取各部分最大的值
+                dp[i] = Math.max(dp[i], Math.max(j, dp[j]) * Math.max(i - j, dp[i - j]));
             }
-            maxProduct[i] = product;
         }
-
-        return maxProduct[n];
+        return dp[n];
     }
 }

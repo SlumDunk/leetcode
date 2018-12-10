@@ -23,18 +23,29 @@ import java.util.List;
  */
 public class Leetcode120 {
     public int minimumTotal(List<List<Integer>> triangle) {
-            int row=triangle.size();    //行数
-            if(row==0) return 0;
-
-            int[] res=new int[row+1];       //倒着求，求最后一行到第一行最小和，这样就可以用o(n)空间了
-
-            for(int i=row-1;i>=0;i--){
-                List<Integer> list=triangle.get(i);
-                for(int j=0;j<list.size();j++){
-                    res[j]=(Math.min(res[j+1],res[j])+list.get(j));//最后一行的最小值就是当前数
-                }
+//            int row=triangle.size();    //行数
+//            if(row==0) return 0;
+//
+//            int[] res=new int[row+1];       //倒着求，求最后一行到第一行最小和，这样就可以用o(n)空间了
+//
+//            for(int i=row-1;i>=0;i--){
+//                List<Integer> list=triangle.get(i);
+//                for(int j=0;j<list.size();j++){
+//                    res[j]=(Math.min(res[j+1],res[j])+list.get(j));//最后一行的最小值就是当前数
+//                }
+//            }
+//        return res[0];
+        //创建与最后一行长度一直的数组作为中间数组，用来存储中间结果
+        int len = triangle.size();
+        if (len == 0) return 0;
+        int[] dp = new int[len + 1];
+        //从下往上找路径
+        for (int i = len - 1; i >= 0; i--) {
+            List<Integer> list = triangle.get(i);
+            for (int j = 0; j < list.size(); j++) {
+                dp[j] = Math.min(dp[j], dp[j + 1]) + list.get(j);
             }
-
-            return res[0];
+        }
+        return dp[0];
     }
 }

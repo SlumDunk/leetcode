@@ -23,7 +23,7 @@ public class Leetcode322 {
         for (int i = 1; i <= amount; i++) {
             dp[i] = Integer.MAX_VALUE;
             for (int j = 0; j < coins.length; j++)
-                if (i >= coins[j] && dp[i - coins[j]] != Integer.MAX_VALUE)  //①
+                if (i >= coins[j] && dp[i - coins[j]] != Integer.MAX_VALUE)
                     dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
         }
         return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];

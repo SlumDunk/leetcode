@@ -27,6 +27,12 @@ package com.github.leetcode.medium;
  * Can you do it in O(n) time?
  */
 public class Leetcode376 {
+    public static void main(String[] args) {
+        Leetcode376 leetcode376 = new Leetcode376();
+        int[] nums = {1, 17, 5, 10, 13, 15, 10, 5, 16, 18};
+        leetcode376.dpWiggleMaxLength(nums);
+    }
+
     public int wiggleMaxLength(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
         int up = 1, down = 1;
@@ -37,5 +43,59 @@ public class Leetcode376 {
                 down = up + 1;
 
         return Math.max(up, down);
+    }
+
+    public int dpWiggleMaxLength(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int[][] dp = new int[nums.length][2];
+        dp[0][0] = 1;
+        dp[0][1] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i - 1]) {//up
+                dp[i][0] = dp[i - 1][1] + 1;
+                dp[i][1] = dp[i - 1][1];
+            } else if (nums[i] < nums[i - 1]) {//down
+                dp[i][1] = dp[i - 1][0] + 1;
+                dp[i][0] = dp[i - 1][0];
+            } else {
+                dp[i][0] = dp[i - 1][0];
+                dp[i][1] = dp[i - 1][1];
+            }
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < 2; j++) {
+                System.out.printf(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        int index = nums.length - 1;
+        int nextVal;
+        if (dp[index][0] > dp[index][1]) {
+            nextVal = Integer.MIN_VALUE;
+        } else {
+            nextVal = Integer.MAX_VALUE;
+        }
+        while (index >= 0) {
+            if (dp[index][0] > dp[index][1]) {//最后一个方向是up
+                if (index == 0) {
+                    System.out.printf(nums[index] + " ");
+                } else if (dp[index][0] >= dp[index - 1][0] && nums[index] > nextVal) {
+                    System.out.printf(nums[index] + " ");
+                    nextVal = nums[index];
+                }
+
+            } else {//最后一个方向是down
+                if (index == 0) {
+                    System.out.printf(nums[index] + " ");
+                } else if (dp[index][1] >= dp[index - 1][1] && nums[index] < nextVal) {
+                    System.out.printf(nums[index] + " ");
+                    nextVal = nums[index];
+                }
+            }
+            index--;
+        }
+        return Math.max(dp[nums.length - 1][0], dp[nums.length - 1][1]);
     }
 }

@@ -35,7 +35,7 @@ package com.github.leetcode.medium;
 public class Leetcode397 {
     public static void main(String[] args) {
         Leetcode397 leetcode397 = new Leetcode397();
-        leetcode397.integerReplacement(2147483647);
+        System.out.println(leetcode397.integerReplacement(7));
     }
 
     public int count = 0;
@@ -48,6 +48,13 @@ public class Leetcode397 {
         return count;
     }
 
+    /**
+     * 自顶向下递归
+     *
+     * @param n
+     * @param number
+     * @return
+     */
     private int helper(long n, int number) {
         if (n == 1) {
             return number;
@@ -59,4 +66,5 @@ public class Leetcode397 {
             return Math.min(helper(n + 1, number), helper(n - 1, number));
         }
     }
+
 }

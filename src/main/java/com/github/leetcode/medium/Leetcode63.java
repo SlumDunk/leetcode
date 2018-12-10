@@ -39,16 +39,21 @@ public class Leetcode63 {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         int[][] paths = new int[m][n];
-        for (int i = 0; i < n; i++) {
+        if (obstacleGrid[0][0] == 0) {
+            paths[0][0] = 1;
+        } else {
+            paths[0][0] = 0;
+        }
+        for (int i = 1; i < n; i++) {
             if (obstacleGrid[0][i] != 1) {
-                paths[0][i] = 1;
+                paths[0][i] = paths[0][i - 1];
             } else {
                 break;
             }
         }
-        for (int j = 0; j < m; j++) {
+        for (int j = 1; j < m; j++) {
             if (obstacleGrid[j][0] != 1) {
-                paths[j][0] = 1;
+                paths[j][0] = paths[j - 1][0];
             } else {
                 break;
             }

@@ -33,11 +33,23 @@ package com.github.leetcode.medium;
 public class Leetcode377 {
     public int combinationSum4(int[] nums, int target) {
         if (nums == null || nums.length == 0 || target <= 0) return 0;
+//        int[] dp = new int[target + 1];
+//        dp[0] = 1;
+//        for (int i = 1; i <= target; i++)
+//            for (int j = 0; j < nums.length; j++)
+//                if (i >= nums[j]) dp[i] += dp[i - nums[j]];
+//        return dp[target];
+        //中间数组，用于存储能够组合成目标和的组合次数
         int[] dp = new int[target + 1];
         dp[0] = 1;
-        for (int i = 1; i <= target; i++)
-            for (int j = 0; j < nums.length; j++)
-                if (i >= nums[j]) dp[i] += dp[i - nums[j]];
+        for (int i = 1; i <= target; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                if (i >= nums[j]) {
+                    dp[i] += dp[i - nums[j]];
+                }
+            }
+        }
+
         return dp[target];
     }
 }

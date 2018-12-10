@@ -17,7 +17,8 @@ package com.github.leetcode.medium;
  */
 public class Leetcode5 {
     public static void main(String[] args) {
-
+        Leetcode5 leetcode5 = new Leetcode5();
+        System.out.println(leetcode5.longestPalindrome("babad"));
     }
 
     public String longestPalindrome(String s) {
@@ -47,5 +48,35 @@ public class Leetcode5 {
             end++;
         }
         return s.substring(start + 1, end);
+    }
+
+    public String dpLongestPalindrome(String s) {
+        if (s.length() == 0) {
+            return "";
+        }
+        int len = s.length();
+        int start = 0, end = 0;
+        int maxLength = 0;
+        int matrix[][] = new int[len][len];
+        for (int i = 0; i < len; i++) {
+            matrix[i][i] = 1;
+        }
+        for (int j = 1; j < len; j++) {
+            for (int i = j - 1; i >= 0; i--) {
+                if (s.charAt(j) == s.charAt(i)) {
+                    if (i + 1 <= j - 1 && matrix[i + 1][j - 1] > 0) {
+                        matrix[i][j] = matrix[i + 1][j - 1] + 2;
+                    } else if (i + 1 == j) {
+                        matrix[i][j] = 2;
+                    }
+                    if (matrix[i][j] > maxLength) {
+                        start = i;
+                        end = j;
+                        maxLength = matrix[i][j];
+                    }
+                }
+            }
+        }
+        return s.substring(start, end + 1);
     }
 }

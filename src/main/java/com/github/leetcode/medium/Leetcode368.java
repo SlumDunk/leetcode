@@ -19,29 +19,43 @@ import java.util.List;
  * Output: [1,2] (of course, [1,3] will also be ok)
  * Example 2:
  * <p>
- * Input: [1,2,4,8]
+ * Input: [2,3,4,9]
  * Output: [1,2,4,8]
  */
 public class Leetcode368 {
+    public static void main(String[] args) {
+        Leetcode368 leetcode368 = new Leetcode368();
+        int[] nums = {2,3,4,9};
+        leetcode368.largestDivisibleSubset(nums);
+    }
+
     public List<Integer> largestDivisibleSubset(int[] nums) {
         int size = nums.length;
         Arrays.sort(nums);
-        int[] countRecord = new int[size];
+        int[][] countRecord = new int[size][2];//存放最长长度和前驱节点索引
         int maxCount = 0;
         int index = -1;
         for (int i = 0; i < size; i++) {
             int cur = nums[i];
             int max = 1;
+            countRecord[i][1] = -1;
             for (int j = i - 1; j >= 0; j--) {
                 if (cur % nums[j] == 0) {
-                    max = Math.max(max, countRecord[j] + 1);
+                    if (max < countRecord[j][0] + 1) {
+                        countRecord[i][1] = j;
+                        max = countRecord[j][0] + 1;
+                    }
                 }
             }
-            countRecord[i] = max;
+            countRecord[i][0] = max;
             if (max > maxCount) {
                 maxCount = max;
                 index = i;
             }
+        }
+        while (index != -1) {
+            System.out.println(nums[index]);
+            index = countRecord[index][1];
         }
         int count = 0;
         List<Integer> result = new ArrayList<Integer>();

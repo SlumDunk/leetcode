@@ -25,24 +25,35 @@ import java.util.List;
  */
 public class Leetcode96 {
     public static void main(String[] args) {
-        Leetcode96 leetcode96=new Leetcode96();
+        Leetcode96 leetcode96 = new Leetcode96();
         System.out.println(leetcode96.numTrees(19));
     }
+
     public int numTrees(int n) {
-        if(n == 0 || n == 1) {
+        if (n == 0 || n == 1) {
             return 1;
         }
-        int[] nums = new int[n+1];
-
-        nums[0] = 1;
-        nums[1] = 1;
-
-        for(int i = 2;i <= n;i++) {
-            for(int j = 0;j < i;j++) {
-                nums[i] += nums[j]*nums[i-j-1];
+//        int[] nums = new int[n+1];
+//
+//        nums[0] = 1;
+//        nums[1] = 1;
+//
+//        for(int i = 2;i <= n;i++) {
+//            for(int j = 0;j < i;j++) {
+//                nums[i] += nums[j]*nums[i-j-1];
+//            }
+//        }
+//
+//        return nums[n];
+        //中间数组，用于存储前n个数能组成的树的种类
+        int[] dp = new int[n + 1];
+        dp[0] = 1;//空节点树
+        dp[1] = 1;//单个节点的树
+        for (int i = 2; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[i] += dp[j] * dp[i - j - 1];//j个数构成子树，i-j-1个数构成祖先树
             }
         }
-
-        return nums[n];
+        return dp[n];
     }
 }
