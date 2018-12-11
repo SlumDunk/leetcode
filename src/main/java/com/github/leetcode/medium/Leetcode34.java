@@ -20,21 +20,29 @@ package com.github.leetcode.medium;
  */
 public class Leetcode34 {
     public int[] searchRange(int[] nums, int target) {
+        //二分查找target在数组中的位置
         int mid = binarySearch(nums, target, 0, nums.length - 1);
-        int left = mid;
-        int left_temp = binarySearch(nums, target, 0, mid - 1);
-        while (left_temp != -1) {
-            left = left_temp;
-            left_temp = binarySearch(nums, target, 0, left_temp - 1);
+//        int left = mid;
+//        int left_temp = binarySearch(nums, target, 0, mid - 1);
+//        while (left_temp != -1) {
+//            left = left_temp;
+//            left_temp = binarySearch(nums, target, 0, left_temp - 1);
+//        }
+//        int right = mid;
+//        int right_temp = binarySearch(nums, target, mid + 1, nums.length - 1);
+//        while (right_temp != -1) {
+//            right = right_temp;
+//            right_temp = binarySearch(nums, target, right_temp + 1, nums.length - 1);
+//        }
+        int left = mid - 1, right = mid + 1;
+        while (left >= 0 && nums[left] == target) {
+            left--;
         }
-        int right = mid;
-        int right_temp = binarySearch(nums, target, mid + 1, nums.length - 1);
-        while (right_temp != -1) {
-            right = right_temp;
-            right_temp = binarySearch(nums, target, right_temp + 1, nums.length - 1);
+        while (right >= 0 && right < nums.length && nums[right] == target) {
+            right++;
         }
 
-        int[] result = {left, right};
+        int[] result = {++left, --right};
         return result;
     }
 

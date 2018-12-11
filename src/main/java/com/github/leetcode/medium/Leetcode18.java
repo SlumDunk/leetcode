@@ -30,12 +30,13 @@ public class Leetcode18 {
         }
 
         Arrays.sort(nums);
+        //先两两一组放进map里头
         HashMap<Integer, List<Integer[]>> map = new HashMap<>();
         for (int i = 0; i < nums.length - 1; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
+            for (int j = i + 1; j < nums.length; j++) {//避免重复，从i+i开始遍历
                 int sum = nums[i] + nums[j];
                 Integer[] pair = {i, j};
-
+                //和值作为key,组合作为list
                 if (!map.containsKey(sum)) {
                     map.put(sum, new ArrayList<Integer[]>());
                 }
@@ -47,14 +48,12 @@ public class Leetcode18 {
         for (int key : keys) {
             List<Integer[]> listA = map.get(key);
             List<Integer[]> listB = map.get(target - key);
-
             if (listA != null && listB != null) {
                 for (Integer[] pairA : listA) {
                     int a0 = pairA[0], a1 = pairA[1];
-
                     for (Integer[] pairB : listB) {
                         int b0 = pairB[0], b1 = pairB[1];
-                        if (a1 < b0) {  // to avoid repeat： a0 < a1, b0 < b1
+                        if (a1 < b0) {  // 同一个位置的元素用两遍 a0 < a1, b0 < b1
                             List<Integer> list = new ArrayList<>();
                             list.add(nums[a0]);
                             list.add(nums[a1]);

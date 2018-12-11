@@ -24,29 +24,24 @@ public class Leetcode11 {
     public int maxArea(int[] height) {
         if (height == null || height.length < 2) {
             return 0;
-        }
-        int result = 0;
-
-        int left = 0;
-        int right = height.length - 1;
-        while (left < right) {
-            result = Math.max(result, Math.min(height[left], height[right]) * (right - left));
-            if (height[left] < height[right]) {
-                int k = left;
-                while (k < right && height[k] <= height[left]) {
-                    k++;
+        } else {
+            //双指针，一点点往里收缩
+            int left = 0;
+            int right = height.length - 1;
+            int tmpHeight;
+            int max = 0;
+            while (left < right) {//保持最高的那条边
+                if (height[left] <= height[right]) {
+                    tmpHeight = height[left];
+                    max = Math.max(max, tmpHeight * (right - left));
+                    left++;
+                } else {
+                    tmpHeight = height[right];
+                    max = Math.max(max, tmpHeight * (right - left));
+                    right--;
                 }
-                left = k;
-            } else {
-                int k = right;
-
-                while (k > left && height[k] <= height[right]) {
-                    k--;
-                }
-                right = k;
             }
-
+            return max;
         }
-        return result;
     }
 }

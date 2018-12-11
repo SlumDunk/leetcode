@@ -24,9 +24,10 @@ package com.github.leetcode.medium;
  */
 public class Leetcode33 {
     public int search(int[] nums, int target) {
-        if(nums.length==0){
+        if (nums.length == 0) {
             return -1;
         }
+        //改进的二分查找
         return search(nums, target, 0, nums.length - 1);
     }
 
@@ -39,15 +40,15 @@ public class Leetcode33 {
             }
         }
         int mid = (left + right) / 2;
-        if (nums[mid] >= nums[left]) {
-            if (nums[left] <= target && target <= nums[mid]) {
+        if (nums[mid] > nums[left]) {//(left..mid)是完全有序的
+            if (nums[left] <= target && nums[mid] >= target) {
                 return binarySearch(nums, target, left, mid);
             } else {
                 return search(nums, target, mid + 1, right);
             }
-        } else {
-            if (nums[mid] <= target && target <= nums[right]) {
-                return binarySearch(nums, target, mid, right);
+        } else {//(mid+1..right)是完全有序的
+            if (nums[mid + 1] <= target && target <= nums[right]) {
+                return binarySearch(nums, target, mid + 1, right);
             } else {
                 return search(nums, target, left, mid);
             }

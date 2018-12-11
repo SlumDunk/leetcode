@@ -25,34 +25,44 @@ import java.util.List;
  */
 public class Leetcode15 {
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> list = new ArrayList<List<Integer>>();
-        int n = nums.length;
-        Arrays.sort(nums);
-        for (int i = 0; i < n; i++) {
-            if (i != 0 && nums[i] == nums[i - 1]) continue;
-            int sum = 0;
-            int p = i + 1, q = n - 1;
-            while (p < q) {
-                sum = nums[i] + nums[p] + nums[q];
-                if (sum == 0) {
-                    List<Integer> item = new ArrayList<>();
-                    item.add(nums[i]);
-                    item.add(nums[p]);
-                    item.add(nums[q]);
-                    list.add(item);
-                    while (++p < q && nums[p - 1] == nums[p]) {
+        List<List<Integer>> resultList = new ArrayList<List<Integer>>();
+        if (nums.length < 3) {
+            return resultList;
+        } else {
+            //变成有序的数组
+            Arrays.sort(nums);
+            //遍历小于等于0的数
+            for (int i = 0; i < nums.length; i++) {
+                //重复元素不用再走一遍了
+                if (i != 0 && nums[i] == nums[i - 1]) continue;
+                if (nums[i] > 0) {
+                    break;
+                }
+                int sum = 0;
+                int left = i + 1;
+                int right = nums.length - 1;
+                while (left < right) {
+                    sum = nums[i] + nums[left] + nums[right];
+                    if (sum == 0) {
+                        List<Integer> numList = new ArrayList<Integer>();
+                        numList.add(nums[i]);
+                        numList.add(nums[left]);
+                        numList.add(nums[right]);
+                        resultList.add(numList);
+                        while (++left < right && nums[left] == nums[left - 1]) {
 
-                    }
-                    while (--q > p && nums[q + 1] == nums[q]) {
+                        }
+                        while (--right > left && nums[right] == nums[right + 1]) {
 
+                        }
+                    } else if (sum > 0) {
+                        right--;
+                    } else {
+                        left++;
                     }
-                } else if (sum > 0) {
-                    q--;
-                } else {
-                    p++;
                 }
             }
+            return resultList;
         }
-        return list;
     }
 }

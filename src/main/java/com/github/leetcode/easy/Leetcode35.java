@@ -24,28 +24,27 @@ package com.github.leetcode.easy;
  */
 public class Leetcode35 {
     public int searchInsert(int[] nums, int target) {
-        int index = findPosition(0, nums.length - 1, nums, target);
+        int len = nums.length;
+        int index = findPosition(nums, 0, len - 1, target);
         return index;
     }
 
-    private int findPosition(int left, int right, int[] nums, int target) {
-        if (left < right) {
+    public int findPosition(int[] nums, int left, int right, int target) {
+        if (left < right) {//开始二分查找
             int mid = (left + right) / 2;
             if (nums[mid] == target) {
                 return mid;
-            } else if (nums[mid] < target) {
-                return findPosition(mid + 1, right, nums, target);
             } else {
-                return findPosition(left, mid - 1, nums, target);
+                if (nums[mid] < target) {
+                    return findPosition(nums, mid + 1, right, target);
+                } else {
+                    return findPosition(nums, left, mid - 1, target);
+                }
             }
         } else {
-            if (left == right) {
-                if (nums[left] < target) {
-                    return left + 1;
-                } else {
-                    return left;
-                }
-            } else {
+            if (nums[left] < target) {//target 大于nums[left]
+                return left + 1;
+            } else {//target小于等于nums[left]
                 return left;
             }
         }
