@@ -30,20 +30,22 @@ package com.github.leetcode.medium;
  */
 public class Leetcode74 {
     public boolean searchMatrix(int[][] matrix, int target) {
+        //像一维数组的二分查找一样
         int m = matrix.length;
         if (m == 0) return false;
         int n = matrix[0].length;
         int left = 0, right = m * n - 1;
         while (left <= right) {
             int mid = (left + right) / 2;
-            if (target == matrix[mid / n][mid % n])
+            int tmp = matrix[mid / n][mid % n];//转化为二维数组中对应的位置指针
+            if (target == tmp) {
                 return true;
-            else if (target > matrix[mid / n][mid % n])
-                left = mid + 1;
-            else
+            } else if (target < tmp) {
                 right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
         }
         return false;
-
     }
 }

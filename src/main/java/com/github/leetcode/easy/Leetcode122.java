@@ -38,18 +38,17 @@ public class Leetcode122 {
      * @return
      */
     public int maxProfit(int[] prices) {
-        if (prices == null || prices.length == 0) {
+        if(prices==null||prices.length==0){
             return 0;
-        } else {
-            int min = prices[0];
-            int profit = 0;
-            for (int i = 0; i < prices.length; i++) {
-                if (prices[i] < min) {
-                    min = prices[i];
-                } else {
-                    profit += prices[i] - min;
-                    min = prices[i];
+        }else{
+            //可以当天卖出，当天买进, 所以收益可以累积，始终选择最低价买入，高价卖出，然后动态调整最低价
+            int min=prices[0];
+            int profit=0;
+            for(int i=1;i<prices.length;i++){
+                if(min<prices[i]){//当天卖出有收益
+                    profit+=prices[i]-min;
                 }
+                min=prices[i];//买入新股
             }
             return profit;
         }

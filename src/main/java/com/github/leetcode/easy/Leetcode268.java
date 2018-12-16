@@ -19,7 +19,8 @@ import java.util.Arrays;
 public class Leetcode268 {
 
     public int missingNumber(int[] nums) {
-              int sum = 0;
+        //等差数列求和公式
+        int sum = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
         }

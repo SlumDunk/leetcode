@@ -33,41 +33,35 @@ public class Leetcode54 {
         if (matrix.length == 0) {
             return res;
         }
-        int up = 0;
-        int down = matrix.length - 1;
-        int left = 0;
-        int right = matrix[0].length - 1;
-        // 取到‘=’是因为走过的已经移动指针
-        while (up <= down && left <= right) {
-            // Traverse Right(→)
-            for (int j = left; j <= right; j++) {
-                res.add(matrix[up][j]);
+        //回字形从最外圈走到最里圈
+        //从左上角走到右上角，从右上角走到右下角，从右下角走到左下角，从左下角走到左上角
+        int left = 0, right = matrix[0].length - 1, up = 0, down = matrix.length - 1;
+        while (left <= right && up <= down) {
+            //左上角走到右上角
+            for (int i = left; i <= right; i++) {
+                res.add(matrix[up][i]);
             }
-            up++;
-
-            // Traverse Down(↓)
-            for (int j = up; j <= down; j++) {
-                res.add(matrix[j][right]);
+            //右上角走到右下角，拐角重复元素去掉
+            for (int i = up + 1; i <= down; i++) {
+                res.add(matrix[i][right]);
             }
-            right--;
-
-            if (up <= down) {
-                // Traverse Left(←)
-                for (int j = right; j >= left; j--) {
-                    res.add(matrix[down][j]);
+            //右下角走到左下角，拐角重复元素去掉
+            if (down > up) {//排除单行的情况
+                for (int i = right - 1; i >= left; i--) {
+                    res.add(matrix[down][i]);
                 }
             }
-            down--;
-
-            if (left <= right) {
-                // Traver Up(↑)
-                for (int j = down; j >= up; j--) {
-                    res.add(matrix[j][left]);
+            //左下角走到左上角，拐角重复元素去掉
+            if (right > left) {//排除单列的情况
+                for (int i = down - 1; i > up; i--) {
+                    res.add(matrix[i][left]);
                 }
             }
             left++;
+            right--;
+            up++;
+            down--;
         }
-
         return res;
     }
 }

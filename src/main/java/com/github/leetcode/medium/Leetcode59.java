@@ -23,48 +23,41 @@ public class Leetcode59 {
         if (n == 0) {
             return null;
         }
-
-        int up = 0;
-        int down = n - 1;
-        int left = 0;
-        int right = n - 1;
         int[][] matrix = new int[n][n];
-        int num = 1;
-        // 取到‘=’是因为走过的已经移动指针
-        while (up <= down && left <= right) {
-            // Traverse Right(→)
-            for (int j = left; j <= right; j++) {
-                matrix[up][j] = num;
-                num++;
+        //回字形从最外圈走到最里圈
+        //从左上角走到右上角，从右上角走到右下角，从右下角走到左下角，从左下角走到左上角
+        int left = 0, right = n - 1, up = 0, down = n - 1;
+        int currentItem = 1;
+        while (left <= right && up <= down) {
+            //左上角走到右上角
+            for (int i = left; i <= right; i++) {
+                matrix[up][i] = currentItem;
+                currentItem++;
             }
-            up++;
-
-            // Traverse Down(↓)
-            for (int j = up; j <= down; j++) {
-                matrix[j][right] = num;
-                num++;
+            //右上角走到右下角，拐角重复元素去掉
+            for (int i = up + 1; i <= down; i++) {
+                matrix[i][right] = currentItem;
+                currentItem++;
             }
-            right--;
-
-            if (up <= down) {
-                // Traverse Left(←)
-                for (int j = right; j >= left; j--) {
-                    matrix[down][j] = num;
-                    num++;
+            //右下角走到左下角，拐角重复元素去掉
+            if (down > up) {//排除单行的情况
+                for (int i = right - 1; i >= left; i--) {
+                    matrix[down][i] = currentItem;
+                    currentItem++;
                 }
             }
-            down--;
-
-            if (left <= right) {
-                // Traver Up(↑)
-                for (int j = down; j >= up; j--) {
-                    matrix[j][left] = num;
-                    num++;
+            //左下角走到左上角，拐角重复元素去掉
+            if (right > left) {//排除单列的情况
+                for (int i = down - 1; i > up; i--) {
+                    matrix[i][left] = currentItem;
+                    currentItem++;
                 }
             }
             left++;
+            right--;
+            up++;
+            down--;
         }
-
         return matrix;
     }
 }

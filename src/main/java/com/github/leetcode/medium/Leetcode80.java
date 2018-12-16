@@ -44,10 +44,12 @@ public class Leetcode80 {
         if (nums == null) return 0;
         //base case;
         if (nums.length <= 2) return nums.length;
-        int len = 2;
+        int len = 2;//下一个元素该放置的位置
         //general case
         for (int i = 2; i < nums.length; i++) {
-            if (nums[i] != nums[len - 1] || nums[i] != nums[len - 2]) {
+            if (nums[i] == nums[len - 1] && nums[len - 1] == nums[len - 2]) {//连续三个数字一样，跳过，继续往前走
+
+            } else {
                 nums[len] = nums[i];
                 len++;
             }

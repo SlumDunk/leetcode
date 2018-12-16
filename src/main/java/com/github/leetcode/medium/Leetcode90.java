@@ -25,29 +25,23 @@ import java.util.List;
  * ]
  */
 public class Leetcode90 {
-    List<List<Integer>> res = new ArrayList<>();
-    int[] num;
-    int len;
-
 
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        len = nums.length;
-        num = nums;
-        Arrays.sort(num);
+        int len = nums.length;
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
         res.add(new ArrayList<>());
-        sub(0, new ArrayList<>());
+        sub(0, new ArrayList<>(), len, nums, res);
         return res;
     }
 
-    public void sub(int start, List<Integer> ans) {
-        int flag = 0;
+    public void sub(int start, List<Integer> ans, int len, int[] nums, List<List<Integer>> res) {
         for (int i = start; i < len; i++) {
-            if (i > 0 && flag == 1 && num[i] == num[i - 1])
+            if (i > start && nums[i] == nums[i - 1])//往前重复的元素跳过
                 continue;
-            ans.add(num[i]);
-            flag = 1;
+            ans.add(nums[i]);
             res.add(new ArrayList<Integer>(ans));
-            sub(i + 1, ans);
+            sub(i + 1, ans, len, nums, res);
             ans.remove(ans.size() - 1);
         }
         return;

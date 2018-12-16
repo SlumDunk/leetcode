@@ -23,24 +23,39 @@ import com.github.leetcode.vo.TreeNode;
  * 15   7
  */
 public class Leetcode106 {
-    public TreeNode buildTree(int[] inorder, int[] postorder) {
-        return build(postorder.length - 1, 0, inorder.length - 1, inorder, postorder);
+    int[] inOrder;
+    int[] postOrder;
+
+    public TreeNode buildTree(int[] inOrder, int[] postOrder) {
+        this.inOrder = inOrder;
+        this.postOrder = postOrder;
+        return build(postOrder.length - 1, 0, inOrder.length - 1);
     }
 
-    private TreeNode build(int poststart, int instart, int inend, int[] inorder, int[] postorder) {
-        if (poststart < 0 || instart > inend) {
+    /**
+     * @param postStart 子树后根序列的起始位置
+     * @param inStart   子树中根序列的起始位置
+     * @param inEnd     子树中根序列的终止位置
+     * @return
+     */
+    private TreeNode build(int postStart, int inStart, int inEnd) {
+        if (postStart < 0 || inStart > inEnd) {
             return null;
         }
-        TreeNode root = new TreeNode(postorder[poststart]);
-        int inindex = 0;
-        for (int i = instart; i <= inend; i++) {
-            if (inorder[i] == root.val) {
-                inindex = i;
+        TreeNode root = new TreeNode(postOrder[postStart]);
+        int index = -1;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (inOrder[i] == root.val) {
+                index = i;
                 break;
             }
         }
-        root.right = build(poststart - 1, inindex + 1, inend, inorder, postorder);
-        root.left = build(poststart - (inend - inindex) - 1, instart, inindex - 1, inorder, postorder);
+        if (index != -1) {
+            //构建右子树
+            root.right = build(postStart - 1, index + 1, inEnd);
+            //构建左子树，后根序列的开始位置为原来的位置往前偏移右子树的节点长度
+            root.left = build(postStart - (inEnd - index) - 1, inStart, index - 1);
+        }
         return root;
     }
 

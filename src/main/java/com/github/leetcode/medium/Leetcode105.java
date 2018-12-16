@@ -25,21 +25,40 @@ import com.github.leetcode.vo.TreeNode;
 public class Leetcode105 {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
+        //递归构建树
         return build(preorder, inorder, 0, 0, inorder.length - 1);
     }
 
-    public TreeNode build(int[] pre, int[] in, int preStart, int inStart, int inEnd) {
-        if (preStart > pre.length - 1 || inStart > inEnd) return null;
-        TreeNode root = new TreeNode(pre[preStart]);
-        int index = 0;//记录根节点的位置
-        for (int i = inStart; i <= inEnd; i++) {
-            if (root.val == in[i]) {
-                index = i;
-                break;
+    /**
+     * @param preOrder
+     * @param inOrder
+     * @param preStart 先根排序的起始位置
+     * @param inStart  中根排序的起始位置
+     * @param inEnd    中根排序中树最后节点的位置
+     * @return
+     */
+    public TreeNode build(int[] preOrder, int[] inOrder, int preStart, int inStart, int inEnd) {
+        if (preStart > preOrder.length || inStart > inEnd) {
+            return null;
+        } else {
+            //子树根节点
+            TreeNode root = new TreeNode(preOrder[preStart]);
+            //遍历中序数组，找到根节点的位置
+            int index = -1;
+            for (int i = inStart; i <= inEnd; i++) {
+                if (inOrder[i] == preOrder[preStart]) {
+                    index = i;
+                    break;
+                }
+
             }
+            if (index != -1) {
+                //中序根节点左侧的树节点构成左子树
+                root.left = build(preOrder, inOrder, preStart + 1, inStart, index - 1);
+                //中序根节点右侧构造右子树,先根排序数组中右侧子树的起始位置
+                root.right = build(preOrder, inOrder, preStart + index - inStart + 1, index + 1, inEnd);
+            }
+            return root;
         }
-        root.left = build(pre, in, preStart + 1, inStart, index - 1);//找出左子树的各个位置
-        root.right = build(pre, in, preStart + index - inStart + 1, index + 1, inEnd);//找出右子树的各个位置
-        return root;
     }
 }

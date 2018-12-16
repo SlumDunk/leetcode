@@ -40,9 +40,10 @@ public class Leetcode152 {
             return 0;
         int len = nums.length;
         int max = Integer.MIN_VALUE;
+        //因为存在负负得正，所以必须保存最大值和最小值
         int[][] dp = new int[len + 1][2];
-        dp[0][0] = 1;
-        dp[0][1] = 1;
+        dp[0][0] = 1;//存放最大值
+        dp[0][1] = 1;//存放最小值
         for (int i = 1; i < len + 1; i++) {
             dp[i][0] = nums[i - 1];
             dp[i][1] = nums[i - 1];
@@ -52,6 +53,7 @@ public class Leetcode152 {
             dp[i][1] = Math.min(dp[i][1], Math.min(dp[i - 1][0] * nums[i - 1], dp[i - 1][1] * nums[i - 1]));
             max = Math.max(dp[i][0], max);
         }
+
         for (int i = 0; i < len+1; i++) {
             for (int j = 0; j < 2; j++) {
                 System.out.printf(dp[i][j]+" ");

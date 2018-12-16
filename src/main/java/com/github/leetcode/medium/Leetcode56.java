@@ -2,10 +2,7 @@ package com.github.leetcode.medium;
 
 import com.github.leetcode.vo.Interval;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -21,25 +18,19 @@ public class Leetcode56 {
         Collections.sort(intervals, new Comparator<Interval>() {
             @Override
             public int compare(Interval o1, Interval o2) {
-                if (o1.start < o2.start)
-                    return -1;
-                else if (o1.start > o2.start)
-                    return 1;
-                else
-                    return 0;
+                return o1.start == o2.start ? 0 : o1.start > o2.start ? 1 : -1;
             }
         });
         Interval top = intervals.get(0);
         res.add(new Interval(top.start, top.end));
-
         for (int i = 1; i < intervals.size(); i++) {
-            Interval current = intervals.get(i);
-            top = res.get(res.size() - 1);
-
-            if (top.end >= current.start) {
-                top.end = Math.max(current.end, top.end);
-            } else {
-                res.add(new Interval(current.start, current.end));
+            Interval currentInterval = intervals.get(i);
+            top = res.get(res.size() - 1);//每次拿出集合中结束时间最晚的元素
+            if (top.end >= currentInterval.start) {
+                //修正上边界
+                top.end = Math.max(top.end, currentInterval.end);
+            } else {//没有交集，需要添加新的
+                res.add(new Interval(currentInterval.start, currentInterval.end));
             }
         }
         return res;

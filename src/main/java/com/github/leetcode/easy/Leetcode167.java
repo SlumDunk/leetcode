@@ -27,6 +27,32 @@ public class Leetcode167 {
     }
 
     public int[] twoSum(int[] numbers, int target) {
+        //return findWithList(numbers, target);
+        //使用滑动窗口，双指针，逐步缩小范围
+        int left = 0, right = numbers.length - 1;
+        int[] result = new int[2];
+        while (left < right) {
+            int tmp = numbers[left] + numbers[right];
+            if (tmp == target) {
+                result[0] = ++left;
+                result[1] = ++right;
+                return result;
+            } else if (tmp > target) {
+                while (numbers[right - 1] == numbers[right]) {
+                    right--;
+                }
+                right--;
+            } else {
+                while (numbers[left + 1] == numbers[left]) {
+                    left++;
+                }
+                left++;
+            }
+        }
+        return result;
+    }
+
+    private int[] findWithList(int[] numbers, int target) {
         List<Integer> numberList = new ArrayList<Integer>();
         for (int i = 0; i < numbers.length; i++) {
             numberList.add(numbers[i]);

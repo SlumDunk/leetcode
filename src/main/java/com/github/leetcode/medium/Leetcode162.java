@@ -31,10 +31,12 @@ public class Leetcode162 {
 
     public int findPeakElement(int[] nums) {
         int left = 0, right = nums.length - 1;
-        while (left < right) {
+        while (left < right) {//left和right同个位置，只剩一个元素
             int mid = (left + right) / 2;
+            //每次二分查找总往大值的位置靠近
             if (nums[mid] < nums[mid + 1]) left = mid + 1;
-            else right = mid;
+            else
+                right = mid;
         }
         return left;
     }

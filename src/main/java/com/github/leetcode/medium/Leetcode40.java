@@ -35,18 +35,26 @@ public class Leetcode40 {
         return res;
     }
 
-    public void findSum(int[] candidates, int target, int sum, int level, List<Integer> temp, List<List<Integer>> res) {
+    /**
+     * @param candidates
+     * @param target
+     * @param sum
+     * @param currentIndex
+     * @param temp
+     * @param res
+     */
+    public void findSum(int[] candidates, int target, int sum, int currentIndex, List<Integer> temp, List<List<Integer>> res) {
         if (sum == target) {
             res.add(new ArrayList<>(temp));
             return;
         } else if (sum > target) {
             return;
         } else {
-            for (int i = level; i < candidates.length; i++) {
+            for (int i = currentIndex; i < candidates.length; i++) {
                 temp.add(candidates[i]);
-                findSum(candidates, target, sum + candidates[i], i + 1, temp, res);
+                findSum(candidates, target, sum + candidates[i], i + 1, temp, res);//从当前位置的下一个位置开始，因为每个位置的数字只能用一次
                 temp.remove(temp.size() - 1);
-                while (i + 1 < candidates.length && candidates[i + 1] == candidates[i]) {
+                while (i + 1 < candidates.length && candidates[i + 1] == candidates[i]) {//去掉重复的组合
                     i++;
                 }
             }

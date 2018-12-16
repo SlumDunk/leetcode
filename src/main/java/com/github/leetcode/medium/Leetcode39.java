@@ -38,25 +38,34 @@ public class Leetcode39 {
         int[] candidates = new int[]{2, 3, 6, 7};
         int target = 7;
         Leetcode39 leetcode39 = new Leetcode39();
-        leetcode39.combinationSum(candidates, target);
+        System.out.println(leetcode39.combinationSum(candidates, target));
     }
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> temp = new ArrayList<>();
+        //存储最终结果集
+        List<List<Integer>> resultList = new ArrayList<>();
+        List<Integer> tmpList = new ArrayList<>();
         Arrays.sort(candidates);
-        findSum(candidates, target, 0, 0, temp, res);
-        return res;
+        findSum(candidates, target, 0, 0, tmpList, resultList);
+        return resultList;
     }
 
-    public void findSum(int[] candidates, int target, int sum, int level, List<Integer> temp, List<List<Integer>> res) {
+    /**
+     * @param candidates   候选元素集合
+     * @param target       目标值
+     * @param sum          当前和值
+     * @param currentIndex 当前开始位置
+     * @param temp         缓存list
+     * @param res          结果集
+     */
+    public void findSum(int[] candidates, int target, int sum, int currentIndex, List<Integer> temp, List<List<Integer>> res) {
         if (sum == target) {
             res.add(new ArrayList<>(temp));
             return;
         } else if (sum > target) {
             return;
         } else {
-            for (int i = level; i < candidates.length; i++) {
+            for (int i = currentIndex; i < candidates.length; i++) {//去掉重复的组合，指针只能从当前位置往前走
                 temp.add(candidates[i]);
                 findSum(candidates, target, sum + candidates[i], i, temp, res);
                 temp.remove(temp.size() - 1);

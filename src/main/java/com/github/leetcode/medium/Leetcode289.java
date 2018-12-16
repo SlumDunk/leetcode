@@ -39,35 +39,40 @@ package com.github.leetcode.medium;
  * In this question, we represent the board using a 2D array. In principle, the board is infinite, which would cause problems when the active area encroaches the border of the array. How would you address these problems?
  */
 public class Leetcode289 {
-    private int countLiveNeigh(int[][] board,int row,int col){
-        int count =  0;
-        for(int i = row-1;i<=row+1;i++){
-            for(int j = col-1;j<=col+1;j++){
-                if(i==row && j==col)
+    private int countLiveNeigh(int[][] board, int row, int col) {
+        int count = 0;
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+                if (i == row && j == col)
                     continue;
-                if(i>=0 && i<board.length && j>=0 && j<board[0].length && (board[i][j]==1||board[i][j]==2))//最开始状态为1的
+                if (i >= 0 && i < board.length && j >= 0 && j < board[0].length && (board[i][j] == 1 || board[i][j] == 2))//最开始状态为1的
                     count++;
             }
         }
         return count;
     }
+
     public void gameOfLife(int[][] board) {
-        int rowlen = board.length;
-        int collen = board[0].length;
-        for(int row = 0;row<rowlen;row++){
-            for(int col = 0;col<collen;col++){
-                int count = countLiveNeigh(board,row,col);
-                if(count == 2);
-                else if(count == 3){
-                    board[row][col] = board[row][col]==0?3:1;
-                }else{
-                    board[row][col] = board[row][col]==1?2:0;
+        int row = board.length;
+        int col = board[0].length;
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                int count = countLiveNeigh(board, i, j);
+                if (count == 2) {//相邻存活数量为2,保持本身不变
+
+                } else if (count == 3) {//相邻存活数量为3，且本身为0的，变为3，本身为1的，保持1不变
+                    board[i][j] = board[i][j] == 0 ? 3 : 1;
+                } else {//相邻存活数量少于2，超过3的，且本身为1的，变为2，本身为0的保持0不变
+                    board[i][j] = board[i][j] == 1 ? 2 : 0;
                 }
             }
         }
-        for(int row = 0;row<rowlen;row++){
-            for(int col = 0;col<collen;col++){
-                board[row][col] %= 2;
+
+        //利用奇偶和余数性质
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                board[i][j] %= 2;
             }
         }
     }

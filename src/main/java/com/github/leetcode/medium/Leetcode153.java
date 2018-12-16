@@ -26,13 +26,30 @@ public class Leetcode153 {
         int end = nums.length - 1;
         int mid = 0;
         while (start < end) { //注意这里和普通的二分查找不同，这里是start < end不是 start <= end.
-            mid = start + (end - start) / 2;
-            if (nums[mid] > nums[end])
+            mid = (start+end) / 2;
+            if (nums[mid] > nums[end])//mid是拐点
                 start = mid + 1; //此时可以扔掉mid的值
             else
-                end = mid;//此时不能扔掉mid的值
+                end = mid;//此时不能扔掉mid的值,因为最小值可能出现在mid位置
         }
         return nums[end]; //退出循环说明start与end相等，所以只剩一个元素可能，所以return [start]或者return [end]都可以了。
-        //注意不能return mid，可以从{2,1}这个输入看出来。
+    }
+
+    /**
+     * 二分查找
+     *
+     * @param nums
+     * @param start
+     * @param end
+     * @return
+     */
+    public int binarySearch(int[] nums, int start, int end) {
+        if (start <= end) {
+            int mid = (start + end) / 2;
+            //最小值只可能出现在3个位置，中间点，中间点左侧，中间点右侧
+            return Math.min(nums[mid], Math.min(binarySearch(nums, start, mid - 1), binarySearch(nums, mid + 1, end)));
+        } else {
+            return Integer.MAX_VALUE;
+        }
     }
 }

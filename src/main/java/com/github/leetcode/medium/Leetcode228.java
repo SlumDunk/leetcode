@@ -21,19 +21,36 @@ import java.util.List;
  */
 public class Leetcode228 {
     public List<String> summaryRanges(int[] nums) {
-        List<String> list = new ArrayList<>();
+//        List<String> resultList = new ArrayList<>();
+//        int pos = 0;
+//        while (pos < nums.length) {
+//            StringBuilder it = new StringBuilder("" + nums[pos]);
+//            int temp = pos;
+//            while (pos + 1 < nums.length && nums[pos + 1] == nums[pos] + 1)
+//                pos++;
+//
+//            if (pos != temp)
+//                it.append("->").append(nums[pos]);
+//            resultList.add(it.toString());
+//            pos++;
+//        }
+//        return resultList;
+        List<String> resultList = new ArrayList<>();
         int pos = 0;
+        StringBuilder buffer = new StringBuilder();
         while (pos < nums.length) {
-            StringBuilder it = new StringBuilder("" + nums[pos]);
-            int temp = pos;
-            while (pos + 1 < nums.length && nums[pos + 1] == nums[pos] + 1)
+            buffer.append("" + nums[pos]);
+            int temp = nums[pos];
+            while (pos + 1 < nums.length && nums[pos + 1] == nums[pos] + 1) {//连续范围，指针往前移
                 pos++;
-
-            if (pos != temp)
-                it.append("->").append(nums[pos]);
-            list.add(it.toString());
+            }
+            if (nums[pos] != temp) {
+                buffer.append("->" + nums[pos]);
+            }
+            resultList.add(buffer.toString());
             pos++;
+            buffer.delete(0,buffer.length());
         }
-        return list;
+        return resultList;
     }
 }

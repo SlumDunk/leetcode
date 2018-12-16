@@ -23,9 +23,15 @@ package com.github.leetcode.medium;
 public class Leetcode55 {
 
     public boolean canJump(int[] nums) {
+//        int reach = nums[0];
+//        for (int i = 1; i < nums.length && reach >= i; i++)
+//            if (i + nums[i] > reach) reach = i + nums[i];  //贪心策略
+//        return reach >= (nums.length - 1) ? true : false;
+        //每次都尽可能到达最远能够到达的地方
         int reach = nums[0];
-        for (int i = 1; i < nums.length && reach >= i; i++)
-            if (i + nums[i] > reach) reach = i + nums[i];  //贪心策略
-        return reach >= (nums.length - 1) ? true : false;
+        for (int i = 1; i < nums.length && reach >= i; i++) {
+            reach = Math.max(reach, i + nums[i]);
+        }
+        return reach >= nums.length - 1 ? true : false;
     }
 }

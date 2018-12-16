@@ -27,12 +27,14 @@ public class Leetcode229 {
     }
 
     public List<Integer> majorityElement(int[] nums) {
+        //先对数组排序
         Arrays.sort(nums);
         int count = nums.length / 3;
         List<Integer> resultList = new ArrayList<>();
         if (nums.length == 0) {
             return resultList;
         }
+        //用于缓存当前的数字
         int tmp = nums[0];
         int counter = 1;
         for (int i = 1; i < nums.length; i++) {
@@ -46,6 +48,7 @@ public class Leetcode229 {
                 counter = 1;
             }
         }
+        //防止漏掉最后一个
         if (counter > count) {
             resultList.add(tmp);
         }

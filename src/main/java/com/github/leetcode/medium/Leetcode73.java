@@ -41,20 +41,43 @@ package com.github.leetcode.medium;
  */
 public class Leetcode73 {
     public void setZeroes(int[][] matrix) {
-        int col0 = 1, rows = matrix.length, cols = matrix[0].length;
-
-        for (int i = 0; i < rows; i++) {
-            if (matrix[i][0] == 0) col0 = 0;
-            for (int j = 1; j < cols; j++)
-                if (matrix[i][j] == 0)
-                    matrix[i][0] = matrix[0][j] = 0;
+        //如果matrix[i][j]==0,那么设置matrix[0][j]=0,matrix[i][0]=0
+        int row = matrix.length, cols = matrix[0].length;
+        boolean colFlag = false, rowFlag = false;
+        for (int i = 0; i < row; i++) {
+            if (matrix[row][0] == 0) {//首列有元素是0
+                colFlag = true;
+            }
+            for (int j = 0; j < cols; j++) {
+                if (i == 0 && matrix[i][j] == 0) {//首行有元素是0
+                    rowFlag = true;
+                }
+                if (matrix[i][j] == 0) {
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
         }
 
-        for (int i = rows - 1; i >= 0; i--) {
-            for (int j = cols - 1; j >= 1; j--)
-                if (matrix[i][0] == 0 || matrix[0][j] == 0)
+        //从右下角往左上角扫描如果matrix[0][j]或者matrix[i][0]=0, 那么设置matrix[i][j]=0,
+        //首行首列需做特殊处理
+        for (int i = row - 1; i > 0; i--) {
+            for (int j = cols - 1; j > 0; j--) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
                     matrix[i][j] = 0;
-            if (col0 == 0) matrix[i][0] = 0;
+                }
+            }
+        }
+        //处理首行首列
+        if (colFlag == true) {
+            for (int i = 0; i < row; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+        if (rowFlag == true) {
+            for (int i = 0; i < cols; i++) {
+                matrix[0][i] = 0;
+            }
         }
     }
 }
