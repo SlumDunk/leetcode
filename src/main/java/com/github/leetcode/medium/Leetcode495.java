@@ -40,12 +40,15 @@ public class Leetcode495 {
         }
         int total = 0;
         for (int i = 0; i < timeSeries.length - 1; i++) {
-            if (timeSeries[i + 1] <= timeSeries[i] + duration) {
-                total += (timeSeries[i + 1] + duration - timeSeries[i] - duration);
+            //排除i和i+1两个时间点覆盖的中毒时间
+            if (timeSeries[i + 1] <= timeSeries[i] + duration-1) {
+                //i和i+1两个时间点的差集为i时间点施毒的有效中毒时间
+                total += timeSeries[i+1]-timeSeries[i];
             } else {
                 total += duration;
             }
         }
+        //加上最后一次施毒的持续时间
         total += duration;
         return total;
     }

@@ -38,17 +38,19 @@ import java.util.*;
  */
 public class Leetcode380 {
     class RandomizedSet {
-
         /**
-         * Initialize your data structure here.
+         * 存储元素的位置索引Map
          */
         Map<Integer, Integer> map;
+        /**
+         * 存储元素
+         */
         List<Integer> list;
         int lastIndex;
 
         public RandomizedSet() {
             map = new HashMap<>();
-            list = new ArrayList<>();
+            list = new LinkedList<>();
             lastIndex = 0;
         }
 
@@ -74,16 +76,23 @@ public class Leetcode380 {
             if (!map.containsKey(val)) {
                 return false;
             }
-
+            //维护索引位置，最后一个元素移到要删除元素的位置
             map.put(list.get(lastIndex - 1), map.get(val));
+            //交换要删除的元素和末尾元素的位置
             swap(map.get(val), lastIndex - 1);
+            //移除最后一个元素
             list.remove(lastIndex - 1);
+            //将要移除的元素位置索引移除
             map.remove(val);
+            //长度减1
             lastIndex--;
 
             return true;
         }
 
+        /**
+         * 交换元素
+         */
         private void swap(int id1, int id2) {
             int temp = list.get(id1);
             list.set(id1, list.get(id2));
@@ -95,7 +104,8 @@ public class Leetcode380 {
          */
         public int getRandom() {
             Random rand = new Random();
-            int idx = rand.nextInt(((lastIndex - 1) - 0) + 1) + 0;
+            //返回随机索引位置
+            int idx = rand.nextInt(lastIndex);
             return list.get(idx);
         }
     }

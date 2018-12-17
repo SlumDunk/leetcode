@@ -1,6 +1,8 @@
 package com.github.leetcode.medium;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,29 +26,50 @@ import java.util.Set;
  * Each element of A is an integer within the range [0, N-1].
  */
 public class Leetcode565 {
+    /**
+     * 保存中间结果
+     */
+    Map<Integer, Integer> lengthMap = new HashMap<Integer, Integer>();
+
     public int arrayNesting(int[] nums) {
-        if (nums.length == 0) {
+        int len = nums.length;
+        if (len == 0) {
             return 0;
         } else {
+            //存储访问过的位置索引
+            Set<Integer> indexSet = new HashSet<Integer>();
+            //最长长度
             int max = 0;
-            Set<Integer> indexSet = new HashSet<>();
-            for (int i = 0; i < nums.length; i++) {
-                int tmp = 0;
+            for (int i = 0; i < len; i++) {
+                //只需遍历森林中不同的树的根节点
                 if (!indexSet.contains(i)) {
-                    max = Math.max(max, findLength(i, nums, indexSet));
+                    max = Math.max(max, findNestLength(nums, i, indexSet));
                 }
-
             }
             return max;
         }
     }
 
-    private int findLength(int index, int[] nums, Set<Integer> indexSet) {
+    /**
+     * 查找从根index出发的子树长度
+     * @param nums 数组
+     * @param index 出发位置
+     * @param indexSet 访问过的位置
+     * @return
+     */
+    private int findNestLength(int[] nums, int index, Set<Integer> indexSet) {
         if (indexSet.contains(index)) {
             return 0;
         } else {
             indexSet.add(index);
-            return 1 + findLength(nums[index], nums, indexSet);
+            int tmpLength = 0;
+            if (lengthMap.containsKey(nums[index])) {
+                tmpLength = 1 + lengthMap.get(nums[index]);
+            } else {
+                tmpLength = 1 + findNestLength(nums, nums[index], indexSet);
+            }
+            lengthMap.put(index, tmpLength);
+            return tmpLength;
         }
     }
 }

@@ -34,26 +34,29 @@ public class Leetcode532 {
     }
 
     public int findPairs(int[] nums, int k) {
-        int len = nums.length, result = 0;
+        //对数组进行排序
         Arrays.sort(nums);
-        Set<Integer> set = new HashSet<Integer>();
-        Set<Integer> sameSet = new HashSet<Integer>();
-        if (k != 0) {
-            for (int i = 0; i < len; i++) {
-                if (!set.contains(nums[i]) && set.contains(nums[i] - k)) {
+        int len = nums.length;
+        int result = 0;
+        int count = 0;//加上一个标志位
+        Set<Integer> numSet = new HashSet<Integer>();
+        for (int i = 0; i < len; i++) {
+            if (k == 0) {
+                if (numSet.contains(nums[i]) && count == 1) {
+                    result++;
+                    count = 0;//标志位抹去
+                } else if (!numSet.contains(nums[i])) {//集合中没有元素，添加进去，同时将标志位置为1
+                    numSet.add(nums[i]);
+                    count = 1;
+                }
+            } else {
+                //重复的元素不计算
+                if (!numSet.contains(nums[i]) && numSet.contains(nums[i] - k)) {
                     result++;
                 }
-                set.add(nums[i]);
+                numSet.add(nums[i]);
+            }
 
-            }
-        } else {
-            for (int i = 0; i < len; i++) {
-                if (!sameSet.contains(nums[i]) && set.contains(nums[i])) {
-                    result++;
-                    sameSet.add(nums[i]);
-                }
-                set.add(nums[i]);
-            }
         }
         return result;
     }

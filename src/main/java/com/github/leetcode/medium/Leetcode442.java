@@ -31,11 +31,14 @@ public class Leetcode442 {
         if (nums.length == 0) {
             return resultList;
         }
-        //正正得负
-        for (int i = 0; i < nums.length; i++) {
+        //利用数组的元素取值范围不超过数组的长度，且只有一个元素重复的特性
+        int len = nums.length;
+        //用正负性质来判断元素出现的次数
+        for (int i = 0; i < len; i++) {
+            //要变更符号的元素的位置
             int index = Math.abs(nums[i]) - 1;
             if (nums[index] < 0) {
-                resultList.add(Math.abs(nums[i]));
+                resultList.add(index + 1);
             } else {
                 nums[index] = -nums[index];
             }

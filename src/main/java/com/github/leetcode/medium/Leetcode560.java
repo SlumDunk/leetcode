@@ -27,22 +27,18 @@ public class Leetcode560 {
         if (nums.length == 0) {
             return 0;
         }
-        int[] sumarray = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            if (i > 0) {
-                sumarray[i] += nums[i] + sumarray[i - 1];
-            } else {
-                sumarray[i] += nums[i];
-            }
-        }
         int total = 0;
-        int tmp = 0;
+        int sum = 0;
+        //0-n之间连续累积和为sum的数量，有点像动态规划
+        Map<Integer, Integer> subSumMap = new HashMap<Integer, Integer>();
+        subSumMap.put(0, 1);//默认累积和为0是1
         for (int i = 0; i < nums.length; i++) {
-            for (int j = i; j < nums.length; j++) {
-                if (sumarray[j] - sumarray[i] + nums[i] == k) {
-                    total++;
-                }
+            sum += nums[i];
+            if (subSumMap.containsKey(sum - k)) {
+                total += subSumMap.get(sum - k);
             }
+            //0-i之间连续累积和为sum的数量
+            subSumMap.put(sum, subSumMap.getOrDefault(sum, 0) + 1);
         }
         return total;
     }
