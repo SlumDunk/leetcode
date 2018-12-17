@@ -22,20 +22,20 @@ public class Leetcode674 {
     }
 
     public int findLengthOfLCIS(int[] nums) {
-        if (nums.length == 0) {
+        int len = nums.length;
+        if (len == 0) {
             return 0;
         }
-        int count = 1;
         int max = 1;
-        for (int i = 1; i < nums.length; i++) {
+        int count = 1;
+        for (int i = 1; i < len; i++) {
             if (nums[i] > nums[i - 1]) {
                 count++;
-            } else {
-                max = Math.max(count, max);
+                max = Math.max(max, count);
+            } else {//出现中断，重置为1
                 count = 1;
             }
         }
-        max = Math.max(count, max);
         return max;
     }
 }

@@ -18,19 +18,18 @@ import java.util.Arrays;
  */
 public class Leetcode628 {
     public int maximumProduct(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        } else {
-            Arrays.sort(nums);
-            int len = nums.length;
-            if (nums[len - 1] < 0) {
+        Arrays.sort(nums);
+        int len = nums.length;
+        //需要考虑都是负数，都是正数，有正数有负数的情况
+        int max = 0;
+        if (nums[0] < 0) {//有负数
+            if (nums[len - 1] < 0) {//都是负数
                 return nums[len - 1] * nums[len - 2] * nums[len - 3];
-            } else {
-                int a = nums[len - 1] * nums[len - 2] * nums[len - 3];
-                int b = nums[len - 1] * nums[0] * nums[1];
-                return a > b ? a : b;
+            } else {//有正有负
+                return Math.max(nums[0] * nums[1] * nums[len - 1], nums[len - 1] * nums[len - 2] * nums[len - 3]);
             }
-
+        } else {//都是正数
+            return nums[len - 1] * nums[len - 2] * nums[len - 3];
         }
     }
 }

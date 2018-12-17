@@ -24,24 +24,33 @@ public class Leetcode605 {
     }
 
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
-        int result = 0;
-        //left case
-        int count = 1;
-        for (int i = 0; i < flowerbed.length; i++) {
-            if (flowerbed[i] == 0) {
-                count++;
-            } else {
-                if (count >= 1) {
-                    result += (count - 1) / 2;
-                    count = 0;
+        //注意边界问题
+        int len = flowerbed.length;
+        int count = 0;
+        if (len == 1 && flowerbed[0] == 0) {
+            return true;
+        }
+        for (int i = 0; i < len; i++) {
+            if (i == 0 && flowerbed[i] == 0) {//左边界
+                if (i + 1 < len && flowerbed[i + 1] == 0) {
+                    count++;
+                    flowerbed[i] = 2;
                 }
+            } else if (i == len - 1 && flowerbed[i] == 0) {//右边界
+                if (i - 1 >= 0 && flowerbed[i - 1] == 0) {
+                    count++;
+                    flowerbed[i] = 2;
+                }
+            } else if (flowerbed[i] == 0 && flowerbed[i - 1] == 0 && flowerbed[i + 1] == 0) {//一般情况
+                count++;
+                flowerbed[i] = 2;
             }
         }
-        //right case
-        if (count != 0) {
-            result += count / 2;
+        if (count >= n) {
+            return true;
+        } else {
+            return false;
         }
-        return result >= n;
     }
 
 }

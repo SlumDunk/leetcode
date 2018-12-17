@@ -25,37 +25,36 @@ public class Leetcode695 {
     }
 
     public int maxAreaOfIsland(int[][] grid) {
-        int maxArea = 0;
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+        //深度优先遍历数组
+        int row = grid.length;
+        int col = grid[0].length;
+        int max = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
                 if (grid[i][j] == 1) {
-                    maxArea = Math.max(maxArea, findMaxArea(grid, i, j));
+                    max = Math.max(max, findArea(grid, i, j, row, col));
                 }
             }
         }
-        return maxArea;
+        return max;
     }
 
     /**
-     * return the area of island [i][j]
-     * dfs
-     *
-     * @param grid
-     * @param i
-     * @param j
+     * @param grid 数组
+     * @param i    行位置
+     * @param j    列位置
+     * @param row  行数
+     * @param col  列数
      * @return
      */
-    private int findMaxArea(int[][] grid, int i, int j) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0)
+    public int findArea(int[][] grid, int i, int j, int row, int col) {
+        if (i >= row || i < 0 || j < 0 || j >= col || grid[i][j] == 0) {
             return 0;
-        int tempArea = 1;
-
-        //do not repeat in future
-        grid[i][j] = 0;
-
-        //direction: left top right down
-        tempArea += findMaxArea(grid, i, j - 1) + findMaxArea(grid, i - 1, j) + findMaxArea(grid, i, j + 1) + findMaxArea(grid, i + 1, j);
-
-        return tempArea;
+        } else {
+            int area = 1;
+            grid[i][j] = 0;//已经访问过了
+            //顺时针 上，右，下，左
+            return area + findArea(grid, i - 1, j, row, col) + findArea(grid, i, j + 1, row, col) + findArea(grid, i + 1, j, row, col) + findArea(grid, i, j - 1, row, col);
+        }
     }
 }

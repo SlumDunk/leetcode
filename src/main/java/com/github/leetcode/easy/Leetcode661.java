@@ -29,54 +29,50 @@ public class Leetcode661 {
     }
 
     public int[][] imageSmoother(int[][] M) {
-        if (M != null) {
-            int[][] result = new int[M.length][M[0].length];
-
-            for (int i = 0; i < M.length; i++) {
-                for (int j = 0; j < M[0].length; j++) {
-                    int sum = 0;
-                    int count = 0;
-                    sum += M[i][j];
+        int row = M.length;
+        int col = M[0].length;
+        int[][] result = new int[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                int sum = M[i][j];
+                int count = 1;
+                //注意边界问题
+                //按顺时针走
+                if (i - 1 >= 0) {//正上
+                    sum += M[i - 1][j];
                     count++;
-                    if (j - 1 >= 0) {
-                        sum += M[i][j - 1];
-                        count++;
-                    }
-                    if (i - 1 >= 0 && j - 1 >= 0) {
-                        sum += M[i - 1][j - 1];
-                        count++;
-                    }
-                    if (i - 1 >= 0) {
-                        sum += M[i - 1][j];
-                        count++;
-                    }
-                    if (i - 1 >= 0 && j + 1 < M[0].length) {
-                        sum += M[i - 1][j + 1];
-                        count++;
-                    }
-                    if (j + 1 < M[0].length) {
-                        sum += M[i][j + 1];
-                        count++;
-                    }
-                    if (i + 1 < M.length && j + 1 < M[0].length) {
-                        sum += M[i + 1][j + 1];
-                        count++;
-                    }
-                    if (i + 1 < M.length) {
-                        sum += M[i + 1][j];
-                        count++;
-                    }
-                    if (i + 1 < M.length && j - 1 >= 0) {
-                        sum += M[i + 1][j - 1];
-                        count++;
-                    }
-
-                    result[i][j] = sum / count;
                 }
+                if (i - 1 >= 0 && j + 1 < col) {//右上
+                    sum += M[i - 1][j + 1];
+                    count++;
+                }
+                if (j + 1 < col) {//正右
+                    sum += M[i][j + 1];
+                    count++;
+                }
+                if (j + 1 < col && i + 1 < row) {//右下
+                    sum += M[i + 1][j + 1];
+                    count++;
+                }
+                if (i + 1 < row) {//正下
+                    sum += M[i + 1][j];
+                    count++;
+                }
+                if (i + 1 < row && j - 1 >= 0) {//左下
+                    sum += M[i + 1][j - 1];
+                    count++;
+                }
+                if (j - 1 >= 0) {//正左
+                    sum += M[i][j - 1];
+                    count++;
+                }
+                if (j - 1 >= 0 && i - 1 >= 0) {//左上
+                    sum += M[i - 1][j - 1];
+                    count++;
+                }
+                result[i][j] = sum / count;
             }
-            return result;
-        } else {
-            return null;
         }
+        return result;
     }
 }

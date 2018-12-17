@@ -35,8 +35,9 @@ public class Leetcode667 {
             res[i] = i + 1;
         }
 
+        //每次翻转0..n-i-1个数
         for (int i = 0; i < k; i++) {
-            reverseList(res, i, n - 1);
+            reverseList(res, 0, n - i - 1);
         }
         return res;
     }

@@ -34,29 +34,27 @@ public class Leetcode621 {
     }
 
     public int leastInterval(char[] tasks, int n) {
-        Map<Character, Integer> map = new HashMap<>();//char array is better, I just want to make this answer easier to read.
-        for (char c : tasks) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
+        //存储不同task的数量
+        Map<Character, Integer> taskMap = new HashMap<>();
+        int len = tasks.length;
+        int max = 0;
+        for (int i = 0; i < len; i++) {
+            taskMap.put(tasks[i], taskMap.getOrDefault(tasks[i], 0) + 1);
+            max = Math.max(max, taskMap.get(tasks[i]));
         }
 
-        int max = 0;//Most frequent task.
-        for (int val : map.values()) {
-            max = Math.max(val, max);
-        }
-
-        int p = 0;//how many tasks that has the same frequency as the top frequent task.(include itself)
-        for (int val : map.values()) {
-            if (val == max) {
-                p++;
+        int count = 0;
+        for (Integer value : taskMap.values()) {
+            if (value == max) {
+                count++;
             }
         }
-
-        int total = (max - 1) * (n + 1) + p;//Totally intervals to fill out all empty space.
-
-        if (total < tasks.length) {
-            return tasks.length; //After I fill out all empty space, there are still some tasks that I have not use them.
-        } else {
-            return total; //Task is not enough, I used some idles.
+        //对max-1个空进行填充，用字母或者idle，剩下count
+        int taskLength = (max - 1) * (n + 1) + count;
+        if (len >= taskLength) {//不需要idle
+            return len;
+        } else {//需要idle填充额外的间隙
+            return taskLength;
         }
     }
 }

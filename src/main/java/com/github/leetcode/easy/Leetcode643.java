@@ -13,15 +13,17 @@ package com.github.leetcode.easy;
  */
 public class Leetcode643 {
     public double findMaxAverage(int[] nums, int k) {
+        //使用滑动窗口
         int sum = 0;
-        for (int i = 0; i < k; i++) {
+        int len = nums.length;
+        for (int i = 0; i < k; i++) {//先填充大小为k的窗口
             sum += nums[i];
         }
-        double result = sum;
-        for (int i = k; i < nums.length; i++) {
-            sum += nums[i] - nums[i - k];
-            result = Math.max(sum, result);
+        double max = sum;
+        for (int i = k; i < len; i++) {
+            sum += nums[i] - nums[i - k];//向前滑动,新窗口
+            max = Math.max(max, sum);
         }
-        return result / k;
+        return max / k;
     }
 }

@@ -32,51 +32,36 @@ public class Leetcode697 {
     }
 
     public int findShortestSubArray(int[] nums) {
-        Map<Integer, Integer> dataMap = new HashMap<Integer, Integer>();
-        List<Integer> numList = new ArrayList<Integer>();
-        for (int i = 0; i < nums.length; i++) {
-            if (dataMap.get(nums[i]) == null) {
-                dataMap.put(nums[i], 1);
-            } else {
-                dataMap.put(nums[i], dataMap.get(nums[i]) + 1);
+        int len = nums.length;
+        if (len == 0) return 0;
+        else {
+            //存储元素的开始位置
+            Map<Integer, Integer> startMap = new HashMap<>();
+            //存储元素的终止位置
+            Map<Integer, Integer> endMap = new HashMap<>();
+            //存储各个元素的次数
+            Map<Integer, Integer> countMap = new HashMap<>();
+            int degree = 0;
+
+            for (int i = 0; i < len; i++) {
+                if (!startMap.containsKey(nums[i])) {
+                    startMap.put(nums[i], i);
+                    endMap.put(nums[i], i);
+                    countMap.put(nums[i], 1);
+                } else {
+                    endMap.put(nums[i], i);
+                    countMap.put(nums[i], countMap.get(nums[i]) + 1);
+                }
+                degree = Math.max(degree, countMap.get(nums[i]));
             }
-            numList.add(nums[i]);
-        }
-        dataMap = sortByComparator(dataMap);
-        Integer degree = Integer.MIN_VALUE;
-        List<Integer> degreeList = new ArrayList<Integer>();
-        for (Map.Entry<Integer, Integer> entry : dataMap.entrySet()
-                ) {
-            degree = Math.max(degree, entry.getValue());
-            if (entry.getValue().equals(degree)) {
-                degreeList.add(entry.getKey());
-            } else {
-                break;
+            int shortestLength = len;
+            for (Integer key : countMap.keySet()) {
+                if (countMap.get(key) == degree) {
+                    shortestLength = Math.min(shortestLength, endMap.get(key) - startMap.get(key) + 1);
+                }
             }
+            return shortestLength;
         }
-        int min = nums.length;
-        for (int i = 0; i < degreeList.size(); i++) {
-            min = Math.min(min, numList.lastIndexOf(degreeList.get(i)) - numList.indexOf(degreeList.get(i)) + 1);
-        }
-        return min;
     }
-
-    public static Map sortByComparator(Map unsortMap) {
-        List list = new LinkedList(unsortMap.entrySet());
-        Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o2)).getValue())
-                        .compareTo(((Map.Entry) (o1)).getValue());
-            }
-        });
-        Map sortedMap = new LinkedHashMap();
-
-        for (Iterator it = list.iterator(); it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-        return sortedMap;
-    }
-
 
 }

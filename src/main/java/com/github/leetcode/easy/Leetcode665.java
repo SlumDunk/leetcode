@@ -24,22 +24,24 @@ public class Leetcode665 {
     }
 
     public boolean checkPossibility(int[] nums) {
-        Boolean modified = Boolean.FALSE;
-        for (int i = 0; i < nums.length; i++) {
-            if (i + 1 < nums.length && nums[i] > nums[i + 1]) {
-                if (modified) {
+        int len = nums.length;
+        //记住变更的次数
+        //i+1代替i,或者i代替i+1
+        int count = 0;
+        for (int i = 0; i < len - 1; i++) {
+            if (nums[i] > nums[i + 1]) {//用i+1代替i
+                if (count == 1) {
                     return false;
-                } else {
-                    if (i - 1 < 0 || nums[i + 1] > nums[i - 1]) {
-                        nums[i] = nums[i + 1];
-                    } else {
-                        nums[i + 1] = nums[i];
-                    }
-                    modified=Boolean.TRUE;
+                }
+                if (i - 1 >= 0 && nums[i + 1] < nums[i - 1]) {//如果i+1比i-1小,证明i-1小于等于i，直接将i+1调整为i即刻保证升序
+                    nums[i + 1] = nums[i];
+                    count++;
+                } else {//i+1大于i-1,小于i，所以直接将i调整为i+1即刻保证升序
+                    nums[i] = nums[i + 1];//用i+1代替i
+                    count++;
                 }
             }
         }
-
         return true;
     }
 }

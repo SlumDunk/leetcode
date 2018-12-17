@@ -20,17 +20,20 @@ import java.util.Arrays;
  */
 public class Leetcode611 {
     public int triangleNumber(int[] nums) {
-        if (nums.length < 3) {
+        int len = nums.length;
+        if (len < 3) {
             return 0;
         } else {
             int count = 0;
             Arrays.sort(nums);
-            for (int i = 0; i < nums.length - 2; i++) {
-                for (int j = i + 1; j < nums.length - 1; j++) {
-                    for (int k = j + 1; k < nums.length; k++) {
-                        if (nums[i] + nums[j] > nums[k] && nums[k] - nums[j] < nums[i] && nums[k] - nums[i] < nums[j]) {
-                            count++;
-                        }
+            for (int i = len - 1; i >= 2; i--) {
+                int left = 0, right = i - 1;
+                while (left < right) {
+                    if (nums[left] + nums[right] > nums[i]) {//left和right之间的元素和right都可以组建成三角形的另外两条边
+                        count += right - left;
+                        right--;
+                    } else {
+                        left++;
                     }
                 }
             }

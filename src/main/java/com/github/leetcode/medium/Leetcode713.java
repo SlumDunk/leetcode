@@ -29,16 +29,22 @@ public class Leetcode713 {
 
     public int numSubarrayProductLessThanK(int[] nums, int k) {
         if (k == 0) return 0;
-        int cnt = 0;
-        int pro = 1;
-        for (int i = 0, j = 0; j < nums.length; j++) {
-            pro *= nums[j];
-            while (i <= j && pro >= k) {
-                pro /= nums[i++];
+        int count = 0;
+        int product = 1;
+        int len = nums.length;
+        //利用滑动窗口
+        //开始位置
+        int start = 0;
+        for (int end = 0; end < len; end++) {
+            product *= nums[end];
+            while (product >= k && start <= end) {//判断是否大于等于k，是的话需要调整滑动窗口
+                product /= nums[start];
+                start++;
             }
-            cnt += j - i + 1;
+            //每次滑动窗口的大小等于新增加的组合
+            count += end - start + 1;
         }
-        return cnt;
+        return count;
     }
 
     private int numSubarrayProduct(int[] nums, int k) {
