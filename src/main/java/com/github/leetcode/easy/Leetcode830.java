@@ -42,31 +42,46 @@ public class Leetcode830 {
         if (S == null || S.length() == 0) {
             return null;
         }
-        int i = 0;
+        //位置指针
+        int index = 0;
         int startIndex = 0;
-        char start = S.charAt(startIndex);
-        List<Integer> positionList;
+        //暂存要比较的字符
+        char tmp = S.charAt(startIndex);
+        //连续相同串的长度
+        int size = 1;
         List<List<Integer>> resultList = new ArrayList<List<Integer>>();
-        while (i < S.length() - 1) {
-            if (S.charAt(i + 1) != start) {
-                addToList(i, startIndex, resultList);
-                startIndex = i + 1;
-                start = S.charAt(startIndex);
-            } else if (i + 1 == S.length() - 1) {
-                addToList(i + 1, startIndex, resultList);
+        while (index < S.length() - 1) {
+            if (S.charAt(index + 1) != tmp) {//和下一个字符不同，需要变更
+                if (size >= 3) {//判断长度是否大于等于3
+                    addToList(index, startIndex, resultList);
+                }
+                startIndex = index + 1;//变更开始位置
+                size = 1;//变更长度
+                tmp = S.charAt(startIndex);//变更暂存的字符
+            } else {//相同的情况，长度+1
+                size++;
             }
-            i++;
+            index++;
+        }
+        //防止漏掉最后一个串
+        if (size >= 3) {
+            addToList(index, startIndex, resultList);
         }
         return resultList;
     }
 
-    private void addToList(int i, int startIndex, List<List<Integer>> resultList) {
+    /**
+     * 将符合条件的组合添加到结果集
+     *
+     * @param endIndex
+     * @param startIndex
+     * @param resultList
+     */
+    private void addToList(int endIndex, int startIndex, List<List<Integer>> resultList) {
         List<Integer> positionList;
-        if (i - startIndex >= 2) {
-            positionList = new ArrayList<Integer>();
-            positionList.add(startIndex);
-            positionList.add(i);
-            resultList.add(positionList);
-        }
+        positionList = new ArrayList<Integer>();
+        positionList.add(startIndex);
+        positionList.add(endIndex);
+        resultList.add(positionList);
     }
 }

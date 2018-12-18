@@ -43,29 +43,28 @@ import sun.tools.tree.BooleanExpression;
  */
 public class Leetcode896 {
     public boolean isMonotonic(int[] A) {
-        if (A == null || A.length == 1) {
-            return Boolean.TRUE;
-        }
-        int count = 0;
+        //先判断是否是递增
         int len = A.length;
-        Boolean isAsc = Boolean.TRUE;
+        Boolean isAscend = true;//递增
         for (int i = 0; i < len - 1; i++) {
-            if (A[i] > A[i + 1]) {
-                isAsc = Boolean.FALSE;
+            if (A[i] <= A[i + 1]) {
+
+            } else {
+                isAscend = false;
             }
         }
-
-        if (isAsc) {
-            return Boolean.TRUE;
+        if (isAscend) {
+            return true;
         } else {
+            //如果不是递增，那么判断是不是递减
             for (int i = 0; i < len - 1; i++) {
-                if (A[i] < A[i + 1]) {
-                    return Boolean.FALSE;
+                if (A[i] >= A[i + 1]) {
+
+                } else {
+                    return false;
                 }
             }
-            return Boolean.TRUE;
         }
-
-
+        return true;
     }
 }

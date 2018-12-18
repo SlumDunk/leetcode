@@ -25,7 +25,7 @@ public class Leetcode832 {
     }
 
     /**
-     * flip an image
+     * 每行reverse
      *
      * @param originalImage
      * @return
@@ -43,7 +43,7 @@ public class Leetcode832 {
     }
 
     /**
-     * invert an image
+     * 将1转换为0，将0转换为1
      *
      * @param originalImage
      * @return

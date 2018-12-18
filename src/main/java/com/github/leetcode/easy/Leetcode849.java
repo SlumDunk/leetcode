@@ -2,6 +2,8 @@ package com.github.leetcode.easy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * In a row of seats, 1 represents a person sitting in that seat, and 0 represents that the seat is empty.
@@ -34,19 +36,30 @@ import java.util.List;
  */
 public class Leetcode849 {
     public int maxDistToClosest(int[] seats) {
-        int len = seats.length;
-        List<Integer> list = new ArrayList<Integer>();
-        for (int i = 0; i < len; i++) {
+        //保存1出现的位置
+        TreeSet<Integer> set = new TreeSet<Integer>();
+        for (int i = 0; i < seats.length; i++) {
             if (seats[i] == 1) {
-                list.add(i);
+                set.add(i);
             }
         }
-        int m = list.size();
-        int pre = list.get(0), result = Math.max(list.get(0) - 0, len - 1 - list.get(m - 1));
-        for (int i = 0; i < m; i++) {
-            result = Math.max(result, (list.get(i) + pre) / 2);
-            pre = list.get(i);
+        int max = 0;
+        //保存距离最近的人的位置
+        int closetPersonIndex;
+        for (int i = 0; i < seats.length; i++) {
+            if (seats[i] == 1) {
+                continue;
+            }
+            //find the closet person index
+            if (set.floor(i) == null) {//左边没人
+                closetPersonIndex = set.ceiling(i);
+            } else if (set.ceiling(i) == null) {//左边有人，右边没人
+                closetPersonIndex = set.floor(i);
+            } else {//左右都有人，找最近的
+                closetPersonIndex = (i - set.floor(i) < set.ceiling(i) - i) ? set.floor(i) : set.ceiling(i);
+            }
+            max = Math.max(max, Math.abs(i - closetPersonIndex));
         }
-        return result;
+        return max;
     }
 }

@@ -1,5 +1,6 @@
 package com.github.leetcode.easy;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,22 +46,22 @@ import java.util.Set;
  */
 public class Leetcode888 {
     public int[] fairCandySwap(int[] A, int[] B) {
+        //先进行排序才能进行二分查找
+        Arrays.sort(B);
+        //利用平均数
         int sumA = 0;
-        for (int item : A
-                ) {
-            sumA += item;
+        for (int i = 0; i < A.length; i++) {
+            sumA += A[i];
         }
+
         int sumB = 0;
-        Set<Integer> set = new HashSet<Integer>();
-        for (int item : B
-                ) {
-            set.add(item);
-            sumB += item;
+        for (int i = 0; i < B.length; i++) {
+            sumB += B[i];
         }
-        int avg = (sumA + sumB) >> 1;
+        int avg = (sumA + sumB) / 2;
         for (int i = 0; i < A.length; i++) {
             int diff = avg - (sumA - A[i]);
-            if (set.contains(diff)) {
+            if (Arrays.binarySearch(B, diff) >= 0) {
                 return new int[]{A[i], diff};
             }
         }

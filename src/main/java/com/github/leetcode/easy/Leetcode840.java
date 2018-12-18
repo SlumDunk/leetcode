@@ -44,7 +44,7 @@ public class Leetcode840 {
         int res = 0;
         for (int i = 0; i <= grid.length - 3; i++) {
             for (int j = 0; j <= grid[0].length - 3; j++) {
-                if (magicHelper(i, j, grid))
+                if (magicHelper(i, j, grid))//判断每个矩阵符不符合条件，每行和，列和，对角线和为15
                     res++;
             }
         }
@@ -52,7 +52,9 @@ public class Leetcode840 {
     }
 
     private boolean magicHelper(int x, int y, int[][] grid) {
+        //判断中间元素是否为5
         if (grid[x + 1][y + 1] != 5) return false;
+        //判断每行是否满足条件
         for (int i = x; i < x + 3; i++) {
             int tmp = 0;
             for (int j = y; j < y + 3; j++) {
@@ -66,21 +68,19 @@ public class Leetcode840 {
             if (tmp != 15) return false;
         }
         int sum = 0;
+        //判断第一列
         sum = grid[x][y] + grid[x + 1][y] + grid[x + 2][y];
         if (sum != 15) return false;
-
+        //判断第二列
         sum = grid[x][y + 1] + grid[x + 1][y + 1] + grid[x + 2][y + 1];
         if (sum != 15) return false;
-
+        //判断第三列
         sum = grid[x][y + 2] + grid[x + 1][y + 2] + grid[x + 2][y + 2];
         if (sum != 15) return false;
-
-        sum = grid[x][y] + grid[x + 1][y] + grid[x + 2][y];
-        if (sum != 15) return false;
-
+        //判断主对角线
         sum = grid[x][y] + grid[x + 1][y + 1] + grid[x + 2][y + 2];
         if (sum != 15) return false;
-
+        //判断副对角线
         sum = grid[x][y + 2] + grid[x + 1][y + 1] + grid[x + 2][y];
         if (sum != 15) return false;
 

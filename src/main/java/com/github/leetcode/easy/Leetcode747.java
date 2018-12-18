@@ -31,25 +31,27 @@ public class Leetcode747 {
     }
 
     public int dominantIndex(int[] nums) {
-        int[] oldnum = new int[nums.length];
-        System.arraycopy(nums, 0, oldnum, 0, nums.length);
-        if (nums == null || nums.length == 0) {
-            return -1;
-        }
-        Arrays.sort(nums);
         int len = nums.length;
-        if (len >= 2) {
-            if (nums[len - 1] >= 2 * nums[len - 2]) {
-                for (int i = 0; i < oldnum.length; i++) {
-                    if (oldnum[i] == nums[len - 1]) {
-                        return i;
-                    }
-                }
-            }
-        } else {
+        int max = 0;
+        int index = -1;
+        if (len < 2) {
             return 0;
         }
-        return -1;
+        //找出最大值的位置
+        for (int i = 0; i < len; i++) {
+            if (nums[i] > max) {
+                index = i;
+                max = nums[i];
+            }
+        }
+        //排序数组
+        Arrays.sort(nums);
+        //只要最大的元素大于二倍的次大元素就行
+        if (nums[len - 1] >= 2 * nums[len - 2]) {
+            return index;
+        } else {
+            return -1;
+        }
     }
 
 }
