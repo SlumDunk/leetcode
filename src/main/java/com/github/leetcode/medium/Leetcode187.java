@@ -19,16 +19,19 @@ import java.util.List;
  */
 public class Leetcode187 {
     public List<String> findRepeatedDnaSequences(String s) {
+        //将每个子串放进set集合里，利用set中元素唯一性的特性
         HashSet<String> set = new HashSet<>();
-        HashSet<String> repeated = new HashSet<>();
+        List<String> result = new ArrayList<String>();
 
         for (int i = 0; i + 9 < s.length(); i++) {
             String temp = s.substring(i, i + 10);
-            if (!set.add(temp)) {
-                repeated.add(temp);
+            if (!set.add(temp)) {//集合中已经存在过了
+                if (!result.contains(temp)) {
+                    result.add(temp);
+                }
             }
         }
-        List<String> result = new ArrayList(repeated);
+
         return result;
     }
 }

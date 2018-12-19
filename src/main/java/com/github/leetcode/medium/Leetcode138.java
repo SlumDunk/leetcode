@@ -13,16 +13,19 @@ import java.util.HashMap;
  */
 public class Leetcode138 {
     public RandomListNode copyRandomList(RandomListNode head) {
+        //map存储旧节点和新节点的对应关系
         HashMap<RandomListNode, RandomListNode> newMap = new HashMap<>();
         //进行第一次遍历  将节点存入哈希表
         RandomListNode cur = head;
         while (cur != null) {
+            //创建新节点
             RandomListNode newNode = new RandomListNode(cur.label);
             newMap.put(cur, newNode);
             cur = cur.next;
         }
 
         cur = head;
+        //构建新节点和新节点之间的对应关系
         while (cur != null) {
             RandomListNode node = newMap.get(cur);
             node.next = newMap.get(cur.next);
@@ -30,6 +33,5 @@ public class Leetcode138 {
             cur = cur.next;
         }
         return newMap.get(head);
-
     }
 }

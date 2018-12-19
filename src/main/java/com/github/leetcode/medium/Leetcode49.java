@@ -30,7 +30,9 @@ public class Leetcode49 {
         String tmp = "";
         for (int i = 0; i < len; i++) {
             tmp = strs[i];
+            //字符串转化为字符数组
             char[] arrayOfString = tmp.toCharArray();
+            //对字符数组排序
             Arrays.sort(arrayOfString);
             tmp = new String(arrayOfString);
             if (map.containsKey(tmp)) {

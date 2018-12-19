@@ -24,13 +24,17 @@ public class Leetcode274 {
         int size = citations.length;
         if (size <= 0)
             return 0;
+        //给数组排序
         Arrays.sort(citations);
+        //找出h个元素的值大于等于h
         int count = 0;
-
+        //从后往前遍历
         for (int i = size - 1; i >= 0; i--) {
-            if (count >= citations[i])
-                return Math.max(count, citations[i]);
-            count++;
+            if (count >= citations[i]) {
+                return count;
+            } else {
+                count++;
+            }
         }
         return count;
 

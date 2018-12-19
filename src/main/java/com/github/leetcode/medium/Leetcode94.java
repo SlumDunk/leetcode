@@ -27,17 +27,19 @@ public class Leetcode94 {
     public List<Integer> inorderTraversal(TreeNode root) {
 
         List<Integer> res = new ArrayList<>();
-        Stack<TreeNode> nodeStack = new Stack<>();
-
-        while (root != null || !nodeStack.isEmpty()) {
+        //中序遍历树
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        while (root != null || !stack.isEmpty()) {
+            //左边的先进栈
             while (root != null) {
-                nodeStack.push(root);
+                stack.push(root);
                 root = root.left;
             }
-
-            TreeNode tempNode = nodeStack.pop();
-            res.add(tempNode.val);
-            root = tempNode.right;
+            //弹出栈
+            TreeNode tmpNode = stack.pop();
+            res.add(tmpNode.val);
+            //右边节点赋给root
+            root = tmpNode.right;
 
         }
         return res;

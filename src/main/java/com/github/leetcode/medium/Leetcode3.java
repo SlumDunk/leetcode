@@ -1,6 +1,8 @@
 package com.github.leetcode.medium;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author: zerongliu
@@ -31,14 +33,18 @@ public class Leetcode3 {
     }
 
     public int lengthOfLongestSubstring(String s) {
-        int[] m = new int[256];
-        Arrays.fill(m, -1);
-        int res = 0, left = -1;
-        for (int i = 0; i < s.length(); i++) {
-            left = Math.max(left, m[s.charAt(i)]);
-            m[s.charAt(i)] = i;
-            res = Math.max(res, i - left);
+        int len = s.length();
+        int left = -1;//存储该字符最后一次出现的位置
+        int max = 0;//存储最长长度
+        //存储各字符最近一次的索引
+        Map<Character, Integer> map = new HashMap<Character, Integer>();
+        for (int i = 0; i < len; i++) {
+            //找到最近一次出现的位置
+            left = Math.max(left, map.getOrDefault(s.charAt(i), -1));
+            map.put(s.charAt(i), i);//更新字符位置索引
+            max = Math.max(max, i - left);
         }
-        return res;
+
+        return max;
     }
 }
