@@ -39,13 +39,12 @@ import java.util.*;
 public class Leetcode380 {
     class RandomizedSet {
         /**
-         * 存储元素的位置索引Map
+         * 存储元素和元素在list中对应的位置索引
          */
         Map<Integer, Integer> map;
-        /**
-         * 存储元素
-         */
+        //存储元素
         List<Integer> list;
+        //下一个元素的位置索引
         int lastIndex;
 
         public RandomizedSet() {
@@ -55,7 +54,7 @@ public class Leetcode380 {
         }
 
         /**
-         * Inserts a value to the set. Returns true if the set did not already contain the specified element.
+         * 往集合中插入元素，如果不存在该元素的话，存在返回false
          */
         public boolean insert(int val) {
             if (map.containsKey(val)) {
@@ -70,21 +69,21 @@ public class Leetcode380 {
         }
 
         /**
-         * Removes a value from the set. Returns true if the set contained the specified element.
+         * 从集合中移除元素，如果存在的话，返回true,不存在，返回false
          */
         public boolean remove(int val) {
             if (!map.containsKey(val)) {
                 return false;
             }
-            //维护索引位置，最后一个元素移到要删除元素的位置
+
+            //维护元素的索引位置信息
+            //把最后一个元素放到要删除元素的位置
             map.put(list.get(lastIndex - 1), map.get(val));
-            //交换要删除的元素和末尾元素的位置
-            swap(map.get(val), lastIndex - 1);
-            //移除最后一个元素
-            list.remove(lastIndex - 1);
-            //将要移除的元素位置索引移除
+            //list中交换最后一个元素和当前元素
+            swap(lastIndex - 1, map.get(val));
+            //将该元素从map中移除
             map.remove(val);
-            //长度减1
+            list.remove(lastIndex - 1);
             lastIndex--;
 
             return true;
@@ -100,7 +99,7 @@ public class Leetcode380 {
         }
 
         /**
-         * Get a random element from the set.
+         * 获取一个随机元素
          */
         public int getRandom() {
             Random rand = new Random();

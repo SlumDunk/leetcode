@@ -41,7 +41,9 @@ import java.util.*;
 public class Leetcode355 {
     class Twitter {
         int number = 0;
+        //维护用户和粉丝的关系
         Map<Integer, Set<Integer>> users;  // user --> user follow list
+        //维护用户和发表的推特的关系
         Map<Integer, List<Tweet>> tweets; // user -->  users' tweets
 
         public class Tweet {
@@ -61,11 +63,13 @@ public class Leetcode355 {
             tweets = new HashMap<>();
         }
 
+        //用户userId发表推特tweetId
         public void postTweet(int userId, int tweetId) {
             if (!tweets.containsKey(userId)) tweets.put(userId, new LinkedList<Tweet>());
             tweets.get(userId).add(new Tweet(userId, tweetId));
         }
 
+        //获取该用户最近相关的推特，由该用户发表的或者是粉丝发表的
         public List<Integer> getNewsFeed(int userId) {
             PriorityQueue<Tweet> pq = new PriorityQueue<Tweet>((t1, t2) -> t1.num - t2.num);
             Set<Integer> follow = users.get(userId) == null ? new HashSet<Integer>() : users.get(userId);
@@ -74,8 +78,10 @@ public class Leetcode355 {
                 List<Tweet> temp = tweets.get(uid);
                 if (temp != null) {
                     for (Tweet t : temp) {
-                        if (pq.size() < 10) pq.add(t);
-                        else {
+                        //未足十条，继续添加
+                        if (pq.size() < 10) {
+                            pq.add(t);
+                        } else {//超过十条，优先级低的出队，优先级高的进队
                             if (t.num > pq.peek().num) {
                                 pq.poll();
                                 pq.add(t);
@@ -84,6 +90,7 @@ public class Leetcode355 {
                     }
                 }
             }
+            //返回最近的十条推特
             int count = 0;
             LinkedList<Integer> list = new LinkedList<Integer>();
             while (!pq.isEmpty() && count++ < 10) {

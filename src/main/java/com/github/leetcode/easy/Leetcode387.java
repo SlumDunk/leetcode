@@ -18,15 +18,13 @@ public class Leetcode387 {
     }
 
     public int firstUniqChar(String s) {
-        if (s == null || s.length() == 0) {
-            return -1;
-        } else {
-            for (int i = 0; i < s.length(); i++) {
-                if (s.lastIndexOf(s.charAt(i)) == i && s.indexOf(s.charAt(i)) == i) {
-                    return i;
-                }
+        //第一次出现的位置和最后一次出现的位置是否一致
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            if (s.lastIndexOf(s.charAt(i)) == s.indexOf(s.charAt(i))) {
+                return i;
             }
-            return -1;
         }
+        return -1;
     }
 }

@@ -1,9 +1,6 @@
 package com.github.leetcode.medium;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -34,23 +31,28 @@ public class Leetcode347 {
             else
                 map.put(num, map.get(num) + 1);//重复出现，则累计频次
         }
-
-        //step2—桶排序
-        List<Integer>[] bucket = new List[nums.length + 1];//定义足够数量的桶
-        for (int key : map.keySet())//按“键”遍历
-        {
-            int count = map.get(key);//获取数值为key的元素出现的频次
-            //把出现频次相同的元素“扔”到序号等于频次的桶中
-            if (bucket[count] == null)
-                bucket[count] = new ArrayList<Integer>();
-            bucket[count].add(key);
+        //存储各个数字出现的次数
+        int[] count = new int[map.keySet().size()];
+        int index = 0;
+        for (Integer key : map.keySet()) {
+            count[index] = map.get(key);
+            index++;
         }
-        //step3—“逆序”取数据
+        //对数组进行排序
+        Arrays.sort(count);
         List<Integer> result = new ArrayList<Integer>();
-        for (int i = nums.length; i > 0; i--)//注意i的起始值，当数组只有一个数据时
-        {
-            if (bucket[i] != null && result.size() < k)
-                result.addAll(bucket[i]);
+        for (int i = count.length - 1; i >= 0; i--) {
+            //查找当前key中value等于count[i]的数字，并添加到结果集中
+            for (Integer key : map.keySet()) {
+                if (count[i] == map.get(key)) {
+                    result.add(key);
+                    map.remove(key);
+                    break;
+                }
+            }
+            if (result.size() == k) {
+                return result;
+            }
         }
         return result;
     }
