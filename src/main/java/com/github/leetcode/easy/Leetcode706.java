@@ -33,26 +33,34 @@ public class Leetcode706 {
 }
 
 class MyHashMap {
+    /**
+     * 注意key的取值范围
+     */
     int[] keyData = new int[1000001];
+    /**
+     * 注意value的取值范围
+     */
     int[] valueData = new int[1000001];
 
     /**
-     * Initialize your data structure here.
+     * 创建map
      */
     public MyHashMap() {
 
     }
 
     /**
-     * value will always be non-negative.
+     * 存入key和value值
      */
     public void put(int key, int value) {
+        //设置value数组中某个key的索引的值为value
         valueData[key] = value;
+        //设置Key数组中对应的key为1,表示该key已经被占有了
         keyData[key] = 1;
     }
 
     /**
-     * Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key
+     * 如果存在这样的key，那么从值数组中返回该key对应的value
      */
     public int get(int key) {
         if (keyData[key] == 1) {
@@ -63,7 +71,7 @@ class MyHashMap {
     }
 
     /**
-     * Removes the mapping of the specified value key if this map contains a mapping for the key
+     * 从key数组中移除key值和从value数组中移除key对应的value
      */
     public void remove(int key) {
         valueData[key] = 0;

@@ -31,6 +31,9 @@ package com.github.leetcode.easy;
  */
 public class Leetcode705 {
     class MyHashSet {
+        /**
+         * 注意题目的取值范围
+         */
         int[] data = new int[1000001];
 
         /**
@@ -39,6 +42,10 @@ public class Leetcode705 {
         public MyHashSet() {
         }
 
+        /**
+         * 如果不存在，那么添加
+         * @param key
+         */
         public void add(int key) {
             if (data[key] == 0) {
                 data[key]++;
@@ -52,7 +59,7 @@ public class Leetcode705 {
         }
 
         /**
-         * Returns true if this set contains the specified element
+         * 如果存在，则返回true
          */
         public boolean contains(int key) {
             if (data[key] > 0) {

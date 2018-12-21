@@ -1,5 +1,8 @@
 package com.github.leetcode.easy;
 
+import com.github.leetcode.medium.Leetcode208;
+import com.github.leetcode.vo.TreeNode;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,18 +31,90 @@ import java.util.Set;
  */
 public class Leetcode720 {
     public String longestWord(String[] words) {
-        Arrays.sort(words);
-        String temp;
-        String result = "";
-        Set<String> wordSet = new HashSet<String>();
+//        Arrays.sort(words);
+//        String temp;
+//        String result = "";
+//        Set<String> wordSet = new HashSet<String>();
+//        for (int i = 0; i < words.length; i++) {
+//            temp = words[i];
+//            if (temp.length() == 1 || wordSet.contains(temp.substring(0, words[i].length() - 1))) {
+//                result = temp.length() > result.length() ? temp : result;
+//                wordSet.add(temp);
+//            }
+//        }
+//        return result;
+        //构造根节点
+        TrieNode root = new TrieNode(' ');
+        //构造树
         for (int i = 0; i < words.length; i++) {
-            temp = words[i];
-            if (temp.length() == 1 || wordSet.contains(temp.substring(0, words[i].length() - 1))) {
-                result = temp.length() > result.length() ? temp : result;
-                wordSet.add(temp);
+            buildTree(root, words[i]);
+        }
+        //符合条件的最长字符串长度
+        int max = 0;
+        //符合条件的最长字符串对应数组位置
+        int index = -1;
+        for (int i = 0; i < words.length; i++) {
+            boolean flag = findWord(root, words[i]);
+            if (flag && words[i].length() > max) {
+                max = words[i].length();
+                index = i;
+            } else if (flag && words[i].length() == max) {//若长度一致，取字典排序小的
+                index = words[i].compareTo(words[index]) > 0 ? index : i;
             }
         }
-        return result;
+        return words[index];
+    }
+
+    /**
+     * 判断是否能找到如何条件的单词
+     *
+     * @param root
+     * @param word
+     * @return
+     */
+    private boolean findWord(TrieNode root, String word) {
+        for (char value : word.toCharArray()) {
+            if (root.next[value - 'a'] == null) {
+                return false;
+            }
+            root = root.next[value - 'a'];
+            if (!root.isWord) {//子串必须单独成一个单词
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 构建树
+     *
+     * @param root 根节点
+     * @param str  字符串
+     */
+    private void buildTree(TrieNode root, String str) {
+        for (char value : str.toCharArray()) {
+            if (root.next[value - 'a'] == null) {
+                root.next[value - 'a'] = new TrieNode(value);
+            }
+            root = root.next[value - 'a'];
+        }
+        root.isWord = true;
+    }
+
+    /**
+     * 字典树
+     */
+    class TrieNode {
+        char val;
+        TrieNode[] next;
+        boolean isWord;
+
+        TrieNode(char val) {
+            this.val = val;
+            next = new TrieNode[26];
+            isWord = false;
+        }
+
     }
 }
 

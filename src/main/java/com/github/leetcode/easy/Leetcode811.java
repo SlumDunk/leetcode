@@ -33,75 +33,41 @@ public class Leetcode811 {
     }
 
     public List<String> subdomainVisits(String[] cpdomains) {
-        if (cpdomains.length <= 100 && cpdomains.length > 0) {
-            String temp = null;
-            Map<String, Integer> cpdomainMap = new HashMap<String, Integer>(256);
-            for (int i = 0; i < cpdomains.length; i++) {
-                temp = cpdomains[i];
-                String[] cpdomainArray = temp.split(" ");
-                int count = Integer.valueOf(cpdomainArray[0]);
-                List<String> domainList = generateDomainArray(cpdomainArray[1]);
-                for (String domain :
-                        domainList
-                        ) {
-                    if (cpdomainMap.get(domain) != null) {
-                        Integer originalCount = cpdomainMap.get(domain);
-                        cpdomainMap.put(domain, originalCount + count);
-                    } else {
-                        cpdomainMap.put(domain, count);
-                    }
-                }
+        //遍历字符串数组，对每个字符串进行切割处理，然后放进map里头
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        int count = 0;
+        String[] cp = new String[2];
+        for (int i = 0; i < cpdomains.length; i++) {
+            cp = cpdomains[i].split(" ");
+            count = Integer.valueOf(cp[0]);
+            //注意正则表达式
+            String[] domains = cp[1].split("\\.");
+            String tmp = "";
+            for (int j = domains.length - 1; j >= 0; j--) {
+                tmp = generateDomain(tmp, domains[j]);
+                map.put(tmp, map.getOrDefault(tmp, 0) + count);
             }
-            return generateResultArray(cpdomainMap);
-        } else {
-            return null;
         }
+        //遍历map，放进结果集合里头
+        List<String> resultList = new ArrayList<String>();
+        for (String key : map.keySet()) {
+            resultList.add(map.get(key) + " " + key);
+        }
+        return resultList;
     }
 
     /**
-     * transfer resultMap to String[]
+     * 构造域名
      *
-     * @param cpdomainMap
+     * @param parentDomain 父级域名
+     * @param childDomain  子级域名
      * @return
      */
-
-    private List generateResultArray(Map<String, Integer> cpdomainMap) {
-        if (cpdomainMap != null && cpdomainMap.size() > 0) {
-            Set<String> keySet = cpdomainMap.keySet();
-            List<String> resultList = new ArrayList<>();
-            for (String key : keySet
-                    ) {
-                resultList.add(cpdomainMap.get(key) + " " + key);
-            }
-            return resultList;
+    public String generateDomain(String parentDomain, String childDomain) {
+        if ("".equals(parentDomain)) {
+            return childDomain;
         } else {
-            return null;
+            return childDomain + "." + parentDomain;
         }
-
-    }
-
-    /**
-     * get domain arrays
-     *
-     * @param domain
-     * @return
-     */
-    private List generateDomainArray(String domain) {
-        List<String> domainList = new ArrayList<>();
-        String[] domainArray = domain.split("\\.");
-        domainList.add(domain);
-        int length = domainArray.length;
-        switch (length) {
-            case 2:
-                domainList.add(domainArray[1]);
-                break;
-            case 3:
-                domainList.add(domainArray[2]);
-                domainList.add(domainArray[1] + "." + domainArray[2]);
-                break;
-            default:
-                break;
-        }
-        return domainList;
     }
 }

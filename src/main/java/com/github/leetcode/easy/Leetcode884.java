@@ -1,9 +1,6 @@
 package com.github.leetcode.easy;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -43,33 +40,37 @@ public class Leetcode884 {
     }
 
     public String[] uncommonFromSentences(String A, String B) {
-        List<String> aList = new ArrayList<String>();
-        List<String> bList = new ArrayList<String>();
-
+        //遍历字符串，将两边都只出现一次的子串放进map中，再做对比
         String[] arrayA = A.split(" ");
         String[] arrayB = B.split(" ");
-
-        for (String item : arrayA
-                ) {
-            aList.add(item);
-        }
-        for (String item : arrayB
-                ) {
-            bList.add(item);
-        }
-        Set<String> uniqueSet = new HashSet<String>();
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        //结果集合
         List<String> resultList = new ArrayList<String>();
-        generateUniqueList(bList, aList, uniqueSet, resultList);
-
-        generateUniqueList(aList, bList, uniqueSet, resultList);
-        String[] result = new String[resultList.size()];
-        int index = 0;
-        for (String item :
-                resultList) {
-            result[index] = item;
-            index++;
+        for (int i = 0; i < arrayA.length; i++) {
+            if (map.containsKey(arrayA[i])) {
+                resultList.remove(arrayA[i]);
+            } else {
+                map.put(arrayA[i], 1);
+                resultList.add(arrayA[i]);
+            }
         }
+        for (int i = 0; i < arrayB.length; i++) {
+            if (map.containsKey(arrayB[i])) {//B中出现两次
+                resultList.remove(arrayB[i]);
+            } else {
+                map.put(arrayB[i], 1);
+                //是否在A中出现过
+                if (resultList.contains(arrayB[i])) {
+                    resultList.remove(arrayB[i]);
+                } else {//A中未出现，目前在B中出现一次
+                    resultList.add(arrayB[i]);
+                }
+            }
+        }
+        String[] result = new String[resultList.size()];
+        resultList.toArray(result);
         return result;
+
     }
 
     private void generateUniqueList(List<String> aList, List<String> bList, Set<String> uniqueSet, List<String> resultList) {

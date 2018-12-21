@@ -1,5 +1,8 @@
 package com.github.leetcode.easy;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * The set S originally contains numbers from 1 to n. But unfortunately, due to the data error, one of the numbers in the set got duplicated to another number in the set, which results in repetition of one number and loss of another number.
  * <p>
@@ -12,18 +15,21 @@ package com.github.leetcode.easy;
 public class Leetcode645 {
     public int[] findErrorNums(int[] nums) {
         int[] result = new int[2];
+        //因为数组元素的取值范围是1-n, 所以可以利用和差
+        int len = nums.length;
+        int sum = (len + 1) * len / 2;
+        Set<Integer> numSet = new HashSet<Integer>();
         for (int i = 0; i < nums.length; i++) {
-            int index = Math.abs(nums[i]) - 1;
-            if (nums[index] > 0) {
-                nums[index] *= -1;
-            } else {
-                result[0] = index + 1;
+            sum -= nums[i];
+            if (numSet.contains(nums[i])) {
+                result[0] = nums[i];
             }
+            numSet.add(nums[i]);
         }
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] > 0) {
-                result[1] = i + 1;
-            }
+        if (sum > 0) {//重复的值是小值
+            result[1] = result[0] + sum;
+        } else {//重复的数值是大值
+            result[1] = result[0] - Math.abs(sum);
         }
         return result;
     }

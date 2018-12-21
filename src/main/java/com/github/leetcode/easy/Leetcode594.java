@@ -21,15 +21,16 @@ public class Leetcode594 {
     }
 
     public int findLHS(int[] nums) {
-        Map<Integer, Integer> numMap = new HashMap<Integer, Integer>(128);
+        //存储每个数字出现的次数
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
         for (int i = 0; i < nums.length; i++) {
-            numMap.put(nums[i], numMap.getOrDefault(nums[i], 0) + 1);
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
         }
+        //存储两个最长连续数字的长度
         int max = 0;
-        for (Integer key : numMap.keySet()) {
-            if (numMap.containsKey(key + 1)) {
-                max = Math.max(max, numMap.get(key) + numMap.get(key + 1));
-            }
+        for (Integer key : map.keySet()) {
+            //存在连续数字的话，看看长度
+            max = Math.max(max, (map.get(key + 1) == null ? 0 : map.get(key + 1) + map.get(key)));
         }
         return max;
     }
