@@ -30,18 +30,20 @@ import com.github.leetcode.vo.ListNode;
 public class Leetcode147 {
     public ListNode insertionSortList(ListNode head) {
         ListNode sortedHead = new ListNode(-1);
+        //在有序链表中查找要插入的位置
+        ListNode curNode = sortedHead;
+        ListNode tmpNode = null;
         while (head != null) {
-            //保存head位置
-            ListNode temp = head.next;
-            ListNode cur = sortedHead;
-            while (cur.next != null && cur.next.val < head.val) {
-                cur = cur.next;
+            //存储原有链表的下一节点
+            tmpNode = head.next;
+            curNode = sortedHead;
+            while (curNode.next != null && curNode.next.val < head.val) {
+                curNode = curNode.next;
             }
-            //插入
-            head.next = cur.next;
-            cur.next = head;
-            //恢复head
-            head = temp;
+            //找到当前节点是要插入节点的前置节点
+            head.next = curNode.next;
+            curNode.next = head;
+            head = tmpNode;
         }
         return sortedHead.next;
     }

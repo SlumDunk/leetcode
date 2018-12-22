@@ -32,41 +32,60 @@ public class Leetcode2 {
     }
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode curNode = new ListNode(0);
-        ListNode headNode = new ListNode(0);
-        Queue<Integer> queue1 = new LinkedList<>(), queue2 = new LinkedList<>();
+        //从低位加到高位,注意进位
+        Queue<Integer> queue1 = new LinkedList<Integer>();
+        Queue<Integer> queue2 = new LinkedList<Integer>();
+        //将l1的位入队
         while (l1 != null) {
             queue1.add(l1.val);
             l1 = l1.next;
         }
+        //将l2的位入队
         while (l2 != null) {
             queue2.add(l2.val);
             l2 = l2.next;
         }
-        int sum = 0;
-        int count = 0;
+
+        //头节点
+        ListNode headNode = null;
+        ListNode previousNode = null;
+        //进位
+        int tmp = 0;
+        //队列1当前数字
+        int tmp1 = 0;
+        //队列2当前数字
+        int tmp2 = 0;
+        //当前节点
+        ListNode curNode = null;
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             if (!queue1.isEmpty()) {
-                sum += queue1.poll();
+                tmp1 = queue1.poll();
             }
             if (!queue2.isEmpty()) {
-                sum += queue2.poll();
+                tmp2 = queue2.poll();
             }
-            //high bit
-            ListNode tmpNode = new ListNode(sum / 10);
-            //low bit
-            curNode.val = sum % 10;
-            if (count == 0) {
+            curNode = new ListNode((tmp1 + tmp2 + tmp) % 10);
+            if (headNode == null) {
                 headNode = curNode;
+                previousNode = curNode;
+            } else {
+                previousNode.next = curNode;
+                previousNode=curNode;
             }
-            if (!queue1.isEmpty() || !queue2.isEmpty() || tmpNode.val != 0) {
-                curNode.next = tmpNode;
-                curNode = tmpNode;
-            }
-            sum /= 10;
-            count++;
+            //进位
+            tmp = (tmp1 + tmp2 + tmp) / 10;
+            //将tmp1和tmp2复位
+            tmp1 = 0;
+            tmp2 = 0;
         }
-
+        if (tmp != 0) {
+            curNode = new ListNode(tmp);
+            if (headNode == null) {
+                headNode = curNode;
+            } else {
+                previousNode.next = curNode;
+            }
+        }
         return headNode;
     }
 }

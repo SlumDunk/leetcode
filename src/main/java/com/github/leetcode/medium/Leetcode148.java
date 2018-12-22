@@ -21,12 +21,20 @@ public class Leetcode148 {
         if (head == null || head.next == null)//递归出口  当只有一个节点时就不再递归
             return head;
         ListNode middle = getMiddleOfList(head);
-        ListNode next = middle.next;
-        middle.next = null;//把两个链表断开分为左边（包括middle）一半和右边一半
-        return mergeTwoList(sortList(head), sortList(next));
+        ListNode right = middle.next;
+        //把两个链表断开分为左边（包括middle）一半和右边一半
+        middle.next = null;
+        //归并
+        return mergeTwoList(sortList(head), sortList(right));
 
     }
 
+    /**
+     * 利用快慢指针找到中间点
+     *
+     * @param head
+     * @return
+     */
     public ListNode getMiddleOfList(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
@@ -37,7 +45,14 @@ public class Leetcode148 {
         return slow;
     }
 
-    public static ListNode mergeTwoList(ListNode headA, ListNode headB) {
+    /**
+     * 合并两个有序的链表
+     *
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode mergeTwoList(ListNode headA, ListNode headB) {
 
         ListNode fakeNode = new ListNode(-1);
         ListNode cur = fakeNode;

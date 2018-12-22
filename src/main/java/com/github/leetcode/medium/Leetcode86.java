@@ -16,27 +16,40 @@ import com.github.leetcode.vo.ListNode;
  */
 public class Leetcode86 {
     public ListNode partition(ListNode head, int x) {
-        // 头结点
-        ListNode dummy1 = new ListNode(0);
-        ListNode dummy2 = new ListNode(0);
-        // 当前结点
-        ListNode curr1 = dummy1;
-        ListNode curr2 = dummy2;
+        if (head == null) {
+            return null;
+        }
+        //构造两个子链表 small链表和big链表，然后将small和big连接起来
+        ListNode small = new ListNode(-1);
+        ListNode smallHead = null;
+        ListNode big = new ListNode(-1);
+        ListNode bigHead = null;
         while (head != null) {
-            if (head.val < x) {
-                curr1.next = head;
-                curr1 = head;
+            if (head.val >= x) {
+                if (bigHead == null) {
+                    bigHead = head;
+                }
+                big.next = head;
+                big = big.next;//指针前移
             } else {
-                curr2.next = head;
-                curr2 = head;
+                if (smallHead == null) {
+                    smallHead = head;
+                }
+                small.next = head;
+                small = small.next;//指针前移
             }
             head = head.next;
         }
-        // important! avoid cycle in linked list.
-        // otherwise u will get TLE.
-        curr2.next = null;
-        curr1.next = dummy2.next;
-        return dummy1.next;
+        if (smallHead != null) {//存在小于x的
+            small.next = bigHead;
+            if (big != null) {
+                //避免形成环路
+                big.next = null;
+            }
+            return smallHead;
+        } else {//全都大于等于x
+            return bigHead;
+        }
     }
 }
 

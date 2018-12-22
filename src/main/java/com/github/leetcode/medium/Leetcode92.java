@@ -22,41 +22,60 @@ public class Leetcode92 {
             return head;
         }
 
-        ListNode dummyNode = new ListNode(0);
-        dummyNode.next = head;
-        head = dummyNode;
+        //原来的链表切成三个部分，[1..m),[m,n],(n,len]
+        //先计算链表的长度
+        int len = 0;
+        ListNode curNode = head;
+        while (curNode != null) {
+            len++;
+            curNode = curNode.next;
+        }
+        ListNode newHead = null;
 
-        ListNode preNode = head; // pre node
-
+        //前置链表
+        ListNode prefix = new ListNode(-1);
+        prefix.next = null;
+        ListNode currentPrefix = prefix;
+        curNode = head;
         for (int i = 1; i < m; i++) {
-            preNode = preNode.next;
+            currentPrefix.next = curNode;
+            currentPrefix = currentPrefix.next;
+            curNode = curNode.next;
         }
+        newHead = prefix.next;
 
-
-        ListNode tempNode = preNode.next;
-
-        Stack<ListNode> stack = new Stack<>();
-        int i = 0;
-        while (m + i <= n) {
-            stack.push(tempNode);
-            tempNode = tempNode.next;
-            i++;
+        //中间链表
+        //借助Stack让它旋转
+        Stack<ListNode> stack = new Stack<ListNode>();
+        for (int i = m; i <= n; i++) {
+            stack.push(curNode);
+            curNode = curNode.next;
         }
-
-        ListNode postNode = tempNode; // post node
-
-        ListNode resultNode = stack.pop();
-        tempNode = resultNode;
-
+        ListNode middle = new ListNode(-1);
+        middle.next = null;
+        ListNode currentMiddle = middle;
         while (!stack.isEmpty()) {
-            tempNode.next = stack.pop();
-            tempNode = tempNode.next;
+            currentMiddle.next = stack.pop();
+            currentMiddle = currentMiddle.next;
         }
+        currentMiddle.next = null;
+        if (newHead != null) {
+            currentPrefix.next = middle.next;
+        } else {
+            newHead = middle.next;
+        }
+        //后置链表
+        ListNode postfix = new ListNode(-1);
+        postfix.next = null;
+        ListNode currentPostfix = postfix;
+        for (int i = n + 1; i <= len; i++) {
+            currentPostfix.next = curNode;
+            currentPostfix = currentPostfix.next;
+            curNode = curNode.next;
+        }
+        currentMiddle.next = postfix.next;
 
-        preNode.next = resultNode;
-        tempNode.next = postNode;
-
-        return dummyNode.next;
+        return newHead;
 
     }
 }

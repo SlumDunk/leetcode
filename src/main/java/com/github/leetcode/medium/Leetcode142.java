@@ -17,26 +17,30 @@ public class Leetcode142 {
         if (head == null || head.next == null) {
             return null;
         }
-        // 快指针fp和慢指针sp，
-        ListNode fp = head, sp = head;
-        while (fp != null && fp.next != null) {
-            sp = sp.next;
-            fp = fp.next.next;
-            if (fp == sp) {  //说明有环
+        // 利用快慢指针来做
+        ListNode fast = head;
+        ListNode slow = head;
+        //是否存在环
+        Boolean flag = false;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {//在环中的某个节点发生碰撞
+                flag = true;
                 break;
             }
         }
-        //System.out.println( fp.val + "   "+ sp.val );
-        if (fp == null || fp.next == null) {
+        //头结点距离环开始的距离为A，环开始到碰撞的距离为B，那么快指针走过的距离为2(A+B),满指针走过的距离为A+B，2(A+B)=A+B+N,N为环的大小，碰撞节点走到开始节点的距离为A
+        if (flag) {
+            slow = head;
+            while (slow != fast) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            return fast;
+        } else {
             return null;
         }
-        //说明有环，求环的起始节点
-        sp = head;
-        while (fp != sp) {
-            sp = sp.next;
-            fp = fp.next;
-        }
-        return sp;
     }
 
 }

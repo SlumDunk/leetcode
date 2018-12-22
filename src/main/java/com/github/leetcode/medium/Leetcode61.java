@@ -29,21 +29,39 @@ public class Leetcode61 {
         if (head == null || k == 0) {
             return head;
         }
-        int cnt = 1;
-        ListNode p2 = head;
-        while (p2.next != null) {
-            cnt++;
-            p2 = p2.next;
+
+        //计算链表的长度
+        int len = 0;
+        ListNode curNode = head;
+        while (curNode != null) {
+            curNode = curNode.next;
+            len++;
         }
-        k = k % cnt;
-        ListNode pHead = head;
-        ListNode p1 = head;
-        for (int i = 0; i < cnt - k - 1; i++) {
-            p1 = p1.next;
+        //真实的位移
+        k = k % len;
+        //将链表后k位移到链表头部即可
+        int count = 0;
+        curNode = head;
+        //找到新链表的尾部节点
+        while (count < len - k - 1) {
+            curNode = curNode.next;
+            count++;
         }
-        p2.next = pHead;
-        pHead = p1.next;
-        p1.next = null;
-        return pHead;
+        //新的头结点
+        ListNode newHead = curNode.next;
+        //新的尾部节点下一位
+        curNode.next = null;
+        ////找到尾部节点
+        curNode = newHead;
+        if (curNode != null) {
+            while (curNode.next != null) {
+                curNode = curNode.next;
+            }
+            //将原来的头部节点接到尾部节点后面
+            curNode.next = head;
+        } else {
+            newHead = head;
+        }
+        return newHead;
     }
 }
