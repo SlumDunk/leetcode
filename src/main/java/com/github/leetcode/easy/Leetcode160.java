@@ -1,5 +1,8 @@
 package com.github.leetcode.easy;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @Author: zerongliu
  * @Date: 12/21/18 20:39
@@ -45,4 +48,22 @@ package com.github.leetcode.easy;
  * Your code should preferably run in O(n) time and use only O(1) memory.
  */
 public class Leetcode160 {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        //先将a链表的节点放进set
+        Set<ListNode> aSet = new HashSet<ListNode>();
+        while (headA != null) {
+            aSet.add(headA);
+            headA = headA.next;
+        }
+
+        //遍历第二个链表
+        while (headB != null) {
+            if (aSet.contains(headB)) {
+                return headB;
+            } else {
+                headB = headB.next;
+            }
+        }
+        return null;
+    }
 }

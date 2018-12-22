@@ -41,38 +41,48 @@ public class Leetcode725 {
     }
 
     public ListNode[] splitListToParts(ListNode root, int k) {
+        //先得出链表的长度
         int len = getLen(root);
+        //每部分的大小
         int partSize = len / k;
+        //余下的长度，因为分组的长度差不超过1，所以每个部分分配1
         int rem = len % k;
-        int[] parLen = new int[k];
+        //原链表切成k部分
+        ListNode[] result = new ListNode[k];
+        int forward = 0;
         for (int i = 0; i < k; i++) {
-            parLen[i] = partSize;
-            if (rem != 0) {
-                parLen[i]++;
+            result[i] = root;
+            forward += partSize;
+            if (rem > 0) {
+                forward += 1;
                 rem--;
             }
+            //更新root指针root，即每次进行迁移
+            root = getNextRoot(root, forward);
+            forward = 0;//重新归位
         }
-
-        ListNode[] res = new ListNode[k];
-        for (int i = 0; i < k; i++) {
-            res[i] = root;
-            root = getNextRoot(root, parLen[i] - 1);
-        }
-        return res;
+        return result;
     }
 
-    private ListNode getNextRoot(ListNode root, int size) {
-        if (root == null) return null;
-        while (root != null && size > 0) {
+    ListNode getNextRoot(ListNode root, int forward) {
+        if (root == null) {
+            return null;
+        }
+        //找到下个节点的前置节点
+        for (int i = 0; i < forward - 1; i++) {
             root = root.next;
-            size--;
         }
-        ListNode res = root;
-        if (res != null) res = res.next;
-        if (root != null) root.next = null;
-        return res;
+        ListNode next = root.next;
+        root.next = null;
+        return next;
     }
 
+    /**
+     * 获取链表长度
+     *
+     * @param root
+     * @return
+     */
     private int getLen(ListNode root) {
         int len = 0;
         while (root != null) {

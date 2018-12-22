@@ -39,20 +39,14 @@ public class Leetcode876 {
     }
 
     public ListNode middleNode(ListNode head) {
-        int count = 0;
-        ListNode copyHead = head;
-        while (head != null) {
-            count++;
-            head = head.next;
+        //利用快慢指针
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
         }
-
-        int index = count / 2;
-        int start = 0;
-        while (start < index) {
-            copyHead = copyHead.next;
-            start++;
-        }
-        return copyHead;
+        return slow;
     }
 }
 

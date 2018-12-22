@@ -20,15 +20,18 @@ import com.github.leetcode.vo.ListNode;
  */
 public class Leetcode328 {
     public ListNode oddEvenList(ListNode head) {
+        //双指针，一个指向奇数节点，一个指向偶数节点
         if (head == null) return head;
-        ListNode odd = head, even = head.next, evenhead = even;
+        //奇数节点的当前节点，偶数节点的当前节点，偶数节点的头结点
+        ListNode odd = head, even = head.next, evenHead = even;
         while (odd.next != null && even.next != null) {
             odd.next = odd.next.next;
             even.next = even.next.next;
             odd = odd.next;
             even = even.next;
         }
-        odd.next = evenhead;
+        //偶数节点链表对接到奇数链表末尾
+        odd.next = evenHead;
         return head;
     }
 }

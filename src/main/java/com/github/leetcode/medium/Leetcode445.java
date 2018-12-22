@@ -25,34 +25,49 @@ public class Leetcode445 {
     }
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode curNode = new ListNode(0);
-        Stack<Integer> stack1 = new Stack<Integer>(), stack2 = new Stack<Integer>();
+        //利用堆栈，先将两个链表的值放进栈里头，再弹出相加
+        Stack<Integer> stack1 = new Stack<Integer>();
+        Stack<Integer> stack2 = new Stack<Integer>();
         while (l1 != null) {
             stack1.push(l1.val);
             l1 = l1.next;
         }
+
         while (l2 != null) {
             stack2.push(l2.val);
             l2 = l2.next;
         }
-        int sum = 0;
+        //低位加到高位
+        ListNode next = null;
+        //进位
+        Integer add = 0;
+        Integer sum = 0;
+        Integer factor1 = 0;
+        Integer factor2 = 0;
+        ListNode currentNode = null;
         while (!stack1.isEmpty() || !stack2.isEmpty()) {
-            if (!stack1.isEmpty()) {
-                sum += stack1.pop();
+            if (!stack1.isEmpty() && !stack2.isEmpty()) {
+                factor1 = stack1.pop();
+                factor2 = stack2.pop();
+                sum = factor1 + factor2 + add;
+            } else if (!stack1.isEmpty()) {
+                factor1 = stack1.pop();
+                sum = factor1 + add;
+            } else {
+                factor2 = stack2.pop();
+                sum = factor2 + add;
             }
-            if (!stack2.isEmpty()) {
-                sum += stack2.pop();
-            }
-            ListNode tmpNode = new ListNode(sum / 10);
-            curNode.val = sum % 10;
-            tmpNode.next = curNode;
-            curNode = tmpNode;
-            sum /= 10;
+            currentNode = new ListNode(sum % 10);
+            currentNode.next = next;
+            next = currentNode;
+            add = sum / 10;
+            sum = 0;
         }
-        if (curNode.val == 0) {
-            curNode = curNode.next;
+        if (add > 0) {//还有进位
+            currentNode = new ListNode(add);
+            currentNode.next = next;
         }
-        return curNode;
+        return currentNode;
     }
 
 

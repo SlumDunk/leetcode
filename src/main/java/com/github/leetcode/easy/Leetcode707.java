@@ -62,10 +62,12 @@ public class Leetcode707 {
          * Get the value of the index-th node in the linked list. If the index is invalid, return -1.
          */
         public int get(int index) {
-            if (index < 0 || index > size) {
+            //注意边界条件
+            if (index < 0 || index >= size) {
                 return -1;
             }
             Node prev = dummyHead;
+            //找到index的前置节点
             for (int i = 0; i < index; i++) {
                 prev = prev.next;
             }
@@ -90,11 +92,13 @@ public class Leetcode707 {
          * Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
          */
         public void addAtIndex(int index, int val) {
+            //注意边界条件
             if (index < 0 || index > size) {
                 return;
             }
 
             Node prev = dummyHead;
+            //走到index的前置节点
             for (int i = 0; i < index; i++) {
                 prev = prev.next;
             }
@@ -106,6 +110,7 @@ public class Leetcode707 {
          * Delete the index-th node in the linked list, if the index is valid.
          */
         public void deleteAtIndex(int index) {
+            //注意边界条件
             if (index < 0 || index >= size) {
                 return;
             }
