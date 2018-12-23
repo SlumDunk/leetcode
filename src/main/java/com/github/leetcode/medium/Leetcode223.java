@@ -19,6 +19,45 @@ package com.github.leetcode.medium;
  */
 public class Leetcode223 {
     public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
-        return 0;
+        //两个长方形的面积-覆盖区域的面积
+        int area1 = (C - A) * (D - B);
+        int area2 = (G - E) * (H - F);
+
+        int overlapRegion = computeOverlapArea(A, B, C, D, E, F, G, H);
+        return Math.abs(area1) + Math.abs(area2) - overlapRegion;
+
+    }
+
+    /**
+     * 计算覆盖区域的面积
+     *
+     * @param A
+     * @param B
+     * @param C
+     * @param D
+     * @param E
+     * @param F
+     * @param G
+     * @param H
+     * @return
+     */
+    public int computeOverlapArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        //覆盖区域的宽
+        int down = Math.max(B, F);
+        int up = Math.min(D, H);
+        int width = up - down;
+
+        //覆盖区域的长
+        int right = Math.min(C, G);
+        int left = Math.max(A, E);
+        int length = right - left;
+
+        if (up < down || right < left) {
+            return 0;
+        } else if (length <= 0 || width <= 0) {
+            return 0;
+        } else {
+            return length * width;
+        }
     }
 }
