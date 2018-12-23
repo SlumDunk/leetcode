@@ -30,52 +30,53 @@ package com.github.leetcode.easy;
  * Please do not use the built-in HashMap library.
  */
 public class Leetcode706 {
-}
+    class MyHashMap {
+        /**
+         * 注意key的取值范围
+         */
+        int[] keyData = new int[1000001];
+        /**
+         * 注意value的取值范围
+         */
+        int[] valueData = new int[1000001];
 
-class MyHashMap {
-    /**
-     * 注意key的取值范围
-     */
-    int[] keyData = new int[1000001];
-    /**
-     * 注意value的取值范围
-     */
-    int[] valueData = new int[1000001];
+        /**
+         * 创建map
+         */
+        public MyHashMap() {
 
-    /**
-     * 创建map
-     */
-    public MyHashMap() {
+        }
 
-    }
+        /**
+         * 存入key和value值
+         */
+        public void put(int key, int value) {
+            //设置value数组中某个key的索引的值为value
+            valueData[key] = value;
+            //设置Key数组中对应的key为1,表示该key已经被占有了
+            keyData[key] = 1;
+        }
 
-    /**
-     * 存入key和value值
-     */
-    public void put(int key, int value) {
-        //设置value数组中某个key的索引的值为value
-        valueData[key] = value;
-        //设置Key数组中对应的key为1,表示该key已经被占有了
-        keyData[key] = 1;
-    }
+        /**
+         * 如果存在这样的key，那么从值数组中返回该key对应的value
+         */
+        public int get(int key) {
+            if (keyData[key] == 1) {
+                return valueData[key];
+            } else {
+                return -1;
+            }
+        }
 
-    /**
-     * 如果存在这样的key，那么从值数组中返回该key对应的value
-     */
-    public int get(int key) {
-        if (keyData[key] == 1) {
-            return valueData[key];
-        } else {
-            return -1;
+        /**
+         * 从key数组中移除key值和从value数组中移除key对应的value
+         */
+        public void remove(int key) {
+            valueData[key] = 0;
+            keyData[key] = 0;
         }
     }
-
-    /**
-     * 从key数组中移除key值和从value数组中移除key对应的value
-     */
-    public void remove(int key) {
-        valueData[key] = 0;
-        keyData[key] = 0;
-    }
 }
+
+
 

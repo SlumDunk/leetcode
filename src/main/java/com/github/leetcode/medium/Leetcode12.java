@@ -47,6 +47,7 @@ package com.github.leetcode.medium;
  */
 public class Leetcode12 {
     public String intToRoman(int num) {
+        //采用递归，注意对应关系的先后顺序, 900,400,90,40,9,4
         if (num >= 1000) return "M" + intToRoman(num - 1000);
         if (num >= 900) return "CM" + intToRoman(num - 900);
         if (num >= 500) return "D" + intToRoman(num - 500);
@@ -56,7 +57,7 @@ public class Leetcode12 {
         if (num >= 50) return "L" + intToRoman(num - 50);
         if (num >= 40) return "XL" + intToRoman(num - 40);
         if (num >= 10) return "X" + intToRoman(num - 10);
-        if (num >= 9) return "IX" + intToRoman(num - 90);
+        if (num >= 9) return "IX" + intToRoman(num - 9);
         if (num >= 5) return "V" + intToRoman(num - 5);
         if (num >= 4) return "IV" + intToRoman(num - 4);
         if (num >= 1) return "I" + intToRoman(num - 1);

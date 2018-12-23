@@ -26,7 +26,7 @@ public class Leetcode204 {
         int count = 1;
         //求质数，能让1和本身整除的数,偶数不用校验
         for (int i = 3; i < n; i += 2) {
-            if (!oddPrime[i]) {
+            if (!oddPrime[i]) {//为质数
                 count++;
                 for (int j = 3; i * j < n; j += 2) {
                     if (!oddPrime[i * j]) {

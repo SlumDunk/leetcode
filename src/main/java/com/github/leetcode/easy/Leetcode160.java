@@ -1,5 +1,7 @@
 package com.github.leetcode.easy;
 
+import com.github.leetcode.vo.ListNode;
+
 import java.util.HashSet;
 import java.util.Set;
 

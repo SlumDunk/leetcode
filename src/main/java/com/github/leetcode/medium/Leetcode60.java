@@ -33,23 +33,30 @@ import java.util.List;
  */
 public class Leetcode60 {
     public String getPermutation(int n, int k) {
-        k--; // to translate index from 0 rather than 1
+        //因为每一位内部都有顺序可循，从高位定位到低位
+        k--; //将位置指针转化为从0开始的
         List<Integer> list = new ArrayList<Integer>();
+        //参与排列组合的数字
         for (int i = 1; i <= n; i++) {
             list.add(i);
         }
+        //factorial 从(n-1)!开始，因为第一位后面有(n-1)!种变化
         int factorial = 1;
         for (int i = 2; i < n; i++) {
             factorial *= i;
         }
+
+        //第一位后面有n-1位
         int round = n - 1;
-        StringBuilder sb = new StringBuilder();
+        StringBuilder buffer = new StringBuilder("");
+        //因为第一位的数字总是从小到大
+        //从高位定位到低位
         while (round >= 0) {
-            sb.append(list.remove(k / factorial));//new list
-            k %= factorial;//new k
-            if (round != 0) factorial /= round;//new factorial
-            round--;// new round
+            buffer.append(list.remove(k / factorial));
+            k = k % factorial;
+            if (round > 0) factorial /= round;
+            round--;
         }
-        return sb.toString();
+        return buffer.toString();
     }
 }

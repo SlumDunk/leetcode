@@ -20,13 +20,18 @@ package com.github.leetcode.easy;
  */
 public class Leetcode69 {
     public int mySqrt(int x) {
-        if (x <= 1) return x;
+        //在0到x/2之间,利用二分搜索
+        if (x <= 1) {
+            return x;
+        }
         int left = 0, right = x;
         while (left < right) {
-            int mid = left + (right - left) / 2;
-            if (x / mid >= mid) left = mid + 1;
+            int mid = (left + right) / 2;
+            //注意x/mid>mid和x>mid*mid是有区别的
+            if (x / mid >= mid) left = mid + 1;//保证最终的right比根号值要大1
             else right = mid;
         }
+
         return right - 1;
     }
 }

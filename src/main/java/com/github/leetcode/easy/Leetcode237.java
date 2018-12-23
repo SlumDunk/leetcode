@@ -1,5 +1,7 @@
 package com.github.leetcode.easy;
 
+import com.github.leetcode.vo.ListNode;
+
 /**
  * @Author: zerongliu
  * @Date: 12/22/18 11:08

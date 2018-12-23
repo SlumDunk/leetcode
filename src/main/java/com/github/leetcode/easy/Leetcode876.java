@@ -48,16 +48,17 @@ public class Leetcode876 {
         }
         return slow;
     }
-}
+    static class ListNode {
 
-class ListNode {
+        int val;
 
-    int val;
+        ListNode next;
 
-    ListNode next;
+        ListNode(int x) {
+            val = x;
+        }
 
-    ListNode(int x) {
-        val = x;
     }
-
 }
+
+

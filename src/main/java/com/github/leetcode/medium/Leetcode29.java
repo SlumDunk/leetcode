@@ -25,25 +25,33 @@ package com.github.leetcode.medium;
  */
 public class Leetcode29 {
     public int divide(int dividend, int divisor) {
+        //确定结果正负号
         boolean flag = (dividend > 0 && divisor > 0)
                 || (dividend < 0 && divisor < 0);
         long absDividend = Math.abs((long) dividend);
         long absDivisor = Math.abs((long) divisor);
         long quotient = dividePositive(absDividend, absDivisor);
+        //注意边界问题
         if (flag && quotient > Integer.MAX_VALUE)
             return Integer.MAX_VALUE;
         return flag ? (int) quotient : -(int) quotient;
     }
 
+    /**
+     * 利用分治思想
+     */
     private long dividePositive(long dividend, long divisor) {
-        if (dividend < divisor)
+        if (dividend < divisor) {
             return 0;
-        long quotient = 1;
-        long originalDivisor = divisor;
-        while (dividend >= (divisor << 1)) {
-            quotient <<= 1;
-            divisor <<= 1;
+        } else {
+            int result = 1;
+            long originalDivisor = divisor;
+            //利用二进制
+            while (dividend > (divisor << 1)) {
+                result <<= 1;
+                divisor <<= 1;
+            }
+            return result + dividePositive(dividend - divisor, originalDivisor);
         }
-        return quotient + dividePositive(dividend - divisor, originalDivisor);
     }
 }
