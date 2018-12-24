@@ -55,25 +55,29 @@ public class Leetcode883 {
     }
 
     public int projectionArea(int[][] grid) {
+        //求投影部分的面积
         int rows = grid.length;
         int cols = grid[0].length;
+        //正视图，侧视图，俯视图
         int xy = 0, yz = 0, xz = 0;
-        int tmpyz = 0, tmpxz = 0;
+        //俯视图
+        //数组的非零元素之和
+        //侧视图
+        //每行最大的数字相加
         for (int i = 0; i < rows; i++) {
+            int maxRow = 0, maxCol = 0;
             for (int j = 0; j < cols; j++) {
                 if (grid[i][j] > 0) {
                     xy++;
-                    tmpxz = Math.max(grid[i][j], tmpxz);
                 }
-                if (grid[j][i] > 0) {
-                    tmpyz = Math.max(grid[j][i], tmpyz);
-                }
+                maxRow = Math.max(maxRow, grid[i][j]);
+                maxCol = Math.max(maxCol, grid[j][i]);
             }
-            yz += tmpyz;
-            tmpyz = 0;
-            xz += tmpxz;
-            tmpxz = 0;
+            yz += maxRow;
+            xz += maxCol;
         }
+        //正视图
+        //每列最大的数字相加
         return xy + yz + xz;
     }
 }

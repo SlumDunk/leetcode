@@ -22,15 +22,19 @@ public class Leetcode453 {
     }
 
     public int minMoves(int[] nums) {
+        //假设初始和尾s,经过k次移动后，和值为s+(n-1)*k, 平均值为(s+(n-1)*k)/n, 最小值为min
+        // k=s-min*n
         int min = Integer.MAX_VALUE, res = 0;
-        for (int i = 0; i < nums.length; i++) {
+        int sum = 0;
+        int len = nums.length;
+        for (int i = 0; i < len; i++) {
             if (nums[i] < min) {
                 min = nums[i];
             }
+            sum += nums[i];
         }
-        for (int i = 0; i < nums.length; i++) {
-            res += nums[i] - min;
-        }
+
+        res = sum - min * len;
         return res;
     }
 }

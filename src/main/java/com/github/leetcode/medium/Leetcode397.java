@@ -44,25 +44,26 @@ public class Leetcode397 {
         if (n == 1) {
             return 0;
         }
+        //递归
         count = helper(n, 0);
         return count;
     }
 
     /**
-     * 自顶向下递归
-     *
-     * @param n
-     * @param number
+     * @param n      数字
+     * @param number 次数
      * @return
      */
     private int helper(long n, int number) {
+        //终止条件
         if (n == 1) {
             return number;
-        } else if (n % 2 == 0) {
+        } else if (n % 2 == 0) {//偶数
             number++;
             return helper(n / 2, number);
-        } else {
+        } else {//奇数
             number++;
+            //n+1和n-1选择路径小的
             return Math.min(helper(n + 1, number), helper(n - 1, number));
         }
     }

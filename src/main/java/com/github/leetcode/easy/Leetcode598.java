@@ -40,10 +40,12 @@ public class Leetcode598 {
     }
 
     public int maxCount(int m, int n, int[][] ops) {
+        //都是元素0
         if (ops == null || ops.length == 0 || ops[0].length == 0) {
             return m * n;
         } else {
             for (int i = 0; i < ops.length; i++) {
+                //找出交集
                 m = Math.min(m, ops[i][0]);
                 n = Math.min(n, ops[i][1]);
             }

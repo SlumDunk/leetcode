@@ -19,10 +19,14 @@ public class Leetcode415 {
     }
 
     public String addStrings(String num1, String num2) {
+        //按位计算，从低位到高位
+        //buffer字符串
         StringBuffer result = new StringBuffer();
         int index1 = num1.length() - 1;
         int index2 = num2.length() - 1;
+        //存储和值
         int sum = 0;
+        //存储进位
         int addition = 0;
         while (index1 >= 0 || index2 >= 0) {
             if (index1 >= 0 && index2 >= 0) {
@@ -38,6 +42,7 @@ public class Leetcode415 {
                 index1--;
                 index2--;
             } else {
+                //字符串num2已经取完了
                 while (index1 >= 0) {
                     sum = num1.charAt(index1) - '0' + addition;
                     if (sum > 9) {
@@ -51,6 +56,7 @@ public class Leetcode415 {
                     sum = 0;
                     index1--;
                 }
+                //字符串num1取完了
                 while (index2 >= 0) {
                     sum = num2.charAt(index2) - '0' + addition;
                     if (sum > 9) {
@@ -66,9 +72,11 @@ public class Leetcode415 {
                 }
             }
         }
+        //是否还有进位
         if (addition > 0) {
             result.append(addition);
         }
+        //字符串翻转，变成高位到低位
         return (result.reverse()).toString();
 
     }

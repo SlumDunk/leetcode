@@ -40,9 +40,11 @@ public class Leetcode413 {
 //            }
 //        return sum;
         //存储到子串(0...n)包含的arithmetic 子串的数量 子串要求是连续的
+        //dp[i]=dp[i-1]+1
         if (A.length < 2) {
             return 0;
         }
+        //存储到i位置的连续子串数量
         int[] dp = new int[A.length];
         dp[0] = 0;
         dp[1] = 0;

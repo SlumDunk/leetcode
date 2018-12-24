@@ -40,9 +40,12 @@ package com.github.leetcode.easy;
  */
 public class Leetcode892 {
     public int surfaceArea(int[][] grid) {
+        //去掉相邻的接触面积
+        //每个元素*4+底面和上表面，再顺时针减去 上，右，下，左
         int row = grid.length;
         int col = grid[0].length;
-        int res = 0;
+        int result = 0;
+        //存储中间结果
         int area = 0;
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -50,22 +53,26 @@ public class Leetcode892 {
                     continue;
                 } else {
                     area = 2 + grid[i][j] * 4;
+                    //上
                     if (i - 1 >= 0) {
                         area -= Math.min(grid[i - 1][j], grid[i][j]);
                     }
+                    //右
                     if (j + 1 < col) {
-                        area -= Math.min(grid[i][j], grid[i][j + 1]);
+                        area -= Math.min(grid[i][j + 1], grid[i][j]);
                     }
+                    //下
                     if (i + 1 < row) {
-                        area -= Math.min(grid[i][j], grid[i + 1][j]);
+                        area -= Math.min(grid[i + 1][j], grid[i][j]);
                     }
+                    //左
                     if (j - 1 >= 0) {
-                        area -= Math.min(grid[i][j], grid[i][j - 1]);
+                        area -= Math.min(grid[i][j - 1], grid[i][j]);
                     }
-                    res += area;
+                    result += area;
                 }
             }
         }
-        return res;
+        return result;
     }
 }

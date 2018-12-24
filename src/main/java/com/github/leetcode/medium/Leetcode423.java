@@ -24,6 +24,7 @@ public class Leetcode423 {
         int[] count = new int[10];
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
+            //按0-9英文的首字母优先级，找有区分度的字母
             if (c == 'z') count[0]++;
             if (c == 'w') count[2]++;
             if (c == 'x') count[6]++;
@@ -41,6 +42,7 @@ public class Leetcode423 {
         count[9] = count[9] - count[8] - count[5] - count[6];
         count[1] = count[1] - count[0] - count[2] - count[4];
         StringBuilder sb = new StringBuilder();
+        //数字按递增顺序输出
         for (int i = 0; i <= 9; i++) {
             for (int j = 0; j < count[i]; j++) {
                 sb.append(i);

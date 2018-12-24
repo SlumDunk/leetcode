@@ -27,17 +27,25 @@ package com.github.leetcode.medium;
  */
 public class Leetcode396 {
     public int maxRotateFunction(int[] A) {
+        //找规律
+        //F(1)=F(0)+allSum-4*A[3]
+        //F(2)=F(1)+allSum-4*A[2]
+        //F(3)=F(2)+allSum-4*A[1]
+        //存储数组的和
         int allSum = 0;
         int len = A.length;
+        //存储各个F(i)的和
         int F = 0;
         for (int i = 0; i < len; i++) {
+            //求F(0)
             F += i * A[i];
             allSum += A[i];
         }
+
         int max = F;
-        for (int i = len - 1; i >= 1; i++) {
+        for (int i = len - 1; i >= 1; i--) {
             F = F + allSum - len * A[i];
-            max = Math.max(F, max);
+            max = Math.max(max, F);
         }
         return max;
     }

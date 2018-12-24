@@ -12,13 +12,18 @@ package com.github.leetcode.easy;
  */
 public class Leetcode507 {
     public boolean checkPerfectNumber(int num) {
-        if (num == 1) return Boolean.FALSE;
-        int sum = 1;
-        for (int i = 2; i * i < num; i++) {
-            if (num % i == 0) sum += (i + num / i);
-            if (i * i == num) sum -= i;
-            if (sum > num) return Boolean.FALSE;
+        //找到能整除的数，即factor
+        if (num == 1) {
+            return false;
         }
+        int sum = 1;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                sum += i;//具有对称性
+                sum += (num / i);
+            }
+        }
+        System.out.println(sum);
         return sum == num;
     }
 }

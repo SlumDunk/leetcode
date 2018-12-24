@@ -15,6 +15,7 @@ package com.github.leetcode.medium;
  * Output: 1024
  */
 public class Leetcode372 {
+    //找规律(a*b)%c=((a%c)*(b%c))%c
     private static final int BASE = 1337;
 
     public int superPow(int a, int[] b) {
@@ -25,17 +26,19 @@ public class Leetcode372 {
     //O(n), where n=b.length
     private int superPowMod(int a, int[] b, int index) {
         if (index < 0) return 1;
+        //从高位到低位
         int c = superPowMod(a, b, index - 1);
+        //每往前一位，高位扩大10倍指数
         return (powMod(c, 10) * powMod(a, b[index])) % BASE;
     }
 
-    //O(10) (a*b)%m=((a%m)*(b%m))%m
+    //O(10) (a*a*a)%c=((a%c)*(a*a)%c)%c=((a%c)*(a%c)*(a%c)%c)%c
     private int powMod(int a, int m) {
         if (a == 1) return 1;
         int res = 1;
         int pow = a % BASE;
         for (int i = 0; i < m; i++) {
-            res = (res * pow) % BASE;
+            res = res * pow % BASE;
         }
         return res;
     }

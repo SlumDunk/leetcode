@@ -25,12 +25,13 @@ import java.util.List;
 public class Leetcode368 {
     public static void main(String[] args) {
         Leetcode368 leetcode368 = new Leetcode368();
-        int[] nums = {2,3,4,9};
+        int[] nums = {2, 3, 4, 9};
         leetcode368.largestDivisibleSubset(nums);
     }
 
     public List<Integer> largestDivisibleSubset(int[] nums) {
         int size = nums.length;
+        //对数组进行排序
         Arrays.sort(nums);
         int[][] countRecord = new int[size][2];//存放最长长度和前驱节点索引
         int maxCount = 0;
@@ -39,6 +40,7 @@ public class Leetcode368 {
             int cur = nums[i];
             int max = 1;
             countRecord[i][1] = -1;
+            //因子从大到小
             for (int j = i - 1; j >= 0; j--) {
                 if (cur % nums[j] == 0) {
                     if (max < countRecord[j][0] + 1) {

@@ -31,13 +31,19 @@ package com.github.leetcode.easy;
  */
 public class Leetcode441 {
     public int arrangeCoins(int n) {
-        if (n <= 1) return n;
-        long low = 1, high = n;
-        while (low < high) {
-            long mid = low + (high - low) / 2;
-            if (mid * (mid + 1) / 2 <= n) low = mid + 1;
-            else high = mid;
+        //二分查找 等差数列求和公式
+        if (n <= 1) {
+            return n;
         }
-        return (int) low - 1;
+        long left = 0, right = n;
+        //注意条件
+        while (left < right) {
+            long mid = (left + right) / 2;
+            //条件是小于等于 保证left最后比要得的值大1
+            if (mid * (mid + 1) / 2 <= n) left = mid + 1;
+            else right = mid;
+        }
+
+        return (int) left - 1;
     }
 }

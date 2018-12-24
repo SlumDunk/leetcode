@@ -13,14 +13,28 @@ package com.github.leetcode.easy;
  */
 public class Leetcode633 {
     public boolean judgeSquareSum(int c) {
+        //0 到 sqrt(c)
         for (int i = (int) Math.sqrt(c); i >= 0; i--) {
-            if (i * i == c) return Boolean.TRUE;
-            int d = c - i * i, t = (int) Math.sqrt(d);
-            if (t * t == d) return Boolean.TRUE;
+            //0*0+i*i=c
+            if (Math.pow(i, 2) == c) return true;
+            else {
+                //i*i+t*t=c
+                int d = (int) (c - Math.pow(i, 2));
+                int t = (int) Math.sqrt(d);
+                if (Math.pow(t, 2) == d) {
+                    return true;
+                }
+            }
         }
-        return Boolean.FALSE;
+        return false;
     }
 
+    /**
+     * 利用二分搜索来做
+     *
+     * @param c
+     * @return
+     */
     public boolean judgeSquareSum2(int c) {
         int a = 0, b = (int) Math.sqrt(c);
         while (a <= b) {

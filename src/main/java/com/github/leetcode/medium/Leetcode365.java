@@ -27,7 +27,9 @@ public class Leetcode365 {
             return false;
         if (z == 0)
             return true;
+        //求出两个壶容量的最大公约数
         int res = gcd(x, y);
+        //查看z是否和x,y具有相同的最大公约数
         return z % res == 0;
     }
 

@@ -46,19 +46,21 @@ package com.github.leetcode.easy;
  */
 public class Leetcode868II {
     public int binaryGap(int N) {
-        int curPos = 0;
+        //按位与
+        int maxLength = 0;
+        //记住最近一次1的位置
         int lastOnePos = -1;
-        int maxDis = 0;
+        int curPos = 0;
         while (N > 0) {
-            if (N % 2 == 1) {
+            if ((N & 1) == 1) {
                 if (lastOnePos != -1) {
-                    maxDis = Math.max(curPos - lastOnePos, maxDis);
+                    maxLength = Math.max(curPos - lastOnePos, maxLength);
                 }
                 lastOnePos = curPos;
             }
-            N /= 2;
-            ++curPos;
+            N >>= 1;
+            curPos++;
         }
-        return maxDis;
+        return maxLength;
     }
 }

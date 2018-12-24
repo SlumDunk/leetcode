@@ -24,47 +24,28 @@ import java.util.PriorityQueue;
 public class Leetcode264 {
     public static void main(String[] args) {
         Leetcode264 leetcode264 = new Leetcode264();
-        System.out.println(leetcode264.heapNthUglyNumber(
+        System.out.println(leetcode264.nthUglyNumber(
                 40));
     }
 
     public int nthUglyNumber(int n) {
-        int u = 0;
-        List<Integer> l1 = new LinkedList<Integer>();
-        List<Integer> l2 = new LinkedList<Integer>();
-        List<Integer> l3 = new LinkedList<Integer>();
-        l1.add(1);
-        l2.add(1);
-        l3.add(1);
-
-        for (int i = 0; i < n; i++) {
-            u = Math.min(Math.min(l1.get(0), l2.get(0)), l3.get(0));
-
-            if (l1.get(0) == u) l1.remove(0);
-            if (l2.get(0) == u) l2.remove(0);
-            if (l3.get(0) == u) l3.remove(0);
-
-            l1.add(u * 2);
-            l2.add(u * 3);
-            l3.add(u * 5);
-        }
-        return u;
-    }
-
-    public int heapNthUglyNumber(int n) {
         if (n == 1) return 1;
+        //从小到大，所以需要用最小堆来存储丑数，每次取出最小值参与新丑数的生成
         PriorityQueue<Long> heapQueue = new PriorityQueue<>();
         heapQueue.add(1l);
 
         while (n > 1) {
+            //取出当前最小的丑数
             Long tmp = heapQueue.poll();
+            //去除重复的最小丑数
             while (!heapQueue.isEmpty() && heapQueue.peek().longValue() == tmp.longValue()) {
                 heapQueue.poll();
             }
-            System.out.println(tmp);
+            //产生新的丑数
             heapQueue.add(tmp * 2);
             heapQueue.add(tmp * 3);
             heapQueue.add(tmp * 5);
+            //n减1
             n--;
         }
         return heapQueue.poll().intValue();

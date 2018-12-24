@@ -40,6 +40,7 @@ package com.github.leetcode.medium;
  */
 public class Leetcode319 {
     public int bulbSwitch(int n) {
+        //找规律
         return (int) Math.sqrt(n);
     }
 }

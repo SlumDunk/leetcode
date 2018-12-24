@@ -23,23 +23,13 @@ public class Leetcode279 {
     }
 
     public int numSquares(int n) {
-//        int[] res = new int[n + 1];
-//        res[0] = 0;
-//        for (int i = 1; i <= n; i++) {
-//            int minNum = Integer.MAX_VALUE;
-//            for (int base = 1; i - base * base >= 0; base++) {
-//                minNum = Math.min(res[i - base * base], minNum);
-//            }
-//            res[i] = minNum + 1;
-//        }
-//        return res[n];
         //如果自己能开方，那么他的值是1， 如果不能开方，那么他的值是dp[num-j*j]+1, dp[]数组存储最小的中间结果
         int[] dp = new int[n + 1];
         dp[0] = 0;
         for (int i = 1; i <= n; i++) {
             dp[i] = Integer.MAX_VALUE;
             for (int j = 1; i - j * j >= 0; j++) {
-                int minNum = dp[i - j*j] + 1;
+                int minNum = dp[i - j * j] + 1;
                 dp[i] = Math.min(dp[i], minNum);
             }
 

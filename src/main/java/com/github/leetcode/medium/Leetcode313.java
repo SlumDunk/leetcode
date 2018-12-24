@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.PriorityQueue;
+
 /**
  * @Author: zerongliu
  * @Date: 10/28/18 09:55
@@ -22,29 +24,29 @@ package com.github.leetcode.medium;
  */
 public class Leetcode313 {
     public static void main(String[] args) {
-        Leetcode313 leetcode313=new Leetcode313();
-        leetcode313.nthSuperUglyNumber(12, new int[]{2,7,13,19});
+        Leetcode313 leetcode313 = new Leetcode313();
+        leetcode313.nthSuperUglyNumber(12, new int[]{2, 7, 13, 19});
     }
+
     public int nthSuperUglyNumber(int n, int[] primes) {
-        int[] dp = new int[n];
-        dp[0] = 1;
-        int[] idxPrimes = new int[primes.length];
-        int counter = 1;
-        while (counter < n) {
-            int min = Integer.MAX_VALUE;
-            for (int i = 0; i < primes.length; i++) {
-                int temp = dp[idxPrimes[i]] * primes[i];
-                min = min < temp ? min : temp;
+        //利用最小堆来做
+        PriorityQueue<Long> heap = new PriorityQueue<Long>();
+        heap.add(1l);
+        while (n > 1) {
+            //取出当前最小丑数
+            Long tmp = heap.poll();
+            //去除和当前丑数相同的丑数
+            while (!heap.isEmpty() && heap.peek().longValue() == tmp.longValue()) {
+                heap.poll();
             }
-            for (int i = 0; i < primes.length; i++) {
-                if (min == dp[idxPrimes[i]] * primes[i]) {
-                    idxPrimes[i]++;
-                }
+            //产生新的丑数
+            for (int prime : primes) {
+                heap.add(prime * tmp);
             }
-            dp[counter] = min;
-            counter++;
+            n--;
         }
-        return dp[n - 1];
+        //返回第n个丑数
+        return heap.poll().intValue();
     }
 
 }

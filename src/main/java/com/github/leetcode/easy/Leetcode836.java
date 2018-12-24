@@ -22,6 +22,10 @@ package com.github.leetcode.easy;
  */
 public class Leetcode836 {
     public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
-        return Math.max(rec1[0], rec2[0]) < Math.min(rec1[2], rec2[2]) && Math.max(rec1[1], rec2[1]) < Math.min(rec1[3], rec2[3]);
+        //左下角坐标和右下角坐标
+        //横坐标和纵坐标上都存在交集
+        Boolean x = Math.max(rec1[0], rec2[0]) < Math.min(rec1[2], rec2[2]);
+        Boolean y = Math.max(rec1[1], rec2[1]) < Math.min(rec1[3], rec2[3]);
+        return x && y;
     }
 }

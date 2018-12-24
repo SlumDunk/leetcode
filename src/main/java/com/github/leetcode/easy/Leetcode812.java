@@ -15,6 +15,9 @@ public class Leetcode812 {
     }
 
     public double largestTriangleArea(int[][] points) {
+        //三角形求面积公式 每三个点构成一个三角形，得出每个的面积
+        //(a,b), (c,d), (e,f)
+        //|a*(f-d)+c*(f-b)+e*(b-d)|/2
         int length = points.length;
         double res = 0;
         double area;

@@ -16,19 +16,20 @@ package com.github.leetcode.easy;
  */
 public class Leetcode367 {
     public boolean isPerfectSquare(int num) {
-        if (num < 1) return Boolean.FALSE;
-        if (num == 1) {
-            return Boolean.TRUE;
+        //二分查找
+        if (num <= 1) {
+            return true;
         } else {
             long left = 0, right = num / 2;
             while (left <= right) {
                 long mid = (left + right) / 2;
-                long val = mid * mid;
-                if (val == num) return Boolean.TRUE;
-                else if (val > num) right = mid - 1;
-                else left = mid + 1;
+                if (mid * mid == num)
+                    return true;
+                if (num > mid * mid) left++;
+                else
+                    right = mid - 1;
             }
+            return false;
         }
-        return Boolean.FALSE;
     }
 }
