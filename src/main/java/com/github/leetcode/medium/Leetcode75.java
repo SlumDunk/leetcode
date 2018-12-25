@@ -38,11 +38,11 @@ public class Leetcode75 {
         }
 
         for (int p = 0; p < n; p++) {
-            if (p < i)
+            if (p < i)//0的放一块
                 nums[p] = 0;
-            else if (p >= i && p < i + j)
+            else if (p >= i && p < i + j)//1的放一块
                 nums[p] = 1;
-            else
+            else//2的放一块
                 nums[p] = 2;
         }
 

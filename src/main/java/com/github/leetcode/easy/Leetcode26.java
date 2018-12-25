@@ -40,6 +40,7 @@ package com.github.leetcode.easy;
  */
 public class Leetcode26 {
     public int removeDuplicates(int[] nums) {
+        //数组本身是有序的
         if (nums == null || nums.length == 0)
             return 0;
         int count = 1;//表示不重复的数组长度，也表示下一个不重复数字出现的位置

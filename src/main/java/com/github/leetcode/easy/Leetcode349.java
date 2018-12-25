@@ -23,19 +23,42 @@ import java.util.*;
 public class Leetcode349 {
     public int[] intersection(int[] nums1, int[] nums2) {
         //利用set的唯一性
-        Set<Integer> set1 = new HashSet<Integer>();
-        List<Integer> resultList = new ArrayList<Integer>();
+//        Set<Integer> set1 = new HashSet<Integer>();
+//        List<Integer> resultList = new ArrayList<Integer>();
+//        Arrays.sort(nums2);
+//        for (int i = 0; i < nums1.length; i++) {
+//            //进行二分查找
+//            if (Arrays.binarySearch(nums2, nums1[i]) >= 0 && !resultList.contains(nums1[i])) {
+//                resultList.add(nums1[i]);
+//            }
+//        }
+//
+//
+//        int[] result = new int[resultList.size()];
+//        for (int i = 0; i < resultList.size(); i++) {
+//            result[i] = resultList.get(i);
+//        }
+//        return result;
+        Set<Integer> resultSet = new HashSet<Integer>();
+        Arrays.sort(nums1);
         Arrays.sort(nums2);
-        for (int i = 0; i < nums1.length; i++) {
-            //进行二分查找
-            if (Arrays.binarySearch(nums2, nums1[i]) >= 0 && !resultList.contains(nums1[i])) {
-                resultList.add(nums1[i]);
+        for (int i = 0, j = 0; i < nums1.length && j < nums2.length; ) {
+            if (nums1[i] == nums2[j]) {
+                resultSet.add(nums1[i]);
+                i++;
+                j++;
+            } else if (nums1[i] < nums2[j]) {
+                i++;
+            } else {
+                j++;
             }
         }
-
-        int[] result = new int[resultList.size()];
-        for (int i = 0; i < resultList.size(); i++) {
-            result[i] = resultList.get(i);
+        int[] result = new int[resultSet.size()];
+        int index = 0;
+        Iterator<Integer> iterator = resultSet.iterator();
+        while (iterator.hasNext()) {
+            result[index] = iterator.next();
+            index++;
         }
         return result;
     }

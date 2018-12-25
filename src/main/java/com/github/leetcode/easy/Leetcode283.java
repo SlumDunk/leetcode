@@ -16,12 +16,12 @@ package com.github.leetcode.easy;
  */
 public class Leetcode283 {
     public void moveZeroes(int[] nums) {
-        //把0放在连续的子串里头，并存储子串的长度
+        //把0放在连续的子串里头，并存储子串的长度，当做一个整体移动，滚雪球
         int lengthOfZero = 0;
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == 0) {
                 lengthOfZero++;
-            } else {
+            } else {//把非0的交换到0子串前面
                 if (lengthOfZero > 0) {
                     int temp = nums[i];
                     nums[i] = 0;

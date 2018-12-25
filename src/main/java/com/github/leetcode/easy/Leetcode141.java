@@ -52,7 +52,6 @@ public class Leetcode141 {
             if (slow == fast) {
                 return true;
             }
-
         }
         return false;
     }

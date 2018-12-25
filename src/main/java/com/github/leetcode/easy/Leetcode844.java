@@ -34,10 +34,11 @@ package com.github.leetcode.easy;
  */
 public class Leetcode844 {
     public boolean backspaceCompare(String S, String T) {
+        //这里用Buffer来模拟stack的作用
         StringBuffer SBuffer = new StringBuffer();
         for (int i = 0; i < S.length(); i++) {
             if ('#' == S.charAt(i)) {
-                if (SBuffer.length() > 0) {
+                if (SBuffer.length() > 0) {//模拟栈非空出栈
                     SBuffer.deleteCharAt(SBuffer.length() - 1);
                 }
             } else {
@@ -47,7 +48,7 @@ public class Leetcode844 {
         StringBuffer TBuffer = new StringBuffer();
         for (int i = 0; i < T.length(); i++) {
             if ('#' == T.charAt(i)) {
-                if (TBuffer.length() > 0) {
+                if (TBuffer.length() > 0) {//模拟栈非空出栈
                     TBuffer.deleteCharAt(TBuffer.length() - 1);
                 }
             } else {

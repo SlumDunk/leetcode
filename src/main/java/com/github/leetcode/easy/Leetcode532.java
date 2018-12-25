@@ -41,10 +41,10 @@ public class Leetcode532 {
         int count = 0;//加上一个标志位
         Set<Integer> numSet = new HashSet<Integer>();
         for (int i = 0; i < len; i++) {
-            if (k == 0) {
-                if (numSet.contains(nums[i]) && count == 1) {
+            if (k == 0) {//k等于0时特殊处理
+                if (numSet.contains(nums[i]) && count == 1) {//已经有一个了，第二次出现，结果集加1
                     result++;
-                    count = 0;//标志位抹去
+                    count++;
                 } else if (!numSet.contains(nums[i])) {//集合中没有元素，添加进去，同时将标志位置为1
                     numSet.add(nums[i]);
                     count = 1;

@@ -15,26 +15,29 @@ import java.util.Arrays;
  */
 public class Leetcode16 {
     public int threeSumClosest(int[] nums, int target) {
-        int len = nums.length,
-                closeTarget = 0,
-                minReduce = 0,
-                total = 0,
-                i = 0;
+        int len = nums.length;
+        int closeTarget = 0;
+        //最小差值
+        int minReduce = 0;
+        //三个数字和
+        int total = 0;
+        //对数字位置没有要求，先对数组进行排序
         Arrays.sort(nums);
+        //给予初始值
         closeTarget = nums[0] + nums[1] + nums[2];
         minReduce = Math.abs(closeTarget - target);
-        for (; i < len; i++) {
-            int j = i + 1, k = len - 1;
-            while (j < k) {
-                total = nums[i] + nums[j] + nums[k];
+        for (int i = 0; i < len; i++) {
+            int left = i + 1, right = len - 1;
+            while (left < right) {
+                total = nums[i] + nums[left] + nums[right];
                 if (total > target) {
-                    k--;
+                    right--;
                 } else if (total < target) {
-                    j++;
+                    left++;
                 } else {
                     return target;
                 }
-
+                //每次求出最小差值
                 if (minReduce > Math.abs(total - target)) {
                     minReduce = Math.abs(total - target);
                     closeTarget = total;

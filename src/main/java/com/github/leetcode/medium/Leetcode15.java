@@ -29,7 +29,7 @@ public class Leetcode15 {
         if (nums.length < 3) {
             return resultList;
         } else {
-            //变成有序的数组
+            ////对元素索引没要求，可以先变成有序的数组
             Arrays.sort(nums);
             //遍历小于等于0的数
             for (int i = 0; i < nums.length; i++) {

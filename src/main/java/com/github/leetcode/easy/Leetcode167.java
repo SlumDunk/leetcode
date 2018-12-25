@@ -54,6 +54,7 @@ public class Leetcode167 {
 
     private int[] findWithList(int[] numbers, int target) {
         List<Integer> numberList = new ArrayList<Integer>();
+        //用list的位置指针来表明该元素在原来数组中的位置
         for (int i = 0; i < numbers.length; i++) {
             numberList.add(numbers[i]);
         }

@@ -49,15 +49,15 @@ public class Leetcode61 {
         }
         //新的头结点
         ListNode newHead = curNode.next;
-        //新的尾部节点下一位
+        //把原来的链表切断成前后两个链表
         curNode.next = null;
-        ////找到尾部节点
+        //找到右边链表的尾部节点
         curNode = newHead;
         if (curNode != null) {
             while (curNode.next != null) {
                 curNode = curNode.next;
             }
-            //将原来的头部节点接到尾部节点后面
+            //将左边链表的头部节点接到右边链表的尾部节点后面
             curNode.next = head;
         } else {
             newHead = head;

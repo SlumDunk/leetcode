@@ -40,18 +40,20 @@ package com.github.leetcode.medium;
  */
 public class Leetcode80 {
     public int removeDuplicates(int[] nums) {
-        //special case
+        //数组是有序的，只要比较连续的三个数字即可
+        //数组为空
         if (nums == null) return 0;
-        //base case;
+        //数组长度小于3
         if (nums.length <= 2) return nums.length;
-        int len = 2;//下一个元素该放置的位置
-        //general case
+        //前两个数先放进新数组，不违规
+        int len = 2;
+        //从第三个数开始
         for (int i = 2; i < nums.length; i++) {
             if (nums[i] == nums[len - 1] && nums[len - 1] == nums[len - 2]) {//连续三个数字一样，跳过，继续往前走
 
             } else {
-                nums[len] = nums[i];
-                len++;
+                nums[len] = nums[i];//放进新元素
+                len++;//下个元素要放的位置
             }
         }
         return len;
