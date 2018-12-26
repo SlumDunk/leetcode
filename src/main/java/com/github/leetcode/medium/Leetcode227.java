@@ -34,14 +34,16 @@ public class Leetcode227 {
         if (s == null || (len = s.length()) == 0)
             return 0;
         Stack<Integer> stack = new Stack<Integer>();
+        //记录正在处理的数字
         int num = 0;
-        // sign记录本次数字之前的上一个运算符，初始值为'+'，
+        //第一次运算任务
         char sign = '+';
         for (int i = 0; i < len; i++) {
+            //多位数
             if (Character.isDigit(s.charAt(i))) {
                 num = num * 10 + s.charAt(i) - '0';
             }
-            // 先乘除后加减
+            // 遇到新的计算任务，先解决现有的运算任务 先乘除后加减
             if ((!Character.isDigit(s.charAt(i))
                     // 非空格
                     && ' ' != s.charAt(i))
@@ -61,11 +63,14 @@ public class Leetcode227 {
                 if (sign == '/') {
                     stack.push(stack.pop() / num);
                 }
+                //下一次运算任务
                 sign = s.charAt(i);
+                //下一个参加运算的数字
                 num = 0;
             }
         }
 
+        //栈里头的数字出栈，求和即可得到结果
         int res = 0;
         for (int i : stack) {
             res += i;

@@ -32,46 +32,49 @@ import com.github.leetcode.vo.NestedInteger;
  * a. An integer containing value 789.
  */
 public class Leetcode385 {
+    //字符串的位置索引
     int i = 1;
 
     public NestedInteger deserialize(String s) {
+        //它是一个整数，直接构造返回即可
         if (s.charAt(0) != '[')
             return new NestedInteger(Integer.parseInt(s));
-
+        //嵌套数对象，包含list
         return dfs(s.toCharArray());
     }
 
     public NestedInteger dfs(char[] ca) {
-        NestedInteger res = new NestedInteger();
+        NestedInteger result = new NestedInteger();
         while (i < ca.length) {
-            if (ca[i] == ',') {
+            if (ca[i] == '[') {
                 i++;
-            } else if (ca[i] == '[') {
-                i++;
-                res.add(dfs(ca));
-            } else if (ca[i] == ']') {
+                //list开始
+                result.add(dfs(ca));
+            } else if (ca[i] == ']') {//list结束
                 i++;
                 break;
-            } else {
-                int cur = 0;
-                boolean pos = true;
+            } else if (ca[i] == ',') {
+                i++;
+            } else {//找到数字
+                int num = 0;
+                //正负号标记
+                boolean flag = true;
                 if (ca[i] == '-') {
-                    pos = false;
+                    flag = false;
                     i++;
                 }
 
-                while (i < ca.length && ca[i] >= '0' && ca[i] <= '9') {
-                    cur = 10 * cur + ca[i++] - '0';
+                while (i < ca.length && Character.isDigit(ca[i])) {
+                    num = num * 10 + ca[i] - '0';
+                    i++;
                 }
 
-                if (!pos)
-                    cur = -cur;
-
-                res.add(new NestedInteger(cur));
+                if (!flag) {
+                    num = num * -1;
+                }
+                result.add(new NestedInteger(num));
             }
-
         }
-
-        return res;
+        return result;
     }
 }

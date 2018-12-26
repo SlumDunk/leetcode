@@ -27,17 +27,9 @@ public class Leetcode459 {
     }
 
     public boolean repeatedSubstringPattern(String s) {
-        int i = 1, j = 0, n = s.length();
-        int[] dp = new int[n + 1];
-        while (i < n) {
-            if (s.charAt(i) == s.charAt(j)) dp[++i] = ++j;
-            else if (j == 0) ++i;
-            else j = dp[j];
-        }
-        if (dp[n] != 0 && (dp[n] % (n - dp[n]) == 0)) {
-            return Boolean.TRUE;
-        } else {
-            return Boolean.FALSE;
-        }
+        //如果是由重复的子串组成，那么两个原来的字符串拼接成新串
+        //去头去尾还能包含原来的字符串
+        String doubleStr = s + s;
+        return doubleStr.substring(1, doubleStr.length() - 1).contains(s);
     }
 }

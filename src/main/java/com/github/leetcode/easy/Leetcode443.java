@@ -48,14 +48,23 @@ package com.github.leetcode.easy;
  */
 public class Leetcode443 {
     public int compress(char[] chars) {
-        int n = chars.length, cur = 0;
-        for (int i = 0, j = 0; i < n; i = j) {
-            while (j < n && chars[i] == chars[j]) j++;
-            chars[cur++] = chars[i];
-            if (j - i == 1) continue;
-            String countStr = String.valueOf(j - i);
+        //数组目前的长度，下一次开始的位置
+        int len = chars.length, cur = 0;
+        //双指针
+        for (int left = 0, right = 0; left < len; left = right) {
+            //注意数组长度边界问题 字符相同的连续子串
+            while (right < len && chars[left] == chars[right]) right++;
+
+            chars[cur] = chars[left];
+            cur++;
+            //只有一个连续的字符，不做处理
+            if (right - left == 1) continue;
+            //计算字符出现的次数
+            String countStr = String.valueOf(right - left);
+            //放入数组中
             for (int k = 0; k < countStr.length(); k++) {
-                chars[cur++] = countStr.charAt(k);
+                chars[cur] = countStr.charAt(k);
+                cur++;
             }
         }
         return cur;

@@ -19,20 +19,26 @@ import java.util.List;
  */
 public class Leetcode17 {
     public List<String> letterCombinations(String digits) {
+        //每个数字上面可以输出的英文字母
         String[] table = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         List<String> list = new ArrayList<String>();
+        //从字符串第1个字符开始
         letterCombinations(list, digits, "", 0, table);
         return list;
     }
 
+    //回溯递归
     private void letterCombinations(List<String> list, String digits, String curr, int index, String[] table) {
+        //遍历完字符串
         if (index == digits.length()) {
             if (curr.length() != 0) {
                 list.add(curr);
             }
             return;
         }
+        //当前数字对应的英文字符串
         String temp = table[digits.charAt(index) - '0'];
+        //遍历字符串
         for (int i = 0; i < temp.length(); i++) {
             //每次循环把不同字符串加到当前curr之后
             String next = curr + temp.charAt(i);

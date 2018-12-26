@@ -25,54 +25,29 @@ public class Leetcode5 {
         if (s == null || s.isEmpty() || s.length() == 1) {
             return s;
         }
-        String longest = s.substring(0, 1);
-        for (int i = 0; i < s.length(); i++) {
-            // i is the center of the substring
-            String tmp = helper(s, i, i);
-            if (tmp.length() > longest.length()) {
-                longest = tmp;
-            }
-            // i,i+1 is the center of the substring
-            tmp = helper(s, i, i + 1);
-            if (tmp.length() > longest.length()) {
-                longest = tmp;
-            }
-        }
-
-        return longest;
-    }
-
-    private String helper(String s, int start, int end) {
-        while (start >= 0 && end <= s.length() - 1 && s.charAt(start) == s.charAt(end)) {
-            start--;
-            end++;
-        }
-        return s.substring(start + 1, end);
-    }
-
-    public String dpLongestPalindrome(String s) {
-        if (s.length() == 0) {
-            return "";
-        }
         int len = s.length();
+        //开始位置，结束位置
         int start = 0, end = 0;
         int maxLength = 0;
-        int matrix[][] = new int[len][len];
+        //存放i...j回文字符串中间结果
+        int[][] dp = new int[len][len];
+        //字符本身看成一个长度为1的回文字符串
         for (int i = 0; i < len; i++) {
-            matrix[i][i] = 1;
+            dp[i][i] = 1;
         }
-        for (int j = 1; j < len; j++) {
-            for (int i = j - 1; i >= 0; i--) {
-                if (s.charAt(j) == s.charAt(i)) {
-                    if (i + 1 <= j - 1 && matrix[i + 1][j - 1] > 0) {
-                        matrix[i][j] = matrix[i + 1][j - 1] + 2;
-                    } else if (i + 1 == j) {
-                        matrix[i][j] = 2;
+        for (int i = 1; i < len; i++) {
+            //从后往前走
+            for (int j = i - 1; j >= 0; j--) {
+                if (s.charAt(j) == s.charAt(i)) {//j和i的字符相等
+                    if (j + 1 == i) {
+                        dp[j][i] = 2;
+                    } else if (j + 1 <= i - 1 && dp[j + 1][i - 1] > 0) {//中间字符串也是回文序列
+                        dp[j][i] = dp[j + 1][i - 1] + 2;
                     }
-                    if (matrix[i][j] > maxLength) {
-                        start = i;
-                        end = j;
-                        maxLength = matrix[i][j];
+                    if (dp[j][i] > maxLength) {
+                        maxLength = dp[j][i];
+                        start = j;
+                        end = i;
                     }
                 }
             }

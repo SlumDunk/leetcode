@@ -21,19 +21,24 @@ public class Leetcode151 {
         if (s == null || s.length() == 0) {
             return s;
         }
+        //对于只有空格的情况，则去除所有空格，返回即可
         if (s.trim().length() == 0)
-            return s.trim();//对于只有空格的情况，则去除所有空格，返回即可
+            return s.trim();
 
-        s = s.trim();//去除一句话两端多余的空格
-        String[] ss = s.split(" ");
-        String newS = "";
-        for (int i = ss.length - 1; i >= 1; i--) {
-            if (ss[i].equals(""))//由于句子中也可能会有很多空格，所以会产生多余的“”
+        //去除一句话两端多余的空格
+        s = s.trim();
+        String[] array = s.split(" ");
+        StringBuilder buffer = new StringBuilder("");
+        //从后往前走，走到第二个，第一个做特殊处理
+        for (int i = array.length - 1; i >= 1; i--) {
+            //由于句子中也可能会有很多空格，所以会产生多余的“”
+            if (array[i].equals(""))
                 continue;
-            newS = newS + ss[i] + " ";
+            buffer.append(array[i]);
+            buffer.append(" ");
         }
-        newS = newS + ss[0];
-        return newS;
+        buffer.append(array[0]);
+        return buffer.toString();
     }
 
 }

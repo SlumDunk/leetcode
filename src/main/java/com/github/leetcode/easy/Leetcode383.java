@@ -24,16 +24,19 @@ public class Leetcode383 {
     }
 
     public boolean canConstruct(String ransomNote, String magazine) {
-        int[] arr = new int[26];
-        for (int i = 0; i < magazine.length(); i++) {
-            arr[magazine.charAt(i) - 'a']++;
+        //先统计magazine的各个字符数量
+        int[] charCount = new int[26];
+        for (char value : magazine.toCharArray()) {
+            charCount[value - 'a'] = charCount[value - 'a'] + 1;
         }
-        for (int i = 0; i < ransomNote.length(); i++) {
-            if (--arr[ransomNote.charAt(i) - 'a'] < 0) {
+        //遍历ransomNote的字符
+        for (char value : ransomNote.toCharArray()) {
+            if (charCount[value - 'a'] == 0) {
                 return false;
+            } else {
+                charCount[value - 'a'] = charCount[value - 'a'] - 1;
             }
         }
-
         return true;
     }
 }

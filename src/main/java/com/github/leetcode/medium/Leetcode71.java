@@ -26,27 +26,29 @@ public class Leetcode71 {
 
     public String simplifyPath(String path) {
         String[] pathArray = path.split("/");
-        int length = pathArray.length;
-        Stack<String> stack = new Stack<>();
         String result = "";
-        for (int i = 0; i < length; i++) {
-            if (pathArray[i].equals("") || pathArray[i].equals(".")) {
-            } else if (pathArray[i].equals("..")) {
+        Stack<String> stack = new Stack<String>();
+        for (String value : pathArray) {
+            if (value.equals("") || value.equals(".")) {//遇到""和.直接跳过
+
+            } else if (value.equals("..")) {//遇到..表示返回上级目录，若栈非空，那么出栈
                 if (!stack.isEmpty()) {
                     stack.pop();
                 }
-
-            } else {
-                stack.push(pathArray[i]);
+            } else {//进栈
+                stack.push(value);
             }
         }
-        if (stack.isEmpty())
+        //栈是否清空
+        if (stack.isEmpty()) {
             return "/";
-        while (!stack.isEmpty()) {
-            result = "/" + stack.pop() + result;
+        } else {
+            while (!stack.isEmpty()) {
+                result = "/" + stack.pop() + result;
+            }
+            return result;
         }
 
-        return result;
     }
 
 

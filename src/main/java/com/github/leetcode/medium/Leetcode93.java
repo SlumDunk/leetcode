@@ -25,18 +25,29 @@ public class Leetcode93 {
         return result;
     }
 
-    private void dfs(List<String> result, String s, String temp, int curIndex, String curSum, int times) {
+    /**
+     * @param result       结果集
+     * @param s            字符串
+     * @param parentDomain 父级网段
+     * @param curIndex     开始位置
+     * @param curDomain    当前网段
+     * @param times        当前属于第几段 IP地址总共有4个段
+     */
+    private void dfs(List<String> result, String s, String parentDomain, int curIndex, String curDomain, int times) {
         if (times < 4 && times > 0) {
-            temp = temp + curSum + '.';
-            curSum = "";
-        } else if (times == 4 && curIndex == s.length()) {  //得到4个字段过后，如果curIndex不小于s.length()，那么ip合法
-            result.add(temp + curSum);
+            parentDomain = parentDomain + curDomain + '.';
+        } else if (times == 4 && curIndex == s.length()) {
+            //遍历完字符串，且得到4个段，所以是合法IP
+            result.add(parentDomain + curDomain);
         }
+        //要拼接的下一个子网IP段
+        String subDomain = "";
         for (int i = curIndex; i < s.length() && times < 4; i++) {
-            curSum = curSum + s.charAt(i);
-            if (curSum.length() > 1 && curSum.startsWith("0") || Integer.parseInt(curSum) > 255) //该字段ip不合法，剪枝
+            subDomain = subDomain + s.charAt(i);
+            //该子网ip不合法，跳过
+            if (subDomain.length() > 1 && subDomain.startsWith("0") || Integer.parseInt(subDomain) > 255)
                 break;
-            dfs(result, s, temp, i + 1, curSum, times + 1);
+            dfs(result, s, parentDomain, i + 1, subDomain, times + 1);
         }
     }
 

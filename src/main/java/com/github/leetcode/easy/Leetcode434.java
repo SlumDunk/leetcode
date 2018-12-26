@@ -17,6 +17,7 @@ public class Leetcode434 {
         } else {
             int res = 0;
             for (int i = 0; i < s.length(); i++) {
+                //第一个单词比较特殊，首字母前一个不是空格，剩下的单词首字母前一字符是空格
                 if (s.charAt(i) != ' ' && (i == 0 || s.charAt(i - 1) == ' ')) {
                     res++;
                 }

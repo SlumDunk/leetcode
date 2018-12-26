@@ -26,24 +26,28 @@ public class Leetcode520 {
 	}
 	
 	public boolean detectCapitalUse(String word) {
-		char[] arrChar = word.toCharArray();
-		int capitcalCount = 0;
+		char[] array = word.toCharArray();
+		int count = 0;
 		boolean isFirst = false;
-		for (int i = 0; i < arrChar.length; i++) {
-			if ('A' <= arrChar[i] && arrChar[i] <= 'Z') {
-				capitcalCount++;
-				if (i == 0) {
+		for (int i = 0; i < array.length; i++) {
+			//是不是大写字符
+			if (Character.isUpperCase(array[i])) {
+				count++;
+				if (i == 0) {//出现在单词开头
 					isFirst = true;
 				}
 			}
 		}
-		if (isFirst && capitcalCount == 1) {
+		//出现在单词开头且大写字符出现一次
+		if (isFirst && count == 1) {
 			return true;
 		}
-		if (capitcalCount == arrChar.length) {
+		//都是大写
+		if (count == array.length) {
 			return true;
 		}
-		if (capitcalCount == 0) {
+		//出现0次
+		if (count == 0) {
 			return true;
 		}
 		return false;
