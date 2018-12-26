@@ -50,13 +50,20 @@ import java.util.Set;
  */
 public class Leetcode893 {
     public int numSpecialEquivGroups(String[] A) {
+        //只能在一个字符串的奇数号字符之间或者偶数号字符之间进行，
+        //所以我们要分别统计两个字符串的奇数号字符和偶数号字符的分布，然后比较是否等价
+
+        //利用Set元素唯一性的特点
         Set<String> set = new HashSet<String>();
         int len = A.length;
+        //遍历字符串数组
         for (int i = 0; i < len; i++) {
             int[] a = new int[52];
             String item = A[i];
             int subLen = item.length();
+            //遍历字符串
             for (int j = 0; j < subLen; j++) {
+                //统计奇数号字符和偶数号字符的分布情况
                 a[item.charAt(j) - 'a' + 26 * (j % 2)]++;
             }
             set.add(Arrays.toString(a));

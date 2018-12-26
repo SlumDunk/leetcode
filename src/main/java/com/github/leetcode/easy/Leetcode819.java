@@ -48,25 +48,24 @@ public class Leetcode819 {
         Map<String, Integer> wordCountMap = new HashMap<String, Integer>(4096);
         int mostCommon = 0;
         String mostCommonWord = null;
+        //构造禁止的字符串数组list
         for (int i = 0; i < banned.length; i++) {
             bannedList.add(banned[i].toLowerCase());
         }
-        String[] array = paragraph.split(" ");
+        //通过标点符号切割字符串
+        String[] array = paragraph.split("[\\p{Punct}\\s]+");
         String tempString;
         for (int i = 0; i < array.length; i++) {
             tempString = array[i];
-            if (symbolString.indexOf(tempString.charAt(tempString.length() - 1)) != -1) {
+            //是否以特殊符号结尾
+            if (!Character.isLetter(tempString.charAt(tempString.length() - 1))) {
                 tempString = tempString.substring(0, tempString.length() - 1);
             }
+            //不是禁止字符串
             if (bannedList.indexOf(tempString) == -1) {
                 Integer value = null;
-                if (wordCountMap.get(tempString) == null) {
-                    wordCountMap.put(tempString, 1);
-                    value = 1;
-                } else {
-                    value = wordCountMap.get(tempString) + 1;
-                    wordCountMap.put(tempString, value);
-                }
+                value = wordCountMap.getOrDefault(tempString, 0) + 1;
+                wordCountMap.put(tempString, value);
                 if (mostCommon < value) {
                     mostCommon = value;
                     mostCommonWord = tempString;

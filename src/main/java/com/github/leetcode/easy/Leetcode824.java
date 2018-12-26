@@ -46,14 +46,16 @@ public class Leetcode824 {
             for (int i = 0; i < array.length; i++) {
                 temp = array[i];
                 char firstChar = temp.charAt(0);
+                //元音开头
                 if (vowelString.indexOf(firstChar) != -1) {
                     resultBuffer.append(temp);
-                } else {
+                } else {//辅音开头
                     resultBuffer.append(temp.substring(1));
                     resultBuffer.append(firstChar);
                 }
+                //结尾拼上ma
                 resultBuffer.append("ma");
-                resultBuffer.append(generateA(i));
+                resultBuffer.append(generateA(i + 1));
                 if (i < array.length - 1) {
                     resultBuffer.append(" ");
                 }
@@ -65,14 +67,14 @@ public class Leetcode824 {
     }
 
     /**
-     * generate an array composite of 'a'
+     * 产生a数组
      *
-     * @param num
+     * @param num 产生num一个
      * @return
      */
     private char[] generateA(int num) {
-        char[] charArray = new char[num + 1];
-        for (int j = 0; j <= num; j++) {
+        char[] charArray = new char[num];
+        for (int j = 0; j < num; j++) {
             charArray[j] = 'a';
         }
         return charArray;

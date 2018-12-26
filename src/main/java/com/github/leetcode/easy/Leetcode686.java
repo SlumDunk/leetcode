@@ -12,14 +12,15 @@ package com.github.leetcode.easy;
  */
 public class Leetcode686 {
     public int repeatedStringMatch(String A, String B) {
-        int m = A.length(), n = B.length();
-        for (int i = 0; i < m; i++) {
-            int j = 0;
-            while (j < n && A.charAt((i + j) % m) == B.charAt(j)) j++;
-            if (j == n) {
-                return (i + j - 1) / m + 1;
+        StringBuilder buffer = new StringBuilder(A);
+        //buffer拼接字符串A，直到找到子串为B或者直到buffer的长度大于两个字符串长度之和
+        while (buffer.length() <= A.length() + B.length()) {
+            if (buffer.lastIndexOf(B) != -1) {
+                return buffer.length() / A.length();
             }
+            buffer.append(A);
         }
-        return -1;
+        //返回重复次数
+        return buffer.lastIndexOf(B) > -1 ? buffer.length() / A.length() : -1;
     }
 }

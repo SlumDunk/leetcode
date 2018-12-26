@@ -48,40 +48,34 @@ public class Leetcode859 {
     }
 
     public boolean buddyStrings(String A, String B) {
-        if (A.length() != B.length()) {
-            return Boolean.FALSE;
-        } else {
-            List<Character> arrayList1 = new ArrayList<Character>();
-            List<Character> arrayList2 = new ArrayList<Character>();
-            int len = A.length();
-            for (int i = 0; i < len; i++) {
-                if (A.charAt(i) != B.charAt(i)) {
-                    arrayList1.add(A.charAt(i));
-                    arrayList2.add(B.charAt(i));
-                }
-            }
-            if (arrayList1.size() == arrayList2.size() && arrayList1.size() == 2) {
-                if (arrayList1.get(1) == arrayList2.get(0) && arrayList1.get(0) == arrayList2.get(1)) {
-                    return Boolean.TRUE;
-                } else {
-                    return Boolean.FALSE;
-                }
-            } else {
-                if (arrayList1.size() == 0 && arrayList2.size() == 0) {
-                    Set<Character> set = new HashSet<Character>();
-                    for (int i = 0; i < len; i++) {
-                        if (set.contains(A.charAt(i))) {
-                            return Boolean.TRUE;
-                        } else {
-                            set.add(A.charAt(i));
-                        }
-                    }
-                    return Boolean.FALSE;
-                } else {
-                    return Boolean.FALSE;
-                }
-            }
-
+        if (A.length() < 2 || B.length() < 2) {
+            return false;
         }
+        //字符串相等
+        if (A.equals(B)) {
+            int j = 0;
+            //只由一种字符组成
+            for (int i = 1; i < A.length(); i++) {
+                if (A.charAt(0) == A.charAt(i)) {
+                    return true;
+                }
+            }
+        }
+
+        // 字符串不相等
+        //只能有两个位置的字符不相等
+        char[] nonmatched = new char[6];
+        int nm = 0;
+        for (int i = 0; nm < 6 && i < A.length(); i++) {
+            if (A.charAt(i) != B.charAt(i)) {
+                nonmatched[nm] = A.charAt(i);
+                nonmatched[++nm] = B.charAt(i);
+                nm++;
+            }
+        }
+        if (nm == 4) {//两个位置不一致，且对称相等
+            return (nonmatched[0] == nonmatched[3] && nonmatched[1] == nonmatched[2]);
+        }
+        return false;
     }
 }

@@ -18,21 +18,25 @@ package com.github.leetcode.easy;
  */
 public class Leetcode551 {
     public boolean checkRecord(String s) {
-        int countA = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if ('A' == s.charAt(i)) {
-                countA++;
-            }
-            if ('L' == s.charAt(i)) {
-                if (i <= s.length() - 3 && 'L' == s.charAt(i + 1) && 'L' == s.charAt(i + 2)) {
-                    return Boolean.FALSE;
+        //连续L的个数
+        int countL = 0;
+        int countP = 0;
+        for (char value : s.toCharArray()) {
+            if (value == 'A' && countP == 1) {//两个A
+                return false;
+            } else if (value == 'A') {
+                countP++;
+                countL = 0;//同样得复位
+            } else {
+                if (value == 'L' && countL == 2) {//3个L
+                    return false;
+                } else if (value == 'L') {
+                    countL++;
+                } else {
+                    countL = 0;
                 }
             }
         }
-        if (countA > 1) {
-            return Boolean.FALSE;
-        } else {
-            return Boolean.TRUE;
-        }
+        return true;
     }
 }

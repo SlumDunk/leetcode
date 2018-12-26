@@ -16,30 +16,23 @@ public class Leetcode541 {
     }
 
     public String reverseStr(String s, int k) {
-        StringBuffer result = new StringBuffer();
-        reverse(s, k, result);
-
-        return result.toString();
-    }
-
-    private void reverse(String s, int k, StringBuffer result) {
-        if (s.length() < k) {
-            for (int i = s.length() - 1; i >= 0; i--) {
-                result.append(s.charAt(i));
-            }
-            return;
-        } else {
-            if (s.length() >= k && s.length() <= 2 * k) {
-                for (int i = k - 1; i >= 0; i--) {
-                    result.append(s.charAt(i));
-                }
-                for (int i = k; i < s.length(); i++) {
-                    result.append(s.charAt(i));
-                }
-            } else {
-                reverse(s.substring(0, 2 * k), k, result);
-                reverse(s.substring(2 * k), k, result);
+        //2k个字符为一组，翻转前k个，后面的不变
+        int len = s.length();
+        //先将字符串转成数组
+        char[] array = s.toCharArray();
+        for (int i = 0; i < len; i += 2 * k) {
+            //注意数组边界
+            int left = i, right = (i + k - 1) < len ? i + k - 1 : len - 1;
+            while (left < right) {
+                char tmp = array[left];
+                array[left] = array[right];
+                array[right] = tmp;
+                left++;
+                right--;
             }
         }
+        return new String(array);
     }
+
+
 }

@@ -35,15 +35,15 @@ public class Leetcode804 {
                     ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."
             };
     /**
-     * morse map
+     * 摩斯密码映射集合
      */
     private static Map<Character, String> morseMap = new HashMap<Character, String>(64);
 
     /**
-     * initial morse map
+     * 初始化摩斯密码映射集合
      */
     static {
-        Character initialChar=new Character('a');
+        Character initialChar = new Character('a');
         for (int i = 0; i < 26; i++) {
             morseMap.put(initialChar++, arrMorse[i]);
         }
@@ -59,12 +59,14 @@ public class Leetcode804 {
 
     public static int uniqueMorseRepresentations(String[] words) {
         if (words.length > 100) {
-            System.out.println("the max length of words could not longer than 100");
             return 0;
         } else {
+            //利用Set集合元素的唯一性
             Set<String> morseSet = new HashSet<String>();
+            //遍历单词，转换成摩斯密码
             for (int i = 0; i < words.length; i++) {
                 StringBuffer morseCodeBuffer = new StringBuffer();
+                //遍历每个字符
                 for (int j = 0; j < words[i].length(); j++) {
                     morseCodeBuffer.append(morseMap.get(words[i].charAt(j)));
                 }

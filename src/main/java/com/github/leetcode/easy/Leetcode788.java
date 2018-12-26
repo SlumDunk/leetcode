@@ -22,9 +22,12 @@ import java.util.List;
 public class Leetcode788 {
     public static void main(String[] args) {
         Leetcode788 leetcode788 = new Leetcode788();
-        System.out.println(leetcode788.rotatedDigits(857));
+        System.out.println(leetcode788.rotatedDigits(10));
     }
 
+    /**
+     * 翻转后改变的数字
+     */
     public static List<Integer> rotatedNumList = new ArrayList<Integer>();
 
     static {
@@ -34,6 +37,9 @@ public class Leetcode788 {
         rotatedNumList.add(9);
     }
 
+    /**
+     * 翻转后不改变的数字
+     */
     public static List<Integer> unchangedNumList = new ArrayList<Integer>();
 
     static {
@@ -45,26 +51,12 @@ public class Leetcode788 {
 
     public int rotatedDigits(int N) {
         if (N < 1 || N > 10000) {
-            System.out.println("N must be in range [1,10000]");
             return 0;
         } else {
             int count = 0;
-            int modCount = 0;
             for (int i = 1; i <= N; i++) {
-                if (N / 10000 > 0) {
-                    modCount = 4;
-                } else if (N / 1000 > 0) {
-                    modCount = 3;
-                } else if (N / 100 > 0) {
-                    modCount = 2;
-                } else if (N / 10 > 0) {
-                    modCount = 1;
-                } else {
-                    modCount = 0;
-                }
-                if (validateNum(i, modCount)) {
+                if (validateNum(i)) {
                     count++;
-                    System.out.println(i);
                 }
             }
             return count;
@@ -72,29 +64,23 @@ public class Leetcode788 {
     }
 
     /**
-     * validte whether a number is a rotated number
+     * 是否有效的数字
      *
      * @param num
-     * @param modCount
      * @return
      */
-    private Boolean validateNum(int num, int modCount) {
+    private Boolean validateNum(int num) {
         int temp;
         Boolean flag = false;
-        for (int i = 0; i <= modCount; i++) {
-            if (i > 0) {
-                int dividor = (int) Math.pow(10, i);
-                temp = (num / dividor) % 10;
-            } else {
-                temp = num % 10;
-            }
-            if (rotatedNumList.indexOf(temp) == -1 && unchangedNumList.indexOf(temp) == -1) {
+        while (num > 0) {
+            temp = num % 10;
+            num /= 10;
+            if (rotatedNumList.indexOf(temp) == -1 && unchangedNumList.indexOf(temp) == -1) {//翻转后不是有效的数字
                 return false;
-            } else if (rotatedNumList.indexOf(temp) != -1) {
+            } else if (rotatedNumList.indexOf(temp) != -1) {//翻转后数字会改变
                 flag = true;
-            } else {
+            } else {//翻转后数字不改变
                 continue;
-
             }
         }
         return flag;
