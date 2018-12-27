@@ -30,6 +30,7 @@ public class Leetcode35 {
     }
 
     public int findPosition(int[] nums, int left, int right, int target) {
+        //不取=号，保证mid+1不会越界
         if (left < right) {//开始二分查找
             int mid = (left + right) / 2;
             if (nums[mid] == target) {
@@ -41,7 +42,7 @@ public class Leetcode35 {
                     return findPosition(nums, left, mid - 1, target);
                 }
             }
-        } else {
+        } else {//left==right时候，考虑左边界
             if (nums[left] < target) {//target 大于nums[left]
                 return left + 1;
             } else {//target小于等于nums[left]

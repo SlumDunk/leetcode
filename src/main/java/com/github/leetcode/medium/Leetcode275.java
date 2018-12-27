@@ -20,22 +20,20 @@ import java.util.Arrays;
  */
 public class Leetcode275 {
     public int hIndex(int[] citations) {
-        int size = citations.length;
-        if (size <= 0)
+        int len = citations.length;
+        if (len <= 0)
             return 0;
-        Arrays.sort(citations);
-        int count = 0;
-
-        for (int i = size - 1; i >= 0; i--) {
-            if (count >= citations[i]) {
-                int h = Math.max(count, citations[i]);
-                if (size - 1 - i <= h) {
-                    return h;
-                }
+        //二分查找
+        int left = 0, right = len - 1;
+        //循环结束，left回到满足条件的位置
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (citations[mid] >= len - mid) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
             }
-            count++;
         }
-        return count;
-
+        return len - left;
     }
 }

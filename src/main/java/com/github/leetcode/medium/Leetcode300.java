@@ -32,6 +32,7 @@ public class Leetcode300 {
 //            max = Math.max(max, d[i]);
 //        }
 //        return max;
+        //不需要连续
         if (nums == null || nums.length == 0) return 0;
         int[] dp = new int[nums.length];
         dp[0] = 1;

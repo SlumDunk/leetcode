@@ -56,6 +56,9 @@ public class Leetcode33 {
     }
 
     private int binarySearch(int[] nums, int target, int left, int right) {
+        if (left > right) {
+            return -1;
+        }
         if (left == right) {
             if (nums[left] == target) {
                 return left;
@@ -65,7 +68,7 @@ public class Leetcode33 {
         }
         int mid = (left + right) / 2;
         if (target < nums[mid]) {
-            return binarySearch(nums, target, left, mid);
+            return binarySearch(nums, target, left, mid - 1);
         } else if (target == nums[mid]) {
             return mid;
         } else {

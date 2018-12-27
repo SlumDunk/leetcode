@@ -45,6 +45,7 @@ public class Leetcode29 {
             return 0;
         } else {
             int result = 1;
+            //result*originalDivisor=divisor
             long originalDivisor = divisor;
             //利用二进制
             while (dividend > (divisor << 1)) {

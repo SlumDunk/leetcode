@@ -35,6 +35,7 @@ public class Leetcode74 {
         if (m == 0) return false;
         int n = matrix[0].length;
         int left = 0, right = m * n - 1;
+        //保证两个元素的时候左右元素都能被取到，需要=号
         while (left <= right) {
             int mid = (left + right) / 2;
             int tmp = matrix[mid / n][mid % n];//转化为二维数组中对应的位置指针

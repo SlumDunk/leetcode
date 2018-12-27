@@ -27,15 +27,20 @@ package com.github.leetcode.medium;
  */
 public class Leetcode240 {
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix.length == 0 || matrix[0].length == 0) return false;
-
-        int i = 0, j = matrix[0].length - 1;
-
-        while (i < matrix.length && j >= 0) {
-            int x = matrix[i][j];
-            if (target == x) return true;
-            else if (target < x) --j;
-            else ++i;
+        if (matrix.length == 0 || matrix[0].length == 0)
+            return false;
+        int row = matrix.length;
+        int col = matrix[0].length;
+        //从右上角开始，等于目标值那么返回，小于目标值，前进一行，大于目标值，列坐标减小
+        int i = 0, j = col - 1;
+        while (j >= 0 && i < row) {
+            if (matrix[i][j] == target) {
+                return true;
+            } else if (matrix[i][j] > target) {
+                j--;
+            } else {
+                i++;
+            }
         }
         return false;
 

@@ -38,20 +38,25 @@ public class Leetcode230 {
     private int counter;
 
     public int kthSmallest(TreeNode root, int k) {
+        //对树进行中序遍历即可产生有序的数组
         inorder(root, k);
         return temp.val;
     }
 
-    public void inorder(TreeNode node, int k) {
-        // perform in order tree traversal
-        if (node == null)
-            return; // base case
-        inorder(node.left, k);
-        if (++counter == k) {
-            temp = node;
+    public void inorder(TreeNode root, int k) {
+        //空节点或者已经找到了，不用再走
+        if (root == null || counter == k) {
             return;
+        } else {
+            //左子树
+            inorder(root.left, k);
+            //根节点
+            if (++counter == k) {
+                temp = root;
+                return;
+            }
+            //右子树
+            inorder(root.right, k);
         }
-        inorder(node.right, k);
     }
-
 }

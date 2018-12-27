@@ -26,16 +26,23 @@ import java.util.PriorityQueue;
  */
 public class Leetcode378 {
     public int kthSmallest(int[][] matrix, int k) {
+        //下一个最小元素只可能在当前行或下一行行首出现
+        //求最小的
         if (k == 1) return matrix[0][0];
         int n = matrix.length;
+        //求最大的
         if (k == n * n) return matrix[n - 1][n - 1];
         List<Cell> list = new ArrayList<>(n);
+        //将每行行首加入list
         for (int i = 0; i < n; i++) { // O(n)
             list.add(new Cell(i, 0, matrix[i][0]));
         }
-        PriorityQueue<Cell> heap = new PriorityQueue<>(list); // O(n) -> sift down
+        //构建最小堆
+        PriorityQueue<Cell> heap = new PriorityQueue<>(list);
         for (int i = 1; i < k; i++) {
+            //当前最小元素出堆
             Cell cell = heap.poll();
+            //最小元素右边元素进堆
             if (cell.y + 1 < n)
                 heap.add(new Cell(cell.x, cell.y + 1, matrix[cell.x][cell.y + 1]));
         }

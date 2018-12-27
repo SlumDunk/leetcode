@@ -40,18 +40,19 @@ public class Leetcode81 {
             }
             int mid = (left + right) / 2;
             if (nums[mid] == target) return true;
-            if (nums[mid] == nums[left]) left++;//避免找到假拐点
-            else if (nums[mid] > nums[left]) {
+            //避免找到假拐点
+            if (nums[mid] == nums[left]) left++;
+            else if (nums[mid] > nums[left]) {//左半部分有序
                 if (nums[mid] > target && target >= nums[left]) {
-                    right = mid - 1;
+                    right = mid;
                 } else {
                     left = mid + 1;
                 }
-            } else {//mid是拐点的情况
+            } else {//右半部分有序
                 if (nums[mid] < target && nums[right] >= target) {
                     left = mid + 1;
                 } else {
-                    right = mid - 1;
+                    right = mid;
                 }
             }
         }

@@ -22,15 +22,13 @@ public class Leetcode852 {
     }
 
     public static int peakIndexInMountainArray(int[] A) {
-        if (A == null || A.length == 0) {
-            return 0;
-        }
-        int left = 0, right = A.length - 1;
+        //二分查找
+        int left = 0, right = A.length;
         while (left < right) {
             int mid = left + (right - left) / 2;
-            if (A[mid] < A[mid + 1]) {
+            if (A[mid + 1] > A[mid]) {//在peak点左侧
                 left = mid + 1;
-            } else {
+            } else {//在peak点右侧，包含peak点
                 right = mid;
             }
         }

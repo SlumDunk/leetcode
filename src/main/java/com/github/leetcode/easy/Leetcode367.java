@@ -20,6 +20,7 @@ public class Leetcode367 {
         if (num <= 1) {
             return true;
         } else {
+            //num的平方根<=num/2
             long left = 0, right = num / 2;
             while (left <= right) {
                 long mid = (left + right) / 2;

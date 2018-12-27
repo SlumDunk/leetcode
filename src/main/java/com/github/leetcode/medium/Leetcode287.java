@@ -29,20 +29,20 @@ public class Leetcode287 {
 
     public int findDuplicate(int[] nums) {
         //取值范围是1-n
-        int left=1,right=nums.length;
-        while(left<right){
-            int mid=(left+right)/2;//利用mid的位置指针来定位多余的数字的取值范围
-            int count=0;
-            for(int i=0;i<nums.length;i++){
-                if(nums[i]<=mid){
+        int left = 1, right = nums.length;
+        while (left < right) {
+            int mid = (left + right) / 2;//利用mid的位置指针来定位多余的数字的取值范围
+            int count = 0;
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] <= mid) {
                     count++;
                 }
             }
-
-            if(count>mid){
-                right=mid;//缩小范围
-            }else{
-                left=mid+1;
+            //重复数字在1-mid之间
+            if (count > mid) {
+                right = mid;//缩小范围
+            } else {//重复数字在mid+1到n之间
+                left = mid + 1;
             }
         }
         return left;//left和right同样大

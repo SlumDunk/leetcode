@@ -28,8 +28,12 @@ public class Leetcode69 {
         while (left < right) {
             int mid = (left + right) / 2;
             //注意x/mid>mid和x>mid*mid是有区别的
-            if (x / mid >= mid) left = mid + 1;//保证最终的right比根号值要大1
-            else right = mid;
+            if (x / mid >= mid) {//保证最终的right比根号值要大1
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+
         }
 
         return right - 1;

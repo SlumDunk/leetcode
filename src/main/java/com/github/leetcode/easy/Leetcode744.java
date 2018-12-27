@@ -42,24 +42,25 @@ package com.github.leetcode.easy;
  */
 public class Leetcode744 {
     public char nextGreatestLetter(char[] letters, char target) {
-        char result = findNextGreatestLetter(letters, target, 0, letters.length - 1);
-        return result;
-    }
-
-    private char findNextGreatestLetter(char[] letters, char target, int low, int high) {
-        if (low < high) {
-            int mid = (low + high) / 2;
-            if (letters[mid] > target) {
-                return findNextGreatestLetter(letters, target, 0, mid);
-            } else {
-                return findNextGreatestLetter(letters, target, mid + 1, high);
+        //二分查找，没有找到比目标值大的，返回第一个元素
+        int left = 0, right = letters.length - 1;
+        //找到比目标值大的最近的位置
+        //这里不能存在等号条件，因为mid会作为上边界的情况，有等号会出现死循环
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (letters[mid] == target) {
+                left = mid + 1;
+            } else if (letters[mid] > target) {//比目标值大
+                right = mid;
+            } else {//比目标值小
+                left = mid + 1;
             }
+        }
+        //如果最邻近的位置元素比目标值大，返回
+        if (letters[left] > target) {
+            return letters[left];
         } else {
-            if (letters[low] > target) {
-                return letters[low];
-            } else {
-                return letters[0];
-            }
+            return letters[0];
         }
     }
 }

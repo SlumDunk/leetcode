@@ -34,23 +34,25 @@ public class Leetcode475 {
         Arrays.sort(houses);
         Arrays.sort(heaters);
         int max = 0;
-        for (int i = 0; i < houses.length; i++) {
-            int left = 0;
-            int right = heaters.length - 1;
+        for (int house : houses) {
+            //找到每个房子最近的右侧火炉
+            int left = 0, right = heaters.length - 1;
             while (left < right) {
                 int mid = left + (right - left) / 2;
-                if (houses[i] > heaters[mid]) {
+                if (house > heaters[mid]) {
                     left = mid + 1;
                 } else {
                     right = mid;
                 }
             }
             if (right == 0) {
-                max = Math.max(max, Math.abs(heaters[right] - houses[i]));
+                max = Math.max(max, Math.abs(house - heaters[right]));
             } else {
-                int rightDistance = Math.abs(heaters[right] - houses[i]);
-                int leftDistance = Math.abs(houses[i] - heaters[right - 1]);
-                max = Math.max(max, Math.min(rightDistance, leftDistance));
+                //离左边火炉的距离
+                int leftDistance = Math.abs(house - heaters[right - 1]);
+                //离右边火炉的距离
+                int rightDistance = Math.abs(house - heaters[right]);
+                max = Math.max(max, Math.min(leftDistance, rightDistance));
             }
         }
         return max;
