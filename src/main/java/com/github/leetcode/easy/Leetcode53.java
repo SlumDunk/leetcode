@@ -37,13 +37,15 @@ public class Leetcode53 {
             return nums[left];
         }
         int mid = (left + right) / 2;
+        //左边最大连续和
         int leftSub = maxSubArraySum(nums, left, mid);
+        //右边最大连续和
         int rightSub = maxSubArraySum(nums, mid + 1, right);
 
         int leftSum = Integer.MIN_VALUE;
         int rightSum = Integer.MIN_VALUE;
         int sum = 0;
-
+        //包含中间点求最大连续和
         for (int i = mid; i >= left; i--) {
             sum += nums[i];
             leftSum = Math.max(leftSum, sum);
@@ -53,6 +55,7 @@ public class Leetcode53 {
             sum += nums[i];
             rightSum = Math.max(rightSum, sum);
         }
+
         int subResult = Math.max(leftSub, rightSub);
 
         return Math.max(subResult, leftSum + rightSum);

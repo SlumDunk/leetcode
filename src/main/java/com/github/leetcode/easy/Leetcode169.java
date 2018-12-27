@@ -1,5 +1,6 @@
 package com.github.leetcode.easy;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ import java.util.Map;
  */
 public class Leetcode169 {
     public int majorityElement(int[] nums) {
+//        Arrays.sort(nums);
+//        return nums[nums.length/2];
         int len = nums.length;
         //存储每个数字出现的次数
         Map<Integer, Integer> numMap = new HashMap<>();
