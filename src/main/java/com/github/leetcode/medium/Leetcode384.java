@@ -16,7 +16,7 @@ import java.util.Random;
  * // Shuffle the array [1,2,3] and return its result. Any permutation of [1,2,3] must equally likely to be returned.
  * solution.shuffle();
  * <p>
- * // Resets the array back to its original configuration [1,2,3].
+ * // Resets the array backTrack to its original configuration [1,2,3].
  * solution.reset();
  * <p>
  * // Returns the random shuffling of array [1,2,3].

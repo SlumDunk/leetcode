@@ -30,18 +30,27 @@ public class Leetcode90 {
         int len = nums.length;
         Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();
-        res.add(new ArrayList<>());
-        sub(0, new ArrayList<>(), len, nums, res);
+        backTrack(0, new ArrayList<>(), len, nums, res);
         return res;
     }
 
-    public void sub(int start, List<Integer> ans, int len, int[] nums, List<List<Integer>> res) {
+    /**
+     * @param start 开始位置
+     * @param ans   中间结果集
+     * @param len   数组长度
+     * @param nums  数组
+     * @param res   结果集
+     */
+    public void backTrack(int start, List<Integer> ans, int len, int[] nums, List<List<Integer>> res) {
+        res.add(new ArrayList<Integer>(ans));
         for (int i = start; i < len; i++) {
             if (i > start && nums[i] == nums[i - 1])//往前重复的元素跳过
                 continue;
+            //将元素添加到中间结果集
             ans.add(nums[i]);
-            res.add(new ArrayList<Integer>(ans));
-            sub(i + 1, ans, len, nums, res);
+            //继续往前
+            backTrack(i + 1, ans, len, nums, res);
+            //回溯移除元素
             ans.remove(ans.size() - 1);
         }
         return;

@@ -40,22 +40,20 @@ import java.util.List;
  * 在n == 2的时候，序列为 0 1 3 2，其中3 = 2+1 , 2 = 2+0；
  * <p>
  * 在n == 3的时候，序列为 0 1 3 2 6 7 5 4，其中6 = 4+2 , 7 = 4+3 , 5 = 4+1 , 4 = 4+0 ；
- * ---------------------
- * 作者：xuyueqing1225
- * 来源：CSDN
- * 原文：https://blog.csdn.net/xuyueqing1225/article/details/77725583
- * 版权声明：本文为博主原创文章，转载请附上博文链接！
  */
 public class Leetcode89 {
     public List<Integer> grayCode(int n) {
-        List<Integer> result = new ArrayList();
+        //找规律
+        List<Integer> result = new ArrayList<Integer>();
         result.add(0);
         int num = 1;
-        for (int x = 0; x < n; x++) {
-            int length = result.size();
-            for (int i = length - 1; i >= 0; i--)
-                result.add(result.get(i) + num);
-            num *= 2;
+        for (int i = 0; i < n; i++) {
+            int size = result.size();
+            //从后往前走
+            for (int j = size - 1; j >= 0; j--) {
+                result.add(result.get(j) + num);
+            }
+            num <<= 1;
         }
         return result;
     }

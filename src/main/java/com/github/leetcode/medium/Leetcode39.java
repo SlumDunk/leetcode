@@ -65,7 +65,8 @@ public class Leetcode39 {
         } else if (sum > target) {
             return;
         } else {
-            for (int i = currentIndex; i < candidates.length; i++) {//去掉重复的组合，指针只能从当前位置往前走
+            //当前元素可以使用多次，所以指针可以从当前位置往前走 候选数字里头没有重复值，所以不需要过滤掉相同的元素
+            for (int i = currentIndex; i < candidates.length; i++) {
                 temp.add(candidates[i]);
                 findSum(candidates, target, sum + candidates[i], i, temp, res);
                 temp.remove(temp.size() - 1);

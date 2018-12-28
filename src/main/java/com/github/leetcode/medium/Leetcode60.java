@@ -46,7 +46,7 @@ public class Leetcode60 {
             factorial *= i;
         }
 
-        //第一位后面有n-1位
+        //第一位后面有n-1位，所以有(n-1)!种变化
         int round = n - 1;
         StringBuilder buffer = new StringBuilder("");
         //因为第一位的数字总是从小到大

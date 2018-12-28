@@ -18,7 +18,8 @@ import java.util.List;
  */
 public class Leetcode784 {
     public static void main(String[] args) {
-
+        Leetcode784 leetcode784 = new Leetcode784();
+        leetcode784.letterCasePermutation("a1b2");
     }
 
     public List<String> letterCasePermutation(String S) {
@@ -26,24 +27,35 @@ public class Leetcode784 {
         if (S == null) {
             return null;
         }
-        //dfs
-        char[] a = S.toLowerCase().toCharArray();
-        helper(a, 0, res);
+        //字符串转化为字符数组
+        char[] array = S.toLowerCase().toCharArray();
+        backTrack(array, 0, res);
         return res;
     }
 
-    private void helper(char[] a, int position, List<String> res) {
-        if (position == a.length) {
-            res.add(new String(a));
+    /**
+     * @param array    字符数组
+     * @param position 开始位置
+     * @param res      结果集
+     */
+    private void backTrack(char[] array, int position, List<String> res) {
+        //走完了，证明产生了新字符串，添加到结果集
+        if (position == array.length) {
+            res.add(new String(array));
             return;
         }
+        //当前字符不改变，往前走
+        backTrack(array, position + 1, res);
 
-        helper(a, position + 1, res);
-
-        if (Character.isLetter(a[position])) {
-            a[position] = Character.toUpperCase(a[position]);
-            helper(a, position + 1, res);
-            a[position] = Character.toLowerCase(a[position]);
+        //当前位置是字母
+        if (Character.isUpperCase(array[position])) {
+            //转化为小写字母
+            array[position] = Character.toLowerCase(array[position]);
+            backTrack(array, position + 1, res);
+        } else if (Character.isLowerCase(array[position])) {
+            //转化为大写字母
+            array[position] = Character.toUpperCase(array[position]);
+            backTrack(array, position + 1, res);
         }
     }
 }

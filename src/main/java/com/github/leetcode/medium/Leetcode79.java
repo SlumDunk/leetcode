@@ -28,20 +28,34 @@ public class Leetcode79 {
         boolean[][] isVisited = new boolean[board.length][board[0].length];  //访问标记
         for (int i = 0; i < board.length; i++)
             for (int j = 0; j < board[0].length; j++)
-                if (isThisWay(board, word, i, j, 0, isVisited)) return true;
+                if (backTrack(board, word, i, j, 0, isVisited)) return true;
         return false;
     }
 
-    public boolean isThisWay(char[][] board, String word, int row, int column, int index, boolean[][] isVisited) {
+    /**
+     * @param board     数组
+     * @param word      单词
+     * @param row       开始行
+     * @param column    开始列
+     * @param index     单词字符索引
+     * @param isVisited 标记数组 true为访问过 false为未访问
+     * @return
+     */
+    public boolean backTrack(char[][] board, String word, int row, int column, int index, boolean[][] isVisited) {
+        //行或列越界或者当前字符不等于目标单词index位置的字符或者该位置字符已经访问过
         if (row < 0 || row >= board.length || column < 0 || column >= board[0].length
                 || isVisited[row][column] || board[row][column] != word.charAt(index))
             return false;  //剪枝
-        if (++index == word.length()) return true;  //word所有字符均匹配上
+        //word所有字符均匹配上
+        if (index == word.length() - 1) return true;
+        index++;
+        //设置该位置已经访问
         isVisited[row][column] = true;
         for (int i = 0; i < 4; i++)
-            if (isThisWay(board, word, row + dh[i], column + dw[i], index, isVisited))
+            if (backTrack(board, word, row + dh[i], column + dw[i], index, isVisited))
                 return true;  //以board[row][column]为起点找到匹配上word路径
-        isVisited[row][column] = false;  //遍历过后，将该点还原为未访问过
+        //遍历过后，将该点还原为未访问过
+        isVisited[row][column] = false;
         return false;
     }
 }

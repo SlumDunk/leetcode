@@ -23,25 +23,45 @@ import java.util.List;
  * Output: [[1,2,6], [1,3,5], [2,3,4]]
  */
 public class Leetcode216 {
-    private void find(int from, int sum, int[] nums, int step, List<List<Integer>> results) {
+    public static void main(String[] args) {
+        Leetcode216 leetcode216 = new Leetcode216();
+        leetcode216.combinationSum3(3, 7);
+    }
+
+    /**
+     * @param from    开始值
+     * @param sum     目标和值
+     * @param temp    中间结果值
+     * @param count   中间结果数字个数
+     * @param results 结果集
+     * @param k       中间结果目标数量
+     */
+    private void find(int from, int sum, List<Integer> temp, int count, List<List<Integer>> results, int k) {
+        //目标和值小于0，直接返回
         if (sum < 0) return;
-        if (step == nums.length) {
+        //个数相同
+        if (count == k) {
+            //目标和值等于0
             if (sum == 0) {
-                Integer[] n = new Integer[nums.length];
-                for(int i=0; i<step; i++) n[i] = nums[i];
-                results.add(Arrays.asList(n));
+                results.add(new ArrayList<Integer>(temp));
             }
             return;
         }
-        for(int i=from; i<10 && i<=sum; i++) {
-            nums[step] = i;
-            find(i+1, sum-i, nums, step+1, results);
+
+        for (int i = from; i < 10 && i <= sum; i++) {
+            //中间结果集加上
+            temp.add(i);
+            find(i + 1, sum - i, temp, count + 1, results, k);
+            //回溯移除i
+            temp.remove(temp.size() - 1);
         }
 
     }
+
     public List<List<Integer>> combinationSum3(int k, int n) {
         List<List<Integer>> results = new ArrayList<>();
-        find(1, n, new int[k], 0, results);
+        List<Integer> temp = new ArrayList<Integer>();
+        find(1, n, temp, 0, results, k);
         return results;
     }
 }

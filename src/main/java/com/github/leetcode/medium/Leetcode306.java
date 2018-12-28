@@ -1,5 +1,9 @@
 package com.github.leetcode.medium;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author: zerongliu
  * @Date: 10/27/18 11:18
@@ -28,34 +32,110 @@ package com.github.leetcode.medium;
  * 我们可以知道第一个数字的长度不应该超过字符串长度的一般，第二个数字的长度无法超过字符串长度减去第一个数字的长度。
  */
 public class Leetcode306 {
+    public static void main(String[] args) {
+        Leetcode306 leetcode306 = new Leetcode306();
+        leetcode306.isAdditiveNumber("199100199");
+    }
+
+
     public boolean isAdditiveNumber(String num) {
-        if (num == null || num.length() < 3) return false;
-        for (int i = 1; i <= num.length() / 2; i++) {
-            //如果以0开头，则只能取0作为加数
-            if (num.charAt(0) == '0' && i > 1) break;
-            String s1 = num.substring(0, i);
-            long num1 = Long.parseLong(s1);
-            for (int j = i + 1; j <= num.length() - i; j++) {
-                //如果以0开头，则只能取0作为加数
-                if (num.charAt(i) == '0' && j > i + 1) break;
-                String s2 = num.substring(i, j);
-                long num2 = Long.parseLong(s2);
-                //递归判断
-                if (isAdditiveNumber(num.substring(j), num1, num2)) {
+        return backTrack(num, new ArrayList<BigInteger>());
+    }
+
+    /**
+     * @param remain 剩余字符串
+     * @param cur    当前数字list
+     * @return
+     */
+    public boolean backTrack(String remain, List<BigInteger> cur) {
+        if (remain.length() == 0) {
+            return cur.size() >= 3;
+        }
+        if (cur.size() < 2) {//少于两个数字
+            for (int i = 0; i < remain.length(); ++i) {
+                //构造数字
+                String part = remain.substring(0, i + 1);
+                if (part.length() > 1 && part.startsWith("0")) {  // no leading zero
+                    continue;
+                }
+                //数字加入集合中
+                cur.add(new BigInteger(part));
+                if (backTrack(remain.substring(i + 1), cur)) {
                     return true;
                 }
+                //数字从集合中移除
+                cur.remove(cur.size() - 1);
+            }
+        } else {
+            //获取下一个要找的字符串，应该等于前面两个数字的和
+            BigInteger nextval = cur.get(cur.size() - 1).add(cur.get(cur.size() - 2));
+            String next = String.valueOf(nextval);
+            //以和值开头，符合条件
+            if (remain.startsWith(next)) {
+                //添加到结果集
+                cur.add(nextval);
+                if (backTrack(remain.substring(next.length()), cur)) {
+                    return true;
+                }
+                //从结果集中移除
+                cur.remove(cur.size() - 1);
             }
         }
         return false;
     }
 
 
-    private boolean isAdditiveNumber(String num, long num1, long num2) {
-        //如果剩余长度为0，说明之前都是AdditiveNumber，返回true
-        if (num.length() == 0) return true;
-        long add = num1 + num2;
-        String adds = add + "";
-        //递归判断
-        return num.startsWith(adds) && isAdditiveNumber(num.substring(adds.length()), num2, add);
+//    public boolean isAdditiveNumber(String s) {
+//        int n = s.length();
+//        for (int i = 1; i < n; i++) {
+//            for (int j = i + 1; j < n; j++) {
+//                long a = parse(s.substring(0, i));
+//                long b = parse(s.substring(i, j));
+//                if (a == -1 || b == -1) {
+//                    continue;
+//                } else {
+//                    if (backTrack(s.substring(j), a, b)) {
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+//        return false;
+//    }
+
+    /**
+     * @param s 剩下的字符串
+     * @param a 左factor
+     * @param b 右factor
+     * @return
+     */
+//    boolean backTrack(String s, long a, long b) {
+//        if (s.length() == 0) return true;
+//
+//        for (int i = 1; i <= s.length(); i++) {
+//            long c = parse(s.substring(0, i));
+//            if (c == -1) continue;
+//            if (c == a + b) {
+//                return backTrack(s.substring(i), b, c);
+//            }
+//        }
+//        return false;
+//    }
+
+    /**
+     * 字符串转成数字
+     *
+     * @param s
+     * @return
+     */
+    long parse(String s) {
+        if (!s.equals("0") && s.startsWith("0")) return -1;
+        long result = 0;
+        try {
+            result = Long.parseLong(s);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+        return result;
     }
 }

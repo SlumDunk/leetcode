@@ -52,9 +52,11 @@ public class Leetcode40 {
         } else {
             for (int i = currentIndex; i < candidates.length; i++) {
                 temp.add(candidates[i]);
-                findSum(candidates, target, sum + candidates[i], i + 1, temp, res);//从当前位置的下一个位置开始，因为每个位置的数字只能用一次
+                //从当前位置的下一个位置开始，因为每个位置的数字只能用一次
+                findSum(candidates, target, sum + candidates[i], i + 1, temp, res);
                 temp.remove(temp.size() - 1);
-                while (i + 1 < candidates.length && candidates[i + 1] == candidates[i]) {//去掉重复的组合
+                //候选数字里头会有重复值
+                while (i + 1 < candidates.length && candidates[i + 1] == candidates[i]) {
                     i++;
                 }
             }

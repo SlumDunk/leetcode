@@ -21,7 +21,7 @@ public class Leetcode93 {
 
     public List<String> restoreIpAddresses(String s) {
         List<String> result = new ArrayList<String>();
-        dfs(result, s, "", 0, "", 0);
+        backTrack(result, s, "", 0, "", 0);
         return result;
     }
 
@@ -29,25 +29,26 @@ public class Leetcode93 {
      * @param result       结果集
      * @param s            字符串
      * @param parentDomain 父级网段
-     * @param curIndex     开始位置
+     * @param startIndex   开始位置
      * @param curDomain    当前网段
      * @param times        当前属于第几段 IP地址总共有4个段
      */
-    private void dfs(List<String> result, String s, String parentDomain, int curIndex, String curDomain, int times) {
+    private void backTrack(List<String> result, String s, String parentDomain, int startIndex, String curDomain, int times) {
         if (times < 4 && times > 0) {
             parentDomain = parentDomain + curDomain + '.';
-        } else if (times == 4 && curIndex == s.length()) {
+        } else if (times == 4 && startIndex == s.length()) {
             //遍历完字符串，且得到4个段，所以是合法IP
             result.add(parentDomain + curDomain);
         }
         //要拼接的下一个子网IP段
         String subDomain = "";
-        for (int i = curIndex; i < s.length() && times < 4; i++) {
+        for (int i = startIndex; i < s.length() && times < 4; i++) {
             subDomain = subDomain + s.charAt(i);
             //该子网ip不合法，跳过
             if (subDomain.length() > 1 && subDomain.startsWith("0") || Integer.parseInt(subDomain) > 255)
                 break;
-            dfs(result, s, parentDomain, i + 1, subDomain, times + 1);
+            backTrack(result, s, parentDomain, i + 1, subDomain, times + 1);
+            //因为父网段和子网段之间用.隔开，所以递归过程不会出现重复，所以回溯时不需要移除末尾字符
         }
     }
 

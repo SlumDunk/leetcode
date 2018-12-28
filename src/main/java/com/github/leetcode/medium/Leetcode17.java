@@ -27,7 +27,14 @@ public class Leetcode17 {
         return list;
     }
 
-    //回溯递归
+    /**
+     * 回溯递归
+     * @param list 结果集
+     * @param digits 字符串
+     * @param curr 当前字符串
+     * @param index 当前位置
+     * @param table 数字字母映射表
+     */
     private void letterCombinations(List<String> list, String digits, String curr, int index, String[] table) {
         //遍历完字符串
         if (index == digits.length()) {

@@ -23,23 +23,41 @@ public class Leetcode131 {
     public List<List<String>> partition(String s) {
         List<List<String>> result = new ArrayList<List<String>>();
         List<String> temp = new ArrayList<String>();
-        dfs(s, 0, temp, result);
+        backTrack(s, 0, temp, result);
         return result;
     }
-    private void dfs(String s, int curIndex, List<String> temp, List<List<String>> result) {
-        if (curIndex == s.length()) {
+
+    /**
+     * @param s          字符串
+     * @param startIndex 开始位置
+     * @param temp       中间结果
+     * @param result     结果集
+     */
+    private void backTrack(String s, int startIndex, List<String> temp, List<List<String>> result) {
+        if (startIndex == s.length()) {
             result.add(new ArrayList<String>(temp));
             return;
         }
-        for (int i = curIndex + 1; i <= s.length(); i++) {
-            String prefix = s.substring(curIndex, i);
+        for (int i = startIndex + 1; i <= s.length(); i++) {
+            //startIndex...i前缀子串
+            String prefix = s.substring(startIndex, i);
+            //前缀子串非回文序列
             if (!isPrlindrome(prefix))  //剪枝
                 continue;
+            //前缀子串为回文序列，添加到中间结果集
             temp.add(prefix);
-            dfs(s, i, temp, result);
+            backTrack(s, i, temp, result);
+            //移除末尾元素
             temp.remove(temp.size() - 1);
         }
     }
+
+    /**
+     * 校验字符串是不是回文序列
+     *
+     * @param s
+     * @return
+     */
     private boolean isPrlindrome(String s) {
         int left = 0;
         int right = s.length() - 1;

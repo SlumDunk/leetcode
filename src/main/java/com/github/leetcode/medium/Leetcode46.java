@@ -1,6 +1,7 @@
 package com.github.leetcode.medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,54 +31,47 @@ public class Leetcode46 {
     public static void main(String[] args) {
         int[] nums = new int[]{1, 1, 3};
         Leetcode46 leetcode46 = new Leetcode46();
-        System.out.println(leetcode46.permute2(nums));
+        System.out.println(leetcode46.permute(nums));
     }
+
 
     public List<List<Integer>> permute(int[] nums) {
-        LinkedList<List<Integer>> result = new LinkedList<List<Integer>>();
-        if (nums.length == 0) {
-            return result;
-        }
-        List<Integer> first = new LinkedList<Integer>();
-        first.add(0, nums[0]);
-        result.add(first);
-        List<Integer> temp;
-        for (int i = 1; i < nums.length; i++) {
-            int number = nums[i];
-            do {
-                temp = result.removeFirst();
-                for (int j = 0; j <= temp.size(); j++) {
-                    temp.add(j, number);
-                    result.add(new LinkedList<Integer>(temp));
-                    temp.remove(j);
-                }
-            } while (result.getFirst().size() == i);
-        }
-        return result;
-    }
-
-    public List<List<Integer>> permute2(int[] nums) {
-
         List<List<Integer>> result = new ArrayList<List<Integer>>();
-        List<Integer> visitedList = new ArrayList<Integer>();
         if (nums.length == 0)
-            return result;
-        getResult(result, nums, new ArrayList<Integer>(), 0, visitedList);
+            return null;
+        //对数组进行排序
+        Arrays.sort(nums);
+        getResult(result, nums, new ArrayList<Integer>(), 0, new int[nums.length]);
         return result;
     }
 
-    public static void getResult(List<List<Integer>> result, int[] nums, ArrayList<Integer> ans, int num, List<Integer> visitedList) {
+    /**
+     * @param result 结果集
+     * @param nums   候选数字
+     * @param ans    缓存结果
+     * @param num    当前数组长度
+     * @param pos    数组中各数字标记，1为被使用，0为未被使用
+     */
+    public static void getResult(List<List<Integer>> result, int[] nums, List<Integer> ans, int num, int[] pos) {
+        //结果list长度和数组长度一致，添加到结果集
         if (num == nums.length) {
             result.add(new ArrayList<Integer>(ans));
             return;
         }
+        //遍历数组，使用未被使用的数字
         for (int i = 0; i < nums.length; i++) {
-            if (!visitedList.contains(i)) {
-                visitedList.add(i);
+            //该数字未被使用
+            if (pos[i] == 0) {
+                //添加到中间结果
                 ans.add(nums[i]);
-                getResult(result, nums, ans, num + 1, visitedList);
-                visitedList.remove((Integer) i);
-                ans.remove((Integer) nums[i]);
+                //置为使用
+                pos[i] = 1;
+                //继续获取结果
+                getResult(result, nums, ans, num + 1, pos);
+                //复位
+                pos[i] = 0;
+                //从暂存list中移除
+                ans.remove(num);
             }
         }
     }
