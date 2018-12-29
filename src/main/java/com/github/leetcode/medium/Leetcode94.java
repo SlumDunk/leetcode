@@ -25,12 +25,11 @@ import java.util.Stack;
  */
 public class Leetcode94 {
     public List<Integer> inorderTraversal(TreeNode root) {
-
         List<Integer> res = new ArrayList<>();
         //中序遍历树
         Stack<TreeNode> stack = new Stack<TreeNode>();
         while (root != null || !stack.isEmpty()) {
-            //左边的先进栈
+            //当前节点进栈，然后往左走，直到走完
             while (root != null) {
                 stack.push(root);
                 root = root.left;
@@ -38,7 +37,7 @@ public class Leetcode94 {
             //弹出栈
             TreeNode tmpNode = stack.pop();
             res.add(tmpNode.val);
-            //右边节点赋给root
+            //右边节点变成当前节点
             root = tmpNode.right;
 
         }

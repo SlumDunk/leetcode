@@ -17,34 +17,37 @@ import java.util.Stack;
  * Special thanks to @ts for adding this problem and creating all test cases.
  */
 public class Leetcode173 {
-    public class BSTIterator {//将中序遍历的功能嵌查在整个程序中
-        TreeNode current;
+    /**
+     * 将中序遍历的功能嵌查在整个程序中
+     */
+    public class BSTIterator {
         Stack<TreeNode> stack;
 
         public BSTIterator(TreeNode root) {
-            current = root;
             stack = new Stack<TreeNode>();
-            while (current != null)//因为只可能是左节点才是最小值，将所有左子树节点入栈，保证空间复杂度是O(h)
-            {
-                stack.push(current);
-                current = current.left;
+            //因为只可能是左节点才是最小值，将所有左子树节点入栈，保证空间复杂度是O(h)
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
             }
         }
 
         /**
-         * @return whether we have a next smallest number
+         * @return 是否还有下一个元素，判断栈是否为空即可
          */
         public boolean hasNext() {
             return !stack.isEmpty();
         }
 
         /**
-         * @return the next smallest number
+         * @return 获取下一个最小元素，出栈的同时把当前节点的右子树做中序进栈操作处理
          */
         public int next() {
-            current = stack.pop();
-            int res = current.val;//这一步已经得到最小值
-            current = current.right;//但要考虑到右子树的遍历
+            TreeNode current = stack.pop();
+            //获取当前最小值
+            int res = current.val;
+            //右子树进行中序进栈操作
+            current = current.right;
             while (current != null) {
                 stack.push(current);
                 current = current.left;
@@ -52,6 +55,4 @@ public class Leetcode173 {
             return res;
         }
     }
-
-
 }

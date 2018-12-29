@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Stack;
+
 /**
  * @Author: zerongliu
  * @Date: 11/1/18 20:50
@@ -36,32 +38,29 @@ package com.github.leetcode.medium;
 public class Leetcode331 {
 
     public static void main(String[] args) {
-        Leetcode331 leetcode331=new Leetcode331();
+        Leetcode331 leetcode331 = new Leetcode331();
         leetcode331.isValidSerialization("9,3,4,#,#,1,#,#,2,#,6,#,#");
     }
+
     public boolean isValidSerialization(String preorder) {
-        String[] arrayPreOrder = preorder.split(",");
-        if (findTree(arrayPreOrder, 0) == arrayPreOrder.length) {
-            return Boolean.TRUE;
+        //数组转化为树
+        String[] array = preorder.split(",");
+        Stack<String> stack = new Stack<>();
+        //数字遇到后面连续两个#表明节点访问完了，出栈，并把原来的数字代替成#，表示其父节点在这边的分支走完了，遍历完数组，最后堆栈应该只剩一个#
+        for (String value : array) {
+            if (value.equals("#")) {
+                //此分支走完了
+                while (!stack.isEmpty() && stack.peek().equals("#")) {
+                    stack.pop();
+                    if (stack.isEmpty() || stack.peek().equals("#")) {
+                        return false;
+                    }
+                    stack.pop();
+                }
+            }
+            stack.push(value);
         }
-        return Boolean.FALSE;
+        return stack.size() == 1 && stack.peek().equals("#");
     }
 
-    private int findTree(String[] arrayPreOrder, int start) {
-        if (arrayPreOrder.length - start == 0) {
-            return -1;
-        }
-        if (arrayPreOrder[start].equals("#")) {
-            return start + 1;
-        }
-        int left = findTree(arrayPreOrder, start + 1);
-        if (left < 0) {
-            return -1;
-        }
-        int right = findTree(arrayPreOrder, left);
-        if (right < -1) {
-            return -1;
-        }
-        return right;
-    }
 }

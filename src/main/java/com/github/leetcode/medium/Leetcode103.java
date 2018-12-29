@@ -27,17 +27,13 @@ import java.util.List;
  */
 public class Leetcode103 {
     /**
-     * 递归方式 <br />
-     * 重要的是记录层级, 加上一个标识标识是否集合反向<br />
+     * 递归方式
+     * 重要的是记录层级, 加上一个标识标识是否集合反向
      *
-     * 1ms<br />
-     * eats96.02% of java submissions
-     *
-     * @author jacksen
      * @param root
      * @return
      */
-    public List<List<Integer>> zigzagLevelOrder2(TreeNode root) {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
 
         levelRecursion(root, result, 0);
@@ -48,25 +44,26 @@ public class Leetcode103 {
     /**
      * 可以直接通过level层级判断是否需要addFirst，不必要再添加额外的标识
      *
-     * @param node
-     * @param result
-     * @param level
+     * @param node   树节点
+     * @param result 结果集
+     * @param level  层级
      */
     private void levelRecursion(TreeNode node, List<List<Integer>> result,
-                                 int level) {
+                                int level) {
         if (node == null) {
             return;
         }
         if (result.size() < level + 1) {// 说明还需要添加一行
             result.add(new LinkedList<Integer>());
         }
-        if (level % 2 != 0) {
+        if (level % 2 != 0) {//奇数节点，需要反向，所以从头部插入
             ((LinkedList<Integer>) result.get(level)).addFirst(node.val);
-        } else {
+        } else {//偶数节点不需要反向
             result.get(level).add(node.val);
         }
-
+        //对左子树进行递归
         levelRecursion(node.left, result, level + 1);
+        //对右子树进行递归
         levelRecursion(node.right, result, level + 1);
     }
 }

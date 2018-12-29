@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Stack;
+
 /**
  * @Author: zerongliu
  * @Date: 11/22/18 14:50
@@ -26,31 +28,44 @@ package com.github.leetcode.medium;
  */
 public class Leetcode402 {
     public static void main(String[] args) {
-        Leetcode402 leetcode402=new Leetcode402();
-        System.out.println(leetcode402.removeKdigits("1355457",3));
+        Leetcode402 leetcode402 = new Leetcode402();
+        System.out.println(leetcode402.removeKdigits("1355457", 3));
     }
+
     public String removeKdigits(String num, int k) {
-        if(num.length()<k){
+        Stack<Integer> stack = new Stack<Integer>();
+        int index = 0, len = num.length();
+        while (index < len) {
+            int temp = Integer.parseInt(num.substring(index, index + 1));
+            //把大值出栈，小值代替入栈
+            while (!stack.isEmpty() && stack.peek() > temp && k > 0) {
+                stack.pop();
+                k--;
+            }
+            stack.push(temp);
+            index++;
+        }
+        //栈非空且还有位数可以删除
+        while (!stack.isEmpty() && k > 0) {
+            stack.pop();
+            k--;
+        }
+        StringBuilder buffer = new StringBuilder();
+        if (!stack.isEmpty()) {
+            while (!stack.isEmpty()) {
+                buffer.append(stack.pop());
+            }
+            String result = buffer.reverse().toString();
+            int i = 0;
+            //找到第一个非0的位
+            while (i < result.length() && result.charAt(i) == '0') {
+                i++;
+            }
+            //如果等于字符串长度，证明结果值是0
+            return i == result.length() ? "0" : result.substring(i, result.length());
+
+        } else {
             return "0";
         }
-        int digits = num.length() - k;
-        char[] stk = new char[num.length()];
-        int top = 0;
-        // k keeps track of how many characters we can remove
-        // if the previous character in stk is larger than the current one
-        // then removing it will get a smaller number
-        // but we can only do so when k is larger than 0
-        for (int i = 0; i < num.length(); ++i) {
-            char c = num.charAt(i);
-            while (top > 0 && stk[top - 1] > c && k > 0) {
-                top -= 1;
-                k -= 1;
-            }
-            stk[top++] = c;
-        }
-        // find the index of first non-zero digit
-        int idx = 0;
-        while (idx < digits && stk[idx] == '0') idx++;
-        return idx == digits ? "0" : new String(stk, idx, digits - idx);
     }
 }

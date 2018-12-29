@@ -40,16 +40,23 @@ public class Leetcode385 {
         if (s.charAt(0) != '[')
             return new NestedInteger(Integer.parseInt(s));
         //嵌套数对象，包含list
-        return dfs(s.toCharArray());
+        return parse(s.toCharArray());
     }
 
-    public NestedInteger dfs(char[] ca) {
+    /**
+     * 解析字符串
+     *
+     * @param ca
+     * @return
+     */
+    public NestedInteger parse(char[] ca) {
+        //创建空对象
         NestedInteger result = new NestedInteger();
         while (i < ca.length) {
-            if (ca[i] == '[') {
+            if (ca[i] == '[') {//遇到list开始标志
                 i++;
                 //list开始
-                result.add(dfs(ca));
+                result.add(parse(ca));
             } else if (ca[i] == ']') {//list结束
                 i++;
                 break;

@@ -20,32 +20,43 @@ import java.util.Stack;
  * s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
  */
 public class Leetcode394 {
-    public static String decodeString(String s) {
-        Stack<Integer> count = new Stack<>();
-        Stack<String> result = new Stack<>();//用Stack处理包含关系
-        result.push("");
-        int i = 0;
+    public static void main(String[] args) {
+        Leetcode394 leetcode394 = new Leetcode394();
+        System.out.println(leetcode394.decodeString("3[a]2[bc]"));
+    }
 
-        while(i<s.length()){
-            char a = s.charAt(i);
-            if(a >= '0' && a <= '9'){
+    public String decodeString(String s) {
+        Stack<Integer> countStack = new Stack<Integer>();
+        Stack<String> strStack = new Stack<String>();
+        int i = 0, len = s.length();
+        //应付输入字符串为空串和没[]的情况
+        strStack.push("");
+
+        while (i < len) {
+            if (Character.isDigit(s.charAt(i))) {//当前字符是数字
                 int startIndex = i;
-                while(Character.isDigit(s.charAt(i+1))) i++;
-                count.push(Integer.parseInt(s.substring(startIndex,i+1)));
-            } else if (a == '[') {
-                result.push("");//用初始化空字符串处理并列关系
-            } else if(a == ']') {
-                String temp = new String(result.pop());
-                StringBuilder sb = new StringBuilder();
-                int nloop = count.pop();
-                for(int j = 0; j < nloop;j++)
-                    sb.append(temp);
-                result.push(result.pop()+sb.toString());
+                while (Character.isDigit(s.charAt(++i))) ;
+                countStack.push(Integer.parseInt(s.substring(startIndex, i)));
+                i--;
+            } else if ('[' == s.charAt(i)) {//开启新的嵌套
+                strStack.push("");
+            } else if (']' == s.charAt(i)) {
+                int counts = countStack.pop();
+                String top = strStack.pop();
+                StringBuilder buffer = new StringBuilder();
+                for (int j = 0; j < counts; j++) {
+                    buffer.append(top);
+                }
+                if (strStack.isEmpty()) {//栈为空，直接进栈,证明已经走完了
+                    strStack.push(buffer.toString());
+                } else {
+                    strStack.push(strStack.pop() + buffer.toString());
+                }
             } else {
-                result.push(result.pop()+a);
+                strStack.push(strStack.pop() + s.charAt(i));
             }
             i++;
         }
-        return result.pop();
+        return strStack.pop();
     }
 }

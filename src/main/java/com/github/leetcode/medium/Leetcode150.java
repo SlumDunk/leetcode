@@ -38,30 +38,30 @@ import java.util.Stack;
  */
 public class Leetcode150 {
     public int evalRPN(String[] tokens) {
+        //遇到四则运算符号，进行出栈操作，运算结果再入栈
         int len = tokens.length;
-
         if (len == 0)
             return 0;
         Stack<Integer> stack = new Stack<Integer>();
         for (int i = 0; i < len; i++) {
-
+            //加法运算
             if (tokens[i].equals("+")) {
                 int num1 = stack.pop();
                 int num2 = stack.pop();
                 stack.push(num1 + num2);
-            } else if (tokens[i].equals("-")) {
+            } else if (tokens[i].equals("-")) {//减法运算
                 int num1 = stack.pop();
                 int num2 = stack.pop();
                 stack.push(num2 - num1);
-            } else if (tokens[i].equals("*")) {
+            } else if (tokens[i].equals("*")) {//乘法运算
                 int num1 = stack.pop();
                 int num2 = stack.pop();
                 stack.push(num1 * num2);
-            } else if (tokens[i].equals("/")) {
+            } else if (tokens[i].equals("/")) {//除法运算
                 int num1 = stack.pop();
                 int num2 = stack.pop();
                 stack.push(num2 / +num1);
-            } else {
+            } else {//数字，直接入栈
                 stack.push(Integer.valueOf(tokens[i]));
             }
 

@@ -28,7 +28,13 @@ import java.util.List;
  */
 public class Leetcode341 {
     public class NestedIterator implements Iterator<Integer> {
+        /**
+         * list
+         */
         List<NestedInteger> nestedList;
+        /**
+         * 当前元素的值
+         */
         int data;
 
         public NestedIterator(List<NestedInteger> nestedList) {
@@ -42,12 +48,15 @@ public class Leetcode341 {
 
         @Override
         public boolean hasNext() {
+            //list非空
             while (nestedList != null && nestedList.size() > 0) {
+                //获取list的首元素
                 NestedInteger tmpInt = nestedList.remove(0);
+                //若是数字
                 if (tmpInt.isInteger()) {
                     data = tmpInt.getInteger();
                     return true;
-                } else {
+                } else {//若是集合，直接添加到list头部
                     nestedList.addAll(0, tmpInt.getList());
                 }
             }

@@ -25,7 +25,7 @@ public class Google7 {
     }
 
     /**
-     * use dfs to find the result
+     * use parse to find the result
      *
      * @param input
      * @param currentIndex
