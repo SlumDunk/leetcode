@@ -47,6 +47,7 @@ public class Leetcode376 {
 
     public int dpWiggleMaxLength(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
+        //到当前位置的最长摆动子序列长度 方向向上 或 方向向下
         int[][] dp = new int[nums.length][2];
         dp[0][0] = 1;
         dp[0][1] = 1;

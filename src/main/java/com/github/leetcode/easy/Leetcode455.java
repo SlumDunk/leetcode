@@ -39,17 +39,20 @@ public class Leetcode455 {
     }
 
     public int findContentChildren(int[] g, int[] s) {
+        //优先给小需求的小朋友分配最小能满足他的饼干
+        //先对数组进行排序
         int ret = 0;
         Arrays.sort(g);
         Arrays.sort(s);
-
+        //数组g和s元素的位置索引
         int i = 0, j = 0;
         while (i < g.length && j < s.length) {
+            //s[j]饼干能使g[i]小朋友满意，结果加1，指针继续前进
             if (g[i] <= s[j]) {
                 ret++;
                 i++;
                 j++;
-            } else if (g[i] > s[j]) {
+            } else if (g[i] > s[j]) {//无法使g[i]小朋友满意，j继续前进
                 j++;
             }
         }

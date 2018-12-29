@@ -30,11 +30,24 @@ public class Leetcode406 {
     }
 
     public int[][] reconstructQueue(int[][] people) {
+        //先对数组进行排序 按第一位降序，第二位升序的规则排序
+        //7 0
+        //7 1
+        //6 1
+        //5 0
+        //5 2
+        //4 4
         Arrays.sort(people, new Comparator<int[]>() {
             public int compare(int[] p1, int[] p2) {
                 return p1[0] != p2[0] ? Integer.compare(p2[0], p1[0]) : Integer.compare(p1[1], p2[1]);
             }
         });
+        for (int i = 0; i < people.length; i++) {
+            for (int j = 0; j < 2; j++) {
+                System.out.printf("" + people[i][j] + " ");
+            }
+            System.out.println();
+        }
         List<int[]> list = new LinkedList();
         for (int[] ppl : people)
             list.add(ppl[1], ppl);

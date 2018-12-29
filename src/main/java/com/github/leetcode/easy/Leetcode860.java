@@ -33,6 +33,7 @@ public class Leetcode860 {
     }
 
     public boolean lemonadeChange(int[] bills) {
+        //记录拥有的5块和10块的张数，优先使用大额钞票找零
         int countFive = 0;
         int countTen = 0;
         if (bills.length < 0 || bills.length > 10000) {
@@ -61,6 +62,7 @@ public class Leetcode860 {
                     default:
                         break;
                 }
+                //五元面值钞票的个数少于0，返回false
                 if (countFive < 0) {
                     return false;
                 }

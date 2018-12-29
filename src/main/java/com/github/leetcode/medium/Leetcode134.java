@@ -52,26 +52,19 @@ public class Leetcode134 {
         if (gas == null || cost == null || gas.length == 0 || gas.length != cost.length) {
             return -1;
         }
-
-        // 记录访问的起始点
+        //访问起始点
         int start = 0;
-        // 加的气和消耗的气的总差值
+        //最终油箱里头剩的油
         int total = 0;
-        // 从start位置开始，加的气和消耗的气的总差值
+        //从开始位置到当前位置，油箱里头剩的油
         int sum = 0;
-
         for (int i = 0; i < gas.length; i++) {
-            total += (gas[i] - cost[i]);
-
-            // 如是油箱没有油了
-            if (sum < 0) {
-                // 重新设置油箱中的油
+            total += gas[i] - cost[i];
+            if (sum < 0) {//证明无法从开始位置到达i,需要改变出发点
                 sum = gas[i] - cost[i];
-                // 记录新的起点位置
                 start = i;
             } else {
-                // 油箱中还有油，更新油箱中的油数
-                sum += (gas[i] - cost[i]);
+                sum += gas[i] - cost[i];
             }
         }
 

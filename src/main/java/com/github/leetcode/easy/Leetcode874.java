@@ -50,13 +50,15 @@ public class Leetcode874 {
     }
 
     public int robotSim(int[] commands, int[][] obstacles) {
-        //north,east,south,west
+        //北，东，南，西
         int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        //记住机器人的当前方向
         int currentDir = 0;
         int x = 0, y = 0;
         int max = 0;
         int nx, ny;
         Set<Long> obstacleSet = new HashSet<Long>();
+        //x放入高位段，y放在低位段
         for (int[] obstacle : obstacles) {
             long ox = (long) obstacle[0];
             long oy = (long) obstacle[1];
@@ -67,16 +69,22 @@ public class Leetcode874 {
             if (commands[i] == -1) {
                 currentDir = (currentDir + 1) % 4;
             } else if (commands[i] == -2) {
-                currentDir = (currentDir - 1 + 4) % 4;
+                currentDir = (currentDir + 3) % 4;
             } else {
+                //走尽量多的步，贪心体现在这里
                 for (int j = 0; j < commands[i]; j++) {
                     nx = x + dir[currentDir][0];
                     ny = y + dir[currentDir][1];
                     long code = (((long) nx) << 16) + ((long) ny);
+
                     if (!obstacleSet.contains(code)) {
                         x = nx;
                         y = ny;
+                        //算出当前位置距离原点的距离
                         max = Math.max(max, x * x + y * y);
+                    }else{
+                        //此方向路上有阻碍，位置还是和上一次一致
+                        break;
                     }
                 }
             }
