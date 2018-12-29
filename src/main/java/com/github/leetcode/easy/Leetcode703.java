@@ -24,50 +24,36 @@ import java.util.PriorityQueue;
  */
 public class Leetcode703 {
 
-    public static void main(String[] args) {
-
-        int[] nums = {8, 5, 4, 2};
-        KthLargest kthLargest = new KthLargest(3, nums);
-        System.out.println(kthLargest.add(3));
-        System.out.println(kthLargest.add(5));
-        System.out.println(kthLargest.add(10));
-        System.out.println(kthLargest.add(6));
-        System.out.println(kthLargest.add(4));
-    }
-
-    static class KthLargest {
+    class KthLargest {
+        //只保存最大的k个值
+        PriorityQueue<Integer> heap = new PriorityQueue<Integer>();
         int k;
-        PriorityQueue<Integer> queue;
 
         public KthLargest(int k, int[] nums) {
             this.k = k;
-            queue = new PriorityQueue<>();
-            if (nums.length <= k) {
-                for (int ele : nums
-                        ) {
-                    queue.add(ele);
-                }
-            } else {
-                for (int i = 0; i < k; i++) {
-                    queue.add(nums[i]);
-                }
-                for (int i = k; i < nums.length; i++) {
-                    if (queue.peek() < nums[i]) {
-                        queue.poll();
-                        queue.add(nums[i]);
+            for (int num : nums) {
+                if (heap.size() == k) {
+                    if (heap.peek() < num) {
+                        heap.poll();
+                        heap.add(num);
                     }
+                } else {
+                    heap.add(num);
                 }
+
             }
         }
 
         public int add(int val) {
-            if (queue.size() < k) {
-                queue.offer(val);
-            } else if (queue.peek() < val) {
-                queue.poll();
-                queue.offer(val);
+            if (heap.size() == k) {
+                if (heap.peek() < val) {
+                    heap.poll();
+                    heap.add(val);
+                }
+            } else {
+                heap.add(val);
             }
-            return queue.peek();
+            return heap.peek();
         }
     }
 }

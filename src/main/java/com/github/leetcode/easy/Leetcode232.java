@@ -5,26 +5,26 @@ import java.util.Stack;
 /**
  * @Author: zerongliu
  * @Date: 12/28/18 16:43
- * @Description: Implement the following operations of a queue using stacks.
+ * @Description: Implement the following operations of a heap using stacks.
  * <p>
- * push(x) -- Push element x to the back of queue.
- * pop() -- Removes the element from in front of queue.
+ * push(x) -- Push element x to the back of heap.
+ * pop() -- Removes the element from in front of heap.
  * peek() -- Get the front element.
- * empty() -- Return whether the queue is empty.
+ * empty() -- Return whether the heap is empty.
  * Example:
  * <p>
- * MyQueue queue = new MyQueue();
+ * MyQueue heap = new MyQueue();
  * <p>
- * queue.push(1);
- * queue.push(2);
- * queue.peek();  // returns 1
- * queue.pop();   // returns 1
- * queue.empty(); // returns false
+ * heap.push(1);
+ * heap.push(2);
+ * heap.peek();  // returns 1
+ * heap.pop();   // returns 1
+ * heap.empty(); // returns false
  * Notes:
  * <p>
  * You must use only standard operations of a stack -- which means only push to top, peek/pop from top, size, and is empty operations are valid.
- * Depending on your language, stack may not be supported natively. You may simulate a stack by using a list or deque (double-ended queue), as long as you use only standard operations of a stack.
- * You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
+ * Depending on your language, stack may not be supported natively. You may simulate a stack by using a list or deque (double-ended heap), as long as you use only standard operations of a stack.
+ * You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty heap).
  */
 public class Leetcode232 {
     class MyQueue {
@@ -46,14 +46,14 @@ public class Leetcode232 {
         }
 
         /**
-         * Push element x to the back of queue.
+         * Push element x to the back of heap.
          */
         public void push(int x) {
             stack.push(x);
         }
 
         /**
-         * Removes the element from in front of queue and returns that element.
+         * Removes the element from in front of heap and returns that element.
          */
         public int pop() {
             copyStack();
@@ -80,7 +80,7 @@ public class Leetcode232 {
         }
 
         /**
-         * Returns whether the queue is empty.
+         * Returns whether the heap is empty.
          */
         public boolean empty() {
             return stack.isEmpty() && copyStack.isEmpty();

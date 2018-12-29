@@ -32,7 +32,8 @@ import java.util.*;
 public class Leetcode373 {
     public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         List<int[]> result = new LinkedList<>();
-        Queue<int[]> queue = new PriorityQueue<>(k, new Comparator<int[]>() {
+        //创建最小堆
+        Queue<int[]> heap = new PriorityQueue<>(k, new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
                 int tmp1 = o1[0] + o1[1];
@@ -40,14 +41,15 @@ public class Leetcode373 {
                 return tmp1 - tmp2;
             }
         });
+        //遍历两个数组，组成各个组合
         for (int i = 0; i < nums1.length; i++) {
             for (int j = 0; j < nums2.length; j++) {
-                queue.add(new int[]{nums1[i], nums2[j]});
+                heap.add(new int[]{nums1[i], nums2[j]});
             }
         }
-
+        //出堆
         while (k-- > 0) {
-            int[] tmp = queue.poll();
+            int[] tmp = heap.poll();
             if (tmp == null)
                 break;
             result.add(tmp);
