@@ -28,6 +28,7 @@ public class Leetcode324 {
         for (int i = 0; i < nums.length; i++) {
             nums_copy[i] = nums[i];
         }
+        //中间位置和末尾位置,数组分成前后两段，分别从各段末尾往前走
         int p = (nums.length - 1) / 2, q = nums.length - 1;
 
         for (int i = 0, j = 1; i < nums.length; i += 2, j += 2) {

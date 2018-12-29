@@ -36,6 +36,7 @@ public class Leetcode147 {
         while (head != null) {
             //存储原有链表的下一节点
             tmpNode = head.next;
+            //从前往后找到要插入的位置
             curNode = sortedHead;
             while (curNode.next != null && curNode.next.val < head.val) {
                 curNode = curNode.next;
@@ -43,6 +44,7 @@ public class Leetcode147 {
             //找到当前节点是要插入节点的前置节点
             head.next = curNode.next;
             curNode.next = head;
+            //下个要插入的节点
             head = tmpNode;
         }
         return sortedHead.next;

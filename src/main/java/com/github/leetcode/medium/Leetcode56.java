@@ -14,18 +14,19 @@ public class Leetcode56 {
         List<Interval> res = new LinkedList<>();
         if (intervals.size() <= 0)
             return intervals;
-        //根据interval的start排序
+        //按开始时间升序排序intervals
         Collections.sort(intervals, new Comparator<Interval>() {
             @Override
             public int compare(Interval o1, Interval o2) {
-                return o1.start == o2.start ? 0 : o1.start > o2.start ? 1 : -1;
+                return Integer.compare(o1.start, o2.start);
             }
         });
         Interval top = intervals.get(0);
         res.add(new Interval(top.start, top.end));
         for (int i = 1; i < intervals.size(); i++) {
             Interval currentInterval = intervals.get(i);
-            top = res.get(res.size() - 1);//每次拿出集合中结束时间最晚的元素
+            //每次拿出集合中结束时间最晚的元素
+            top = res.get(res.size() - 1);
             if (top.end >= currentInterval.start) {
                 //修正上边界
                 top.end = Math.max(top.end, currentInterval.end);

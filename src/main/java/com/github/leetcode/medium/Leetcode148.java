@@ -20,9 +20,11 @@ public class Leetcode148 {
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null)//递归出口  当只有一个节点时就不再递归
             return head;
+        //利用快慢指针找到中间节点
         ListNode middle = getMiddleOfList(head);
+        //右半链表开始节点
         ListNode right = middle.next;
-        //把两个链表断开分为左边（包括middle）一半和右边一半
+        //将原有链表切成左右两个链表
         middle.next = null;
         //归并
         return mergeTwoList(sortList(head), sortList(right));
@@ -53,8 +55,9 @@ public class Leetcode148 {
      * @return
      */
     public ListNode mergeTwoList(ListNode headA, ListNode headB) {
-
+        //合并后链表的虚拟头结点
         ListNode fakeNode = new ListNode(-1);
+        //保存新链表的当前节点
         ListNode cur = fakeNode;
         while (headA != null && headB != null) {
             if (headA.val <= headB.val) {
