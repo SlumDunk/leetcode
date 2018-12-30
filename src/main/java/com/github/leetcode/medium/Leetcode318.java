@@ -34,17 +34,17 @@ public class Leetcode318 {
         int[] num = new int[len];
         int maxProduct = 0;
         for (int i = 0; i < len; i++) {
-            String temp = words[i];
-            for (int j = 0; j < temp.length(); j++) {
-                num[i] |= (1 << (temp.charAt(j) - 'a'));
+            for (char value : words[i].toCharArray()) {
+                //每个单词根据其字符可以生成唯一的二进制串
+                num[i] |= (1 << (value - 'a'));
             }
         }
         for (int i = 0; i < len; i++) {
             for (int j = i + 1; j < len; j++) {
+                //两个字符串的二进制签名没有交集证明他们没有共同的字符
                 if ((num[i] & num[j]) == 0) {
-                    int temp = words[i].length() * words[j].length();
-                    if (temp > maxProduct)
-                        maxProduct = temp;
+                    maxProduct = Math.max(words[i].length() * words[j].length(), maxProduct);
+
                 }
             }
         }

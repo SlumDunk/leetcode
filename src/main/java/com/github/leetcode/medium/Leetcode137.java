@@ -27,26 +27,29 @@ public class Leetcode137 {
     }
 
     public int singleNumber(int[] nums) {
+        //对数组进行排序
         Arrays.sort(nums);
-        int number = 0;
+        int index = 0;
+        //是否找到标志
         boolean flag = true;
         for (int i = 0; i < nums.length - 2; i++) {
             if (nums[i] == nums[i + 1] && nums[i + 1] == nums[i + 2]) {
                 i += 2;
             } else {
+                //不一致的数字位置在i+2
                 if (nums[i] == nums[i + 1]) {
-                    number = i + 2;
+                    index = i + 2;
                 } else {
-                    number = i;
+                    index = i;
                 }
                 flag = false;
                 break;
             }
         }
-        if(flag){
-            number = nums.length-1;
+        //若为true, 数字出现在最后一位
+        if (flag) {
+            index = nums.length - 1;
         }
-        return nums[number];
-
+        return nums[index];
     }
 }

@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class Leetcode260 {
     public int[] singleNumber(int[] nums) {
+        //先对数组进行排序
         Arrays.sort(nums);
         int count = 1;
         List<Integer> resultList = new ArrayList<>();
@@ -32,14 +33,17 @@ public class Leetcode260 {
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] == tmp) {
                 counter++;
-            } else {
-                if (counter == count) {
+            } else {//出现不一致情况
+                if (counter == count) {//只出现一次，添加到结果集
                     resultList.add(tmp);
                 }
+                //当前数字
                 tmp = nums[i];
+                //计数器置位为1
                 counter = 1;
             }
         }
+        //避免遗漏最后一个数字不一致的情况
         if (counter == count) {
             resultList.add(tmp);
         }

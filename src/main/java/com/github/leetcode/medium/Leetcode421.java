@@ -22,8 +22,11 @@ import java.util.Set;
  */
 public class Leetcode421 {
     class TrieNode {
+        //叶子节点存储的值
         int val;
+        //0节点，1节点
         TrieNode zero, one;
+        //是否叶子节点
         boolean isEnd;
     }
 
@@ -35,22 +38,24 @@ public class Leetcode421 {
         }
 
         public void insert(int num) {
-            TrieNode cur = root;
+            TrieNode current = root;
             int j = 1 << 30;
             for (int i = 0; i < 31; i++) {
-                // 根据num在j位置的数目判断应该向0还是向1
-                int b = (j & num) == 0 ? 0 : 1;
-                if (b == 0 && cur.zero == null) {
-                    cur.zero = new TrieNode();
+                int bit = (num & j) == 0 ? 0 : 1;
+                if (bit == 1) {//走1分支
+                    if (current.one == null) {
+                        current.one = new TrieNode();
+                    }
+                } else {//走0分支
+                    if (current.zero == null) {
+                        current.zero = new TrieNode();
+                    }
                 }
-                if (b == 1 && cur.one == null) {
-                    cur.one = new TrieNode();
-                }
-                cur = b == 0 ? cur.zero : cur.one;
+                current = bit == 0 ? current.zero : current.one;
                 j >>= 1;
             }
-            cur.isEnd = true;
-            cur.val = num;
+            current.isEnd = true;
+            current.val = num;
         }
     }
 
@@ -58,14 +63,17 @@ public class Leetcode421 {
         if (nums == null || nums.length <= 1) {
             return 0;
         }
+        //创建根节点
         TrieTree tree = new TrieTree();
-        for (int n : nums) {
-            tree.insert(n);
+        for (int num :
+                nums) {
+            tree.insert(num);
         }
         // 获取真正需要开始判断的root
         TrieNode cur = tree.root;
-        while (cur.one == null || cur.zero == null) {
-            cur = cur.zero != null ? cur.zero : cur.one;
+        //找到第一个0节点和1节点非空的节点
+        while (cur.zero == null || cur.one == null) {
+            cur = cur.zero == null ? cur.one : cur.zero;
         }
         return maxHelper(cur.one, cur.zero);
 
@@ -83,16 +91,17 @@ public class Leetcode421 {
         if (one.isEnd && zero.isEnd) {
             return one.val ^ zero.val;
         }
-        if (one.zero == null) {
-            return maxHelper(one.one, zero.zero == null ? zero.one : zero.zero);
-        } else if (one.one == null) {
-            return maxHelper(one.zero, zero.one == null ? zero.zero : zero.one);
-        } else if (zero.zero == null) {
-            return maxHelper(one.zero, zero.one);
-        } else if (zero.one == null) {
-            return maxHelper(one.one, zero.zero);
-        } else {
-            return Math.max(maxHelper(one.one, zero.zero), maxHelper(one.zero, zero.one));
+        //先查看两个节点的四个子分支是否有为空的情况
+        if (one.zero == null) {//1分支的0子分支为空，只能走它的1子分支
+            return maxHelper(one.one, zero.zero != null ? zero.zero : zero.one);
+        } else if (one.one == null) {//1分支的1子分支为空，只能走它的0子分支
+            return maxHelper(one.zero, zero.one != null ? zero.one : zero.zero);
+        } else if (zero.zero == null) {//0分支的0子分支为空，只能走它的1子分支
+            return maxHelper(one.zero != null ? one.zero : one.one, zero.one);
+        } else if (zero.one == null) {//0分支的1子分支为空，只能走它的0子分支
+            return maxHelper(one.one != null ? one.one : one.zero, zero.zero);
+        } else {//四个子节点都不为空
+            return Math.max(maxHelper(one.zero, zero.one), maxHelper(one.one, zero.zero));
         }
     }
 }

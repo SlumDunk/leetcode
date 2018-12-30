@@ -24,6 +24,8 @@ public class Leetcode201 {
     }
 
     public int rangeBitwiseAnd(int m, int n) {
+        //低位与的结果肯定是0，高位进行与，然后值左移
+//        return (n > m)?(rangeBitwiseAnd(m >> 1, n >> 1) << 1):m;
         int count = 0;
         while (m != n) {
             n >>>= 1;

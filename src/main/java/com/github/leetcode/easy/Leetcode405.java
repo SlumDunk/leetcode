@@ -25,18 +25,24 @@ package com.github.leetcode.easy;
  * "ffffffff"
  */
 public class Leetcode405 {
+    public static void main(String[] args) {
+        Leetcode405 leetcode405 = new Leetcode405();
+        leetcode405.toHex(-1);
+        System.out.println(Integer.toBinaryString(-1));
+    }
+
     public String toHex(int num) {
+        //小于10，直接返回
         if (num >= 0 && num < 10) {
             return Integer.toString(num);
         } else {
+            //十六进制和数字映射关系
             char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
             StringBuilder result = new StringBuilder();
-            for (int i = 0; i < 8; i++) {
-                result.insert(0, hex[num & 15]);
-                num = num >> 4;
-                if (num == 0) {
-                    break;
-                }
+            while (num != 0) {
+                result.insert(0, hex[num & 0xf]);
+                //注意>>和>>>的区别，前者高位会用符号位补全
+                num = num >>> 4;
             }
             return result.toString();
         }

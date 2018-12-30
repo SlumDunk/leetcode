@@ -38,33 +38,31 @@ public class Leetcode397 {
         System.out.println(leetcode397.integerReplacement(7));
     }
 
-    public int count = 0;
-
     public int integerReplacement(int n) {
         if (n == 1) {
             return 0;
         }
         //递归
-        count = helper(n, 0);
+        int count = helper(n, 0);
         return count;
     }
 
     /**
-     * @param n      数字
-     * @param number 次数
+     * @param n     数字
+     * @param count 次数
      * @return
      */
-    private int helper(long n, int number) {
+    private int helper(long n, int count) {
         //终止条件
         if (n == 1) {
-            return number;
+            return count;
         } else if (n % 2 == 0) {//偶数
-            number++;
-            return helper(n / 2, number);
+            count++;
+            return helper(n / 2, count);
         } else {//奇数
-            number++;
+            count++;
             //n+1和n-1选择路径小的
-            return Math.min(helper(n + 1, number), helper(n - 1, number));
+            return Math.min(helper(n + 1, count), helper(n - 1, count));
         }
     }
 

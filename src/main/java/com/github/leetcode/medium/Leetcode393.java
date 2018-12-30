@@ -40,21 +40,21 @@ public class Leetcode393 {
     public boolean validUtf8(int[] data) {
         int count = 0;
         for (int d : data) {
-            if (d < 128) {
+            if (d < 128) {//单个字节组成
                 continue;
             }
-            if (count == 0) {
-                if ((d >> 5) == 0b110) {
+            if (count == 0) {//新一轮UTF8编码开始
+                if ((d >> 5) == 0b110) {//2个字节
                     count = 1;
-                } else if ((d >> 4) == 0b1110) {
+                } else if ((d >> 4) == 0b1110) {//3个字节
                     count = 2;
-                } else if ((d >> 3) == 0b11110) {
+                } else if ((d >> 3) == 0b11110) {//4个字节
                     count = 3;
                 } else {
                     return false;
                 }
             } else {
-                if ((d >> 6) != 0b10) {
+                if ((d >> 6) != 0b10) {//紧接着的数字必须以10开头
                     return false;
                 } else {
                     count--;

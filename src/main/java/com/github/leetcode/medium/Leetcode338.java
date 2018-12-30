@@ -24,29 +24,19 @@ public class Leetcode338 {
         if (num < 0) {
             return new int[]{};
         } else {
-//            int[] res = new int[num + 1];
-//            res[0] = 0;
-//
-//            int base = 1;//末尾为1的情况
-//            while (base <= num) {
-//                int next = base * 2;//下一个末尾全为0的值
-//                for (int i = base; i < next && i <= num; i++) {
-//                    res[i] = res[i - base] + 1;
-//                }
-//                base = next;
-//            }
-//            return res;
+            //[0,2),[2,4),[4,8)
+            //[000,001),[010,011),[100,101,110,111)
             //存储第n个数字有多少个1, 以2的i-1次幂到2的i次幂是一个周期
             int[] dp = new int[num + 1];
             dp[0] = 0;
             int base = 1;
             while (base <= num) {
-                int next = base * 2;
-                for (int i = base; i < next&&i<=num; i++) {
+                int next = base * 2;//下一个周期数字
+                for (int i = base; i < next && i <= num; i++) {
                     //新高位置为1，后面位数为之前的dp中1的位数
                     dp[i] = dp[i - base] + 1;
                 }
-                base=next;
+                base = next;
             }
             return dp;
         }
