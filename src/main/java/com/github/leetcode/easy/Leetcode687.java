@@ -34,35 +34,47 @@ import java.util.Stack;
  * <p>
  * 2
  */
-public class Leetcode487 {
-    private int max = 1;
+public class Leetcode687 {
+    /**
+     * 全局变量，存储最长的路径长度
+     */
+    private int max = 0;
 
     public int longestUnivaluePath(TreeNode root) {
         findLongestPath(root);
         return max;
     }
 
+    /**
+     * @param root 出发节点
+     * @return
+     */
     private int findLongestPath(TreeNode root) {
+        //左子树出发的最长路径长度
         int left = 0;
+        //右子树出发的最长路径长度
         int right = 0;
         if (root == null) {
             return 0;
         }
+        //递归左子树
         left = findLongestPath(root.left);
+        //递归右子树
         right = findLongestPath(root.right);
         if (root.left != null && root.left.val == root.val) {
             left += 1;
         } else {
+            //根节点和子节点值不同，直接切断
             left = 0;
         }
         if (root.right != null && root.right.val == root.val) {
             right += 1;
         } else {
+            //根节点和右子节点值不同，直接切断
             right = 0;
         }
-
         max = Math.max(max, left + right);
+        //返回较长的路
         return Math.max(left, right);
-
     }
 }

@@ -25,6 +25,7 @@ import java.util.ArrayList;
  */
 public class Leetcode872 {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        //先左节点，再右节点
         ArrayList<Integer> leafList1 = new ArrayList<Integer>();
         ArrayList<Integer> leafList2 = new ArrayList<Integer>();
         generateLeafList(root1, leafList1);
@@ -33,6 +34,7 @@ public class Leetcode872 {
         if (leafList1.size() != leafList2.size()) {
             return Boolean.FALSE;
         } else {
+            //比较两个list结果是否完全一致
             for (int i = 0; i < leafList1.size(); i++) {
                 if (leafList1.get(i) != leafList2.get(i)) {
                     return Boolean.FALSE;
@@ -43,6 +45,10 @@ public class Leetcode872 {
 
     }
 
+    /**
+     * @param root     树节点
+     * @param leafList 叶子结果集
+     */
     private void generateLeafList(TreeNode root, ArrayList<Integer> leafList) {
         if (root.left == null && root.right == null) {
             leafList.add(root.val);

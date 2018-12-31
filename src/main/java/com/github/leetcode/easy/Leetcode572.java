@@ -62,25 +62,34 @@ public class Leetcode572 {
 
 
     public boolean isSubtree(TreeNode s, TreeNode t) {
-        if (s == null)
+        //递归判断，是s的子树或是s左子树的子树或是s右子树的子树
+        if (s == null) {
             return false;
-        if (isSame(s, t))
+        }
+        //从当前节点出发找到子树
+        if (isSame(s, t)) {
             return true;
-
-        return isSubtree(s.left, t)
-                || isSubtree(s.right, t);
+        }
+        //从左子节点出发寻找子树和从右子节点出发寻找子树
+        return isSubtree(s.left, t) || isSubtree(s.right, t);
     }
 
-    private boolean isSame(TreeNode s, TreeNode t) {
-        if (s == null && t == null)
+    /**
+     * 判断两棵树是否一样
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isSame(TreeNode s, TreeNode t) {
+        if (s == null && t == null) {
             return true;
-        if (s == null || t == null)
+        } else if (s == null || t == null) {
             return false;
-
-        if (s.val != t.val)
+        }
+        if (s.val != t.val) {
             return false;
-
-        return isSame(s.left, t.left)
-                && isSame(s.right, t.right);
+        }
+        return isSame(s.left, t.left) && isSame(s.right, t.right);
     }
 }

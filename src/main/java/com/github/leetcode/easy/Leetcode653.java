@@ -8,72 +8,73 @@ import java.util.Queue;
 import com.github.leetcode.vo.TreeNode;
 
 /**
- * Given a Binary Search Tree and a target number, return true if there exist two elements in the BST such that their sum is equal to 
+ * Given a Binary Search Tree and a target number, return true if there exist two elements in the BST such that their sum is equal to
  * the given target.
-
-Example 1:
-Input: 
-    5
-   / \
-  3   6
- / \   \
-2   4   7
-
-Target = 9
-
-Output: True
-Example 2:
-Input: 
-    5
-   / \
-  3   6
- / \   \
-2   4   7
-
-Target = 28
-
-Output: False
- * @author liuzhongda
+ * <p>
+ * Example 1:
+ * Input:
+ * 5
+ * / \
+ * 3   6
+ * / \   \
+ * 2   4   7
+ * <p>
+ * Target = 9
+ * <p>
+ * Output: True
+ * Example 2:
+ * Input:
+ * 5
+ * / \
+ * 3   6
+ * / \   \
+ * 2   4   7
+ * <p>
+ * Target = 28
+ * <p>
+ * Output: False
  *
+ * @author liuzhongda
  */
 public class Leetcode653 {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
 
-	}
-	
-	public boolean findTarget(TreeNode root, int k) {
-		Map<Integer, Integer> valMap = new HashMap<>();
-		Queue<TreeNode> queue = new LinkedList<>();
-		if (root != null) {
-			queue.add(root);
-			TreeNode tmpNode = null;
-			while ((tmpNode = queue.poll()) != null) {
-				if (valMap.get(tmpNode.val) != null) {
-					valMap.put(tmpNode.val, valMap.get(tmpNode.val) + 1);
-				} else {
-					valMap.put(tmpNode.val, 1);
-				}
-				if (tmpNode.left != null)
-					queue.add(tmpNode.left);
-				if (tmpNode.right != null)
-					queue.add(tmpNode.right);
-			}
-		}
+    }
 
-		for (Integer key : valMap.keySet()) {
-			Integer completeVal = valMap.get(k - key);
-			if (completeVal != null) {
-				if ((key == k - key && completeVal == 1)) {
-					return false;
-				} else {
-					return true;
-				}
-			}
-		}
+    public boolean findTarget(TreeNode root, int k) {
+        return helper(root, root, k);
+    }
 
-		return false;
-	}
+    /**
+     * @param root 根节点
+     * @param cur  当前节点
+     * @param k    目标值
+     * @return
+     */
+    private boolean helper(TreeNode root, TreeNode cur, int k) {
+        if (root == null) {
+            return false;
+        }
+        //从当前节点出发，或者从当前节点左子节点出发，或者从当前节点的右子节点出发
+        return search(root, cur, k - root.val) || helper(root.left, cur, k) || helper(root.right, cur, k);
+    }
 
+    /**
+     * @param root 出发节点
+     * @param cur  当前节点
+     * @param k    目标值
+     * @return
+     */
+    private boolean search(TreeNode root, TreeNode cur, int k) {
+        if (cur == null) return false;
+        //两个节点必须不同
+        if (root != cur && k == cur.val) return true;
+        if (cur.val > k) {
+            return search(root, cur.left, k);
+        } else {
+            return search(root, cur.right, k);
+        }
+    }
 }

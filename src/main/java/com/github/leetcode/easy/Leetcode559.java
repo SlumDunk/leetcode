@@ -1,5 +1,7 @@
 package com.github.leetcode.easy;
 
+import com.github.leetcode.vo.Node;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,24 +46,12 @@ public class Leetcode559 {
         if (root.children == null || root.children.size() == 0) {
             return 1;
         }
-        List<Integer> depthList = new ArrayList<Integer>();
+        //求出子树中的最高的那棵的高度
+        int maxSubDepth = 0;
         for (Node node : root.children) {
-            depthList.add(maxDepth(node));
+            maxSubDepth = Math.max(maxSubDepth, maxDepth(node));
         }
-        Collections.sort(depthList);
-        return depthList.get(depthList.size() - 1) + 1;
+        return maxSubDepth + 1;
     }
 
-    static class Node {
-        public int val;
-        public List<Node> children;
-
-        public Node() {
-        }
-
-        public Node(int _val, List<Node> _children) {
-            val = _val;
-            children = _children;
-        }
-    }
 }

@@ -30,21 +30,13 @@ public class Leetcode700 {
         if (root == null) {
             return null;
         } else {
-            return findNode(root, val);
-        }
-    }
-
-    private TreeNode findNode(TreeNode root, int val) {
-        if (root != null) {
-            if (root.val == val) {
+            if (root.val == val) {//等于当前节点，返回
                 return root;
-            } else {
-                TreeNode left = findNode(root.left, val);
-                TreeNode right = findNode(root.right, val);
-                return left == null ? (right == null ? null : right) : left;
+            } else if (root.val > val) {//小于当前节点
+                return searchBST(root.left, val);
+            } else {//大于当前节点
+                return searchBST(root.right, val);
             }
-        } else {
-            return null;
         }
     }
 }

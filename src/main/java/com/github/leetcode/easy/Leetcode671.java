@@ -30,25 +30,32 @@ import com.github.leetcode.vo.TreeNode;
  */
 public class Leetcode671 {
     public int findSecondMinimumValue(TreeNode root) {
-        if (root == null || root.left == null) {
+        //节点值都是非负的
+        //根节点是最小的,另一个与根节点值不等的节点值就是次小值
+        if (root == null || root.left == null) {//不符合树条件
             return -1;
         } else {
             int val = root.val;
-            int result = minVal(root, val);
+            int result = secondMinVal(root, val);
             return result == Integer.MAX_VALUE ? -1 : result;
         }
+
     }
 
-    private int minVal(TreeNode root, int val) {
-        if (root == null) {
-            return Integer.MAX_VALUE;
-        }
+    /**
+     * @param root 当前节点
+     * @param val  目标值
+     * @return
+     */
+    public int secondMinVal(TreeNode root, int val) {
         if (root.val != val) {
             return root.val;
-        } else if (root.val == val && root.left != null && root.right != null) {
-            return Math.min(minVal(root.left, val), minVal(root.right, val));
-        } else {
-            return Integer.MAX_VALUE;
+        } else {//左右子节点都可能出现次大的值，去较小的值
+            if (root.left != null && root.right != null) {
+                return Math.min(secondMinVal(root.left, val), secondMinVal(root.right, val));
+            } else {//没有子节点，无法找到次小值
+                return Integer.MAX_VALUE;
+            }
         }
     }
 }

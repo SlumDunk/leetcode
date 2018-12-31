@@ -54,37 +54,34 @@ public class Leetcode897 {
     }
 
     public TreeNode increasingBST(TreeNode root) {
+        //先处理左右子树，再跟本节点拼接起来
         if (root == null) {
             return null;
         }
-        List<Integer> nodeList = new ArrayList<Integer>();
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        generateStack(root, stack);
-        TreeNode tmpNode = null;
-        while (!stack.isEmpty()) {
-            tmpNode = stack.pop();
-            nodeList.add(tmpNode.val);
-        }
-        TreeNode result = new TreeNode(nodeList.get(0));
-        TreeNode current = result;
-        for (int i = 1; i < nodeList.size(); i++) {
-            current.left = null;
-            current.right = new TreeNode(nodeList.get(i));
-            current = current.right;
-        }
-        return result;
-    }
+        TreeNode left = increasingBST(root.left);
+        TreeNode right = increasingBST(root.right);
 
-    private void generateStack(TreeNode root, Stack<TreeNode> stack) {
-        if (root == null) {
-            return;
+        if (left == null) {//左树为空
+            //右子树直接作为本节点的右子树
+            root.right = right;
+            //切断本节点的左子节点
+            root.left = null;
+            return root;
+        } else {
+            TreeNode curNode = left;
+            //找到左子树的最右节点
+            while (curNode.right != null) {
+                curNode = curNode.right;
+            }
+            //本节点作为左子树最右节点的右子节点
+            curNode.right = root;
+            //切断本节点的左子节点
+            root.left = null;
+            //右子树产生的新树作为本节点的右子节点
+            root.right = right;
+            //返回新树
+            return left;
         }
-        if (root.right != null) {
-            generateStack(root.right, stack);
-        }
-        stack.push(root);
-        if (root.left != null) {
-            generateStack(root.left, stack);
-        }
+
     }
 }

@@ -37,6 +37,9 @@ public class Leetcode563 {
 
     }
 
+    /**
+     * 全局变量
+     */
     int tilt = 0;
 
     public int findTilt(TreeNode root) {
@@ -45,17 +48,22 @@ public class Leetcode563 {
     }
 
     /**
+     * 获取树的tilt
+     *
      * @param root
      * @return
      */
-    private Integer sum(TreeNode root) {
+    public int sum(TreeNode root) {
+        //先处理子节点，再处理父节点
         if (root == null) {
             return 0;
-        } else {
-            int left = sum(root.left);
-            int right = sum(root.right);
-            tilt += Math.abs(left - right);
-            return left + right + root.val;
         }
+        //左子树的和值
+        int left = sum(root.left);
+        //右子树的和值
+        int right = sum(root.right);
+        //左右子树的差值，累加
+        tilt += Math.abs(left - right);
+        return left + right + root.val;
     }
 }

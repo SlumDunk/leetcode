@@ -18,32 +18,38 @@ import com.github.leetcode.vo.TreeNode;
  */
 public class Leetcode543 {
     public int diameterOfBinaryTree(TreeNode root) {
+        //求出树的高度，经过根节点的最长路径和不经过节点的最长路径，取最大值
         if (root == null) {
             return 0;
+        } else {
+            int leftHeight = 0, rightHeight = 0, leftPart = 0, rightPart = 0;
+            if (root.left != null) {
+                //获取左树的高度
+                leftHeight = getHeight(root.left);
+                leftPart = diameterOfBinaryTree(root.left);
+            }
+            if (root.right != null) {
+                //获取右子树的高度
+                rightHeight = getHeight(root.right);
+                rightPart = diameterOfBinaryTree(root.right);
+            }
+            return Math.max(Math.max(leftPart, rightPart), leftHeight + rightHeight);
         }
-        int leftPart = 0, rightPart = 0, leftHeight = 0, rightHeight = 0;
-        if (root.left != null) {
-            leftPart = diameterOfBinaryTree(root.left);
-            leftHeight = getMaxHeight(root.left);
-        }
-        if (root.right != null) {
-            rightPart = diameterOfBinaryTree(root.right);
-            rightHeight = getMaxHeight(root.right);
-        }
-        return Math.max(Math.max(leftPart, rightPart), leftHeight + rightHeight);
     }
 
-    private int getMaxHeight(TreeNode root) {
+    /**
+     * 获取树的高度
+     *
+     * @param root
+     * @return
+     */
+    public int getHeight(TreeNode root) {
         if (root == null) {
             return 0;
+        } else {
+            int leftHeight = getHeight(root.left);
+            int rightHeight = getHeight(root.right);
+            return Math.max(leftHeight, rightHeight) + 1;
         }
-        int maxLeftHeight = 0, maxRightHeight = 0;
-        if (root.left != null) {
-            maxLeftHeight = getMaxHeight(root.left);
-        }
-        if (root.right != null) {
-            maxRightHeight = getMaxHeight(root.right);
-        }
-        return Math.max(maxLeftHeight, maxRightHeight) + 1;
     }
 }
