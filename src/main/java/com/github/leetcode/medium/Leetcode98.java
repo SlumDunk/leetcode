@@ -38,7 +38,7 @@ public class Leetcode98 {
     public boolean isValidBST(TreeNode root) {
         List<Integer> list = new ArrayList<Integer>();
         Stack<TreeNode> stack = new Stack<TreeNode>();
-
+        //中根遍历
         while (!stack.isEmpty() || root != null) {
             while (root != null) {
                 stack.push(root);
@@ -48,7 +48,7 @@ public class Leetcode98 {
             list.add(root.val);
             root = root.right;
         }
-
+        //如果是有效的二叉树，那么中根遍历结果是个递增数组
         int len = list.size();
         for (int i = 0; i < len - 1; i++) {
             if (list.get(i) >= list.get(i + 1)) {

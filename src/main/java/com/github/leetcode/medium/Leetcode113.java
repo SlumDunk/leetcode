@@ -3,6 +3,7 @@ package com.github.leetcode.medium;
 import com.github.leetcode.vo.TreeNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,32 +33,42 @@ import java.util.List;
  */
 public class Leetcode113 {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        List<List<Integer>> list = new ArrayList<List<Integer>>();
-        List<Integer> alist = new ArrayList<Integer>();
+        //结果集
+        List<List<Integer>> resultList = new ArrayList<List<Integer>>();
+        //中间结果集
+        List<Integer> tempList = new ArrayList<Integer>();
         if (root != null)
-            dfs(alist, list, root, sum);
-        return list;
+            dfs(tempList, resultList, root, sum, 0);
+        return resultList;
     }
 
-    public void dfs(List<Integer> alist, List<List<Integer>> list, TreeNode root, int sum) {
+    /**
+     * @param tempList   中间结果集
+     * @param resultList 结果集
+     * @param root
+     * @param target     目标和值
+     * @param current    当前和值
+     */
+    public void dfs(List<Integer> tempList, List<List<Integer>> resultList, TreeNode root, int target, int current) {
+        //走到叶子节点
         if (root.left == null && root.right == null) {
-            if (sum == root.val) {
-                alist.add(root.val);
-                list.add(new ArrayList<Integer>(alist));
-                alist.remove(alist.size() - 1);
+            if (current + root.val == target) {
+                tempList.add(root.val);
+                resultList.add(new ArrayList<Integer>(tempList));
+                tempList.remove(tempList.size() - 1);
             }
             return;
         }
-        alist.add(root.val);
-        if (root.left == null)
-            dfs(alist, list, root.right, sum - root.val);
-        else if (root.right == null)
-            dfs(alist, list, root.left, sum - root.val);
-        else {
-            List<Integer> alistCopy = new ArrayList<Integer>(alist);
-            dfs(alist, list, root.right, sum - root.val);
-            alist = alistCopy;
-            dfs(alist, list, root.left, sum - root.val);
+        tempList.add(root.val);
+        if (root.left == null) {//左分支为空
+            dfs(tempList, resultList, root.right, target, current + root.val);
+        } else if (root.right == null) {//右分支为空
+            dfs(tempList, resultList, root.left, target, current + root.val);
+        } else {//左右分支都非空
+            List<Integer> copy = new ArrayList<Integer>(tempList);
+            dfs(tempList, resultList, root.right, target, current + root.val);
+            tempList = copy;
+            dfs(tempList, resultList, root.left, target, current + root.val);
         }
 
     }

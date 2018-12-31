@@ -1,9 +1,6 @@
 package com.github.leetcode.easy;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 import com.github.leetcode.vo.*;
 
@@ -68,37 +65,36 @@ public class Leetcode429 {
     }
 
     public List<List<Integer>> levelOrder(Node root) {
+        //结果集
         List<List<Integer>> resultList = new ArrayList<List<Integer>>();
         if (root == null) {
             return resultList;
         }
-        Queue<Node> queue = new ArrayDeque<Node>();
+        Queue<Node> queue = new LinkedList<>();
         queue.add(root);
-        Node tmpNode = null;
+        //
         List<Node> children = null;
-        int len = 1, tmpLen = 0;
-        int count = 0;
-        List<Integer> subLevel = null;
+        Node currentNode = null;
+        //每一层的缓存结果
+        List<Integer> temp = null;
         while (!queue.isEmpty()) {
-            tmpNode = queue.poll();
-            if (count == 0) {
-                subLevel = new ArrayList<Integer>();
-            }
-            count++;
-            subLevel.add(tmpNode.val);
-            children = tmpNode.children;
-            if (children != null && children.size() > 0) {
-                for (int i = 0; i < children.size(); i++) {
-                    queue.add(children.get(i));
+            //这一层的节点个数
+            int size = queue.size();
+
+            temp = new ArrayList<>();
+
+            while (size > 0) {
+                currentNode = queue.poll();
+                temp.add(currentNode.val);
+                if (currentNode.children != null) {
+                    children = currentNode.children;
+                    for (Node item : children) {
+                        queue.add(item);
+                    }
                 }
-                tmpLen += children.size();
+                size--;
             }
-            if (count == len) {
-                resultList.add(subLevel);
-                len = tmpLen;
-                tmpLen = 0;
-                count = 0;
-            }
+            resultList.add(temp);
         }
         return resultList;
     }

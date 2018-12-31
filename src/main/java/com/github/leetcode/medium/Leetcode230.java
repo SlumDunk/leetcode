@@ -34,13 +34,19 @@ import com.github.leetcode.vo.TreeNode;
  * What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
  */
 public class Leetcode230 {
-    private TreeNode temp;
+    /**
+     * 全局的节点
+     */
+    private TreeNode target;
+    /**
+     * 全局计数器
+     */
     private int counter;
 
     public int kthSmallest(TreeNode root, int k) {
         //对树进行中序遍历即可产生有序的数组
         inorder(root, k);
-        return temp.val;
+        return target.val;
     }
 
     public void inorder(TreeNode root, int k) {
@@ -52,7 +58,7 @@ public class Leetcode230 {
             inorder(root.left, k);
             //根节点
             if (++counter == k) {
-                temp = root;
+                target = root;
                 return;
             }
             //右子树

@@ -52,6 +52,7 @@ public class Leetcode105 {
                 }
 
             }
+            //inStart...index-1构成左子树，index+1...inEnd构成右子树
             if (index != -1) {
                 //中序根节点左侧的树节点构成左子树
                 root.left = build(preOrder, inOrder, preStart + 1, inStart, index - 1);

@@ -34,12 +34,22 @@ import com.github.leetcode.vo.TreeNode;
  */
 public class Leetcode236 {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) return null;
-        if (root == p || root == q) return root;
+        //在当前节点的左右分支分别寻找目标节点
+        if (root == null) {
+            return null;
+        }
+        //找到p或q
+        if (root == p || root == q) {
+            return root;
+        }
+
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
-        if (left != null && right != null) return root;
-        return left != null ? left : right;
+        if (left != null && right != null) {
+            return root;
+        } else {
+            return left != null ? left : right;
+        }
 
     }
 }

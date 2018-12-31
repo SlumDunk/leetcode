@@ -40,6 +40,9 @@ import com.github.leetcode.vo.TreeNode;
  * Therefore, sum = 495 + 491 + 40 = 1026.
  */
 public class Leetcode129 {
+    /**
+     * 全局和值
+     */
     int sum;
 
     public int sumNumbers(TreeNode root) {
@@ -50,15 +53,22 @@ public class Leetcode129 {
         return sum;
     }
 
-    public void dfs(TreeNode root, int num) {
+    /**
+     * @param root   当前节点
+     * @param preSum 当前和
+     */
+    public void dfs(TreeNode root, int preSum) {
+        //走到叶子节点，添加到全局和值
         if (root.left == null && root.right == null) {
-            sum += num;
+            sum += preSum;
         }
+        //左子节点非空
         if (root.left != null) {
-            dfs(root.left, num * 10 + root.left.val);
+            dfs(root.left, preSum * 10 + root.left.val);
         }
+        //右子节点非空
         if (root.right != null) {
-            dfs(root.right, num * 10 + root.right.val);
+            dfs(root.right, preSum * 10 + root.right.val);
         }
     }
 

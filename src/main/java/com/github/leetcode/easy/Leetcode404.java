@@ -16,28 +16,35 @@ import com.github.leetcode.vo.TreeNode;
  * There are two left leaves in the binary tree, with values 9 and 15 respectively. Return 24.
  */
 public class Leetcode404 {
-    public static void main(String[] args) {
 
-    }
-
-    private int sum = 0;
+    //定义一个全局变量
+    int sum = 0;
 
     public int sumOfLeftLeaves(TreeNode root) {
         if (root == null) {
             return 0;
         } else {
-            getSum(root, Boolean.FALSE);
+            getSum(root, false);
             return sum;
         }
     }
 
-    private void getSum(TreeNode root, Boolean add) {
-        if (root != null) {
-            if (add && root.left == null && root.right == null) {
+    /**
+     * @param root 当且节点
+     * @param add  是否加入和值
+     */
+    public void getSum(TreeNode root, Boolean add) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            if (add) {//叶子节点，且为左叶子节点
                 sum += root.val;
             }
-            getSum(root.left, Boolean.TRUE);
-            getSum(root.right, Boolean.FALSE);
         }
+        //递归左树
+        getSum(root.left, true);
+        //递归右树
+        getSum(root.right, false);
     }
 }

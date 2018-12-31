@@ -36,6 +36,7 @@ import com.github.leetcode.vo.TreeNode;
  */
 public class Leetcode337 {
     public int rob(TreeNode root) {
+        //返回抢劫root和不抢劫root两者的较大值
         int[] res = robSub(root);
         return Math.max(res[0], res[1]);
     }
@@ -44,11 +45,15 @@ public class Leetcode337 {
         if (root == null) {
             return new int[2];
         }
+        int[] res = new int[2];
+        //寻找左子树的最大收益
         int[] left = robSub(root.left);
+        //寻找右子树的最大收益
         int[] right = robSub(root.right);
 
-        int[] res = new int[2];
+        //不抢劫当前节点，所以它等于两个分支较大值的和
         res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        //抢劫当前节点，不抢劫两个子节点
         res[1] = root.val + left[0] + right[0];
         return res;
     }

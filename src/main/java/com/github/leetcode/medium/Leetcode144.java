@@ -47,7 +47,6 @@ public class Leetcode144 {
                 stack.push(node.left);
             }
         }
-
         return list;
     }
 }

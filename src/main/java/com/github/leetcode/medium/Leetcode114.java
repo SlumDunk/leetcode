@@ -32,6 +32,7 @@ import java.util.Stack;
  */
 public class Leetcode114 {
     public void flatten(TreeNode root) {
+        //先根遍历，原来的左节点出栈时调整成右节点
         if (root == null) {
             return;
         }
@@ -39,21 +40,31 @@ public class Leetcode114 {
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode cur = stack.pop();
+            //右节点入栈
             if (cur.right != null) {
                 stack.push(cur.right);
             }
+            //左节点入栈
             if (cur.left != null) {
                 stack.push(cur.left);
             }
+            //出栈，成为现有节点的右节点
             if (!stack.isEmpty()) {
                 cur.right = stack.peek();
             }
+            //切断原有左分支
             cur.left = null;
         }
     }
 
+    /**
+     * 保存的是上一个父节点
+     */
     private TreeNode lastNode = null;
 
+    /**
+     * @param root 当前节点
+     */
     public void flatten_recursive(TreeNode root) {
         if (root == null) {
             return;
@@ -63,7 +74,9 @@ public class Leetcode114 {
             lastNode.right = root;
         }
         lastNode = root;
+        //左子树
         TreeNode left = root.left;
+        //右子树
         TreeNode right = root.right;
         flatten_recursive(left);
         flatten_recursive(right);

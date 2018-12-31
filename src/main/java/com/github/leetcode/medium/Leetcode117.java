@@ -39,26 +39,32 @@ import com.github.leetcode.vo.TreeLinkNode;
  */
 public class Leetcode117 {
     public void connect(TreeLinkNode root) {
+        //每一层层首都有一个虚拟节点
         TreeLinkNode dummy = new TreeLinkNode(0);
+        //当前节点的前置节点
         TreeLinkNode pre = dummy;
         while (root != null) {
+            //当前节点存在左子节点
             if (root.left != null) {
                 pre.next = root.left;
                 pre = pre.next;
             }
+            //当前节点存在右子节点
             if (root.right != null) {
                 pre.next = root.right;
                 pre = pre.next;
             }
+            //右兄弟节点
             root = root.next;
-            // done with the search of current level
+            //这一层走完了
             if (root == null) {
+                //开始新的层级
                 root = dummy.next;
                 pre = dummy;
+                //切断原有的联系
                 dummy.next = null;
             }
         }
-
     }
 
 }

@@ -21,19 +21,19 @@ import com.github.leetcode.vo.TreeNode;
  */
 public class Leetcode108 {
     public TreeNode sortedArrayToBST(int[] nums) {
-        TreeNode rootNode = createTree(nums, 0, nums.length - 1);
-        return rootNode;
+        //二分法，每次取中间节点做为根节点
+        return generateBST(nums, 0, nums.length - 1);
     }
 
-    private TreeNode createTree(int[] nums, int left, int right) {
+    public TreeNode generateBST(int[] nums, int left, int right) {
         if (left > right) {
             return null;
+        } else {
+            int middle = left + (right - left) / 2;
+            TreeNode root = new TreeNode(nums[middle]);
+            root.left = generateBST(nums, left, middle - 1);
+            root.right = generateBST(nums, middle + 1, right);
+            return root;
         }
-        int mid = (left + right) / 2;
-        TreeNode node = new TreeNode(nums[mid]);
-        node.left = createTree(nums, left, mid - 1);
-        node.right = createTree(nums, mid + 1, right);
-        return node;
-
     }
 }

@@ -28,36 +28,35 @@ import java.util.Queue;
  */
 public class Leetcode102 {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();//返回的最终结果
-        Queue<TreeNode> queue = new LinkedList<>();//用来存放每一层的节点
+        //返回的最终结果
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        //用来存放每一层的节点
+        Queue<TreeNode> queue = new LinkedList<>();
 
         //处理第一个节点（root）
         if (root == null)
             return result;
         else {
-            List<Integer> temp = new ArrayList<>();//存放暂时的结果
-            temp.add(root.val);
+            List<Integer> temp = null;//存放暂时的结果
+            TreeNode currentNode = null;
             queue.offer(root);
-            result.add(temp);
-        }
-
-        while (!queue.isEmpty()) {
-            int i = queue.size();
-            List<Integer> tempReslut = new ArrayList<>();//存放暂时的结果
-            while (i > 0)//遍历这一层的所有节点
-            {
-                TreeNode tNode = queue.poll();
-                if (tNode.left != null) {
-                    tempReslut.add(tNode.left.val);
-                    queue.offer(tNode.left);
+            while (!queue.isEmpty()) {
+                //这一层的节点数量
+                int size = queue.size();
+                temp = new ArrayList<>();
+                while (size > 0) {
+                    currentNode = queue.poll();
+                    temp.add(currentNode.val);
+                    if (currentNode.left != null) {//左子树非空
+                        queue.add(currentNode.left);
+                    }
+                    if (currentNode.right != null) {//右子树非空
+                        queue.add(currentNode.right);
+                    }
+                    size--;
                 }
-                if (tNode.right != null) {
-                    tempReslut.add(tNode.right.val);
-                    queue.offer(tNode.right);
-                }
-                i--;
+                result.add(temp);
             }
-            if (!tempReslut.isEmpty()) result.add(tempReslut);
         }
 
         return result;

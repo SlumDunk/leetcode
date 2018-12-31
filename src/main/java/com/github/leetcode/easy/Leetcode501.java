@@ -41,27 +41,30 @@ public class Leetcode501 {
     }
 
     public int[] findMode(TreeNode root) {
+        //中序遍历 递增有序的数组
         List<Integer> resultList = new ArrayList<Integer>();
         Integer mx = 0, cnt = 1;
+        //保存上一个节点
         TreeNode pre = null;
-        TreeNode p = root;
         Stack<TreeNode> stack = new Stack<TreeNode>();
-        while (!stack.isEmpty() || p != null) {
-            while (p != null) {
-                stack.push(p);
-                p = p.left;
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
             }
-            p = stack.pop();
+            root = stack.pop();
             if (pre != null) {
-                cnt = p.val == pre.val ? cnt + 1 : 1;
+                cnt = root.val == pre.val ? cnt + 1 : 1;
             }
             if (cnt >= mx) {
+                //找到新的mod，已有的结果集需要清空
                 if (cnt > mx) resultList.clear();
-                resultList.add(p.val);
+                resultList.add(root.val);
                 mx = cnt;
             }
-            pre = p;
-            p = p.right;
+            pre = root;
+            //对右子树进行处理
+            root = root.right;
         }
         int[] res = new int[resultList.size()];
         for (int i = 0; i < res.length; i++) {

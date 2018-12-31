@@ -41,13 +41,22 @@ import com.github.leetcode.vo.TreeLinkNode;
 public class Leetcode116 {
     public void connect(TreeLinkNode root) {
         TreeLinkNode level_start = root;
+        //没有走完所有的层级
         while (level_start != null) {
-            TreeLinkNode cur = level_start;
-            while (cur != null) {
-                if (cur.left != null) cur.left.next = cur.right;
-                if (cur.right != null && cur.next != null) cur.right.next = cur.next.left;
-                cur = cur.next;
+            TreeLinkNode current = level_start;
+            //这一层还没走完
+            while (current != null) {
+                //左节点的next指针指向自己的右子节点
+                if (current.left != null) {
+                    current.left.next = current.right;
+                }
+                //右子节点next指针指向自己右兄弟节点的左节点
+                if (current.right != null && current.next != null) {
+                    current.right.next = current.next.left;
+                }
+                current = current.next;
             }
+            //因为是一颗满二叉树
             level_start = level_start.left;
         }
 

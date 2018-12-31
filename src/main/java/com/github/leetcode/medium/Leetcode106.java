@@ -29,20 +29,21 @@ public class Leetcode106 {
     public TreeNode buildTree(int[] inOrder, int[] postOrder) {
         this.inOrder = inOrder;
         this.postOrder = postOrder;
+        //从后根序列数组的末尾往前推
         return build(postOrder.length - 1, 0, inOrder.length - 1);
     }
 
     /**
-     * @param postStart 子树后根序列的起始位置
+     * @param postEnd 子树后根序列的起始位置
      * @param inStart   子树中根序列的起始位置
      * @param inEnd     子树中根序列的终止位置
      * @return
      */
-    private TreeNode build(int postStart, int inStart, int inEnd) {
-        if (postStart < 0 || inStart > inEnd) {
+    private TreeNode build(int postEnd, int inStart, int inEnd) {
+        if (postEnd < 0 || inStart > inEnd) {
             return null;
         }
-        TreeNode root = new TreeNode(postOrder[postStart]);
+        TreeNode root = new TreeNode(postOrder[postEnd]);
         int index = -1;
         for (int i = inStart; i <= inEnd; i++) {
             if (inOrder[i] == root.val) {
@@ -52,9 +53,9 @@ public class Leetcode106 {
         }
         if (index != -1) {
             //构建右子树
-            root.right = build(postStart - 1, index + 1, inEnd);
+            root.right = build(postEnd - 1, index + 1, inEnd);
             //构建左子树，后根序列的开始位置为原来的位置往前偏移右子树的节点长度
-            root.left = build(postStart - (inEnd - index) - 1, inStart, index - 1);
+            root.left = build(postEnd - (inEnd - index) - 1, inStart, index - 1);
         }
         return root;
     }

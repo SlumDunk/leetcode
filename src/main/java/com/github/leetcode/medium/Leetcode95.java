@@ -36,18 +36,27 @@ public class Leetcode95 {
         return generateSubTree(1, n);
     }
 
+    /**
+     * @param start 左闭区间
+     * @param end   右闭区间
+     * @return
+     */
     public ArrayList<TreeNode> generateSubTree(int start, int end) {
+        //结果集
         ArrayList<TreeNode> result = new ArrayList<TreeNode>();
+        //start > end 表明越界了，无法产生新的子节点，添加空节点
         if (start > end) {
             result.add(null);
             return result;
         }
-        for (int rootVal = start; rootVal <= end; rootVal++)
-            for (TreeNode leftSubTreeRoot : generateSubTree(start, rootVal - 1))
-                for (TreeNode rightSubTreeRoot : generateSubTree(rootVal + 1, end)) {
-                    TreeNode root = new TreeNode(rootVal);
-                    root.left = leftSubTreeRoot;
-                    root.right = rightSubTreeRoot;
+        for (int val = start; val <= end; val++)
+            //start...rootVal-1构成左子树
+            for (TreeNode left : generateSubTree(start, val - 1))
+                //rootVal+1...end构成右子树
+                for (TreeNode right : generateSubTree(val + 1, end)) {
+                    TreeNode root = new TreeNode(val);
+                    root.left = left;
+                    root.right = right;
                     result.add(root);
                 }
         return result;
