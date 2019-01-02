@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.LinkedList;
+
 /**
  * @Author: zerongliu
  * @Date: 10/25/18 14:07
@@ -63,6 +65,48 @@ public class Leetcode200 {
         dfsSearch(grid, i, j + 1, rows, cols);
         dfsSearch(grid, i + 1, j, rows, cols);
         dfsSearch(grid, i, j - 1, rows, cols);
+    }
+
+    /**
+     * 广度优先搜索
+     *
+     * @param grid 数组
+     * @param x    当前行位置
+     * @param y    当前列位置
+     */
+    private void bfsFill(char[][] grid, int x, int y) {
+        grid[x][y] = '0';
+        int row = grid.length;
+        int col = grid[0].length;
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+        int code = x * col + y;
+        queue.offer(code);
+        while (!queue.isEmpty()) {
+            code = queue.poll();
+            int i = code / col;
+            int j = code % col;
+            //访问过的陆地置为0，避免重复访问
+            if (i > 0 && grid[i - 1][j] == '1')//上
+            {
+                queue.offer((i - 1) * col + j);
+                grid[i - 1][j] = '0';
+            }
+            if (i < row - 1 && grid[i + 1][j] == '1')  //下
+            {
+                queue.offer((i + 1) * col + j);
+                grid[i + 1][j] = '0';
+            }
+            if (j > 0 && grid[i][j - 1] == '1')  //左
+            {
+                queue.offer(i * col + j - 1);
+                grid[i][j - 1] = '0';
+            }
+            if (j < col - 1 && grid[i][j + 1] == '1')  //右
+            {
+                queue.offer(i * col + j + 1);
+                grid[i][j + 1] = '0';
+            }
+        }
     }
 }
 

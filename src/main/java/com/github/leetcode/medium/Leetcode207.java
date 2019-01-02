@@ -1,6 +1,8 @@
 package com.github.leetcode.medium;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @Author: zerongliu
@@ -37,7 +39,7 @@ public class Leetcode207 {
         for (int i = 0; i < numCourses; i++) {
             edges[i] = new ArrayList<Integer>();
         }
-        //v2->v1
+        //1->0
         for (int i = 0; i < prerequisites.length; i++) {
             edges[prerequisites[i][1]].add(prerequisites[i][0]);
         }
@@ -77,5 +79,56 @@ public class Leetcode207 {
         return true;
     }
 
+    /**
+     * 广度优先搜索
+     *
+     * @param numCourses
+     * @param prerequisites
+     * @return
+     */
+    public boolean bfsCanFinish(int numCourses, int[][] prerequisites) {
+        //图
+        ArrayList[] graph = new ArrayList[numCourses];
+        //各节点的入度
+        int[] degree = new int[numCourses];
+        //队列
+        Queue queue = new LinkedList();
+        int count = 0;
+        //初始化边集合
+        for (int i = 0; i < numCourses; i++)
+            graph[i] = new ArrayList();
+        //构造边集合
+        for (int i = 0; i < prerequisites.length; i++) {
+            //0->1
+            degree[prerequisites[i][0]]++;
+            graph[prerequisites[i][1]].add(prerequisites[i][0]);
+        }
+        //入度为0的节点先入队列，表示可以先上
+        for (int i = 0; i < degree.length; i++) {
+            if (degree[i] == 0) {
+                queue.add(i);
+                count++;
+            }
+        }
+
+        while (queue.size() != 0) {
+            int course = (int) queue.poll();
+            //修正关联节点的入度
+            for (int i = 0; i < graph[course].size(); i++) {
+                int adjVertex = (int) graph[course].get(i);
+                degree[adjVertex]--;
+                //入度为0，加入队列
+                if (degree[adjVertex] == 0) {
+                    queue.add(adjVertex);
+                    count++;
+                }
+            }
+        }
+        //所有课程都修完
+        if (count == numCourses)
+            return true;
+        else
+            return false;
+    }
 }
 

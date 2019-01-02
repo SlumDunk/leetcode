@@ -61,48 +61,112 @@ public class Leetcode310 {
     }
 
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-        List<Integer> leaves = new ArrayList<>();
-        if (n <= 1)
-
-        {
-            leaves.add(0);
-            return leaves;
+        //最多有两个节点，从外到内一点点裁剪，裁减掉度为1的节点和边
+        //结果集
+        List<Integer> result = new ArrayList<>();
+        if (n <= 1) {
+            result.add(0);
+            return result;
         }
-
+        //边集合
         Map<Integer, Set<Integer>> graph = new HashMap<>();
-        for (
-                int i = 0;
-                i < n; i++)
+        //初始化边集合
+        for (int i = 0; i < n; i++)
             graph.put(i, new HashSet<Integer>());
-        for (
-                int[] edge : edges)
-
-        {
+        //构造边集合
+        for (int[] edge : edges) {
             graph.get(edge[0]).add(edge[1]);
             graph.get(edge[1]).add(edge[0]);
         }
-
-        for (int i = 0; i < n; i++)
-
-        {
+        //度为1的节点
+        for (int i = 0; i < n; i++) {
             if (graph.get(i).size() == 1)
-                leaves.add(i);
+                result.add(i);
         }
-        while (n > 2)
-
-        {
-            n -= leaves.size();
-            List<Integer> newLeaves = new ArrayList<>();
-            for (int leaf : leaves) {
-                for (int newLeaf : graph.get(leaf)) {
-                    graph.get(leaf).remove(newLeaf);
-                    graph.get(newLeaf).remove(leaf);
-                    if (graph.get(newLeaf).size() == 1)
-                        newLeaves.add(newLeaf);
+        //剩余节点数大于2
+        while (n > 2) {
+            n -= result.size();
+            List<Integer> vertexes = new ArrayList<>();
+            for (int vertex : result) {
+                for (int adjVertex : graph.get(vertex)) {
+                    //删除关联边
+                    graph.get(vertex).remove(adjVertex);
+                    graph.get(adjVertex).remove(vertex);
+                    //度为1的节点放入list
+                    if (graph.get(adjVertex).size() == 1)
+                        vertexes.add(adjVertex);
                 }
             }
-            leaves = newLeaves;
+            result = vertexes;
         }
-        return leaves;
+        return result;
+    }
+
+    /**
+     * 广度优先
+     *
+     * @param n
+     * @param edges
+     * @return
+     */
+    public List<Integer> bfsMinHeightTrees(int n, int[][] edges) {
+        //构造图
+        Map<Integer, List<Integer>> graph = new HashMap<Integer, List<Integer>>();
+        List<Integer> result = new ArrayList<Integer>();
+        if (n == 1) {
+            result.add(0);
+            return result;
+        }
+        //存储各个节点的度
+        int[] degree = new int[n];
+        //初始化边集合
+        for (int i = 0; i < n; i++) {
+            graph.put(i, new ArrayList<Integer>());
+        }
+        //构造边集合
+        for (int i = 0; i < edges.length; i++) {
+            graph.get(edges[i][0]).add(edges[i][1]);
+            graph.get(edges[i][1]).add(edges[i][0]);
+            degree[edges[i][0]]++;
+            degree[edges[i][1]]++;
+        }
+        Queue<Integer> queue = new LinkedList<Integer>();
+
+        //先从叶子节点往里缩，叶子节点的度为1
+        for (int i = 0; i < n; i++)
+            //一开始有度为0的点，已经找到最小高度树
+            if (degree[i] == 0)
+                return result;
+            else if (degree[i] == 1) {
+                queue.offer(i);
+            }
+
+        while (!queue.isEmpty()) {
+            result = new ArrayList<Integer>();
+            int count = queue.size();
+            //遍历当前叶子节点，把它的度和与它关联节点的度减1
+            for (int i = 0; i < count; i++) {
+                int current = queue.poll();
+                //加入结果集
+                result.add(current);
+                //度减1
+                degree[current]--;
+                List<Integer> adjEdges = graph.get(current);
+                //处理关联节点的度
+                for (int k = 0; k < adjEdges.size(); k++) {
+                    int vertex = adjEdges.get(k);
+                    //查看边是否已经删除过
+                    if (degree[vertex] == 0) {
+                        continue;
+                    } else {
+                        degree[vertex]--;
+                        if (degree[vertex] == 1) {
+                            queue.offer(vertex);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
