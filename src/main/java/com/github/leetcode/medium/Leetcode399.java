@@ -1,8 +1,6 @@
 package com.github.leetcode.medium;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -26,7 +24,6 @@ import java.util.Stack;
 public class Leetcode399 {
     public double[] calcEquation(String[][] equations, double[] values, String[][] query) {
         double[] result = new double[query.length];
-        // filter unexpected words
         // 过滤掉没有遇见过的字符
         Set<String> words = new HashSet<>();
         for (String[] strs : equations) {
@@ -37,34 +34,49 @@ public class Leetcode399 {
             String[] keys = query[i];
             if (!words.contains(keys[0]) || !words.contains(keys[1])) result[i] = -1.0d;
             else {
-                Stack<Integer> stack = new Stack<>();
-                result[i] = helper(equations, values, keys, stack);
+                List<Integer> temp = new ArrayList<Integer>();
+                result[i] = helper(equations, values, keys, temp);
             }
         }
         return result;
     }
 
-    public double helper(String[][] equations, double[] values, String[] keys, Stack<Integer> stack) {
+    /**
+     * @param equations 除数和被除数关系集合
+     * @param values    商集合
+     * @param keys      目标除数和被除数对
+     * @param list      存储路径上的节点
+     * @return
+     */
+    public double helper(String[][] equations, double[] values, String[] keys, List<Integer> list) {
         // 直接查找，key的顺序有正反
-        // look up equations directly
         for (int i = 0; i < equations.length; ++i) {
             if (equations[i][0].equals(keys[0]) && equations[i][1].equals(keys[1])) return values[i];
             if (equations[i][0].equals(keys[1]) && equations[i][1].equals(keys[0])) return 1 / values[i];
         }
-        // lookup equations by other equations
         // 间接查找，key的顺序也有正反
         for (int i = 0; i < equations.length; ++i) {
-            if (!stack.contains(i) && keys[0].equals(equations[i][0])) {
-                stack.push(i);
-                double temp = values[i] * helper(equations, values, new String[]{equations[i][1], keys[1]}, stack);
-                if (temp > 0) return temp;
-                else stack.pop();
+            //防止出现环路
+            if (!list.contains(i) && keys[0].equals(equations[i][0])) {
+                list.add(i);
+                //(key[0]/equation[1])*(equation[1]/key[1])
+                double temp = values[i] * helper(equations, values, new String[]{equations[i][1], keys[1]}, list);
+                if (temp > 0) {
+                    return temp;
+                } else {
+                    list.remove(list.size() - 1);
+                }
             }
-            if (!stack.contains(i) && keys[0].equals(equations[i][1])) {
-                stack.push(i);
-                double temp = helper(equations, values, new String[]{equations[i][0], keys[1]}, stack) / values[i];
-                if (temp > 0) return temp;
-                else stack.pop();
+            //防止出现环路
+            if (!list.contains(i) && keys[0].equals(equations[i][1])) {
+                list.add(i);
+                // (equation[0]/k[1])/(equation[0]/key[0])
+                double temp = helper(equations, values, new String[]{equations[i][0], keys[1]}, list) / values[i];
+                if (temp > 0) {
+                    return temp;
+                } else {
+                    list.remove(list.size() - 1);
+                }
             }
         }
         // 查不到，返回-1
