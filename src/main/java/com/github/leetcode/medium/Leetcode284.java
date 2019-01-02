@@ -8,20 +8,34 @@ import java.util.Iterator;
  * @Description:
  */
 public class Leetcode284 {
+    /**
+     * 实现迭代器接口 代理模式
+     */
     class PeekingIterator implements Iterator<Integer> {
-
+        /**
+         * 真正的迭代器
+         */
         Iterator<Integer> iterator;
+        /**
+         * 存储迭代器的下一个元素
+         */
         int value;
+        /**
+         * peek读取出来的元素是否还有效
+         */
         boolean isValid;
 
         public PeekingIterator(Iterator<Integer> iterator) {
-            // initialize any member here.
             this.iterator = iterator;
             value = -1;
             isValid = false;
         }
 
-        // Returns the next element in the iteration without advancing the iterator.
+        /**
+         * 返回迭代器顶部元素
+         *
+         * @return
+         */
         public Integer peek() {
             if (isValid)
                 return value;
@@ -31,10 +45,14 @@ public class Leetcode284 {
             return val;
         }
 
-        // hasNext() and next() should behave the same as in the Iterator interface.
-        // Override them if needed.
+        /**
+         * 返回下一个元素
+         *
+         * @return
+         */
         @Override
         public Integer next() {
+            //如果val是有效的，直接返回，并置为false
             if (isValid) {
                 isValid = false;
                 return value;
@@ -42,8 +60,14 @@ public class Leetcode284 {
             return iterator.next();
         }
 
+        /**
+         * 是否迭代完所有元素
+         *
+         * @return
+         */
         @Override
         public boolean hasNext() {
+            //如果val元素是有效的，直接返回true
             if (isValid)
                 return true;
             return iterator.hasNext();

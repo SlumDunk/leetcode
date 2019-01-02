@@ -33,8 +33,17 @@ public class Leetcode707 {
     }
 
     class MyLinkedList {
+        /**
+         * 链表节点类
+         */
         private class Node {
+            /**
+             * 节点值
+             */
             public int val;
+            /**
+             * 指向下一个节点指针
+             */
             public Node next;
 
             public Node(int val, Node next) {
@@ -47,11 +56,17 @@ public class Leetcode707 {
             }
         }
 
+        /**
+         * 虚拟头结点
+         */
         private Node dummyHead;
+        /**
+         * 链表大小
+         */
         private int size;
 
         /**
-         * Initialize your data structure here.
+         * 初始化数据结构
          */
         public MyLinkedList() {
             dummyHead = new Node(-1, null);
@@ -59,7 +74,10 @@ public class Leetcode707 {
         }
 
         /**
-         * Get the value of the index-th node in the linked list. If the index is invalid, return -1.
+         * 获取某个位置的元素
+         *
+         * @param index
+         * @return
          */
         public int get(int index) {
             //注意边界条件
@@ -75,21 +93,28 @@ public class Leetcode707 {
         }
 
         /**
-         * Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+         * 往链表头部插入元素
+         *
+         * @param val
          */
         public void addAtHead(int val) {
             addAtIndex(0, val);
         }
 
         /**
-         * Append a node of value val to the last element of the linked list.
+         * 往链表尾部插入元素
+         *
+         * @param val
          */
         public void addAtTail(int val) {
             addAtIndex(size, val);
         }
 
         /**
-         * Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
+         * 往链表某个位置插入元素
+         *
+         * @param index
+         * @param val
          */
         public void addAtIndex(int index, int val) {
             //注意边界条件
@@ -107,7 +132,9 @@ public class Leetcode707 {
         }
 
         /**
-         * Delete the index-th node in the linked list, if the index is valid.
+         * 删除某个位置的元素
+         *
+         * @param index
          */
         public void deleteAtIndex(int index) {
             //注意边界条件

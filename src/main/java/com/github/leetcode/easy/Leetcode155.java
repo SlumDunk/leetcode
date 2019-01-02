@@ -34,7 +34,13 @@ public class Leetcode155 {
         minStack.getMin();
     }
 
+    /**
+     * 装饰模式
+     */
     static class MinStack {
+        /**
+         * 真正的栈
+         */
         Stack<Integer> stack;
         /**
          * 最小值
@@ -47,8 +53,10 @@ public class Leetcode155 {
         }
 
         public void push(int x) {
+            //调整最小值的时候，多存储上一次的最小值，
+            // 方便在最小值出栈的时候获取剩下元素的最小值
+            //注意是小于等于
             if (x <= min) {
-                //多存储上一次的最小值，在最小值出栈的时候获取剩下元素的最小值
                 stack.push(min);
                 min = x;
             }
@@ -56,7 +64,7 @@ public class Leetcode155 {
         }
 
         public void pop() {
-            //若出栈元素等于最小值，那么接着出栈，获取剩下元素的最小值
+            //若出栈元素等于最小值，那么接着出栈，得到剩下元素的最小值
             if (stack.pop() == min) {
                 min = stack.pop();
             }

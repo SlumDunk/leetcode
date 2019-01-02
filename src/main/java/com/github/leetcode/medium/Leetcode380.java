@@ -7,8 +7,8 @@ import java.util.*;
  * @Date: 11/4/18 21:07
  * @Description: Design a data structure that supports all following operations in average O(1) time.
  * <p>
- * insert(val): Inserts an item val to the set if not already present.
- * remove(val): Removes an item val from the set if present.
+ * insert(val): Inserts an val val to the set if not already present.
+ * remove(val): Removes an val val from the set if present.
  * getRandom: Returns a random element from current set of elements. Each element must have the same probability of being returned.
  * Example:
  * <p>
@@ -42,9 +42,13 @@ public class Leetcode380 {
          * 存储元素和元素在list中对应的位置索引
          */
         Map<Integer, Integer> map;
-        //存储元素
+        /**
+         * 存储元素
+         */
         List<Integer> list;
-        //下一个元素的位置索引
+        /**
+         * 下一个元素的位置索引
+         */
         int lastIndex;
 
         public RandomizedSet() {
@@ -54,7 +58,10 @@ public class Leetcode380 {
         }
 
         /**
-         * 往集合中插入元素，如果不存在该元素的话，存在返回false
+         * 往集合中插入元素，如果已经存在该元素的话，存在返回false
+         *
+         * @param val
+         * @return
          */
         public boolean insert(int val) {
             if (map.containsKey(val)) {
@@ -70,6 +77,9 @@ public class Leetcode380 {
 
         /**
          * 从集合中移除元素，如果存在的话，返回true,不存在，返回false
+         *
+         * @param val
+         * @return
          */
         public boolean remove(int val) {
             if (!map.containsKey(val)) {
@@ -79,11 +89,13 @@ public class Leetcode380 {
             //维护元素的索引位置信息
             //把最后一个元素放到要删除元素的位置
             map.put(list.get(lastIndex - 1), map.get(val));
-            //list中交换最后一个元素和当前元素
+            //将要删除的元素交换到list的末尾
             swap(lastIndex - 1, map.get(val));
             //将该元素从map中移除
             map.remove(val);
+            //将末尾元素移除
             list.remove(lastIndex - 1);
+            //调整list长度
             lastIndex--;
 
             return true;
@@ -91,15 +103,20 @@ public class Leetcode380 {
 
         /**
          * 交换元素
+         *
+         * @param tail   末尾元素
+         * @param target 要删除的元素
          */
-        private void swap(int id1, int id2) {
-            int temp = list.get(id1);
-            list.set(id1, list.get(id2));
-            list.set(id2, temp);
+        private void swap(int tail, int target) {
+            int temp = list.get(tail);
+            list.set(tail, list.get(target));
+            list.set(target, temp);
         }
 
         /**
          * 获取一个随机元素
+         *
+         * @return
          */
         public int getRandom() {
             Random rand = new Random();
@@ -108,5 +125,4 @@ public class Leetcode380 {
             return list.get(idx);
         }
     }
-
 }

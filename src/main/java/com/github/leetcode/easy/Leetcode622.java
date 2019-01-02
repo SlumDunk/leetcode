@@ -64,15 +64,33 @@ public class Leetcode622 {
         System.out.println(circularQueue.deQueue());
     }
 
+    /**
+     * 循环队列
+     */
     static class MyCircularQueue {
-
+        /**
+         * 当前出队位置
+         */
         private int front = 0;
+        /**
+         * 当前队尾位置
+         */
         private int rear = -1;
+        /**
+         * 给队列分配的大小
+         */
         private int size;
+        /**
+         * 真正存储数据的数据结构
+         */
         List<Integer> dataList;
+        /**
+         * 实际队列中存储元素的个数
+         */
+        private int count = 0;
 
         /**
-         * Initialize your data structure here. Set the size of the queue to be k.
+         * 初始化数据结构，设置队列大小为k
          */
         public MyCircularQueue(int k) {
             size = k;
@@ -83,33 +101,44 @@ public class Leetcode622 {
         }
 
         /**
-         * Insert an element into thes circular queue. Return true if the operation is successful.
+         * 往队列尾部插入一个元素
+         *
+         * @param value
+         * @return
          */
         public boolean enQueue(int value) {
             if (getQueueSize() >= size) {
                 return false;
             } else {
+                //要插入的位置
                 rear = (rear + 1) % size;
                 dataList.set(rear, value);
+                count++;
                 return true;
             }
         }
 
         /**
-         * Delete an element from the circular queue. Return true if the operation is successful.
+         * 删除队中的元素
+         *
+         * @return
          */
         public boolean deQueue() {
             if (getQueueSize() <= 0) {
                 return false;
             } else {
                 dataList.set(front, -1);
+                //变更下个要出队的元素位置
                 front = (front + 1) % size;
+                count--;
                 return true;
             }
         }
 
         /**
-         * Get the front item from the queue.
+         * 获取队首元素
+         *
+         * @return
          */
         public int Front() {
             if (getQueueSize() > 0) {
@@ -120,7 +149,9 @@ public class Leetcode622 {
         }
 
         /**
-         * Get the last item from the queue.
+         * 获取队尾元素
+         *
+         * @return
          */
         public int Rear() {
             if (getQueueSize() > 0) {
@@ -131,7 +162,9 @@ public class Leetcode622 {
         }
 
         /**
-         * Checks whether the circular queue is empty or not.
+         * 判断队列是否为空
+         *
+         * @return
          */
         public boolean isEmpty() {
             return getQueueSize() == 0;
@@ -139,19 +172,20 @@ public class Leetcode622 {
 
 
         /**
-         * Checks whether the circular queue is full or not.
+         * 判断队列是否已经满了
+         *
+         * @return
          */
         public boolean isFull() {
             return getQueueSize() == size;
         }
 
+        /**
+         * 获取队列的实际大小
+         *
+         * @return
+         */
         private int getQueueSize() {
-            int count = 0;
-            for (int i = 0; i < dataList.size(); i++) {
-                if (dataList.get(i) != -1) {
-                    count++;
-                }
-            }
             return count;
         }
     }

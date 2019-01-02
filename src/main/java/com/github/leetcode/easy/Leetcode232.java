@@ -38,7 +38,7 @@ public class Leetcode232 {
         Stack<Integer> copyStack;
 
         /**
-         * Initialize your data structure here.
+         * 初始化数据结构
          */
         public MyQueue() {
             stack = new Stack<>();
@@ -46,14 +46,18 @@ public class Leetcode232 {
         }
 
         /**
-         * Push element x to the back of heap.
+         * 元素x入栈
+         *
+         * @param x
          */
         public void push(int x) {
             stack.push(x);
         }
 
         /**
-         * Removes the element from in front of heap and returns that element.
+         * 元素出栈
+         *
+         * @return
          */
         public int pop() {
             copyStack();
@@ -64,6 +68,7 @@ public class Leetcode232 {
          * 将原始栈的数据倒序拷贝到副本栈，如果副本栈为空的话
          */
         private void copyStack() {
+            //副本栈中的元素为空
             if (copyStack.isEmpty()) {
                 while (!stack.isEmpty()) {
                     copyStack.push(stack.pop());
@@ -72,7 +77,9 @@ public class Leetcode232 {
         }
 
         /**
-         * Get the front element.
+         * 获取栈顶元素
+         *
+         * @return
          */
         public int peek() {
             copyStack();
@@ -80,7 +87,9 @@ public class Leetcode232 {
         }
 
         /**
-         * Returns whether the heap is empty.
+         * 判断栈是否为空
+         *
+         * @return
          */
         public boolean empty() {
             return stack.isEmpty() && copyStack.isEmpty();

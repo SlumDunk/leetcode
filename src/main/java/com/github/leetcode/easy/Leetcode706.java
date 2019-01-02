@@ -49,6 +49,9 @@ public class Leetcode706 {
 
         /**
          * 存入key和value值
+         *
+         * @param key
+         * @param value
          */
         public void put(int key, int value) {
             //设置value数组中某个key的索引的值为value
@@ -59,6 +62,9 @@ public class Leetcode706 {
 
         /**
          * 如果存在这样的key，那么从值数组中返回该key对应的value
+         *
+         * @param key
+         * @return
          */
         public int get(int key) {
             if (keyData[key] == 1) {
@@ -70,6 +76,8 @@ public class Leetcode706 {
 
         /**
          * 从key数组中移除key值和从value数组中移除key对应的value
+         *
+         * @param key
          */
         public void remove(int key) {
             valueData[key] = 0;

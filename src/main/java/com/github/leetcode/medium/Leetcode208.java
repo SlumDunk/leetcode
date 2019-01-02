@@ -21,63 +21,90 @@ package com.github.leetcode.medium;
  * All inputs are guaranteed to be non-empty strings.
  */
 public class Leetcode208 {
+    /**
+     * Trie树节点
+     */
     class TrieNode {
-        //存储子节点
+        /**
+         * 存储子节点
+         */
         TrieNode[] children = new TrieNode[26];
-        //存储一条记录，即对应一个单词
-        String item = "";
+        /**
+         * 叶子节点存储单词的值
+         */
+        String val = "";
 
-        // Initialize your data structure here.
         public TrieNode() {
 
         }
     }
 
+    /**
+     * Trie字典树
+     */
     public class Trie {
+        /**
+         * 树的根节点
+         */
         private TrieNode root;
 
         public Trie() {
             root = new TrieNode();
         }
 
-        // Inserts a word into the trie.
+        /**
+         * 插入一个单词进入Trie树
+         *
+         * @param word
+         */
         public void insert(String word) {
-            TrieNode node = this.root;
+            TrieNode curNode = this.root;
             for (char c : word.toCharArray()) {
-                if (node.children[c - 'a'] == null) {
-                    node.children[c - 'a'] = new TrieNode();
+                if (curNode.children[c - 'a'] == null) {
+                    curNode.children[c - 'a'] = new TrieNode();
                 }
-                node = node.children[c - 'a'];
+                //更新当前节点
+                curNode = curNode.children[c - 'a'];
             }
-            node.item = word;
+            //走到叶子节点，赋予单词的值
+            curNode.val = word;
 
         }
 
-        // Returns if the word is in the trie.
+        /**
+         * 查找字典里是否存在单词word
+         *
+         * @param word
+         * @return
+         */
         public boolean search(String word) {
-            TrieNode node = this.root;
+            TrieNode curNode = this.root;
             for (char c : word.toCharArray()) {
-                if (node.children[c - 'a'] == null) {
+                if (curNode.children[c - 'a'] == null) {
                     return false;
                 }
-                node = node.children[c - 'a'];
+                curNode = curNode.children[c - 'a'];
             }
-            return node.item.equals(word);
+            //走到最后节点，查看节点值是否等于单词值
+            return curNode.val.equals(word);
         }
 
-        // Returns if there is any word in the trie
-        // that starts with the given prefix.
+        /**
+         * 查找是否有指定前缀的单词
+         *
+         * @param prefix
+         * @return
+         */
         public boolean startsWith(String prefix) {
-            TrieNode node = this.root;
+            TrieNode curNode = this.root;
             for (char c : prefix.toCharArray()) {
-                if (node.children[c - 'a'] == null) {
+                if (curNode.children[c - 'a'] == null) {
                     return false;
                 }
-                node = node.children[c - 'a'];
+                curNode = curNode.children[c - 'a'];
             }
             return true;
         }
 
     }
-
 }

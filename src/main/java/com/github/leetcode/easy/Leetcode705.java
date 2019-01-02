@@ -37,13 +37,14 @@ public class Leetcode705 {
         int[] data = new int[1000001];
 
         /**
-         * Initialize your data structure here.
+         * 初始化数据结构
          */
         public MyHashSet() {
         }
 
         /**
          * 如果不存在，那么添加
+         *
          * @param key
          */
         public void add(int key) {
@@ -52,6 +53,11 @@ public class Leetcode705 {
             }
         }
 
+        /**
+         * 移除某个元素
+         *
+         * @param key
+         */
         public void remove(int key) {
             if (data[key] > 0) {
                 data[key]--;
@@ -60,6 +66,9 @@ public class Leetcode705 {
 
         /**
          * 如果存在，则返回true
+         *
+         * @param key
+         * @return
          */
         public boolean contains(int key) {
             if (data[key] > 0) {
@@ -69,5 +78,4 @@ public class Leetcode705 {
             }
         }
     }
-
 }

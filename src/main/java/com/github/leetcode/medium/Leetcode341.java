@@ -33,7 +33,7 @@ public class Leetcode341 {
          */
         List<NestedInteger> nestedList;
         /**
-         * 当前元素的值
+         * 当前元素的值，调用hasNext()方法的时候赋值
          */
         int data;
 
@@ -50,7 +50,7 @@ public class Leetcode341 {
         public boolean hasNext() {
             //list非空
             while (nestedList != null && nestedList.size() > 0) {
-                //获取list的首元素
+                //获取list的首元素 并移除
                 NestedInteger tmpInt = nestedList.remove(0);
                 //若是数字
                 if (tmpInt.isInteger()) {

@@ -32,14 +32,16 @@ public class Leetcode225 {
         Queue<Integer> queue;
 
         /**
-         * Initialize your data structure here.
+         * 初始化数据结构
          */
         public MyStack() {
             queue = new LinkedList<Integer>();
         }
 
         /**
-         * Push element x onto stack.
+         * 将元素推入栈
+         *
+         * @param x
          */
         public void push(int x) {
             //将前面size个数重新入队
@@ -53,21 +55,27 @@ public class Leetcode225 {
         }
 
         /**
-         * Removes the element on top of the stack and returns that element.
+         * 栈顶元素出栈
+         *
+         * @return
          */
         public int pop() {
             return queue.poll();
         }
 
         /**
-         * Get the top element.
+         * 获取栈顶元素
+         *
+         * @return
          */
         public int top() {
             return queue.peek();
         }
 
         /**
-         * Returns whether the stack is empty.
+         * 判断栈是否为空
+         *
+         * @return
          */
         public boolean empty() {
             return queue.isEmpty();

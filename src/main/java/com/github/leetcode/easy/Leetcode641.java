@@ -53,123 +53,144 @@ public class Leetcode641 {
 
     }
 
+    /**
+     * 循环双向队列
+     */
     private static class MyCircularDeque {
-        private int size;
-        private List<Integer> lastDataList = new LinkedList<Integer>();
-        private List<Integer> currentDataList = new LinkedList<Integer>();
+        /**
+         * 实际存储数据的结构
+         */
+        private int[] values;
+        /**
+         * 开始位置 即队头
+         */
+        private int start;
+        /**
+         * 队列的大小
+         */
+        private int max_size;
+        /**
+         * 队列的实际大小
+         */
+        private int current_size;
+
 
         /**
-         * Initialize your data structure here. Set the size of the deque to be k.
+         * 初始化数据结构，设置队列的大小
          */
         public MyCircularDeque(int k) {
-            size = k;
+            values = new int[k];
+            start = 0;
+            current_size = 0;
+            max_size = k;
         }
 
         /**
-         * Adds an item at the front of Deque. Return true if the operation is successful.
+         * 往队列的头部插入元素
+         *
+         * @param value
+         * @return
          */
         public boolean insertFront(int value) {
-            if (currentDataList.size() >= size) {
+            if (current_size == max_size) {
                 return false;
             } else {
-                currentDataList.clear();
-                currentDataList.add(value);
-                currentDataList.addAll(lastDataList);
-                lastDataList.clear();
-                lastDataList.addAll(currentDataList);
+                values[start] = value;
+                //start指针前移
+                start = (start + max_size - 1) % max_size;
+                current_size++;
                 return true;
             }
         }
 
         /**
-         * Adds an item at the rear of Deque. Return true if the operation is successful.
+         * 往队列末尾插入元素
+         *
+         * @param value
+         * @return
          */
         public boolean insertLast(int value) {
-            if (currentDataList.size() >= size) {
+            if (current_size == max_size) {
                 return false;
             } else {
-                currentDataList.clear();
-                currentDataList.addAll(lastDataList);
-                currentDataList.add(value);
-                lastDataList.clear();
-                lastDataList.addAll(currentDataList);
+                //往末尾插入元素
+                values[(start + current_size + 1) % max_size] = value;
+                current_size++;
                 return true;
             }
         }
 
         /**
-         * Deletes an item from the front of Deque. Return true if the operation is successful.
+         * 删除头部元素
+         *
+         * @return
          */
         public boolean deleteFront() {
-            if (currentDataList.size() > 0) {
-                currentDataList.remove(0);
-                lastDataList.clear();
-                lastDataList.addAll(currentDataList);
-                return true;
-            } else {
+            if (current_size == 0) {
                 return false;
+            } else {
+                current_size--;
+                //指针前移
+                start = (start + 1) % max_size;
+                return true;
             }
         }
 
         /**
-         * Deletes an item from the rear of Deque. Return true if the operation is successful.
+         * 删除尾部元素
+         *
+         * @return
          */
         public boolean deleteLast() {
-            if (currentDataList.size() > 0) {
-                currentDataList.remove(currentDataList.size() - 1);
-                lastDataList.clear();
-                lastDataList.addAll(currentDataList);
-                return true;
-            } else {
+            if (current_size == 0) {
                 return false;
+            } else {
+                current_size--;
+                return true;
             }
         }
 
         /**
-         * Get the front item from the deque.
+         * 获取头部元素
+         *
+         * @return
          */
-
         public int getFront() {
-            if (currentDataList.size() > 0) {
-                return currentDataList.get(0);
-            } else {
+            if (current_size == 0) {
                 return -1;
             }
+            //因为往头部插入元素的时候，start指针发生了前移
+            return values[(start + 1) % max_size];
         }
 
         /**
-         * Get the last item from the deque.
+         * 获取尾部元素
+         *
+         * @return
          */
         public int getRear() {
-            if (currentDataList.size() > 0) {
-                return currentDataList.get(currentDataList.size() - 1);
-            } else {
+            if (current_size == 0) {
                 return -1;
             }
+            return values[(start + current_size) % max_size];
         }
 
         /**
-         * Checks whether the circular deque is empty or not.
+         * 判断队列是否为空
+         *
+         * @return
          */
         public boolean isEmpty() {
-            if (currentDataList.size() == 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return current_size == 0;
         }
 
         /**
-         * Checks whether the circular deque is full or not.
+         * 判断队列是否满了
+         *
+         * @return
          */
         public boolean isFull() {
-            if (currentDataList.size() == size) {
-                return true;
-            } else {
-                return false;
-            }
+            return current_size == max_size;
         }
     }
-
-
 }
