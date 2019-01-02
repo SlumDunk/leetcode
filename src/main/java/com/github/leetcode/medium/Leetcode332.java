@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class Leetcode332 {
     /**
-     * 存储出发地和目的地的map
+     * 存储出发地和目的地的map 相当于图的边集合
      */
     HashMap<String, List<String>> maps;
     /**
@@ -38,7 +38,7 @@ public class Leetcode332 {
     public List<String> findItinerary(String[][] tickets) {
         maps = new HashMap<>();
         initHashMap(tickets);
-
+        //最终路径的长度 等于所有的边的长度+1
         count = tickets.length + 1;
         List<String> res = new LinkedList<>();
         res.add("JFK");
@@ -63,7 +63,9 @@ public class Leetcode332 {
         String to = null;
         for (int i = 0; i < lists.size(); i++) {
             to = lists.get(i);
+            //添加到结果集
             res.add(to);
+            //把边暂时移除，防止这条路上产生环，造成死循环
             lists.remove(to);
             //找到结果集
             if (dfs(res)) {
