@@ -25,6 +25,12 @@ public class Leetcode108 {
         return generateBST(nums, 0, nums.length - 1);
     }
 
+    /**
+     * @param nums  数组
+     * @param left  左边界
+     * @param right 右边界
+     * @return
+     */
     public TreeNode generateBST(int[] nums, int left, int right) {
         if (left > right) {
             return null;

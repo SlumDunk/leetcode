@@ -64,8 +64,6 @@ public class Leetcode897 {
         if (left == null) {//左树为空
             //右子树直接作为本节点的右子树
             root.right = right;
-            //切断本节点的左子节点
-            root.left = null;
             return root;
         } else {
             TreeNode curNode = left;

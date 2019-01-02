@@ -74,4 +74,19 @@ public class Leetcode100 {
         }
         return true;
     }
+
+    /**
+     * 判断左右子树是否一致
+     *
+     * @param p
+     * @param q
+     * @return
+     */
+    public boolean isSameTreeDfs(TreeNode p, TreeNode q) {
+        // recurision method
+        if (p == null && q == null) return true;
+        if (p == null && q != null || p != null && q == null) return false;
+        if (p.val != q.val) return false;
+        return isSameTreeDfs(p.left, q.left) && isSameTreeDfs(p.right, q.right);
+    }
 }

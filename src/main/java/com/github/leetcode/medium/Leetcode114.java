@@ -48,7 +48,7 @@ public class Leetcode114 {
             if (cur.left != null) {
                 stack.push(cur.left);
             }
-            //出栈，成为现有节点的右节点
+            //栈顶元素成为现有节点的右节点
             if (!stack.isEmpty()) {
                 cur.right = stack.peek();
             }
@@ -74,11 +74,14 @@ public class Leetcode114 {
             lastNode.right = root;
         }
         lastNode = root;
+        //必须创建变量，因为在递归过程中会调整root的左右指针指向
         //左子树
         TreeNode left = root.left;
         //右子树
         TreeNode right = root.right;
+        //先解决左边的子树
         flatten_recursive(left);
+        //再解决右边的子树
         flatten_recursive(right);
     }
 }

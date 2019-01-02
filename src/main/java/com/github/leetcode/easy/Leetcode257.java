@@ -52,11 +52,13 @@ public class Leetcode257 {
         }
         temp.add(root.val);
         //副本，防止在递归过程中被篡改
-        List<Integer> copy = new ArrayList<Integer>(temp);
+        //List<Integer> copy = new ArrayList<Integer>(temp);
         //往左走
         findTreePaths(root.left, temp, result);
         //往右走
-        findTreePaths(root.right, copy, result);
+        //findTreePaths(root.right, copy, result);
+        findTreePaths(root.right, temp, result);
+        temp.remove(temp.size() - 1);
     }
 
     /**

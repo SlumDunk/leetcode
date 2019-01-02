@@ -26,16 +26,16 @@ import java.util.Queue;
 public class Leetcode199 {
     public List<Integer> rightSideView(TreeNode root) {
         //广度优先遍历，记住每一层的最后一个元素
-        List<Integer> list = new LinkedList<Integer>();
+        List<Integer> result = new LinkedList<Integer>();
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
 
         if (root == null) {
-            return list;
+            return result;
         }
         queue.add(root);
 
         while (!queue.isEmpty()) {
-            //获取当前层次的节点数量
+            //这一层的节点个数
             int size = queue.size();
             while (size > 0) {
                 TreeNode node = queue.remove();
@@ -46,11 +46,12 @@ public class Leetcode199 {
                     queue.add(node.right);
                 }
                 size--;
+                //最右的节点，加入结果集
                 if (size == 0) {
-                    list.add(node.val);
+                    result.add(node.val);
                 }
             }
         }
-        return list;
+        return result;
     }
 }

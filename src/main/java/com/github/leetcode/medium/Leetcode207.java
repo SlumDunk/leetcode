@@ -31,35 +31,48 @@ import java.util.ArrayList;
  */
 public class Leetcode207 {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-
-        ArrayList[] list = new ArrayList[numCourses];
+        //边集合
+        ArrayList[] edges = new ArrayList[numCourses];
+        //初始化边集合
         for (int i = 0; i < numCourses; i++) {
-            list[i] = new ArrayList<Integer>();
+            edges[i] = new ArrayList<Integer>();
         }
+        //v2->v1
         for (int i = 0; i < prerequisites.length; i++) {
-            list[prerequisites[i][1]].add(prerequisites[i][0]);
+            edges[prerequisites[i][1]].add(prerequisites[i][0]);
         }
         boolean[] visit = new boolean[numCourses];
+        //不要存在闭环即可
         for (int i = 0; i < numCourses; i++) {
-            if (!dfs(list, visit, i)) {
+            if (!dfs(edges, visit, i)) {
                 return false;
             }
         }
         return true;
     }
 
-    public boolean dfs(ArrayList[] list, boolean[] visit, int pos) {
+    /**
+     * @param edges 边集合
+     * @param visit 节点访问标志数组
+     * @param pos   开始位置
+     * @return
+     */
+    public boolean dfs(ArrayList[] edges, boolean[] visit, int pos) {
+        //存在环，返回false
         if (visit[pos]) {
             return false;
         } else {
+            //置为true,防止一条链上存在闭环
             visit[pos] = true;
         }
-        for (int i = 0; i < list[pos].size(); i++) {
-            if (!dfs(list, visit, (int) list[pos].get(i))) {
+        for (int i = 0; i < edges[pos].size(); i++) {
+            if (!dfs(edges, visit, (int) edges[pos].get(i))) {
                 return false;
             }
-            list[pos].remove(i);
+            //移除走过的边
+            edges[pos].remove(i);
         }
+        //这一路走完了，访问标志置为false，因为可能它有其它入度
         visit[pos] = false;
         return true;
     }

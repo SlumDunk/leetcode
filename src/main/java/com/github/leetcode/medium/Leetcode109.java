@@ -28,7 +28,7 @@ public class Leetcode109 {
         if (head == null) return null;
         if (head.next == null) return new TreeNode(head.val);
         //找到中间节点,方法：快慢指针
-        //快指针先走两步，为了找到中间节点的前置节点
+        //快指针先走两步，为了找到中间节点的前置节点, 防止只有一个节点的时候出现死循环
         ListNode fast = head.next.next;
         ListNode slow = head;
         while (fast != null && fast.next != null) {

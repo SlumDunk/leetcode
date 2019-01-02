@@ -37,17 +37,30 @@ import java.util.Map;
  * Note: The information about the tree serialization is only meant so that you can understand error output if you get a wrong answer. You don't need to understand the serialization to solve the problem.
  */
 public class Leetcode133 {
+    /**
+     * 旧节点和克隆节点的map集合
+     */
     Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
 
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if (node == null)
+        if (node == null) {
             return null;
-        if (map.containsKey(node))
-            return map.get(node);
-        UndirectedGraphNode newHead = new UndirectedGraphNode(node.label);
-        map.put(node, newHead);
-        for (UndirectedGraphNode aNeighbor : node.neighbors)
-            newHead.neighbors.add(cloneGraph(aNeighbor));
-        return newHead;
+        } else {
+            //map中是否已经有了新节点
+            if (map.containsKey(node)) {
+                return map.get(node);
+            } else {
+                //创建新节点
+                UndirectedGraphNode head = new UndirectedGraphNode(node.label);
+                //放入map
+                map.put(node, head);
+                //创建邻居节点并绑定关系
+                for (UndirectedGraphNode neighbor : node.neighbors) {
+                    head.neighbors.add(cloneGraph(neighbor));
+                }
+                return head;
+            }
+
+        }
     }
 }

@@ -33,35 +33,51 @@ import java.util.List;
  */
 public class Leetcode417 {
     public List<int[]> pacificAtlantic(int[][] matrix) {
+        //结果集
         List<int[]> res = new LinkedList<>();
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return res;
         }
-        int n = matrix.length, m = matrix[0].length;
-        boolean[][] pacific = new boolean[n][m];
-        boolean[][] atlantic = new boolean[n][m];
-        for (int i = 0; i < n; i++) {
+        int row = matrix.length, col = matrix[0].length;
+        //记录能流入pacific的位置
+        boolean[][] pacific = new boolean[row][col];
+        //记录能流入atlantic的位置
+        boolean[][] atlantic = new boolean[row][col];
+        //解决左右列边界
+        for (int i = 0; i < row; i++) {
             dfs(matrix, pacific, Integer.MIN_VALUE, i, 0);
-            dfs(matrix, atlantic, Integer.MIN_VALUE, i, m - 1);
+            dfs(matrix, atlantic, Integer.MIN_VALUE, i, col - 1);
         }
-        for (int i = 0; i < m; i++) {
+        //解决上下行边界
+        for (int i = 0; i < col; i++) {
             dfs(matrix, pacific, Integer.MIN_VALUE, 0, i);
-            dfs(matrix, atlantic, Integer.MIN_VALUE, n - 1, i);
+            dfs(matrix, atlantic, Integer.MIN_VALUE, row - 1, i);
         }
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
+        //找出能同时到达pacific和atlantic的位置
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < col; j++)
                 if (pacific[i][j] && atlantic[i][j])
                     res.add(new int[]{i, j});
         return res;
     }
 
+    //四大方向 右，下，左，上
     int[][] dir = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
+    /**
+     * @param matrix  水流数组
+     * @param visited 访问数组
+     * @param height  出流的高度
+     * @param x       行位置
+     * @param y       列位置
+     */
     public void dfs(int[][] matrix, boolean[][] visited, int height, int x, int y) {
-        int n = matrix.length, m = matrix[0].length;
-        if (x < 0 || x >= n || y < 0 || y >= m || visited[x][y] || matrix[x][y] < height)
+        int row = matrix.length, col = matrix[0].length;
+        if (x < 0 || x >= row || y < 0 || y >= col || visited[x][y] || matrix[x][y] < height)
             return;
+        //设置访问标记
         visited[x][y] = true;
+        //分别沿四个方向深度遍历
         for (int[] d : dir) {
             dfs(matrix, visited, matrix[x][y], x + d[0], y + d[1]);
         }

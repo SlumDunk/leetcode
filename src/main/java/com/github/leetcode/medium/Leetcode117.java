@@ -39,6 +39,7 @@ import com.github.leetcode.vo.TreeLinkNode;
  */
 public class Leetcode117 {
     public void connect(TreeLinkNode root) {
+        //每层的元素都能通过next指针串起来
         //每一层层首都有一个虚拟节点
         TreeLinkNode dummy = new TreeLinkNode(0);
         //当前节点的前置节点

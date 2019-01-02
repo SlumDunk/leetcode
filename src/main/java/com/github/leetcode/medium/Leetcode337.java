@@ -41,10 +41,17 @@ public class Leetcode337 {
         return Math.max(res[0], res[1]);
     }
 
+    /**
+     * 抢劫某棵树的收益
+     *
+     * @param root
+     * @return
+     */
     private int[] robSub(TreeNode root) {
         if (root == null) {
             return new int[2];
         }
+        //抢劫当前节点的收益和不抢劫当前节点的收益
         int[] res = new int[2];
         //寻找左子树的最大收益
         int[] left = robSub(root.left);

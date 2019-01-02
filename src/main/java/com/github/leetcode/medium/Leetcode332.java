@@ -26,7 +26,13 @@ import java.util.List;
  * But it is larger in lexical order.
  */
 public class Leetcode332 {
+    /**
+     * 存储出发地和目的地的map
+     */
     HashMap<String, List<String>> maps;
+    /**
+     * 结果数组的长度
+     */
     int count;
 
     public List<String> findItinerary(String[][] tickets) {
@@ -40,27 +46,42 @@ public class Leetcode332 {
         return res;
     }
 
+    /**
+     * 深度遍历寻找结果
+     *
+     * @param res
+     * @return
+     */
     private boolean dfs(List<String> res) {
         if (res.size() == count)
             return true;
-        String top = res.get(res.size() - 1);
-        List<String> lists = maps.get(top);
+        //出发点
+        String from = res.get(res.size() - 1);
+        List<String> lists = maps.get(from);
         if (lists == null)
             return false;
-
+        String to = null;
         for (int i = 0; i < lists.size(); i++) {
-            String tmp = lists.get(i);
-            res.add(tmp);
-            lists.remove(i);
-
-            if (dfs(res))//当找到合适点之后，直接返回true
+            to = lists.get(i);
+            res.add(to);
+            lists.remove(to);
+            //找到结果集
+            if (dfs(res)) {
                 return true;
-            lists.add(i, tmp);//恢复现场
+            }
+            //没找到合适的结果集，恢复现场
+            lists.add(i, to);
             res.remove(res.size() - 1);
+
         }
         return false;
     }
 
+    /**
+     * 创建出发地和目的地的map
+     *
+     * @param tickets
+     */
     private void initHashMap(String[][] tickets) {
         for (String[] tmp : tickets) {
             String from = tmp[0];
@@ -73,6 +94,7 @@ public class Leetcode332 {
 
             int index = 0;
             int size = list.size();
+            //寻找到合适的插入位置，保证list递增
             while (index < size) {
                 String cur = list.get(index);
                 if (cur.compareTo(to) >= 0) {

@@ -32,9 +32,9 @@ public class Leetcode200 {
         int rows = grid.length;
         int cols = grid[0].length;
         int count = 0;
+        //遍历数组
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++)
-                // 注意char
                 if (grid[i][j] == '1') {
                     count++;
                     dfsSearch(grid, i, j, rows, cols);
@@ -42,21 +42,27 @@ public class Leetcode200 {
         return count++;
     }
 
-    // 每遇到'1'后, 开始向四个方向 递归搜索. 搜到后变为'0',
-    // 因为相邻的属于一个island. 然后开始继续找下一个'1'.
+    /**
+     * @param grid 数组
+     * @param i    当前行位置
+     * @param j    当前列位置
+     * @param rows 行数量
+     * @param cols 列数量
+     */
     private void dfsSearch(char[][] grid,
                            int i, int j, int rows, int cols) {
+        //越界
         if (i < 0 || i >= rows || j < 0 || j >= cols)
             return;
         if (grid[i][j] != '1')
             return;
-        // 也可以才用一个visited数组，标记遍历过的岛屿
+        //访问过的陆地置为0，避免重复访问
         grid[i][j] = '0';
-        dfsSearch(grid, i + 1, j, rows, cols);
+        //沿着四个方向搜索， 顺时针 上 右 下 左
         dfsSearch(grid, i - 1, j, rows, cols);
         dfsSearch(grid, i, j + 1, rows, cols);
+        dfsSearch(grid, i + 1, j, rows, cols);
         dfsSearch(grid, i, j - 1, rows, cols);
-
     }
 }
 

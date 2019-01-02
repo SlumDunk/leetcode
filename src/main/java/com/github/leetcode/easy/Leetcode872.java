@@ -28,8 +28,8 @@ public class Leetcode872 {
         //先左节点，再右节点
         ArrayList<Integer> leafList1 = new ArrayList<Integer>();
         ArrayList<Integer> leafList2 = new ArrayList<Integer>();
-        generateLeafList(root1, leafList1);
-        generateLeafList(root2, leafList2);
+        dfs(root1, leafList1);
+        dfs(root2, leafList2);
 
         if (leafList1.size() != leafList2.size()) {
             return Boolean.FALSE;
@@ -49,15 +49,16 @@ public class Leetcode872 {
      * @param root     树节点
      * @param leafList 叶子结果集
      */
-    private void generateLeafList(TreeNode root, ArrayList<Integer> leafList) {
+    private void dfs(TreeNode root, ArrayList<Integer> leafList) {
+        //走到叶子节点，添加到结果集
         if (root.left == null && root.right == null) {
             leafList.add(root.val);
         } else {
             if (root.left != null) {
-                generateLeafList(root.left, leafList);
+                dfs(root.left, leafList);
             }
             if (root.right != null) {
-                generateLeafList(root.right, leafList);
+                dfs(root.right, leafList);
             }
         }
 

@@ -37,33 +37,46 @@ public class Leetcode210 {
     }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
+        //边集合
         List<Integer> edges[] = new ArrayList[numCourses];
+        //访问标记数组
         boolean[] visit = new boolean[numCourses];
-        int[] out_degree = new int[numCourses];
+        //入度数组
+        int[] in_degree = new int[numCourses];
+        //结果集
         int[] ans = new int[numCourses];
-        int n = numCourses;
+        int index = 0;
+        //初始化边集合
         for (int i = 0; i < numCourses; ++i)
             edges[i] = new ArrayList<>();
+        //
         for (int i = 0; i < prerequisites.length; ++i) {
+            //v2->v1
             int v1 = prerequisites[i][0];
             int v2 = prerequisites[i][1];
-            edges[v1].add(v2);
-            ++out_degree[v2];
+            edges[v2].add(v1);
+            ++in_degree[v1];
         }
         Queue<Integer> q = new LinkedList<>();
+        //入度为0的课程先入队列 最先开始
         for (int i = 0; i < numCourses; ++i)
-            if (out_degree[i] == 0)
+            if (in_degree[i] == 0)
                 q.add(i);
+
         while (q.isEmpty() != true) {
             int v = q.poll();
+            //设置为已访问
             visit[v] = true;
-            ans[--n] = v;
+            //放在所在的位置
+            ans[index++] = v;
+            //调整关联的节点的入度
             for (int i : edges[v]) {
-                --out_degree[i];
-                if (out_degree[i] == 0)
+                --in_degree[i];
+                if (in_degree[i] == 0)
                     q.add(i);
             }
         }
+        //判断是否所有的课程都已经修了
         for (int i = 0; i < numCourses; ++i)
             if (visit[i] == false) {
                 ans = new int[0];
