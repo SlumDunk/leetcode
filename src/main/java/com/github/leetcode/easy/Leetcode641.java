@@ -130,7 +130,7 @@ public class Leetcode641 {
                 return false;
             } else {
                 current_size--;
-                //指针前移
+                //指针后移
                 start = (start + 1) % max_size;
                 return true;
             }
