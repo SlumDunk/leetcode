@@ -41,6 +41,7 @@ public class Leetcode687 {
     private int max = 0;
 
     public int longestUnivaluePath(TreeNode root) {
+        //从叶子节点往前推
         findLongestPath(root);
         return max;
     }
