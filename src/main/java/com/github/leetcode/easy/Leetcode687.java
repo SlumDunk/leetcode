@@ -61,12 +61,14 @@ public class Leetcode687 {
         left = findLongestPath(root.left);
         //递归右子树
         right = findLongestPath(root.right);
+        //根节点的值跟左子节点一致
         if (root.left != null && root.left.val == root.val) {
             left += 1;
         } else {
             //根节点和子节点值不同，直接切断
             left = 0;
         }
+        //根节点的值跟右子节点一致
         if (root.right != null && root.right.val == root.val) {
             right += 1;
         } else {
@@ -74,7 +76,7 @@ public class Leetcode687 {
             right = 0;
         }
         max = Math.max(max, left + right);
-        //返回较长的路
+        //返回高度较高的子树的值
         return Math.max(left, right);
     }
 }
