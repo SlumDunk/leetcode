@@ -26,39 +26,23 @@ package com.github.leetcode.medium;
  */
 public class LeetCode375 {
     public static void main(String[] args) {
-        LeetCode375 leetCode375=new LeetCode375();
+        LeetCode375 leetCode375 = new LeetCode375();
         leetCode375.getMoneyAmount(10);
     }
-    public int getMoneyAmount(int n) {
-        //since when we want to get dp[i][j], we need all dp[i][k] - dp[k][j], so we fix j, traversal i from i to 1.
-        // dp[i][j] minimum number to guarantee a win for subproblem [i, j], target dp[1][n]
-        // base case dp[i][i] = 0
-        // for a i <= k <= j, pay k and chose worse dp[k + 1][j] or dp[i][k - 1]
-//        int[][] minPay = new int[n + 1][n + 1];
-//        for (int j = 1; j <= n; j++) {
-//            for (int i = j; i >= 1; i--) {
-//                if (i == j) {
-//                    minPay[i][j] = 0;
-//                } else {
-//                    minPay[i][j] = Integer.MAX_VALUE;
-//                    for (int k = j ; k >= i; k --) {
-//                        minPay[i][j] = Math.min(minPay[i][j], k + Math.max(k == i ? 0 : minPay[i][k - 1],
-//                                k == j ? 0 : minPay[k + 1][j]));
-//                    }
-//                }
-//            }
-//        }
-//        return minPay[1][n];
 
+    public int getMoneyAmount(int n) {
+        //存储保证能猜赢某个范围内的数字的最小金额
         int[][] minPay = new int[n + 1][n + 1];
         for (int i = 1; i <= n; i++) {
             for (int j = i; j >= 1; j--) {
                 if (i == j) {
                     minPay[j][i] = 0;
-                } else {//在j到i之间选择一个中间数，让赢得subproblem [j,i]成本最小
+                } else {
+                    //在j到i之间选择一个中间数，让赢得sub problem [j,i]成本最小
                     minPay[j][i] = Integer.MAX_VALUE;
                     for (int k = i; k >= j; k--) {
-                        minPay[j][i] = Math.min(minPay[j][i], k + Math.max(k == j ? 0 : minPay[j][k - 1], k == i ? 0 : minPay[k + 1][i]));
+                        int cost = k + Math.max(k == j ? 0 : minPay[j][k - 1], k == i ? 0 : minPay[k + 1][i]);
+                        minPay[j][i] = Math.min(minPay[j][i], cost);
                     }
                 }
             }
