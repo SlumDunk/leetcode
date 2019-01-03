@@ -31,30 +31,43 @@ public class Leetcode530 {
 
     }
 
-    public int getMinimumDifference(TreeNode root) {
-        if (root == null) {
-            return -1;
-        } else {
-            List<Integer> dataList = new ArrayList<Integer>();
-            getDataList(root, dataList);
-            Collections.sort(dataList);
-            if (dataList.size() <= 1) {
-                return -1;
-            } else {
-                int min = Integer.MAX_VALUE;
-                for (int i = 0; i < dataList.size() - 1; i++) {
-                    min = Math.min(min, dataList.get(i + 1) - dataList.get(i));
-                }
-                return min;
-            }
-        }
+    /**
+     * 前置节点的值
+     */
+    Integer prev = null;
+    /**
+     * 全局结果值
+     */
+    Integer result = Integer.MAX_VALUE;
+
+    public int minDiffInBST(TreeNode root) {
+        //中序遍历记住上一个节点的值
+        if (root == null || (root.left == null && root.right == null)) return 0;
+        dfs(root);
+        return result;
     }
 
-    private void getDataList(TreeNode root, List<Integer> dataList) {
-        if (root != null) {
-            dataList.add(root.val);
-            getDataList(root.left, dataList);
-            getDataList(root.right, dataList);
+    /**
+     * 深度优先中序遍历树
+     *
+     * @param root
+     */
+    private void dfs(TreeNode root) {
+
+        if (root == null) {
+            return;
         }
+        //先处理左子树
+        if (root.left != null) {
+            dfs(root.left);
+        }
+        //处理根节点
+        result = prev == null ? result : Math.min(root.val - prev, result);
+        prev = root.val;
+        //处理右子树
+        if (root.right != null) {
+            dfs(root.right);
+        }
+
     }
 }

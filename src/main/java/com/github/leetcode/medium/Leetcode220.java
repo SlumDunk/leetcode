@@ -28,15 +28,22 @@ public class Leetcode220 {
     }
 
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        //利用treeset的特性
         if (k < 1 || t < 0)
             return false;
+        //创建一棵有序的树
         SortedSet<Long> binTree = new TreeSet<>();
         for (int i = 0; i < nums.length; i++) {
+            //确定树种是否存在满足条件的子树 根据t的范围来确定 subSet会包括下边界，移除上边界
             SortedSet<Long> son = binTree.subSet((long) nums[i] - t, (long) nums[i] + t + 1);
-            if (!son.isEmpty())
+            //子集非空
+            if (!son.isEmpty()) {
                 return true;
-            if (i >= k)
+            }
+            //移除越界的节点
+            if (i >= k) {
                 binTree.remove((long) nums[i - k]);
+            }
             binTree.add((long) nums[i]);
         }
         return false;
