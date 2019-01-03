@@ -26,57 +26,97 @@ public class Leetcode307 {
     }
 
     public static class NumArray {
-        int[] processed;
+        /**
+         * 树状数组
+         */
+        int[] bitArr;
+        /**
+         * 数组元素
+         */
         int[] nums;
+        /**
+         * 数组长度
+         */
         int length;
 
         public NumArray(int[] nums) {
             length = nums.length;
-            processed = new int[length + 1];
+            bitArr = new int[length + 1];
             this.nums = nums;
 
-            //init processed
+            //初始化树状数组
+            //填坑法，填充每个空，长度是2的幂次
             for (int i = 1; i <= length; i++) {
                 int sum = 0;
                 int count = 1;
+                //0001 0010 0011 0100 0101 0110 0111 1000
+                //1,2,1,4,1,2,1,8
                 int counter = lowBit(i);
 
                 while (count <= counter) {
                     sum += nums[i - count];
                     count++;
                 }
-                processed[i] = sum;
+                //存储数组范围[i-counter,i-1]的数的和
+                bitArr[i] = sum;
             }
         }
 
-        void update(int i, int val) {
+        /**
+         * 更新数组某个位置元素的值
+         *
+         * @param index 元素位置
+         * @param val   元素值
+         */
+        void update(int index, int val) {
             //更新树状数组
-            int gap = val - nums[i];
-            nums[i] = val;
-
-            int index = i + 1;
+            int gap = val - nums[index];
+            //先更新数组
+            nums[index] = val;
+            index++;
+            //从前往后走
             while (index <= length) {
-                processed[index] += gap;
+                bitArr[index] += gap;
                 index += lowBit(index);
             }
         }
 
-        public int sumRange(int i, int j) {
-            return sum(j + 1) - sum(i);
+        /**
+         * 返回[i,j]范围内的元素的和
+         *
+         * @param lower 下边界
+         * @param upper 上边界
+         * @return
+         */
+        public int sumRange(int lower, int upper) {
+            return sum(upper + 1) - sum(lower);
         }
 
+        /**
+         * 返回[0,index-1]元素的和
+         *
+         * @param index
+         * @return
+         */
         private int sum(int index) {
             int sum = 0;
+            //从后往前走
             while (index > 0) {
-                sum += processed[index];
+                sum += bitArr[index];
                 index -= lowBit(index);
             }
             return sum;
         }
 
+        /**
+         * 返回最低位的1
+         *
+         * @param index
+         * @return
+         */
         private int lowBit(int index) {
-            //return index & (-index);
-            return ((index - 1) ^ index) & index;
+            //负数的二进制表示方法是符号位不变，正数按位取反加1
+            return index & (-index);
         }
     }
 }
