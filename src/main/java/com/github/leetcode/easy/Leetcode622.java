@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Design your implementation of the circular heap. The circular heap is a linear data structure in which the operations are performed based on FIFO (First In First Out) principle and the last position is connected backTrack to the first position to make a circle. It is also called ‘Ring Buffer’.
- * One of the Benefits of the circular heap is that we can make use of the spaces in front of the heap. In a normal heap, once the heap becomes full, we can not insert the next element even if there is a space in front of the heap. But using the circular heap, we can use the space to store new values.
+ * One of the Benefits of the circular heap is that we can make use of the spaces in front of the heap. In a normal heap, once the heap becomes full, we can not insert the children element even if there is a space in front of the heap. But using the circular heap, we can use the space to store new values.
  * Your implementation should support following operations:
  * <p>
  * MyCircularQueue(k): Constructor, set the size of the queue to be k.

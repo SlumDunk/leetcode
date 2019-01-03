@@ -21,22 +21,43 @@ import java.util.Set;
  * Explanation: The maximum result is 5 ^ 25 = 28.
  */
 public class Leetcode421 {
+    /**
+     * Trie树节点
+     */
     class TrieNode {
-        //叶子节点存储的值
+        /**
+         * 叶子节点存储的值
+         */
         int val;
-        //0节点，1节点
+        /**
+         * 0节点，1节点
+         */
         TrieNode zero, one;
-        //是否叶子节点
+        /**
+         * 是否叶子节点
+         */
         boolean isEnd;
     }
 
+    /**
+     * 根据数字的二进制形式构造一棵Trie树
+     */
     class TrieTree {
+        /**
+         * 数根节点
+         */
         TrieNode root;
 
         public TrieTree() {
             root = new TrieNode();
         }
 
+        /**
+         * 插入新的数字
+         * 高位到低位
+         *
+         * @param num
+         */
         public void insert(int num) {
             TrieNode current = root;
             int j = 1 << 30;
@@ -59,14 +80,18 @@ public class Leetcode421 {
         }
     }
 
+    /**
+     * @param nums
+     * @return
+     */
     public int findMaximumXOR(int[] nums) {
         if (nums == null || nums.length <= 1) {
             return 0;
         }
-        //创建根节点
+        //创建Trie树
         TrieTree tree = new TrieTree();
-        for (int num :
-                nums) {
+        //插入数字
+        for (int num : nums) {
             tree.insert(num);
         }
         // 获取真正需要开始判断的root
@@ -86,6 +111,10 @@ public class Leetcode421 {
      * 2. 当1分支的下一位只有0时，找0分支的1，若没有，就找0分支的0
      * 3. 当1分支的下一位0，1均有时，看0分支：如果0分支只有1，则1分支走0，反之则走1
      * 4. 当0，1两个分支均有两个下一位是，尝试1分支走1，0分支走0和1分支走0，0分支走1并取最大值
+     *
+     * @param one
+     * @param zero
+     * @return
      */
     private int maxHelper(TrieNode one, TrieNode zero) {
         if (one.isEnd && zero.isEnd) {

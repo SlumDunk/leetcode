@@ -25,21 +25,29 @@ import java.util.Map;
  * You may assume that all words are consist of lowercase letters a-z.
  */
 public class Leetcode211 {
+    /**
+     * 字典树类Trie
+     */
     public class WordDictionary {
         /**
          * 字典树根节点
          */
         private TrieNode root = new TrieNode();
 
+        /**
+         * 往字典里投添加单词
+         *
+         * @param word
+         */
         public void addWord(String word) {
-            Map<Character, TrieNode> children = root.children;
-            TrieNode childNode = null;
+            TrieNode curNode = root;
             for (char value : word.toCharArray()) {
-                childNode = children.getOrDefault(value, new TrieNode(value));
-                children.put(value, childNode);
-                children = childNode.children;
+                if (curNode.children[value - 'a'] == null) {
+                    curNode.children[value - 'a'] = new TrieNode(value);
+                }
+                curNode = curNode.children[value - 'a'];
             }
-            childNode.isLeaf = true;
+            curNode.isLeaf = true;
         }
 
         /**
@@ -55,29 +63,27 @@ public class Leetcode211 {
         /**
          * 查找单词
          *
-         * @param word 要查找的字符串
-         * @param tn   父级节点
+         * @param word    要查找的字符串
+         * @param curNode 父级节点
          * @return
          */
-        public boolean searchNode(String word, TrieNode tn) {
-            if (tn == null) return false;
-            if (word.length() == 0) return tn.isLeaf;
+        public boolean searchNode(String word, TrieNode curNode) {
+            if (curNode == null) return false;
+            if (word.length() == 0) return curNode.isLeaf;
 
-            Map<Character, TrieNode> children = tn.children;
-            TrieNode t = null;
             char c = word.charAt(0);
             //通配符，可以匹配所有的字符
             if (c == '.') {
                 //遍历当前节点的所有子节点,有一个匹配即可
-                for (char key : children.keySet()) {
-                    if (searchNode(word.substring(1), children.get(key))) return true;
+                for (TrieNode child : curNode.children) {
+                    if (searchNode(word.substring(1), child)) return true;
                 }
                 return false;
-            } else if (!children.containsKey(c)) {
+            } else if (curNode.children[c - 'a'] == null) {
                 return false;
             } else {
-                t = children.get(c);
-                return searchNode(word.substring(1), t);
+                curNode = curNode.children[c - 'a'];
+                return searchNode(word.substring(1), curNode);
             }
         }
     }
@@ -86,12 +92,18 @@ public class Leetcode211 {
      * 字典树节点
      */
     class TrieNode {
-        //节点存储的字符
+        /**
+         * 节点存储的字符
+         */
         char value;
-        //是否叶子节点
+        /**
+         * 是否叶子节点
+         */
         boolean isLeaf;
-        //子节点
-        Map<Character, TrieNode> children = new HashMap<>();
+        /**
+         * 子节点
+         */
+        TrieNode[] children;
 
         public TrieNode() {
 

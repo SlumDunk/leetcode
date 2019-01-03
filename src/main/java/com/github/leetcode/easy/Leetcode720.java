@@ -1,12 +1,5 @@
 package com.github.leetcode.easy;
 
-import com.github.leetcode.medium.Leetcode208;
-import com.github.leetcode.vo.TreeNode;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Given a list of strings words representing an English Dictionary, find the longest word in words that can be built one character at a time by other words in words. If there is more than one possible answer, return the longest word with the smallest lexicographical order.
  * <p>
@@ -31,18 +24,7 @@ import java.util.Set;
  */
 public class Leetcode720 {
     public String longestWord(String[] words) {
-//        Arrays.sort(words);
-//        String temp;
-//        String result = "";
-//        Set<String> wordSet = new HashSet<String>();
-//        for (int i = 0; i < words.length; i++) {
-//            temp = words[i];
-//            if (temp.length() == 1 || wordSet.contains(temp.substring(0, words[i].length() - 1))) {
-//                result = temp.length() > result.length() ? temp : result;
-//                wordSet.add(temp);
-//            }
-//        }
-//        return result;
+        //由某一个单词开始，每次增加一个字符，走到长度最长的一个单词
         //构造根节点
         TrieNode root = new TrieNode(' ');
         //构造树
@@ -74,15 +56,16 @@ public class Leetcode720 {
      */
     private boolean findWord(TrieNode root, String word) {
         for (char value : word.toCharArray()) {
-            if (root.next[value - 'a'] == null) {
+            if (root.children[value - 'a'] == null) {
                 return false;
             }
-            root = root.next[value - 'a'];
-            if (!root.isWord) {//子串必须单独成一个单词
+            root = root.children[value - 'a'];
+            //子串必须单独成一个单词
+            if (!root.isWord) {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -93,25 +76,34 @@ public class Leetcode720 {
      */
     private void buildTree(TrieNode root, String str) {
         for (char value : str.toCharArray()) {
-            if (root.next[value - 'a'] == null) {
-                root.next[value - 'a'] = new TrieNode(value);
+            if (root.children[value - 'a'] == null) {
+                root.children[value - 'a'] = new TrieNode(value);
             }
-            root = root.next[value - 'a'];
+            root = root.children[value - 'a'];
         }
         root.isWord = true;
     }
 
     /**
-     * 字典树
+     * 字典树的节点
      */
     class TrieNode {
+        /**
+         * 节点字符值
+         */
         char val;
-        TrieNode[] next;
+        /**
+         * 子节点数组
+         */
+        TrieNode[] children;
+        /**
+         * 是否是单词尽头字符
+         */
         boolean isWord;
 
         TrieNode(char val) {
             this.val = val;
-            next = new TrieNode[26];
+            children = new TrieNode[26];
             isWord = false;
         }
 
