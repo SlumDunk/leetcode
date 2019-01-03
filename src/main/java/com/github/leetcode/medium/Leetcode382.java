@@ -25,27 +25,35 @@ import java.util.Random;
  */
 public class Leetcode382 {
     class Solution {
+        /**
+         * 头结点
+         */
         ListNode head;
 
         /**
-         * @param head The linked list's head.
-         *             Note that the head is guaranteed to be not null, so it contains at least one node.
+         * @param head 头结点
          */
         public Solution(ListNode head) {
-            this.head=head;
+            this.head = head;
         }
 
         /**
-         * Returns a random node's value.
+         * 随机返回节点的值
+         *
+         * @return
          */
         public int getRandom() {
-            Random random=new Random();
-            int result=head.val;
-            ListNode currNode=head;
-            for(int i=1;currNode.next!=null;i++){
-                currNode=currNode.next;
-                if(random.nextInt(i+1)==i){
-                    result=currNode.val;
+            Random random = new Random();
+            int result = head.val;
+            ListNode curNode = head;
+            //蓄水池算法，假设有3个节点
+            //第一个节点留下的概率是1*1/2*2/3=1/3
+            //第二个节点留下的概率是1/2*2/3=1/3
+            //第三个节点留下的概率是1/3
+            for (int i = 1; curNode.next != null; i++) {
+                curNode = curNode.next;
+                if (random.nextInt(i + 1) == i) {
+                    result = curNode.val;
                 }
             }
             return result;
