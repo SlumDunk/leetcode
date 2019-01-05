@@ -27,6 +27,8 @@ public class Leetcode253 {
     }
 
     public int minMeetingRooms(Interval[] intervals) {
+        //对起始时间进行排序，使用最小堆来记录当前会议的结束时间，
+        //新会议的起始时间大于最小堆中的最早结束时间，说明新会议与堆中的最早结束会议不重叠。
         //按开始时间从小到大排列
         Arrays.sort(intervals, new Comparator<Interval>() {
             @Override
