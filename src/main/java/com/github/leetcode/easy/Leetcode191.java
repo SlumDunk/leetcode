@@ -26,6 +26,7 @@ package com.github.leetcode.easy;
 public class Leetcode191 {
     public int hammingWeight(int n) {
         //利用n和n-1与操作的结果
+        //n&=(n-1) 最低位的1改为0
         int count = 0;
         while (n != 0) {
             n = n & (n - 1);

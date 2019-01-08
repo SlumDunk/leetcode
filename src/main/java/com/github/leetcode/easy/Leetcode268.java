@@ -19,6 +19,18 @@ import java.util.Arrays;
 public class Leetcode268 {
 
     public int missingNumber(int[] nums) {
+        //异或运算 注意数组长度和取值范围的关系
+        int res = nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            res ^= i ^ nums[i];
+        }
+        return res;
+        //return getMissingNumber(nums);
+
+
+    }
+
+    private int getMissingNumber(int[] nums) {
         //等差数列求和公式
         int sum = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -26,6 +38,5 @@ public class Leetcode268 {
         }
         int n = nums.length;
         return (n * (n + 1)) / 2 - sum;
-
     }
 }

@@ -30,12 +30,10 @@ public class Leetcode389 {
 
     public char findTheDifference(String s, String t) {
         //按位异或运算
-        char result = 0x00;
-        for (char value : s.toCharArray()) {
-            result ^= value;
-        }
-        for (char value : t.toCharArray()) {
-            result ^= value;
+        char result = t.charAt(t.length() - 1);
+        for (int i = 0; i < s.length(); i++) {
+            result ^= s.charAt(i);
+            result ^= t.charAt(i);
         }
         return result;
     }
