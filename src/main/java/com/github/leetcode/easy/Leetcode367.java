@@ -26,7 +26,7 @@ public class Leetcode367 {
                 long mid = (left + right) / 2;
                 if (mid * mid == num)
                     return true;
-                if (num > mid * mid) left++;
+                if (num > mid * mid) left = mid + 1;
                 else
                     right = mid - 1;
             }

@@ -30,15 +30,26 @@ public class Leetcode162 {
     }
 
     public int findPeakElement(int[] nums) {
-        int left = 0, right = nums.length - 1;
-        while (left < right) {//left和right同个位置，只剩一个元素
-            int mid = (left + right) / 2;
-            //每次二分查找总往大值的位置靠近
-            if (nums[mid] < nums[mid + 1]) left = mid + 1;
-            else
-                right = mid;
+        if (nums.length < 2) {
+            return 0;
         }
-        return left;
+        int left = 0, right = nums.length - 1;
+        while (left + 1 < right) {
+            //中间元素和左右两边元素比较 几何图形应该是先升后降
+            int mid = (right - left) / 2 + left;
+            if (nums[mid] < nums[mid - 1]) {//左边下降，峰值在左
+                right = mid;
+            } else if (nums[mid] < nums[mid + 1]) {//右边上升，峰值在右
+                left = mid;
+            } else {//左上升，右下降
+                right = mid;
+            }
+        }
+        if (nums[left] < nums[right]) {
+            return right;
+        } else {
+            return left;
+        }
     }
 
 }

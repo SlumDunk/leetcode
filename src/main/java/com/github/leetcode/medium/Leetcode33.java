@@ -27,53 +27,32 @@ public class Leetcode33 {
         if (nums.length == 0) {
             return -1;
         }
-        //改进的二分查找
-        return search(nums, target, 0, nums.length - 1);
-    }
-
-    private int search(int[] nums, int target, int left, int right) {
-        if (left == right) {
-            if (nums[left] == target) {
-                return left;
-            } else {
-                return -1;
+        int left = 0, right = nums.length - 1;
+        while (left + 1 < right) {
+            int mid = (right - left) / 2 + left;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[left] < nums[mid]) {//左边有序
+                if (nums[left] <= target && target <= nums[mid]) {
+                    right = mid;
+                } else {
+                    left = mid;
+                }
+            } else {//右边有序
+                if (nums[mid] <= target && target <= nums[right]) {
+                    left = mid;
+                } else {
+                    right = mid;
+                }
             }
         }
-        int mid = (left + right) / 2;
-        if (nums[mid] > nums[left]) {//(left..mid)是完全有序的
-            if (nums[left] <= target && nums[mid] >= target) {
-                return binarySearch(nums, target, left, mid);
-            } else {
-                return search(nums, target, mid + 1, right);
-            }
-        } else {//(mid+1..right)是完全有序的
-            if (nums[mid + 1] <= target && target <= nums[right]) {
-                return binarySearch(nums, target, mid + 1, right);
-            } else {
-                return search(nums, target, left, mid);
-            }
-        }
-    }
-
-    private int binarySearch(int[] nums, int target, int left, int right) {
-        if (left > right) {
+        if (nums[left] == target) {
+            return left;
+        } else if (nums[right] == target) {
+            return right;
+        } else {
             return -1;
         }
-        if (left == right) {
-            if (nums[left] == target) {
-                return left;
-            } else {
-                return -1;
-            }
-        }
-        int mid = (left + right) / 2;
-        if (target < nums[mid]) {
-            return binarySearch(nums, target, left, mid - 1);
-        } else if (target == nums[mid]) {
-            return mid;
-        } else {
-            return binarySearch(nums, target, mid + 1, right);
-        }
     }
-
 }

@@ -21,4 +21,25 @@ package com.github.leetcode.easy;
  */
 public class Leetcode278 {
 
+    public int firstBadVersion(int n) {
+        int left = 1, right = n;//这里用n，不是n+1,因为返回结果是left不是-1
+        while (left + 1 < right) {//[left,right]
+            //(right+left)/2大数值会越界
+            int mid = left + (right - left) / 2;
+            if (isBadVersion(mid)) {//mid可能是开始坏的version,所以不能丢
+                right = mid;
+            } else {
+                left = mid;
+            }
+        }
+        if (isBadVersion(left)) {
+            return left;
+        } else {
+            return right;
+        }
+    }
+
+    private boolean isBadVersion(int mid) {
+        return true;
+    }
 }
