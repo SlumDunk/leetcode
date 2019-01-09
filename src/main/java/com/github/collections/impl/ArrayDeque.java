@@ -26,24 +26,28 @@ public class ArrayDeque<E> implements Deque<E> {
         }
         size++;
         items[0] = item;
-        resize();
+        if (size == items.length) {
+            resize(2 * items.length);
+        }
     }
 
     /**
-     * 扩容
+     * 调整数组大小
+     *
+     * @param len
      */
-    private void resize() {
-        if (size == items.length) {
-            E[] newItems = (E[]) new Object[items.length * 2];
-            newItems = Arrays.copyOf(items, newItems.length);
-            items = newItems;
-        }
+    private void resize(int len) {
+        E[] newItems = (E[]) new Object[len];
+        newItems = Arrays.copyOf(items, newItems.length);
+        items = newItems;
     }
 
     @Override
     public void pushTail(E item) {
         items[size++] = item;
-        resize();
+        if (size == items.length) {
+            resize(2 * items.length);
+        }
     }
 
     @Override
