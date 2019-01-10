@@ -22,17 +22,22 @@ package com.github.leetcode.medium;
  */
 public class Leetcode153 {
     public int findMin(int[] nums) {
-        int start = 0;
-        int end = nums.length - 1;
-        int mid = 0;
-        while (start < end) { //注意这里和普通的二分查找不同，这里是start < end不是 start <= end.
-            mid = (start+end) / 2;
-            if (nums[mid] > nums[end])//mid是拐点
-                start = mid + 1; //此时可以扔掉mid的值
-            else
-                end = mid;//此时不能扔掉mid的值,因为最小值可能出现在mid位置
+        int left = 0, right = nums.length - 1;
+        //画出图形 找左边第一个比target小的
+        int target = nums[nums.length - 1];
+        while (left + 1 < right) {
+            int mid = (right - left) / 2 + left;
+            if (nums[mid] >= target) {
+                left = mid;
+            } else {
+                right = mid;
+            }
         }
-        return nums[end]; //退出循环说明start与end相等，所以只剩一个元素可能，所以return [start]或者return [end]都可以了。
+        if (nums[left] <= target) {
+            return nums[left];
+        } else {
+            return nums[right];
+        }
     }
 
     /**

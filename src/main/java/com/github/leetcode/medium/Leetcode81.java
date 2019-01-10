@@ -29,31 +29,15 @@ public class Leetcode81 {
     }
 
     public boolean search(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
-        while (left <= right) {
-            if (left == right) {
-                if (nums[left] == target) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            int mid = (left + right) / 2;
-            if (nums[mid] == target) return true;
-            //避免找到假拐点
-            if (nums[mid] == nums[left]) left++;
-            else if (nums[mid] > nums[left]) {//左半部分有序
-                if (nums[mid] > target && target >= nums[left]) {
-                    right = mid;
-                } else {
-                    left = mid + 1;
-                }
-            } else {//右半部分有序
-                if (nums[mid] < target && nums[right] >= target) {
-                    left = mid + 1;
-                } else {
-                    right = mid;
-                }
+        // 这个问题在面试中不会让实现完整程序
+        // 只需要举出能够最坏情况的数据是 [1,1,1,1... 1] 里有一个0即可。
+        // 在这种情况下是无法使用二分法的，复杂度是O(n)
+        // 因此写个for循环最坏也是O(n)，那就写个for循环就好了
+        //  如果你觉得，不是每个情况都是最坏情况，你想用二分法解决不是最坏情况的情况，那你就写一个二分吧。
+        //  反正面试考的不是你在这个题上会不会用二分法。这个题的考点是你想不想得到最坏情况。
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
+                return true;
             }
         }
         return false;
