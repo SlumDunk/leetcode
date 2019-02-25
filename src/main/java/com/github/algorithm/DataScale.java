@@ -30,6 +30,8 @@ public class DataScale {
     }
 
     public static void main(String[] args) {
-        dataScale();
+        String str = "hello";
+        System.out.println(str.substring(0, 0));
+        //dataScale();
     }
 }

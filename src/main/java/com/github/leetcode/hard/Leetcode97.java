@@ -1,32 +1,29 @@
-package com.github.lintcode.medium;
+package com.github.leetcode.hard;
 
 /**
  * @Author: zerongliu
- * @Date: 1/15/19 14:36
- * @Description: Given three strings: s1, s2, s3, determine whether s3 is formed by the interleaving of s1 and s2.
+ * @Date: 2/21/19 13:38
+ * @Description: Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
  * <p>
- * Example
- * For s1 = "aabcc", s2 = "dbbca"
+ * Example 1:
  * <p>
- * When s3 = "aadbbcbcac", return true.
- * When s3 = "aadbbbaccc", return false.
- * Challenge
- * O(n2) time or better
+ * Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+ * Output: true
+ * Example 2:
+ * <p>
+ * Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
+ * Output: false
  */
-public class Lintcode29 {
+public class Leetcode97 {
     public static void main(String[] args) {
-        Lintcode29 lintcode29 = new Lintcode29();
-        lintcode29.isInterleave("aabcc", "dbbca", "aadbbcbcac");
+        Leetcode97 leetcode97 = new Leetcode97();
+        String s1 = "aabcc";
+        String s2 = "dbbca";
+        String s3 = "aadbbcbcac";
+        leetcode97.isInterleave(s1, s2, s3);
     }
 
-    /**
-     * @param s1: A string
-     * @param s2: A string
-     * @param s3: A string
-     * @return: Determine whether s3 is formed by interleaving of s1 and s2
-     */
     public boolean isInterleave(String s1, String s2, String s3) {
-        // write your code here
         if (s1 == null || s2 == null || s3 == null) {
             return false;
         }
@@ -65,6 +62,7 @@ public class Lintcode29 {
                 System.out.println();
             }
             return dp[m][n];
+
         }
     }
 }
