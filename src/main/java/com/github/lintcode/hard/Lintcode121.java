@@ -47,6 +47,16 @@ public class Lintcode121 {
         return result;
     }
 
+    /**
+     * 深度遍历获取结果
+     *
+     * @param result
+     * @param temp
+     * @param current
+     * @param start
+     * @param distance
+     * @param map
+     */
     public void dfs(List<List<String>> result, List<String> temp, String current, String start, Map<String, Integer> distance, Map<String, List<String>> map) {
         temp.add(current);
         if (current.equals(start)) {
@@ -63,6 +73,15 @@ public class Lintcode121 {
         temp.remove(temp.size() - 1);
     }
 
+    /**
+     * 构造树结构
+     *
+     * @param map
+     * @param distance
+     * @param start
+     * @param end
+     * @param dict
+     */
     public void bfs(Map<String, List<String>> map, Map<String, Integer> distance, String start, String end, Set<String> dict) {
         Queue<String> queue = new LinkedList<String>();
         queue.offer(start);
@@ -83,6 +102,13 @@ public class Lintcode121 {
         }
     }
 
+    /**
+     * 获取下一个单词
+     *
+     * @param current
+     * @param dict
+     * @return
+     */
     public List<String> getNextWords(String current, Set<String> dict) {
         List<String> words = new ArrayList<String>();
         for (int i = 0; i < current.length(); i++) {
@@ -100,6 +126,14 @@ public class Lintcode121 {
         return words;
     }
 
+    /**
+     * 替换单词中的某个字符
+     *
+     * @param current
+     * @param index
+     * @param c
+     * @return
+     */
     public String replace(String current, int index, char c) {
         char[] chars = current.toCharArray();
         chars[index] = c;

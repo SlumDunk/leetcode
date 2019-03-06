@@ -63,6 +63,7 @@ public class Leetcode269 {
                         //入度加1
                         degree.put(to, degree.get(to) + 1);
                     }
+                    map.put(from,set);
                     break;
                 }
             }

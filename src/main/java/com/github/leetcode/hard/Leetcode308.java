@@ -30,7 +30,7 @@ package com.github.leetcode.hard;
 public class Leetcode308 {
     public class NumMatrix {
         /**
-         * 树状数组
+         * 树状数组,下标从1开始
          */
         private int[][] bitArr;
         /**
@@ -68,6 +68,7 @@ public class Leetcode308 {
                 int j = col;
                 while (j < bitArr[i].length) {
                     bitArr[i][j] += adjust;
+                    //求lowbit j
                     j += (j & -j);
                 }
                 i += (i & -i);

@@ -32,7 +32,7 @@ public class Leetcode340 {
         int left = 0;
         //最大长度
         int max = 0;
-        //存储每个字符最近一次出现的位置 left右边
+        //存储每个字符最近一次出现的次数 left右边
         Map<Character, Integer> charMap = new HashMap<>();
         //子串中字符的类别数量
         int count = 0;
@@ -48,8 +48,10 @@ public class Leetcode340 {
                     //如果这子串中left字符只出现一次，那么删除它可以满足，left继续前进
                     if (charMap.get(s.charAt(left)) == 1) {
                         count--;
+                        charMap.remove(s.charAt(left));
+                    } else {
+                        charMap.put(s.charAt(left), charMap.get(s.charAt(left)) - 1);
                     }
-                    charMap.put(s.charAt(left), charMap.get(s.charAt(left)) - 1);
                     left++;
                 }
             } else {
@@ -58,7 +60,6 @@ public class Leetcode340 {
             max = Math.max(max, index - left + 1);
             index++;
         }
-        max = Math.max(max, index - left);
         return max;
     }
 }

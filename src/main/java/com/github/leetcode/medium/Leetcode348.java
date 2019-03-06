@@ -99,21 +99,21 @@ public class Leetcode348 {
          */
         public int move(int row, int col, int player) {
             //看看走完这一步行状态
-            int len = ++rows[row][player--];
+            int len = ++rows[row][player - 1];
             if (len == size) return player;
 
             //看看走完这一步列状态
-            len = ++cols[col][player--];
+            len = ++cols[col][player - 1];
             if (len == size) return player;
 
             //看看主对角线状态
             if (row == col) {
-                len = ++diag[player--];
+                len = ++diag[player - 1];
                 if (len == size) return player;
             }
             //看看副对角线状态
             if (row + col == size - 1) {
-                len = ++aDiag[player--];
+                len = ++aDiag[player - 1];
                 if (len == size) return player;
             }
             return 0;

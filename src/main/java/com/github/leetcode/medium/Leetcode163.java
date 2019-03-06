@@ -20,30 +20,31 @@ public class Leetcode163 {
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> result = new ArrayList<>();
         int index = 0;
-        int left = lower;
+        long aLower = (long) lower;
+        long aUpper = (long) upper;
         while (index < nums.length) {
-            if (left == nums[index]) {//左边界和当前值一致，继续前进
+            if (aLower == nums[index]) {//左边界和当前值一致，继续前进
+                aLower++;
                 index++;
-                left = nums[index] + 1;
-            } else if (nums[index] - left == 1) {//左边界和当前值相差1
-                result.add(String.valueOf(left));
-                left = nums[index] + 1;
+            } else if (nums[index] - aLower == 1) {//左边界和当前值相差1
+                result.add(String.valueOf(aLower));
+                aLower = nums[index] + 1;
                 index++;
-            } else if (nums[index] - left > 1) {//左边界和当前值相差大于1，求出右边界
-                int right = nums[index] - 1;
-                result.add(left + "->" + right);
-                left = nums[index] + 1;
+            } else if (nums[index] - aLower > 1) {//左边界和当前值相差大于1，求出右边界
+                long right = nums[index] - 1;
+                result.add(aLower + "->" + right);
+                aLower = (long) nums[index] + 1;
                 index++;
             } else {
                 index++;
             }
         }
         //判断和上边界
-        if (left <= upper) {
-            if (left == upper) {
-                result.add(String.valueOf(left));
+        if (aLower <= aUpper) {
+            if (aLower == aUpper) {
+                result.add(String.valueOf(aLower));
             } else {
-                result.add(left + "->" + upper);
+                result.add(aLower + "->" + aUpper);
             }
         }
         return result;
