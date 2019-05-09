@@ -5,7 +5,7 @@ package com.github.leetcode.medium;
  * @Date: 2/24/19 20:11
  * @Description: Given a grid where each entry is only 0 or 1, find the number of corner rectangles.
  * <p>
- * A corner rectangle is 4 distinct 1s on the grid that form an axis-aligned rectangle. Note that only the corners need to have the value 1. Also, all four 1s used must be distinct.
+ * A corner rectangle is 4 distinct 1s on the grid that form an axis-aligned rectangle. Note that only the corners need to have the frequency 1. Also, all four 1s used must be distinct.
  * <p>
  * <p>
  * <p>

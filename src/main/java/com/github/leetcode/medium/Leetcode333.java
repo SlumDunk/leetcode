@@ -22,7 +22,7 @@ import com.github.leetcode.vo.TreeNode;
  * <p>
  * Output: 3
  * Explanation: The Largest BST Subtree in this case is the highlighted one.
- * The return value is the subtree's size, which is 3.
+ * The return frequency is the subtree's size, which is 3.
  * Follow up:
  * Can you figure out ways to solve it with O(n) time complexity?
  */

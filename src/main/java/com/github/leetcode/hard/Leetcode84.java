@@ -3,7 +3,7 @@ package com.github.leetcode.hard;
 /**
  * @Author: zerongliu
  * @Date: 1/4/19 16:06
- * @Description: Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
+ * @Description: Given n non-negative integers representing the histogram'word bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
  * <p>
  * <p>
  * <p>

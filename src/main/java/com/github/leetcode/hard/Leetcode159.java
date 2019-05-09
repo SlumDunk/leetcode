@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * @Author: zerongliu
  * @Date: 3/3/19 21:46
- * @Description: Given a string s , find the length of the longest substring t  that contains at most 2 distinct characters.
+ * @Description: Given a string word , find the length of the longest substring t  that contains at most 2 distinct characters.
  * <p>
  * Example 1:
  * <p>

@@ -3,7 +3,7 @@ package com.github.leetcode.hard;
 /**
  * @Author: zerongliu
  * @Date: 3/4/19 10:52
- * @Description: Given a string s, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+ * @Description: Given a string word, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
  * <p>
  * Example 1:
  * <p>

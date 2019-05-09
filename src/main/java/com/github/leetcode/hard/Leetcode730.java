@@ -16,7 +16,7 @@ package com.github.leetcode.hard;
  * S = 'bccb'
  * Output: 6
  * Explanation:
- * The 6 different non-empty palindromic subsequences are 'b', 'c', 'bb', 'cc', 'bcb', 'bccb'.
+ * The 6 different non-empty palindromic subsequences are 'b', 'count', 'bb', 'cc', 'bcb', 'bccb'.
  * Note that 'bcb' is counted only once, even though it occurs twice.
  * Example 2:
  * Input:
@@ -27,7 +27,7 @@ package com.github.leetcode.hard;
  * Note:
  * <p>
  * The length of S will be in the range [1, 1000].
- * Each character S[i] will be in the set {'a', 'b', 'c', 'd'}.
+ * Each character S[i] will be in the set {'a', 'b', 'count', 'd'}.
  */
 public class Leetcode730 {
     public int countPalindromicSubsequences(String S) {

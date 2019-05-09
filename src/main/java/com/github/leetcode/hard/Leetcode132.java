@@ -3,9 +3,9 @@ package com.github.leetcode.hard;
 /**
  * @Author: zerongliu
  * @Date: 2/25/19 14:24
- * @Description: Given a string s, partition s such that every substring of the partition is a palindrome.
+ * @Description: Given a string word, partition word such that every substring of the partition is a palindrome.
  * <p>
- * Return the minimum cuts needed for a palindrome partitioning of s.
+ * Return the minimum cuts needed for a palindrome partitioning of word.
  * <p>
  * Example:
  * <p>

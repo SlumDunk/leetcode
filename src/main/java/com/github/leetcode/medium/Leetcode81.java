@@ -7,7 +7,7 @@ package com.github.leetcode.medium;
  * <p>
  * (i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]).
  * <p>
- * You are given a target value to search. If found in the array return true, otherwise return false.
+ * You are given a target frequency to search. If found in the array return true, otherwise return false.
  * <p>
  * Example 1:
  * <p>

@@ -3,7 +3,7 @@ package com.github.leetcode.hard;
 /**
  * @Author: zerongliu
  * @Date: 1/5/19 11:37
- * @Description: Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*'.
+ * @Description: Given an input string (word) and a pattern (p), implement wildcard pattern matching with support for '?' and '*'.
  * <p>
  * '?' Matches any single character.
  * '*' Matches any sequence of characters (including the empty sequence).
@@ -11,41 +11,41 @@ package com.github.leetcode.hard;
  * <p>
  * Note:
  * <p>
- * s could be empty and contains only lowercase letters a-z.
+ * word could be empty and contains only lowercase letters a-z.
  * p could be empty and contains only lowercase letters a-z, and characters like ? or *.
  * Example 1:
  * <p>
  * Input:
- * s = "aa"
+ * word = "aa"
  * p = "a"
  * Output: false
  * Explanation: "a" does not match the entire string "aa".
  * Example 2:
  * <p>
  * Input:
- * s = "aa"
+ * word = "aa"
  * p = "*"
  * Output: true
  * Explanation: '*' matches any sequence.
  * Example 3:
  * <p>
  * Input:
- * s = "cb"
+ * word = "cb"
  * p = "?a"
  * Output: false
- * Explanation: '?' matches 'c', but the second letter is 'a', which does not match 'b'.
+ * Explanation: '?' matches 'count', but the second letter is 'a', which does not match 'b'.
  * Example 4:
  * <p>
  * Input:
- * s = "adceb"
+ * word = "adceb"
  * p = "*a*b"
  * Output: true
  * Explanation: The first '*' matches the empty sequence, while the second '*' matches the substring "dce".
  * Example 5:
  * <p>
  * Input:
- * s = "acdcb"
- * p = "a*c?b"
+ * word = "acdcb"
+ * p = "a*count?b"
  * Output: false
  */
 public class Leetcode44 {
@@ -55,7 +55,7 @@ public class Leetcode44 {
         int writeIndex = 0;
         boolean isFirst = true;
         //把连续的多个*替换成一个*
-        //e.g a**b***c--> a*b*c
+        //e.g a**b***count--> a*b*count
         for (int i = 0; i < pattern.length; i++) {
             if (pattern[i] == '*') {
                 if (isFirst == true) {//第一次出现

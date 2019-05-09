@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Author: zerongliu
  * @Date: 1/4/19 21:41
- * @Description: Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences.
+ * @Description: Given a non-empty string word and a dictionary wordDict containing a list of non-empty words, add spaces in word to construct a sentence where each word is a valid dictionary word. Return all such possible sentences.
  * <p>
  * Note:
  * <p>
@@ -17,7 +17,7 @@ import java.util.Map;
  * Example 1:
  * <p>
  * Input:
- * s = "catsanddog"
+ * word = "catsanddog"
  * wordDict = ["cat", "cats", "and", "sand", "dog"]
  * Output:
  * [
@@ -27,7 +27,7 @@ import java.util.Map;
  * Example 2:
  * <p>
  * Input:
- * s = "pineapplepenapple"
+ * word = "pineapplepenapple"
  * wordDict = ["apple", "pen", "applepen", "pine", "pineapple"]
  * Output:
  * [
@@ -39,7 +39,7 @@ import java.util.Map;
  * Example 3:
  * <p>
  * Input:
- * s = "catsandog"
+ * word = "catsandog"
  * wordDict = ["cats", "dog", "sand", "and", "cat"]
  * Output:
  * []

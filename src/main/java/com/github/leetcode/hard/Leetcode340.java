@@ -10,11 +10,12 @@ import java.util.Set;
  * @Date: 1/3/19 20:57
  * @Description: Given a string, find the length of the longest substring T that contains at most k distinct characters.
  * <p>
- * For example, Given s = “eceba” and k = 2,
+ * For example, Given word = “eceba” and k = 2,
  * <p>
  * T is "ece" which its length is 3.
  * <p>
  * <p>
+ * 拥有K个distinct字符的子串的最大长度
  */
 public class Leetcode340 {
     public static void main(String[] args) {

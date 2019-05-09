@@ -19,7 +19,7 @@ import java.util.TreeMap;
  * [1, 3], [7, 7]
  * [1, 3], [6, 7]
  * Follow up:
- * What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?
+ * What if there are lots of merges and the number of disjoint intervals are small compared to the data stream'word size?
  */
 public class Leetcode352 {
     class SummaryRanges {

@@ -5,7 +5,7 @@ import com.github.leetcode.vo.ListNode;
 /**
  * @Author: zerongliu
  * @Date: 10/24/18 11:07
- * @Description: Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+ * @Description: Given a linked list and a frequency x, partition it such that all nodes less than x come before nodes greater than or equal to x.
  * <p>
  * You should preserve the original relative order of the nodes in each of the two partitions.
  * <p>

@@ -8,12 +8,12 @@ import java.util.Map;
 /**
  * @Author: zerongliu
  * @Date: 3/3/19 09:54
- * @Description: You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+ * @Description: You are given a string, word, and a list of words, words, that are all of the same length. Find all starting indices of substring(word) in word that is a concatenation of each word in words exactly once and without any intervening characters.
  * <p>
  * Example 1:
  * <p>
  * Input:
- * s = "barfoothefoobarman",
+ * word = "barfoothefoobarman",
  * words = ["foo","bar"]
  * Output: [0,9]
  * Explanation: Substrings starting at index 0 and 9 are "barfoor" and "foobar" respectively.
@@ -21,7 +21,7 @@ import java.util.Map;
  * Example 2:
  * <p>
  * Input:
- * s = "wordgoodgoodgoodbestword",
+ * word = "wordgoodgoodgoodbestword",
  * words = ["word","good","best","word"]
  * Output: []
  */

@@ -5,9 +5,9 @@ import com.github.leetcode.vo.TreeNode;
 /**
  * @Author: zerongliu
  * @Date: 3/4/19 14:55
- * @Description: Given a binary tree, count the number of uni-value subtrees.
+ * @Description: Given a binary tree, count the number of uni-frequency subtrees.
  * <p>
- * A Uni-value subtree means all nodes of the subtree have the same value.
+ * A Uni-frequency subtree means all nodes of the subtree have the same frequency.
  * <p>
  * Example :
  * <p>

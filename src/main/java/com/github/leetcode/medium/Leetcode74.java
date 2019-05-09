@@ -3,7 +3,7 @@ package com.github.leetcode.medium;
 /**
  * @Author: zerongliu
  * @Date: 10/23/18 20:22
- * @Description: Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+ * @Description: Write an efficient algorithm that searches for a frequency in an m x n matrix. This matrix has the following properties:
  * <p>
  * Integers in each row are sorted from left to right.
  * The first integer of each row is greater than the last integer of the previous row.

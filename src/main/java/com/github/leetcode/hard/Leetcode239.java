@@ -23,7 +23,7 @@ import java.util.Deque;
  * 1  3  -1  -3 [5  3  6] 7       6
  * 1  3  -1  -3  5 [3  6  7]      7
  * Note:
- * You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+ * You may assume k is always valid, 1 ≤ k ≤ input array'word size for non-empty array.
  * <p>
  * Follow up:
  * Could you solve it in linear time?

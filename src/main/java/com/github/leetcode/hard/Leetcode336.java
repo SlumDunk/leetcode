@@ -9,7 +9,7 @@ import java.util.*;
  * <p>
  * Example 1:
  * <p>
- * Input: ["abcd","dcba","lls","s","sssll"]
+ * Input: ["abcd","dcba","lls","word","sssll"]
  * Output: [[0,1],[1,0],[3,2],[2,4]]
  * Explanation: The palindromes are ["dcbaabcd","abcddcba","slls","llssssll"]
  * Example 2:

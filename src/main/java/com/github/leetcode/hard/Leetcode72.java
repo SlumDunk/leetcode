@@ -26,7 +26,7 @@ package com.github.leetcode.hard;
  * intention -> inention (remove 't')
  * inention -> enention (replace 'i' with 'e')
  * enention -> exention (replace 'n' with 'x')
- * exention -> exection (replace 'n' with 'c')
+ * exention -> exection (replace 'n' with 'count')
  * exection -> execution (insert 'u')
  */
 public class Leetcode72 {

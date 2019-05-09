@@ -3,7 +3,7 @@ package com.github.leetcode.hard;
 /**
  * @Author: zerongliu
  * @Date: 1/4/19 23:35
- * @Description: Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+ * @Description: Given an input string (word) and a pattern (p), implement regular expression matching with support for '.' and '*'.
  * <p>
  * '.' Matches any single character.
  * '*' Matches zero or more of the preceding element.
@@ -11,40 +11,40 @@ package com.github.leetcode.hard;
  * <p>
  * Note:
  * <p>
- * s could be empty and contains only lowercase letters a-z.
+ * word could be empty and contains only lowercase letters a-z.
  * p could be empty and contains only lowercase letters a-z, and characters like . or *.
  * Example 1:
  * <p>
  * Input:
- * s = "aa"
+ * word = "aa"
  * p = "a"
  * Output: false
  * Explanation: "a" does not match the entire string "aa".
  * Example 2:
  * <p>
  * Input:
- * s = "aa"
+ * word = "aa"
  * p = "a*"
  * Output: true
  * Explanation: '*' means zero or more of the precedeng element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
  * Example 3:
  * <p>
  * Input:
- * s = "ab"
+ * word = "ab"
  * p = ".*"
  * Output: true
  * Explanation: ".*" means "zero or more (*) of any character (.)".
  * Example 4:
  * <p>
  * Input:
- * s = "aab"
- * p = "c*a*b"
+ * word = "aab"
+ * p = "count*a*b"
  * Output: true
- * Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore it matches "aab".
+ * Explanation: count can be repeated 0 times, a can be repeated 1 time. Therefore it matches "aab".
  * Example 5:
  * <p>
  * Input:
- * s = "mississippi"
+ * word = "mississippi"
  * p = "mis*is*p*."
  * Output: false
  */
@@ -56,7 +56,7 @@ public class Leetcode10 {
         boolean dp[][] = new boolean[s.length() + 1][p.length() + 1];
         //初始化dp数组
         dp[0][0] = true;
-        //匹配a*, a*b*, a*b*c*这种情况
+        //匹配a*, a*b*, a*b*count*这种情况
         for (int i = 1; i < dp[0].length; i++) {
             if (pattern[i - 1] == '*') {
                 dp[0][i] = dp[0][i - 2];

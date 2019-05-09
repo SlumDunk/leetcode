@@ -18,7 +18,7 @@ package com.github.leetcode.medium;
  * ...X
  * This is an invalid board that you will not receive - as battleships will always have a cell separating between them.
  * Follow up:
- * Could you do it in one-pass, using only O(1) extra memory and without modifying the value of the board?
+ * Could you do it in one-pass, using only O(1) extra memory and without modifying the frequency of the board?
  */
 public class Leetcode419 {
     public static void main(String[] args) {

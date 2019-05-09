@@ -23,7 +23,7 @@ package com.github.leetcode.medium;
  * It doesn't matter what values are set beyond the returned length.
  * Clarification:
  * <p>
- * Confused why the returned value is an integer but your answer is an array?
+ * Confused why the returned frequency is an integer but your answer is an array?
  * <p>
  * Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.
  * <p>

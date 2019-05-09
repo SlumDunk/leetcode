@@ -20,7 +20,7 @@ import com.github.leetcode.vo.ListNode;
  * Note:
  * <p>
  * Only constant extra memory is allowed.
- * You may not alter the values in the list's nodes, only nodes itself may be changed.
+ * You may not alter the values in the list'word nodes, only nodes itself may be changed.
  */
 public class Leetcode25 {
     public ListNode reverseKGroup(ListNode head, int k) {

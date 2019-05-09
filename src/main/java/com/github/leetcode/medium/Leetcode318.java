@@ -3,7 +3,7 @@ package com.github.leetcode.medium;
 /**
  * @Author: zerongliu
  * @Date: 10/28/18 10:18
- * @Description: Given a string array words, find the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters. You may assume that each word will contain only lower case letters. If no such two words exist, return 0.
+ * @Description: Given a string array words, find the maximum frequency of length(word[i]) * length(word[j]) where the two words do not share common letters. You may assume that each word will contain only lower case letters. If no such two words exist, return 0.
  * <p>
  * Example 1:
  * <p>

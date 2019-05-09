@@ -3,23 +3,23 @@ package com.github.leetcode.hard;
 /**
  * @Author: zerongliu
  * @Date: 3/5/19 22:59
- * @Description: Given a non-empty string s and an integer k, rearrange the string such that the same characters are at least distance k from each other.
+ * @Description: Given a non-empty string word and an integer k, rearrange the string such that the same characters are at least distance k from each other.
  * <p>
  * All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
  * <p>
  * Example 1:
  * <p>
- * Input: s = "aabbcc", k = 3
+ * Input: word = "aabbcc", k = 3
  * Output: "abcabc"
  * Explanation: The same letters are at least distance 3 from each other.
  * Example 2:
  * <p>
- * Input: s = "aaabc", k = 3
+ * Input: word = "aaabc", k = 3
  * Output: ""
  * Explanation: It is not possible to rearrange the string.
  * Example 3:
  * <p>
- * Input: s = "aaadbbcc", k = 2
+ * Input: word = "aaadbbcc", k = 2
  * Output: "abacabcd"
  * Explanation: The same letters are at least distance 2 from each other.
  */

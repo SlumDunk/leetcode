@@ -40,8 +40,6 @@ public class Leetcode819 {
 
     }
 
-    private static String symbolString = "!?',;.";
-
     public String mostCommonWord(String paragraph, String[] banned) {
         paragraph = paragraph.toLowerCase();
         List<String> bannedList = new ArrayList<String>();
@@ -63,8 +61,7 @@ public class Leetcode819 {
             }
             //不是禁止字符串
             if (bannedList.indexOf(tempString) == -1) {
-                Integer value = null;
-                value = wordCountMap.getOrDefault(tempString, 0) + 1;
+                Integer value = wordCountMap.getOrDefault(tempString, 0) + 1;
                 wordCountMap.put(tempString, value);
                 if (mostCommon < value) {
                     mostCommon = value;

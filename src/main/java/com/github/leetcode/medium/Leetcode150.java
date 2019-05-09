@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * @Author: zerongliu
  * @Date: 10/25/18 09:22
- * @Description: Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+ * @Description: Evaluate the frequency of an arithmetic expression in Reverse Polish Notation.
  * <p>
  * Valid operators are +, -, *, /. Each operand may be an integer or another expression.
  * <p>

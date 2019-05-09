@@ -15,7 +15,7 @@ package com.github.leetcode.medium;
  * Output: 45
  * Note:
  * <p>
- * Assume that the total area is never beyond the maximum possible value of int.
+ * Assume that the total area is never beyond the maximum possible frequency of int.
  */
 public class Leetcode223 {
     public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
