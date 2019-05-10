@@ -1,5 +1,10 @@
 package com.github.leetcode.medium;
 
+import com.github.leetcode.vo.TreeNode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author: zerongliu
  * @Date: 5/8/19 17:41
@@ -51,4 +56,71 @@ package com.github.leetcode.medium;
  * So order them in anti-clockwise without duplicate nodes we have [1,2,4,7,8,9,10,6,3].
  */
 public class Leetcode545 {
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        if (root == null) {
+            return list;
+        }
+        list.add(root.val);
+        if (root.left == null && root.right == null) {
+            return list;
+        }
+        LBTrav(root.left, list);
+        LeafTrav(root, list);
+        RBT(root.right, list);
+        return list;
+
+    }
+
+    /**
+     * 右边界
+     *
+     * @param root
+     * @param list
+     */
+    private void RBT(TreeNode root, List<Integer> list) {
+        if (root != null && root.right != null) {
+            RBT(root.right, list);
+        } else if (root != null && root.left != null) {
+            RBT(root.left, list);
+        }
+        if (root != null && !(root.left == null && root.right == null)) {
+            list.add(root.val);
+        }
+    }
+
+    /**
+     * 叶子节点
+     *
+     * @param root
+     * @param list
+     */
+    private void LeafTrav(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        if (root != null && root.left == null && root.right == null) {
+            list.add(root.val);
+        }
+        LeafTrav(root.left, list);
+        LeafTrav(root.right, list);
+    }
+
+    /**
+     * 左边界
+     *
+     * @param root
+     * @param list
+     */
+    private void LBTrav(TreeNode root, List<Integer> list) {
+        if (root != null && !(root.left == null && root.right == null)) {
+            list.add(root.val);
+        }
+        if (root != null && root.left != null) {
+            LBTrav(root.left, list);
+        } else if (root != null && root.right != null) {
+            LBTrav(root.right, list);
+        }
+
+    }
 }
