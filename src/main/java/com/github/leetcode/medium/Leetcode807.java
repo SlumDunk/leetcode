@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 5/10/19 23:16
@@ -37,6 +39,28 @@ package com.github.leetcode.medium;
  */
 public class Leetcode807 {
     public int maxIncreaseKeepingSkyline(int[][] grid) {
-        return 0;
+        int sum = 0;
+        int[] colsMax = new int[grid[0].length];
+        int[] rowsMax = new int[grid.length];
+        Arrays.fill(colsMax, -1);
+        Arrays.fill(rowsMax, -1);
+
+        for (int row = 0; row < rowsMax.length; row++) {
+            for (int col = 0; col < colsMax.length; col++) {
+                if (rowsMax[row] == -1) {
+                    for (int i = 0; i < colsMax.length; i++) {
+                        rowsMax[row] = Math.max(rowsMax[row], grid[row][i]);
+                    }
+                }
+                if (colsMax[col] == -1) {
+                    for (int i = 0; i < rowsMax.length; i++) {
+                        colsMax[col] = Math.max(colsMax[col], grid[i][col]);
+                    }
+                }
+                int possibleMax = Math.min(rowsMax[row], colsMax[col]);
+                sum += possibleMax - grid[row][col];
+            }
+        }
+        return sum;
     }
 }
