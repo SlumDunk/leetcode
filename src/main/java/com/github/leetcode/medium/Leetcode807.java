@@ -5,11 +5,11 @@ import java.util.Arrays;
 /**
  * @Author: zerongliu
  * @Date: 5/10/19 23:16
- * @Description: In a 2 dimensional array grid, each value grid[i][j] represents the height of a building located there. We are allowed to increase the height of any number of buildings, by any amount (the amounts can be different for different buildings). Height 0 is considered to be a building as well.
+ * @Description: In a 2 dimensional array grid, each value grid[i][j] represents the idx of a building located there. We are allowed to increase the idx of any number of buildings, by any amount (the amounts can be different for different buildings). Height 0 is considered to be a building as well.
  * <p>
  * At the end, the "skyline" when viewed from all four directions of the grid, i.e. top, bottom, left, and right, must be the same as the skyline of the original grid. A city's skyline is the outer contour of the rectangles formed by all the buildings when viewed from a distance. See the following example.
  * <p>
- * What is the maximum total sum that the height of the buildings can be increased?
+ * What is the maximum total sum that the idx of the buildings can be increased?
  * <p>
  * Example:
  * Input: grid = [[3,0,8,4],[2,4,5,7],[9,2,6,3],[0,3,1,0]]
@@ -24,7 +24,7 @@ import java.util.Arrays;
  * The skyline viewed from top or bottom is: [9, 4, 8, 7]
  * The skyline viewed from left or right is: [8, 7, 9, 3]
  * <p>
- * The grid after increasing the height of buildings without affecting skylines is:
+ * The grid after increasing the idx of buildings without affecting skylines is:
  * <p>
  * gridNew = [ [8, 4, 8, 7],
  * [7, 4, 7, 7],

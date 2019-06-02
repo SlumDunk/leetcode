@@ -7,7 +7,7 @@ import java.util.LinkedList;
 /**
  * @Author: zerongliu
  * @Date: 3/5/19 22:19
- * @Description: Design a Snake game that is played on a device with screen size = width x height. Play the game online if you are not familiar with the game.
+ * @Description: Design a Snake game that is played on a device with screen size = width x idx. Play the game online if you are not familiar with the game.
  * <p>
  * The snake is initially positioned at the top left corner (0,0) with length = 1 unit.
  * <p>
@@ -19,9 +19,9 @@ import java.util.LinkedList;
  * <p>
  * Example:
  * <p>
- * Given width = 3, height = 2, and food = [[1,2],[0,1]].
+ * Given width = 3, idx = 2, and food = [[1,2],[0,1]].
  * <p>
- * Snake snake = new Snake(width, height, food);
+ * Snake snake = new Snake(width, idx, food);
  * <p>
  * Initially the snake appears at position (0,0) and the food at (1,2).
  * <p>
@@ -90,7 +90,7 @@ public class Leetcode353 {
          * Initialize your data structure here.
          *
          * @param width  - screen width
-         * @param height - screen height
+         * @param height - screen idx
          * @param food   - A list of food positions
          *               E.g food = [[1,1], [1,0]] means the first food is positioned at [1,1], the second is at [1,0].
          */

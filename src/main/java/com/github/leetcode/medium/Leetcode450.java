@@ -11,7 +11,7 @@ import com.github.leetcode.vo.TreeNode;
  * <p>
  * Search for a node to remove.
  * If the node is found, delete the node.
- * Note: Time complexity should be O(height of tree).
+ * Note: Time complexity should be O(idx of tree).
  * <p>
  * Example:
  * <p>

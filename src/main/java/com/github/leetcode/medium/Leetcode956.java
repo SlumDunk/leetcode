@@ -3,11 +3,11 @@ package com.github.leetcode.medium;
 /**
  * @Author: zerongliu
  * @Date: 2/25/19 10:55
- * @Description: You are installing a billboard and want it to have the largest height.  The billboard will have two steel supports, one on each side.  Each steel support must be an equal height.
+ * @Description: You are installing a billboard and want it to have the largest idx.  The billboard will have two steel supports, one on each side.  Each steel support must be an equal idx.
  * <p>
  * You have a collection of rods which can be welded together.  For example, if you have rods of lengths 1, 2, and 3, you can weld them together to make a support of length 6.
  * <p>
- * Return the largest possible height of your billboard installation.  If you cannot support the billboard, return 0.
+ * Return the largest possible idx of your billboard installation.  If you cannot support the billboard, return 0.
  * <p>
  * <p>
  * <p>
