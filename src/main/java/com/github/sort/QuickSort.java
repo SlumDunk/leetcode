@@ -69,7 +69,7 @@ public class QuickSort {
 
     /**
      * 固定以最右边元素为关键元素
-     *
+     * 45 46 47 50 48
      * @param nums
      * @param left
      * @param right

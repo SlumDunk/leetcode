@@ -5,13 +5,13 @@ import java.util.Arrays;
 /**
  * @Author: zerongliu
  * @Date: 1/8/19 11:53
- * @Description: 基数排序
+ * @Description: 基数排序=执行多次的计数排序
  */
 public class RadixSort {
 
 
     /**
-     * 计数排序
+     * 基数排序
      *
      * @param nums
      * @param exp  10的幂次
@@ -48,7 +48,7 @@ public class RadixSort {
             max = Math.max(max, nums[i]);
         }
 
-        //每次按位进行计数排序
+        //每次按位进行计数排序，从低位到高位
         for (int exp = 1; max / exp > 0; exp *= 10)
             countSort(nums, exp);
     }

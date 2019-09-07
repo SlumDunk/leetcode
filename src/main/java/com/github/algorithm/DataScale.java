@@ -33,5 +33,10 @@ public class DataScale {
         String str = "hello";
         System.out.println(str.substring(0, 0));
         //dataScale();
+        Integer max = Integer.MAX_VALUE;
+        System.out.println(max + 1);
+
+        Integer min = Integer.MIN_VALUE;
+        System.out.println(min - 1);
     }
 }

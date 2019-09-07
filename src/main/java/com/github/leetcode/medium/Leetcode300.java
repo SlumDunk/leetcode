@@ -18,20 +18,6 @@ package com.github.leetcode.medium;
  */
 public class Leetcode300 {
     public int lengthOfLIS(int[] nums) {
-//        if (nums == null || nums.length < 1) return 0;
-//        int[] d = new int[nums.length];
-//        d[0] = 1;
-//        int max = 1;
-//        for (int i = 1; i < nums.length; i++) {
-//            d[i] = 1;
-//            for (int j = 0; j < i; j++) {
-//                if (nums[i] > nums[j]) {
-//                    d[i] = Math.max(d[i], d[j] + 1);
-//                }
-//            }
-//            max = Math.max(max, d[i]);
-//        }
-//        return max;
         //不需要连续
         if (nums == null || nums.length == 0) return 0;
         int[] dp = new int[nums.length];
@@ -47,6 +33,41 @@ public class Leetcode300 {
             max = Math.max(dp[i], max);
         }
         return max;
+    }
+
+    /**
+     * nlogn
+     * @param nums
+     * @return
+     */
+    public int _lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        if (n == 0) {
+            return 0;
+        }
+
+        int[] b = new int[n + 1];
+        b[0] = Integer.MIN_VALUE;
+        int top = 0;
+        for (int i = 0; i < n; i++) {
+            int start = 0, stop = top;
+            int mid;
+            int j = 0;
+            while (start <= stop) {
+                mid = (start + stop) / 2;
+                if (b[mid] < nums[i]) {
+                    j = mid;
+                    start = mid + 1;
+                } else {
+                    stop = mid - 1;
+                }
+            }
+            b[j + 1] = nums[i];
+            if (j + 1 > top) {
+                top = j + 1;
+            }
+        }
+        return top;
     }
 
 }

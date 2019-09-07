@@ -47,6 +47,7 @@ public class MergeSort {
      */
     public void merge(int[] nums, int left, int mid, int right) {
         int i = left, j = mid + 1;
+//        将原数组copy一份
         for (int k = left; k <= right; k++) {
             aux[k] = nums[k];
         }

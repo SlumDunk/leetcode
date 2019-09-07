@@ -3,7 +3,7 @@ package com.github.sort;
 /**
  * @Author: zerongliu
  * @Date: 1/8/19 11:18
- * @Description: 冒泡排序
+ * @Description: 冒泡排序 跟选择排序逻辑相反
  */
 public class BubbleSort {
     /**
