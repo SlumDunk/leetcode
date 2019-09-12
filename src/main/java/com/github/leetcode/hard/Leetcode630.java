@@ -62,38 +62,37 @@ public class Leetcode630 {
         return q.size();
     }
 
-}
+    class Pair implements Comparable<Pair> {
+        /**
+         * 课程结束时间
+         */
+        int limit;
+        /**
+         * 课程时长
+         */
+        int length;
 
-class Pair implements Comparable<Pair> {
+        public Pair(int limit, int length) {
+            this.limit = limit;
+            this.length = length;
+        }
+
+        @Override
+        public int compareTo(Pair p1) {
+            return this.limit - p1.limit;
+        }
+
+    }
+
     /**
-     * 课程结束时间
+     * 根据时长倒序排列
      */
-    int limit;
-    /**
-     *
-     * 课程时长
-     */
-    int length;
+    class LengthComparator implements Comparator<Pair> {
 
-    public Pair(int limit, int length) {
-        this.limit = limit;
-        this.length = length;
+        @Override
+        public int compare(Pair p1, Pair p2) {
+            return p2.length - p1.length;
+        }
     }
 
-    @Override
-    public int compareTo(Pair p1) {
-        return this.limit - p1.limit;
-    }
-
-}
-
-/**
- * 根据时长倒序排列
- */
-class LengthComparator implements Comparator<Pair> {
-
-    @Override
-    public int compare(Pair p1, Pair p2) {
-        return p2.length - p1.length;
-    }
 }

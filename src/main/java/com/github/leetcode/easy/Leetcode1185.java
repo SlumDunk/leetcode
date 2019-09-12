@@ -56,7 +56,7 @@ public class Leetcode1185 {
             Date date = sdf.parse(dateBuffer.toString());
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            return weekMap[calendar.get(Calendar.DAY_OF_WEEK)-1];
+            return weekMap[calendar.get(Calendar.DAY_OF_WEEK) - 1];
         } catch (ParseException e) {
             e.printStackTrace();
         }
