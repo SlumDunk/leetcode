@@ -54,7 +54,8 @@ public class RadixSort {
     }
 
     public static void main(String[] args) {
-        int[] nums = {170, 45, 75, 90, 802, 24, 2, 66};
+//        int[] nums = {170, 45, 75, 90, 802, 24, 2, 66};
+        int[] nums = {642, 830, 175, 254, 645, 799, 466, 867, 317, 29};
         sort(nums);
         for (int i = 0; i < nums.length; i++) {
             System.out.println(nums[i]);

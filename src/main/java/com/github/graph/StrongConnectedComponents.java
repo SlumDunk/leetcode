@@ -13,14 +13,14 @@ public class StrongConnectedComponents {
     public static int count;   //用于对图中顶点遍历的次序进行计数
     public static int n;
     public static int[] DFN = new int[MAX];    //记录图中每个节点的DFS遍历的时间戳(即次序)
-    public static int[] Low = new int[MAX];   //记录每个顶点的所在树的根节点编号
+    public static int[] Low = new int[MAX];   //记录每个顶点的所属的连通分量
     public static boolean[] inStack = new boolean[MAX];  //用于记录当前节点是否在栈中
     /**
      * 用于存储深度优先搜索过程中未处理过的节点
      */
     public static Stack<Integer> stack;
     /**
-     * 标志节点是否已经访问过 没找到强连通分量后更新
+     * 标志节点是否已经访问过 每次找到强连通分量后更新
      */
     public static boolean[] visited;
 

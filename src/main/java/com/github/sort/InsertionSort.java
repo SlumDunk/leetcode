@@ -4,6 +4,7 @@ package com.github.sort;
  * @Author: zerongliu
  * @Date: 1/6/19 20:06
  * @Description: 插入排序
+ * O(n^2)
  */
 public class InsertionSort {
     /**

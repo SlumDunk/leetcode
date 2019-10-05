@@ -27,6 +27,29 @@ public class BubbleSort {
     }
 
     /**
+     * 加个哨兵，最优是O(n)
+     *
+     * @param nums
+     */
+    public static void sortOptimization(int[] nums) {
+        int len = nums.length;
+
+        for (int i = 0; i < len - 1; i++) {
+            boolean flag = false;
+            for (int j = 0; j < len - 1 - i; j++) {
+                if (nums[j] > nums[j + 1]) {
+                    swap(nums, j, j + 1);
+                    flag = true;
+                }
+            }
+
+            if (flag == true) {
+                break;
+            }
+        }
+    }
+
+    /**
      * 交换两个位置元素
      *
      * @param indexOne
