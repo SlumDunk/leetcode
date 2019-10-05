@@ -129,4 +129,80 @@ public class Lintcode623 {
             this.word = null;
         }
     }
+
+
+    /**
+     * @param words:  a set of stirngs
+     * @param target: a target string
+     * @param k:      An integer
+     * @return: output all the strings that meet the requirements
+     */
+    public List<String> kDistance__(String[] words, String target, int k) {
+        // write your code here
+        List<String> resultList = new ArrayList<String>();
+        Trie root = new Trie(' ');
+        for (String word : words) {
+            addWord(root, word);
+        }
+        this.len = target.length();
+        int[] dp = new int[this.len + 1];
+        for (int i = 0; i < this.len; i++) {
+            dp[i] = i;
+        }
+
+        helper(root, target, resultList, k, dp);
+
+        return resultList;
+    }
+
+    int len;
+    int INF = (int) (1e9 + 7);
+
+    private void helper(Trie node, String target, List<String> resultList, int k, int[] dp) {
+        if (node.isWord && dp[this.len] <= k) {
+            resultList.add(node.word);
+        }
+        int[] nextDP = new int[this.len + 1];
+        for (int i = 0; i < 26; i++) {
+            if (node.children[i] != null) {
+                nextDP[0] = dp[0] + 1;
+                for (int j = 1; j <= len; j++) {
+                    nextDP[j] = INF;
+                    if (target.charAt(j - 1) == node.children[i].val) {
+                        nextDP[j] = Math.min(nextDP[j], dp[j - 1]);
+                    }
+                    //插入
+                    nextDP[j] = Math.min(nextDP[j], nextDP[j - 1] + 1);
+                    //替换
+                    nextDP[j] = Math.min(nextDP[j], dp[j - 1] + 1);
+                    //删除
+                    nextDP[j] = Math.min(nextDP[j], dp[j] + 1);
+                }
+                helper(node.children[i], target, resultList, k, nextDP);
+            }
+        }
+    }
+
+    public void addWord(Trie root, String word) {
+        Trie current = root;
+        for (char c : word.toCharArray()) {
+            if (current.children[c - 'a'] == null) {
+                current.children[c - 'a'] = new Trie(c);
+            }
+            current = current.children[c - 'a'];
+        }
+        current.isWord = true;
+        current.word = word;
+    }
+
+    class Trie {
+        char val;
+        Trie[] children = new Trie[26];
+        boolean isWord = false;
+        String word;
+
+        public Trie(char val) {
+            this.val = val;
+        }
+    }
 }

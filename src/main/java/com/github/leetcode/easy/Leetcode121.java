@@ -33,4 +33,18 @@ public class Leetcode121 {
         }
         return max;
     }
+
+    public int maxProfit__(int[] prices) {
+        int len = prices.length;
+        if (len == 0) {
+            return 0;
+        }
+        int max = 0;
+        int buy = prices[0];
+        for (int i = 1; i < len; i++) {
+            max = Math.max(prices[i] - buy, max);
+            buy = Math.min(buy, prices[i]);
+        }
+        return max;
+    }
 }

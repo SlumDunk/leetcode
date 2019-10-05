@@ -27,7 +27,7 @@ public class Leetcode334 {
         // 记录目前为止第二小的数字
         int min2 = Integer.MAX_VALUE;
         for (int n : nums) {
-                // min最小的数字
+            // min最小的数字
             if (n <= min)
                 min = n;
                 // n>min,但是比min2小，更新
@@ -37,6 +37,23 @@ public class Leetcode334 {
                 // n>min2>min返回true
                 return true;
         }
+        return false;
+    }
+
+    public boolean increasingTriplet__(int[] nums) {
+        int n = nums.length;
+        int min = Integer.MAX_VALUE;
+        int min2 = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] <= min) {
+                min = nums[i];
+            } else if (nums[i] <= min2) {
+                min2 = nums[i];
+            } else {
+                return true;
+            }
+        }
+
         return false;
     }
 }

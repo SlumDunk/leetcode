@@ -37,4 +37,22 @@ public class Leetcode204 {
         }
         return count;
     }
+
+    public int countPrimes__(int n) {
+        if (n <= 2) {
+            return 0;
+        }
+        int count = 1;
+        boolean[] dp = new boolean[n];
+        //只考虑奇数
+        for (int i = 3; i < n; i += 2) {
+            if (!dp[i]) {
+                count++;
+                for (int j = 3; j * i < n; j += 2) {
+                    dp[j * i] = true;
+                }
+            }
+        }
+        return count;
+    }
 }

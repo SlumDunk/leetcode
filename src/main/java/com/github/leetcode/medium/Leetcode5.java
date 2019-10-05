@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 9/25/18 13:16
@@ -53,5 +55,46 @@ public class Leetcode5 {
             }
         }
         return s.substring(start, end + 1);
+    }
+
+    public String longestPalindrome__(String s) {
+        int n = s.length();
+        char[] array = s.toCharArray();
+        int max = 1;
+        String result = "";
+
+        boolean[][] dp = new boolean[n][n];
+        for (boolean[] sub : dp) {
+            Arrays.fill(sub, false);
+        }
+
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true;
+            result = s.substring(i, i + 1);
+        }
+
+        for (int i = 0; i < n - 1; i++) {
+            if (array[i] == array[i + 1]) {
+                dp[i][i + 1] = true;
+                if (max < 2) {
+                    result = s.substring(i, i + 2);
+                }
+            } else {
+                dp[i][i + 1] = false;
+            }
+        }
+
+        for (int l = 3; l <= n; l++) {
+            for (int i = 0; i <= n - l; i++) {
+                int j = i + l - 1;
+                if (array[i] == array[j]) {
+                    dp[i][j] |= dp[i + 1][j - 1];
+                }
+                if (l > max && dp[i][j] == true) {
+                    result = s.substring(i, j + 1);
+                }
+            }
+        }
+        return result;
     }
 }

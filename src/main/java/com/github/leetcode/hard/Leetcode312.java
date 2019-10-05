@@ -29,7 +29,7 @@ public class Leetcode312 {
         int[] A = new int[n + 2];
         A[0] = A[n + 1] = 1;
         for (i = 1; i <= n; i++) {
-            A[i] = nums[i-1];
+            A[i] = nums[i - 1];
         }
         n += 2;
         //dp[i][j] 代表 burst i+1 ~ j-1 这段时间的所有气球之后，只剩下 i,j 的最大收益。
@@ -49,5 +49,33 @@ public class Leetcode312 {
             }
         }
         return dp[0][n];
+    }
+
+    public int maxCoins__(int[] nums) {
+        int n = nums.length;
+        int[] A = new int[n + 2];
+        A[0] = 1;
+        A[n + 1] = 1;
+        for (int i = 0; i < n; i++) {
+            A[i + 1] = nums[i];
+        }
+        n += 2;
+        //i+1~j-1
+        int[][] dp = new int[n][n];
+        for (int i = 0; i < n - 1; i++) {
+            dp[i][i + 1] = 0;
+        }
+
+        for (int l = 3; l <= n; l++) {
+            for (int i = 0; i <= n - l; i++) {
+                int j = i + l - 1;
+                //选择最后扎破的气球k
+                for (int k = i + 1; k <= j - 1; k++) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i][k] + dp[k][j] + A[i] * A[k] * A[j]);
+                }
+            }
+        }
+
+        return dp[0][n - 1];
     }
 }

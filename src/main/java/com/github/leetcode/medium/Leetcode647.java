@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 2/5/19 13:07
@@ -38,5 +40,43 @@ public class Leetcode647 {
             }
             return count;
         }
+    }
+
+    public int countSubstrings__(String s) {
+        int n = s.length();
+        char[] array = s.toCharArray();
+
+        boolean[][] dp = new boolean[n][n];
+        int count = 0;
+
+        for (boolean[] sub : dp) {
+            Arrays.fill(sub, false);
+        }
+
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true;
+            count++;
+        }
+
+        for (int i = 0; i < n - 1; i++) {
+            if (array[i] == array[i + 1]) {
+                dp[i][i + 1] = true;
+                count++;
+            } else {
+                dp[i][i + 1] = false;
+            }
+        }
+
+        for (int l = 3; l <= n; l++) {
+            for (int i = 0; i <= n - l; i++) {
+                int j = i + l - 1;
+                if (array[i] == array[j] && dp[i + 1][j - 1]) {
+                    dp[i][j] = true;
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 }

@@ -80,4 +80,37 @@ public class Leetcode213 {
     }
 
 
+    public int rob__(int[] nums) {
+        int len = nums.length;
+        if(len==0){
+            return 0;
+        }
+        if(len==1){
+            return nums[0];
+        }
+        if (len == 2) {
+            return Math.max(nums[0],nums[1]);
+        } else {
+            int[] copy = new int[len - 1];
+            System.arraycopy(nums, 1, copy, 0, len - 1);
+            int money1 = executeRob(copy);
+            System.arraycopy(nums, 0, copy, 0, len - 1);
+            int money2 = executeRob(copy);
+            return Math.max(money1, money2);
+        }
+    }
+
+    int executeRob(int[] nums) {
+        int len = nums.length;
+        int[][] dp = new int[len + 1][2];
+
+        dp[0][0] = dp[0][1] = 0;
+
+        for (int i = 1; i <= len; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]);
+            dp[i][1] = dp[i - 1][0] + nums[i - 1];
+        }
+
+        return Math.max(dp[len][0], dp[len][1]);
+    }
 }

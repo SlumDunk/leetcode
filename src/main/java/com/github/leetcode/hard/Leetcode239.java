@@ -1,7 +1,9 @@
 package com.github.leetcode.hard;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 /**
  * @Author: zerongliu
@@ -59,5 +61,36 @@ public class Leetcode239 {
             return result;
         }
 
+    }
+
+
+    public int[] maxSlidingWindow__(int[] nums, int k) {
+        List<Integer> result = new ArrayList<>();
+
+        int len = nums.length;
+        //store index position of each item
+        Deque<Integer> dq = new ArrayDeque<>();
+        for (int i = 0; i < len; i++) {
+            while (!dq.isEmpty() && dq.peek() < i + 1 - k) {
+                dq.poll();
+            }
+
+            while (!dq.isEmpty() && nums[dq.peekLast()] < nums[i]) {
+                dq.pollLast();
+            }
+
+            dq.offer(i);
+
+            if (i >= k - 1) {
+                result.add(nums[dq.peek()]);
+            }
+
+        }
+
+        int[] ans = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            ans[i] = result.get(i);
+        }
+        return ans;
     }
 }

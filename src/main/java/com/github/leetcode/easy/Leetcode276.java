@@ -38,20 +38,25 @@ public class Leetcode276 {
      * @return
      */
     public int numWays(int n, int k) {
-        int[] dp = {0, k, k * k, 0};
-        if (n <= 2) {
-            return dp[n];
-        } else {
-            if (k == 1) {
-                return 0;
-            } else {
-                for (int i = 2; i < n; i++) {
-                    dp[3] = (k - 1) * (dp[2] + dp[1]);
-                    dp[1] = dp[2];
-                    dp[2] = dp[3];
-                }
-            }
-            return dp[3];
+        //i,i-1,i-2
+        //跟前一位不同+跟前一位相同
+        //dp[n]=dp[n-1]*(k-1)+dp[n-2]*(k-1)
+        if (n == 0) {
+            return 0;
         }
+        if (n == 1) {
+            return k;
+        }
+        if (n == 2) {
+            return k * k;
+        }
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = k;
+        dp[2] = k * k;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = dp[i - 1] * (k - 1) + dp[i - 2] * (k - 1);
+        }
+        return dp[n];
     }
 }

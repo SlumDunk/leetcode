@@ -42,9 +42,9 @@ public class Leetcode730 {
                     int j = i + l - 1;
                     if (i == j) {
                         dp[i][j] = 1;
-                    } else if (S.charAt(i) != S.charAt(j)) {
+                    } else if (S.charAt(i) != S.charAt(j)) {//去掉重复的部分
                         dp[i][j] = dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1];
-                    } else {
+                    } else {//array[i]==array[j]
                         int left = i + 1;
                         int right = j - 1;
                         while (left <= right && S.charAt(left) != S.charAt(i)) left++;
@@ -53,7 +53,7 @@ public class Leetcode730 {
                             dp[i][j] = dp[i + 1][j - 1] * 2 + 1;
                         } else if (left > right) {//没重复
                             dp[i][j] = dp[i + 1][j - 1] * 2 + 2;
-                        } else {//中间两个重复
+                        } else {//中间超过两个重复 aa b aa
                             dp[i][j] = dp[i + 1][j - 1] * 2 - dp[left + 1][right - 1];
                         }
                     }
@@ -67,5 +67,51 @@ public class Leetcode730 {
             }
             return dp[0][len - 1];
         }
+    }
+
+    public int countPalindromicSubsequences__(String S) {
+        int MOD = (int) (1e9 + 7);
+        int n = S.length();
+        char[] array = S.toCharArray();
+        int[][] dp = new int[n][n];
+
+        for (int l = 1; l <= n; l++) {
+            for (int i = 0; i <= n - l; i++) {
+                int j = i + l - 1;
+                if (i == j) {
+                    dp[i][j] = 1;
+                } else {
+                    if (array[i] != array[j]) {
+                        dp[i][j] = dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1];
+                    } else {
+                        //判断中间有没有重复字符
+                        int left = i + 1;
+                        int right = j - 1;
+                        while (left <= right && array[left] != array[i]) {
+                            left++;
+                        }
+                        while (left <= right && array[right] != array[i]) {
+                            right--;
+                        }
+
+                        if (left == right) {//只有一个重复
+                            dp[i][j] = 2 * dp[i + 1][j - 1] + 1;
+                        } else if (left > right) {
+                            dp[i][j] = 2 * dp[i + 1][j - 1] + 2;
+                        } else {//一个是原来的，一个是外头包上一层的
+                            dp[i][j] = 2 * dp[i + 1][j - 1] - dp[left + 1][right - 1];
+                        }
+                    }
+                }
+
+                if (dp[i][j] < 0) {
+                    dp[i][j] += MOD;
+                } else {
+                    dp[i][j] %= MOD;
+                }
+            }
+        }
+        return dp[0][n - 1];
+
     }
 }

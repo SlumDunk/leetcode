@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 6/30/19 17:12
@@ -31,5 +33,46 @@ public class Leetcode583 {
             }
         }
         return word1.length() + word2.length() - 2 * dp[word1.length()][word2.length()];
+    }
+
+
+    public int minDistance__(String word1, String word2) {
+        //sea
+        //eat
+        int m = word1.length();
+        int n = word2.length();
+
+        char[] array1 = word1.toCharArray();
+        char[] array2 = word2.toCharArray();
+
+        int[][] dp = new int[m + 1][n + 1];
+        int INF = (int) 1e9 + 7;
+
+        for (int i = 0; i <= m; i++) {
+            Arrays.fill(dp[i], INF);
+        }
+
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = 0;
+                } else if (i == 0) {
+                    dp[i][j] = j;
+                } else if (j == 0) {
+                    dp[i][j] = i;
+                } else {
+
+                    if (array1[i - 1] == array2[j - 1]) {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    }
+
+                    dp[i][j] = Math.min(dp[i][j], dp[i][j - 1] + 1);
+                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][j] + 1);
+                }
+            }
+        }
+
+        return dp[m][n];
+
     }
 }

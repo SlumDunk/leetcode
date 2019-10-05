@@ -55,4 +55,35 @@ public class Leetcode174 {
             return dp[0][0];
         }
     }
+
+    public int calculateMinimumHP__(int[][] dungeon) {
+        //right down 走到每一步都必须至少剩一滴血
+        if (dungeon == null || dungeon.length == 0 || dungeon[0].length == 0) {
+            return 0;
+        } else {
+            int m = dungeon.length;
+            int n = dungeon[0].length;
+            int[][] dp = new int[m][n];
+            if (dungeon[m - 1][n - 1] < 0) {
+                dp[m - 1][n - 1] = 1 - dungeon[m - 1][n - 1];
+            } else {
+                dp[m - 1][n - 1] = 1;
+            }
+            for (int i = n - 2; i >= 0; i--) {
+                dp[m - 1][i] = dungeon[m - 1][i] >= dp[m - 1][i + 1] ? 1 : dp[m - 1][i + 1] - dungeon[m - 1][i];
+            }
+
+            for (int i = m - 2; i >= 0; i--) {
+                dp[i][n - 1] = dungeon[i][n - 1] >= dp[i + 1][n - 1] ? 1 : dp[i + 1][n - 1] - dungeon[i][n - 1];
+            }
+
+            for (int i = m - 2; i >= 0; i--) {
+                for (int j = n - 2; j >= 0; j--) {
+                    int temp = Math.min(dp[i][j + 1], dp[i + 1][j]);
+                    dp[i][j] = dungeon[i][j] >= temp ? 1 : temp - dungeon[i][j];
+                }
+            }
+            return dp[0][0];
+        }
+    }
 }

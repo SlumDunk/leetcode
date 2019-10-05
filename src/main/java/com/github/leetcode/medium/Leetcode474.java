@@ -66,4 +66,49 @@ public class Leetcode474 {
         }
         return dp[len][m][n];
     }
+
+
+    public int findMaxForm__(String[] strs, int m, int n) {
+        int k = strs.length;
+        int[][][] dp = new int[k + 1][m + 1][n + 1];
+        for (int i = 0; i <= k; i++) {
+            for (int j = 0; j <= m; j++) {
+                for (int l = 0; l <= n; l++) {
+                    if (i == 0) {
+                        dp[i][j][l] = 0;
+                    } else {
+                        dp[i][j][l] = dp[i - 1][j][l];
+
+                        if (j >= count0(strs[i - 1]) && l >= count1(strs[i - 1])) {
+
+                            dp[i][j][l] = Math.max(dp[i][j][l], dp[i - 1][j - count0(strs[i - 1])][l - count1(strs[i - 1])] + 1);
+
+                        }
+                    }
+                }
+            }
+        }
+
+        return dp[k][m][n];
+    }
+
+    public int count0(String str) {
+        int result = 0;
+        for (char c : str.toCharArray()) {
+            if (c == '0') {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public int count1(String str) {
+        int result = 0;
+        for (char c : str.toCharArray()) {
+            if (c == '1') {
+                result++;
+            }
+        }
+        return result;
+    }
 }

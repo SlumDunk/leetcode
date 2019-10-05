@@ -34,4 +34,16 @@ public class Leetcode191 {
         }
         return count;
     }
+
+    public int hammingWeight__(int n) {
+        int result = 0;
+
+        while (n != 0) {
+            //取得最低位的1
+            n &= (n - 1);
+            result++;
+        }
+
+        return result;
+    }
 }

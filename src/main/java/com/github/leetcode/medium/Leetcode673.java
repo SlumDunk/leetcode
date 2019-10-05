@@ -79,4 +79,48 @@ public class Leetcode673 {
 
         return result;
     }
+
+
+    public int findNumberOfLIS__(int[] nums) {
+        int len = nums.length;
+        if (len == 0) {
+            return 0;
+        } else {
+            int[] dp = new int[len];
+            int[] routes = new int[len];
+            dp[0] = 1;
+            routes[0] = 1;
+            int max = 1;
+
+            for (int i = 1; i < len; i++) {
+                dp[i] = 1;
+                for (int j = 0; j < i; j++) {
+                    if (nums[j] < nums[i]) {
+                        dp[i] = Math.max(dp[j] + 1, dp[i]);
+                    }
+                }
+                max = Math.max(dp[i], max);
+                //获取前面有多少条可以到达目的的路径
+                for (int j = 0; j < i; j++) {
+                    if (nums[j] < nums[i]) {
+                        if (dp[j] + 1 == dp[i]) {
+                            routes[i] += routes[j];
+                        }
+                    }
+                }
+                //前面没有路径可达，只有本身构成subarray
+                if (routes[i] == 0) {
+                    routes[i] = 1;
+                }
+            }
+            int count = 0;
+            for (int i = 0; i < len; i++) {
+                if (dp[i] == max) {
+                    count += routes[i];
+                }
+            }
+
+            return count;
+        }
+    }
 }

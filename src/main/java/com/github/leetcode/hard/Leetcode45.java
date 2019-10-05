@@ -1,5 +1,7 @@
 package com.github.leetcode.hard;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 3/3/19 10:48
@@ -21,23 +23,21 @@ package com.github.leetcode.hard;
  */
 public class Leetcode45 {
     public int jump(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        } else {
-            int len = nums.length;
-            int[] dp = new int[len];
-            for (int i = 0; i < len; i++) {
-                dp[i] = Integer.MAX_VALUE;
-            }
-            dp[0] = 0;
-            for (int i = 0; i < len; i++) {
-                for (int k = 1; k < nums[i]; k++) {
-                    dp[i + k] = Math.min(dp[i + k], dp[i] + 1);
-                }
-            }
+        int len = nums.length;
+        int[] dp = new int[len];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
 
-            return dp[len - 1];
+        for (int i = 0; i < len; i++) {
+            for (int j = 1; j <= nums[i]; j++) {
+                if (i + j < len) {
+                    dp[i + j] = Math.min(dp[i + j], dp[i] + 1);
+                }
+
+            }
         }
+
+        return dp[len - 1];
     }
 
     public int GreedyJump(int[] A) {

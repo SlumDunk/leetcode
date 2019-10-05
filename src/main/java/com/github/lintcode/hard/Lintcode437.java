@@ -70,4 +70,32 @@ public class Lintcode437 {
         }
         return f[k][n];
     }
+
+
+    public int copyBooks__(int[] pages, int k) {
+        // write your code here
+        int len = pages.length;
+        int[][] dp = new int[k + 1][len + 1];
+        dp[0][0] = 0;
+        for (int i = 1; i <= len; i++) {
+            dp[0][i] = Integer.MAX_VALUE;
+        }
+        for (int i = 1; i <= k; i++) {
+            dp[i][0] = 0;
+            for (int j = 1; j <= len; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+                //划分
+                int sum = 0;
+                for (int l = j; l >= 0; l--) {
+                    int temp = Math.max(dp[i - 1][l], sum);
+                    dp[i][j] = Math.min(dp[i][j], temp);
+                    if (l > 0) {
+                        sum += pages[l - 1];
+                    }
+                }
+            }
+        }
+        return dp[k][len];
+
+    }
 }

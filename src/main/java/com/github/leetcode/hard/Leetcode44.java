@@ -1,5 +1,7 @@
 package com.github.leetcode.hard;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 1/5/19 11:37
@@ -89,5 +91,47 @@ public class Leetcode44 {
             }
         }
         return dp[text.length][writeIndex];
+    }
+
+
+    public boolean isMatch__(String s, String p) {
+        int m = s.length();
+        int n = p.length();
+
+        char[] array1 = s.toCharArray();
+        char[] array2 = p.toCharArray();
+
+        boolean[][] dp = new boolean[n + 1][m + 1];
+
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(dp[i], false);
+        }
+
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = true;
+                } else if (i == 0) {
+                    dp[i][j] = false;
+                } else if (j == 0) {
+                    if (array2[i - 1] == '*') {//只考虑不匹配的情况
+                        dp[i][j] = dp[i - 1][j];
+                    } else {
+                        dp[i][j] = false;
+                    }
+                } else {
+                    if (array2[i - 1] == array1[j - 1] || array2[i - 1] == '?') {
+                        dp[i][j] |= dp[i - 1][j - 1];
+                    } else if (array2[i - 1] == '*') {
+                        //被匹配
+                        dp[i][j] |= dp[i][j - 1];
+                        //不被匹配
+                        dp[i][j] |= dp[i - 1][j];
+                    }
+                }
+            }
+        }
+
+        return dp[n][m];
     }
 }

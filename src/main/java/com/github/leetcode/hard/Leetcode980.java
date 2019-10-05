@@ -120,4 +120,94 @@ public class Leetcode980 {
 
         return result;
     }
+
+    public static void main(String[] args) {
+        Leetcode980 leetcode980 = new Leetcode980();
+        int[][] grid = new int[][]{
+                {
+                        1, 0, 0, 0
+                },
+                {
+                        0, 0, 0, 0
+                },
+                {
+                        0, 0, 2, -1
+                }
+        };
+        leetcode980.uniquePaths(grid);
+    }
+
+    public int uniquePaths(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int sx = 0, sy = 0, totalEmpty = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) {
+                    sx = i;
+                    sy = j;
+                }
+                if (grid[i][j] == 0) {
+                    totalEmpty++;
+                }
+            }
+        }
+
+        boolean[][] visited = new boolean[m][n];
+        return dfs(grid, visited, sx, sy, totalEmpty);
+    }
+
+    int[][] direction = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+
+    /**
+     * @param grid
+     * @param visited
+     * @param x
+     * @param y
+     * @param count
+     * @return
+     */
+    public int dfs(int[][] grid, boolean[][] visited, int x, int y, int count) {
+        int result = 0;
+
+        if (grid[x][y] == 2 && count == 0) {
+            return 1;
+        } else {
+            visited[x][y] = true;
+            for (int i = 0; i < direction.length; i++) {
+                int nx = x + direction[i][0];
+                int ny = y + direction[i][1];
+                if (!validatePosition(nx, ny, grid.length, grid[0].length) || grid[x][y] == -1 || visited[nx][ny]) {
+                    continue;
+                }
+
+                if (grid[x][y] == 0) {
+                    count--;
+                }
+                result += dfs(grid, visited, nx, ny, count);
+                if (grid[x][y] == 0) {
+                    count++;
+                }
+            }
+            visited[x][y] = false;
+        }
+
+        return result;
+    }
+
+    /**
+     * check the position is valid or not
+     *
+     * @param x
+     * @param y
+     * @param m
+     * @param n
+     * @return
+     */
+    boolean validatePosition(int x, int y, int m, int n) {
+        if (x < 0 || x >= m || y < 0 || y >= n) {
+            return false;
+        }
+        return true;
+    }
 }

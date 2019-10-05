@@ -43,4 +43,45 @@ public class Leetcode161 {
         }
         return Math.abs(s.length() - t.length()) == 1;
     }
+
+    public boolean isOneEditDistance__(String s, String t) {
+        int m = s.length();
+        int n = t.length();
+        if (s.equals(t)) {
+            return false;
+        }
+        if (Math.abs(m - n) > 1) {
+            return false;
+        } else {
+            char[] array1 = s.toCharArray();
+            char[] array2 = t.toCharArray();
+
+            int l = Math.min(m, n);
+            for (int i = 0; i < l; i++) {
+                if (array1[i] == array2[i]) {
+                    continue;
+                } else {
+                    boolean result = false;
+                    //增加
+                    if (i + 1 < n) {
+                        result |= s.substring(i).equals(t.substring(i + 1));
+                    }
+                    if (i + 1 < m) {// 删除
+                        result |= s.substring(i + 1).equals(t.substring(i));
+                    }
+                    if (i + 1 <= m && i + 1 <= n) {//替换 需要考虑最后一位
+                        result |= s.substring(i + 1).equals(t.substring(i + 1));
+                    }
+                    return result;
+                }
+            }
+            //前面都相同
+            return Math.abs(m - n) == 1;
+        }
+    }
+
+    public static void main(String[] args) {
+        Leetcode161 leetcode161 = new Leetcode161();
+        System.out.println(leetcode161.isOneEditDistance__("a", "A"));
+    }
 }

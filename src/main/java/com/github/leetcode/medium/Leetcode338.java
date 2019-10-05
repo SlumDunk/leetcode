@@ -41,4 +41,13 @@ public class Leetcode338 {
             return dp;
         }
     }
+
+    public int[] countBits__(int num) {
+        int[] dp = new int[num + 1];
+        for (int i = 0; i <= num; i++) {
+            dp[i] = i % 2 + dp[i >> 1];
+        }
+
+        return dp;
+    }
 }

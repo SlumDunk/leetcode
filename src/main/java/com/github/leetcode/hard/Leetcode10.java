@@ -1,5 +1,7 @@
 package com.github.leetcode.hard;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 1/4/19 23:35
@@ -80,5 +82,50 @@ public class Leetcode10 {
             }
         }
         return dp[text.length][pattern.length];
+    }
+
+
+    public boolean isMatch__(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+
+        char[] array1 = s.toCharArray();
+        char[] array2 = p.toCharArray();
+
+        boolean[][] dp = new boolean[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            Arrays.fill(dp[i], false);
+        }
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = true;
+                } else if (i == 0) {//空正则
+                    dp[i][j] = false;
+                } else if (j == 0) {//空串
+                    if (array2[i - 1] == '*') {
+                        dp[i][j] = dp[i - 2][j];
+                    } else {
+                        dp[i][j] = false;
+                    }
+                } else {
+                    if (array2[i - 1] == array1[j - 1] || array2[i - 1] == '.') {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    } else if (array2[i - 1] == '*') {
+                        if (array2[i - 2] == array1[j - 1]) {
+                            dp[i][j] |= dp[i][j - 1];
+                        }
+
+                        if (array2[i - 2] == '.') {
+                            dp[i][j] |= dp[i][j - 1];
+                        }
+                        //不匹配
+                        dp[i][j] |= dp[i - 2][j];
+                    }
+                }
+            }
+        }
+
+        return dp[m][n];
     }
 }

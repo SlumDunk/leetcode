@@ -32,20 +32,37 @@ public class Leetcode91 {
         //count[i]记录从开始到i-1点有count[i]中可能的编码方式
         int[] count = new int[s.length() + 1];
         count[0] = 1;
-        if(s.charAt(0)>='1'){
-            count[1]=1;
+        if (s.charAt(0) >= '1') {
+            count[1] = 1;
         }
-        for (int i = 2; i <=s.length() ; i++) {
+        for (int i = 2; i <= s.length(); i++) {
             //单个字符独立
-            if(s.charAt(i-1)>='1'){
-                count[i]=count[i-1];
+            if (s.charAt(i - 1) >= '1') {
+                count[i] = count[i - 1];
             }
             //和前面字符组合
-            int num=Integer.parseInt(s.substring(i-2,i));
-            if(num<=26&&s.charAt(i-2)>'0'){
-                count[i]+=count[i-2];
+            int num = Integer.parseInt(s.substring(i - 2, i));
+            if (num <= 26 && s.charAt(i - 2) > '0') {
+                count[i] += count[i - 2];
             }
         }
         return count[s.length()];
+    }
+
+    public int numDecodings__(String s) {
+        int len = s.length();
+        char[] array = s.toCharArray();
+        int[] dp = new int[len + 1];
+        dp[0] = 1;
+
+        for (int i = 1; i <= len; i++) {
+            if (array[i - 1] != '0') {
+                dp[i] = dp[i - 1];
+            }
+            if (i > 1 && ((array[i - 2] == '2' && array[i - 1] <= '6') || (array[i - 2] == '1'))) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[len];
     }
 }

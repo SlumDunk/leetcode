@@ -37,13 +37,18 @@ package com.github.leetcode.medium;
  * the answer is guaranteed to fit into signed 32-bit integer
  */
 public class Leetcode518 {
+    /**
+     * @param amount
+     * @param coins
+     * @return
+     */
     public int change(int amount, int[] coins) {
         int[] dp = new int[amount + 1];
         dp[0] = 1;
-        for (int coin :
-                coins) {
-            for (int j = coin; j <= amount; j++) {
-                dp[j] += dp[j - coin];
+        //最后一位选择coins，剩下的构成dp[i-coin]
+        for (int coin : coins) {
+            for (int i = coin; i <= amount; i++) {
+                dp[i] += dp[i - coin];
             }
         }
         return dp[amount];

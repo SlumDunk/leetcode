@@ -1,5 +1,7 @@
 package com.github.leetcode.hard;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 2/20/19 23:07
@@ -51,5 +53,44 @@ public class Leetcode72 {
             }
         }
         return dp[n][m];
+    }
+
+    public int minDistance__(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+
+        char[] array1 = word1.toCharArray();
+        char[] array2 = word2.toCharArray();
+
+        int INF = (int) 1e9 + 7;
+
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            Arrays.fill(dp[i], INF);
+        }
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = 0;
+                } else if (i == 0) {
+                    dp[i][j] = j;
+                } else if (j == 0) {
+                    dp[i][j] = i;
+                } else {
+                    if (array1[i - 1] == array2[j - 1]) {
+                        dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - 1]);
+                    } else {
+                        //最后一个替换
+                        dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - 1] + 1);
+                        //最后一个删除
+                        dp[i][j] = Math.min(dp[i][j], dp[i - 1][j] + 1);
+                        //最后一个增加
+                        dp[i][j] = Math.min(dp[i][j], dp[i][j - 1] + 1);
+                    }
+                }
+            }
+        }
+
+        return dp[m][n];
     }
 }

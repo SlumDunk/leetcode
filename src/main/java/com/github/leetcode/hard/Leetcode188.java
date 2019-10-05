@@ -56,4 +56,74 @@ public class Leetcode188 {
         }
         return profit;
     }
+
+
+    public int maxProfit__(int k, int[] prices) {
+        int len = prices.length;
+        if (len == 0) {
+            return 0;
+        } else {
+            if (k > len / 2) {
+                return allTimeProfit__(prices);
+            }
+            //第k次买之前 2*(k-1)，
+            //第k次持有 2*(k-1)+1，
+            //第k+1次买之前 2*(k)
+            // int[][] dp=new int[len+1][2*k+1];
+            int[][] dp = new int[2][2 * k + 1];
+            dp[0][0] = 0;
+            for (int i = 1; i <= 2 * k; i++) {
+                dp[0][i] = Integer.MIN_VALUE;
+            }
+
+            for (int i = 1; i <= len; i++) {
+                for (int j = 0; j < 2 * k + 1; j++) {
+                    dp[i % 2][j] = 0;
+                    if (j % 2 == 0) {//非持有
+                        dp[i % 2][j] = Math.max(dp[i % 2][j], dp[(i - 1) % 2][j]);
+                        if (j > 0 && i > 1) {
+                            dp[i % 2][j] = Math.max(dp[i % 2][j], dp[(i - 1) % 2][j - 1] + prices[i - 1] - prices[i - 2]);
+                        }
+                    } else {//持有
+                        dp[i % 2][j] = Math.max(dp[i % 2][j], dp[(i - 1) % 2][j - 1]);
+                        if (i > 1) {
+                            dp[i % 2][j] = Math.max(dp[i % 2][j], dp[(i - 1) % 2][j] + prices[i - 1] - prices[i - 2]);
+                        }
+                        if (j > 1 && i > 1) {
+                            dp[i % 2][j] = Math.max(dp[i % 2][j], dp[(i - 1) % 2][j - 2] + prices[i - 1] - prices[i - 2]);
+                        }
+                    }
+                }
+            }
+            int max = 0;
+            for (int i = 0; i < 2 * k + 1; i += 2) {
+                max = Math.max(max, dp[len % 2][i]);
+            }
+
+            return max;
+        }
+    }
+
+    private int allTimeProfit__(int[] prices) {
+        int len = prices.length;
+        //预计买入价
+        int buy = prices[0];
+        int sum = 0;
+        for (int i = 1; i < len; i++) {
+            if (prices[i] > buy) {
+                sum += prices[i] - buy;
+                buy = prices[i];
+            } else {
+                buy = prices[i];
+            }
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Leetcode188 leetcode188 = new Leetcode188();
+        int k = 2;
+        int[] prices = new int[]{3, 3, 5, 0, 0, 3, 1, 4};
+        leetcode188.maxProfit__(k, prices);
+    }
 }

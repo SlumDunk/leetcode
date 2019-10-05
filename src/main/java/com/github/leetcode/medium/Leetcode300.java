@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 10/27/18 09:27
@@ -37,6 +39,7 @@ public class Leetcode300 {
 
     /**
      * nlogn
+     *
      * @param nums
      * @return
      */
@@ -68,6 +71,80 @@ public class Leetcode300 {
             }
         }
         return top;
+    }
+
+    public int lengthOfLIS__(int[] nums) {
+        int n = nums.length;
+        if (n == 0) {
+            return 0;
+        }
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int max = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            max = Math.max(dp[i], max);
+        }
+        return max;
+    }
+
+    public int lengthOfLIS___(int[] nums) {
+        int n = nums.length;
+        if (n == 0) {
+            return 0;
+        }
+        //多一个冗余，也刚好代表长度
+        int[] b = new int[n + 1];
+        b[0] = Integer.MIN_VALUE;
+        int top = 0;
+        for (int i = 0; i < n; i++) {
+            int start = 0, stop = top;
+            int mid;
+            //存储目标位置的前一位置
+            int j = 0;
+            while (start <= stop) {
+                mid = start + (stop - start) / 2;
+                if (b[mid] < nums[i]) {
+                    start = mid + 1;
+                    j = mid;
+                } else {
+                    stop = mid - 1;
+                }
+            }
+
+            b[j + 1] = nums[i];
+            if (j + 1 > top) {
+                top = j + 1;
+            }
+        }
+        return top;
+
+    }
+
+    public int lengthOfLIS____(int[] nums) {
+        int n = nums.length;
+        if (n == 0) {
+            return 0;
+        }
+        int[] dp = new int[n + 1];
+        int longest = 1;
+
+        Arrays.fill(dp, 1);
+        dp[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i - 1; j++) {
+                if (nums[j] < nums[i - 1]) {
+                    dp[i] = Math.max(dp[i], dp[j + 1] + 1);
+                }
+            }
+
+            longest = Math.max(longest, dp[i]);
+        }
+        return longest;
     }
 
 }

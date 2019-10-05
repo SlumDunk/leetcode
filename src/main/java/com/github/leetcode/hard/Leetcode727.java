@@ -105,4 +105,50 @@ public class Leetcode727 {
 
         return minLen == n + 1 ? "" : S.substring(start, start + minLen);
     }
+
+    /**
+     * abcde  abcde
+     * abcde  abcdf
+     *
+     * 5-0=5
+     *
+     * @param S
+     * @param T
+     * @return
+     */
+    public String minWindow__(String S, String T) {
+        int m = T.length();
+        int n = S.length();
+        char[] sArray = S.toCharArray();
+        char[] tArray = T.toCharArray();
+        //存储cover T的前m个字符的S长度为n的子串的开始位置
+        int[][] dp = new int[m + 1][n + 1];
+        //目标覆盖子串的长度为0
+        //当前位置不考虑，直接考虑下一位
+        for (int i = 0; i <= n; i++) {
+            dp[0][i] = i + 1;
+        }
+        for (int i = 1; i <= m; i++) {
+            //S子串长为0的不需要考虑
+            for (int j = 1; j <= n; j++) {
+                if (tArray[i - 1] == sArray[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                }
+            }
+        }
+
+        int start = 0, minLen = n + 1;
+        for (int i = 1; i <= n; i++) {
+            if (dp[m][i] != 0) {
+                if (i - (dp[m][i] - 1) < minLen) {
+                    start = dp[m][i] - 1;
+                    minLen = Math.min(minLen, i - dp[m][i] + 1);
+                }
+            }
+        }
+
+        return minLen == n + 1 ? "" : S.substring(start, start + minLen);
+    }
 }

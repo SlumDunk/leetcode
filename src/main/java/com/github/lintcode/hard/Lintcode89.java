@@ -1,5 +1,7 @@
 package com.github.lintcode.hard;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 1/16/19 08:18
@@ -41,5 +43,36 @@ public class Lintcode89 {
             }
         }
         return dp[len][k][target];
+    }
+
+    /**
+     * @param A:      An integer array
+     * @param k:      A positive integer (k <= length(A))
+     * @param target: An integer
+     * @return: An integer
+     */
+    public int kSum__(int[] A, int k, int target) {
+        // write your code here
+        int n = A.length;
+        int[][][] dp = new int[n + 1][k + 1][target + 1];
+
+        Arrays.fill(dp[0][0], 0);
+        dp[0][0][0] = 1;
+
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= k; j++) {
+                for (int l = 0; l <= target; l++) {
+                    if (j == 0 && l == 0) {
+                        dp[i][j][l] = 1;
+                    } else if (j == 0) {
+                        dp[i][j][l] = 0;
+                    } else {
+                        dp[i][j][l] = dp[i - 1][j][l] + (l >= A[i - 1] ? dp[i - 1][j - 1][l - A[i - 1]] : 0);
+                    }
+                }
+            }
+        }
+        return dp[n][k][target];
     }
 }

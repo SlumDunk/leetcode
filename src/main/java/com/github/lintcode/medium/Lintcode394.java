@@ -46,4 +46,27 @@ public class Lintcode394 {
         }
         return f[n];
     }
+
+    public boolean firstWillWin__(int n) {
+        // write your code here
+        if (n == 0) {
+            return false;
+        } else if (n <= 2) {
+            return true;
+        }
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = false;
+        dp[1] = true;
+        dp[2] = true;
+
+        for (int i = 3; i <= n; i++) {
+            if (dp[i - 1] == false || dp[i - 2] == false) {
+                dp[i] = true;
+            } else {
+                dp[i] = false;
+            }
+        }
+
+        return dp[n];
+    }
 }

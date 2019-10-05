@@ -64,4 +64,46 @@ public class Leetcode337 {
         res[1] = root.val + left[0] + right[0];
         return res;
     }
+
+
+    class Pair {
+        TreeNode node;
+        int rob;
+        int noRob;
+
+        public Pair(TreeNode node, int rob, int noRob) {
+            this.node = node;
+            this.rob = rob;
+            this.noRob = noRob;
+        }
+    }
+
+    public int rob__(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        //抢左子树的获取的最大收益+抢右子树的最大收益><=抢根节点的最大收益
+        Pair result = helper(root);
+        return Math.max(result.rob, result.noRob);
+    }
+
+    public Pair helper(TreeNode node) {
+        if (node.left == null && node.right == null) {
+            return new Pair(node, node.val, 0);
+        } else {
+            Pair left = null, right = null, current = new Pair(node, 0, 0);
+            if (node.left != null) {
+                left = helper(node.left);
+            }
+
+            if (node.right != null) {
+                right = helper(node.right);
+            }
+
+            current.rob = node.val + (left != null ? left.noRob : 0) + (right != null ? right.noRob : 0);
+            current.noRob = (left != null ? Math.max(left.rob, left.noRob) : 0) + (right != null ? Math.max(right.rob, right.noRob) : 0);
+
+            return current;
+        }
+    }
 }

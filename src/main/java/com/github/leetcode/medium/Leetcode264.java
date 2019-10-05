@@ -3,6 +3,7 @@ package com.github.leetcode.medium;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * @Author: zerongliu
@@ -49,5 +50,26 @@ public class Leetcode264 {
             n--;
         }
         return heapQueue.poll().intValue();
+    }
+
+    public int nthUglyNumber__(int n) {
+        Queue<Long> pq = new PriorityQueue<Long>();
+        pq.offer(1l);
+        while (n > 1) {
+            Long value = pq.poll();
+            // System.out.println(value);
+            if (!pq.contains(value * 2)) {
+                pq.offer(value * 2);
+            }
+            if (!pq.contains(value * 3)) {
+                pq.offer(value * 3);
+            }
+            if (!pq.contains(value * 5)) {
+                pq.offer(value * 5);
+            }
+            n--;
+        }
+        Long value = pq.poll();
+        return value.intValue();
     }
 }

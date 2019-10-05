@@ -70,4 +70,28 @@ public class Lintcode564 {
         }
         return f[target];
     }
+
+
+
+    /**
+     * @param nums: an integer array and all positive numbers, no duplicates
+     * @param target: An integer
+     * @return: An integer
+     */
+    public int backPackVI__(int[] nums, int target) {
+        // write your code here
+        int n=nums.length;
+        int[] dp=new int[target+1];
+
+        dp[0]=1;
+        for(int i=1;i<=target;i++){
+            for(int j=0;j<n;j++){//最后一步
+                if(nums[j]<=i){
+                    dp[i]+=dp[i-nums[j]];
+                }
+            }
+        }
+
+        return dp[target];
+    }
 }

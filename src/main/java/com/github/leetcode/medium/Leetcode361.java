@@ -104,4 +104,185 @@ public class Leetcode361 {
         }
         return result;
     }
+
+
+    public int maxKilledEnemies__(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+        int m = grid.length;
+        int n = grid[0].length;
+
+        // 0 E 0 0
+        // E 0 W E
+        // 0 E 0 0
+        int[][] up = new int[m][n];
+        int[][] down = new int[m][n];
+        int[][] left = new int[m][n];
+        int[][] right = new int[m][n];
+        //首行
+        for (int i = 0; i < n; i++) {
+            switch (grid[0][i]) {
+                case '0':
+                    up[0][i] = 0;
+                    break;
+                case 'E':
+                    up[0][i] = 1;
+                    break;
+                case 'W':
+                    up[0][i] = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //首列
+        for (int i = 0; i < m; i++) {
+            switch (grid[i][0]) {
+                case '0':
+                    left[i][0] = 0;
+                    break;
+                case 'E':
+                    left[i][0] = 1;
+                    break;
+                case 'W':
+                    left[i][0] = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //末行
+        for (int i = 0; i < n; i++) {
+            switch (grid[m - 1][i]) {
+                case '0':
+                    down[m - 1][i] = 0;
+                    break;
+                case 'E':
+                    down[m - 1][i] = 1;
+                    break;
+                case 'W':
+                    down[m - 1][i] = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //末列
+        for (int i = 0; i < m; i++) {
+            switch (grid[i][n - 1]) {
+                case '0':
+                    right[i][n - 1] = 0;
+                    break;
+                case 'E':
+                    right[i][n - 1] = 1;
+                    break;
+                case 'W':
+                    right[i][n - 1] = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //向上方向 从上往下计算
+        for (int i = 1; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                switch (grid[i][j]) {
+                    case '0':
+                        up[i][j] = up[i - 1][j];
+                        break;
+                    case 'E':
+                        up[i][j] = 1 + up[i - 1][j];
+                        break;
+                    case 'W':
+                        up[i][j] = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+        //向下方向 从下往上计算
+        for (int i = m - 2; i >= 0; i--) {
+            for (int j = 0; j < n; j++) {
+                switch (grid[i][j]) {
+                    case '0':
+                        down[i][j] = down[i + 1][j];
+                        break;
+                    case 'E':
+                        down[i][j] = 1 + down[i + 1][j];
+                        break;
+                    case 'W':
+                        down[i][j] = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        //向左方向 从左往右计算
+        for (int j = 1; j < n; j++) {
+            for (int i = 0; i < m; i++) {
+                switch (grid[i][j]) {
+                    case '0':
+                        left[i][j] = left[i][j - 1];
+                        break;
+                    case 'E':
+                        left[i][j] = 1 + left[i][j - 1];
+                        break;
+                    case 'W':
+                        left[i][j] = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        //向右方向 从右向左计算
+        for (int j = n - 2; j >= 0; j--) {
+            for (int i = 0; i < m; i++) {
+                switch (grid[i][j]) {
+                    case '0':
+                        right[i][j] = right[i][j + 1];
+                        break;
+                    case 'E':
+                        right[i][j] = 1 + right[i][j + 1];
+                        break;
+                    case 'W':
+                        right[i][j] = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        int max = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                switch (grid[i][j]) {
+                    case '0':
+                        max = Math.max(max, left[i][j] + right[i][j] + up[i][j] + down[i][j]);
+                        break;
+                    case 'E':
+                        break;
+                    case 'W':
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return max;
+
+    }
 }

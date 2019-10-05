@@ -86,4 +86,43 @@ public class Leetcode87 {
 
         return dp[0][0][n];
     }
+
+
+    public boolean isScramble__(String s1, String s2) {
+        int m = s1.length();
+        int n = s2.length();
+        if (m != n) {
+            return false;
+        }
+
+        char[] array1 = s1.toCharArray();
+        char[] array2 = s2.toCharArray();
+
+        boolean[][][] dp = new boolean[n][n][n + 1];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                dp[i][j][1] = array1[i] == array2[j];
+            }
+        }
+        for (int k = 2; k <= n; k++) {
+            for (int i = 0; i <= n - k; i++) {
+                for (int j = 0; j <= n - k; j++) {
+                    dp[i][j][k] = false;
+                    //切割点
+                    for (int w = 1; w <= k - 1; w++) {
+                        if (dp[i][j][w] == true && dp[i + w][j + w][k - w] == true) {
+                            dp[i][j][k] = true;
+                            break;
+                        } else if (dp[i][j + k - w][w] == true && dp[i + w][j][k - w] == true) {
+                            dp[i][j][k] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return dp[0][0][n];
+    }
 }

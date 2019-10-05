@@ -81,4 +81,113 @@ public class Leetcode265 {
             return res;
         }
     }
+
+
+    public int minCostII_(int[][] costs) {
+        if (costs.length == 0 || costs[0].length == 0) {
+            return 0;
+        }
+        int len = costs.length;
+        int k = costs[0].length;
+
+
+        int[][] dp = new int[len + 1][k];
+
+        for (int i = 0; i < k; i++) {
+            dp[0][i] = 0;
+        }
+
+        for (int i = 1; i <= len; i++) {
+            for (int j = 0; j < k; j++) {
+                if (i == 1) {
+                    dp[i][j] = costs[i - 1][j];
+                    continue;
+                }
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int l = 0; l < k; l++) {
+                    if (l != j) {
+                        dp[i][j] = Math.min(dp[i - 1][l] + costs[i - 1][j], dp[i][j]);
+                    }
+                }
+            }
+        }
+        int result = Integer.MAX_VALUE;
+        for (int i = 0; i < k; i++) {
+            result = Math.min(result, dp[len][i]);
+        }
+
+        return result;
+    }
+
+
+    class Pair {
+        int index;
+        int value;
+
+        public Pair(int index, int value) {
+            this.index = index;
+            this.value = value;
+        }
+    }
+
+    public int minCostII__(int[][] costs) {
+        if (costs.length == 0 || costs[0].length == 0) {
+            return 0;
+        }
+        int len = costs.length;
+        int k = costs[0].length;
+
+
+        int[][] dp = new int[len + 1][k];
+
+        for (int i = 0; i < k; i++) {
+            dp[0][i] = 0;
+        }
+
+        Pair firstMin = new Pair(-1, Integer.MAX_VALUE), secondMin = new Pair(-1, Integer.MAX_VALUE);
+        for (int i = 1; i <= len; i++) {
+            for (int j = 0; j < k; j++) {
+                if (i == 1) {
+                    dp[i][j] = costs[i - 1][j];
+                    if (firstMin.value > dp[i][j]) {
+                        secondMin.index = firstMin.index;
+                        secondMin.value = firstMin.value;
+
+                        firstMin.index = j;
+                        firstMin.value = dp[i][j];
+                    } else if (secondMin.value > dp[i][j]) {
+                        secondMin.index = j;
+                        secondMin.value = dp[i][j];
+                    }
+                    continue;
+                }
+
+                if (firstMin.index != j) {
+                    dp[i][j] = firstMin.value + costs[i - 1][j];
+                } else {
+                    dp[i][j] = secondMin.value + costs[i - 1][j];
+                }
+            }
+            firstMin = new Pair(-1, Integer.MAX_VALUE);
+            secondMin = new Pair(-1, Integer.MAX_VALUE);
+            for (int j = 0; j < k; j++) {
+                if (firstMin.value > dp[i][j]) {
+                    secondMin.index = firstMin.index;
+                    secondMin.value = firstMin.value;
+
+                    firstMin.index = j;
+                    firstMin.value = dp[i][j];
+                } else if (secondMin.value > dp[i][j]) {
+                    secondMin.index = j;
+                    secondMin.value = dp[i][j];
+                }
+            }
+        }
+        int result = Integer.MAX_VALUE;
+        for (int i = 0; i < k; i++) {
+            result = Math.min(result, dp[len][i]);
+        }
+
+        return result;
+    }
 }

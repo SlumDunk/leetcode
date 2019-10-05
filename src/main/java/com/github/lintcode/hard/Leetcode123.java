@@ -58,4 +58,44 @@ public class Leetcode123 {
         }
         return profit;
     }
+
+    public int maxProfit__(int[] prices) {
+
+        //第一次买之前 0，第一次持有 1，第二次买之前 2，第二次持有 3，第二次卖 4
+        int len = prices.length;
+        int[][] dp = new int[len + 1][5];
+
+        dp[0][0] = 0;
+        dp[0][1] = dp[0][2] = dp[0][3] = dp[0][4] = Integer.MIN_VALUE;
+
+        for (int i = 1; i <= len; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (j % 2 == 0) {//非持有状态
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j]);
+                    if (j > 0 && i > 1) {
+                        dp[i][j] = Math.max(dp[i - 1][j - 1] + prices[i - 1] - prices[i - 2], dp[i][j]);
+                    }
+                } else {//持有状态
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1]);
+                    if (i > 1) {
+                        dp[i][j] = Math.max(dp[i][j], dp[i - 1][j] + prices[i - 1] - prices[i - 2]);
+                    }
+                    if (j > 1 && i > 1) {
+                        dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 2] + prices[i - 1] - prices[i - 2]);
+                    }
+                }
+            }
+        }
+        int max = 0;
+        max = Math.max(max, dp[len][0]);
+        max = Math.max(max, dp[len][2]);
+        max = Math.max(max, dp[len][4]);
+        return max;
+    }
+
+    public static void main(String[] args) {
+        Leetcode123 leetcode123 = new Leetcode123();
+        int[] prices = new int[]{2, 1, 4};
+        leetcode123.maxProfit__(prices);
+    }
 }

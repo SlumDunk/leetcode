@@ -52,4 +52,24 @@ public class Leetcode122 {
             return profit;
         }
     }
+
+    public int maxProfit__(int[] prices) {
+        int len = prices.length;
+        int sum = 0;
+        if (len == 0) {
+            return sum;
+        } else {
+            int buy = prices[0];
+            for (int i = 1; i < len; i++) {
+                if (prices[i] > buy) {
+                    sum = sum + prices[i] - buy;
+                    buy = prices[i];
+                } else {
+                    buy = Math.min(buy, prices[i]);
+                }
+            }
+
+            return sum;
+        }
+    }
 }

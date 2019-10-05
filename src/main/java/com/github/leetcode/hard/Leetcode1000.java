@@ -1,5 +1,7 @@
 package com.github.leetcode.hard;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 5/26/19 22:30
@@ -46,8 +48,8 @@ package com.github.leetcode.hard;
 public class Leetcode1000 {
     public static void main(String[] args) {
         Leetcode1000 leetcode1000 = new Leetcode1000();
-        int[] stones = new int[]{3, 2, 4, 1};
-        leetcode1000.mergeStones(stones, 2);
+        int[] stones = new int[]{3, 5, 1, 2, 6};
+        leetcode1000.mergeStones__(stones, 3);
     }
 
     /**
@@ -79,5 +81,52 @@ public class Leetcode1000 {
             }
         }
         return dp[0][n - 1];
+    }
+
+
+    /**
+     * @param stones
+     * @param K
+     * @return
+     */
+    public int mergeStones__(int[] stones, int K) {
+        int INF = (int) 1e9 + 7;
+        int n = stones.length;
+        if ((n - 1) % (K - 1) > 0) {
+            return -1;
+        }
+
+        //i到j切成k堆的最小成本
+        int[][][] dp = new int[n][n][K + 1];
+        int[] prefix = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = prefix[i] + stones[i];
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                Arrays.fill(dp[i][j], INF);
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            dp[i][i][1] = 0;
+        }
+        //长度
+        for (int l = 2; l <= n; l++) {
+            for (int i = 0; i <= n - l; i++) {
+                int j = i + l - 1;
+                for (int k = 2; k <= K; k++) {
+                    for (int m = i; m < j; m++) {
+                        dp[i][j][k] = Math.min(dp[i][j][k], dp[i][m][1] + dp[m + 1][j][k - 1]);
+                    }
+                }
+                //刚好能切成K堆，所以能够合并，切成K堆的成本和合并的成本
+                if (dp[i][j][K] != INF)
+                    dp[i][j][1] = dp[i][j][K] + prefix[j + 1] - prefix[i];
+            }
+        }
+
+        return dp[0][n - 1][1];
     }
 }

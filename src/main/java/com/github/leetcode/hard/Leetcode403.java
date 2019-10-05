@@ -2,6 +2,7 @@ package com.github.leetcode.hard;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @Author: zerongliu
@@ -64,5 +65,86 @@ public class Leetcode403 {
             }
         }
         return !dp.get(stones[stones.length - 1]).isEmpty();
+    }
+
+    public boolean canCross__(int[] stones) {
+        int n = stones.length;
+        Map<Integer, HashSet<Integer>> dp = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            dp.put(stones[i], new HashSet<>());
+        }
+
+        dp.get(0).add(0);
+
+        //从前往后推
+        for (int i = 0; i < n - 1; i++) {
+            int stone = stones[i];
+            for (int k : dp.get(stone)) {
+                if (k - 1 > 0 && dp.containsKey(stone + k - 1)) {
+                    dp.get(stone + k - 1).add(k - 1);
+                }
+                if (dp.containsKey(stone + k)) {
+                    dp.get(stone + k).add(k);
+                }
+                if (dp.containsKey(stone + k + 1)) {
+                    dp.get(stone + k + 1).add(k + 1);
+                }
+            }
+        }
+
+        return !dp.get(stones[n - 1]).isEmpty();
+    }
+
+    /**
+     * 超时版本
+     *
+     * @param stones
+     * @return
+     */
+    public boolean canCross___(int[] stones) {
+        int n = stones.length;
+        boolean[][] dp = new boolean[n][n];
+        boolean ans = false;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = true;
+                } else if (i == 0) {
+                    dp[i][j] = false;
+                } else if (j == 0) {
+                    dp[i][j] = false;
+                } else {
+                    //遍历上块石头的可能位置
+                    for (int k = 0; k < i; k++) {
+                        if (stones[k] + j == stones[i]) {
+                            //上一步还是j
+                            dp[i][j] |= dp[k][j];
+                            //上一步是j-1
+                            dp[i][j] |= dp[k][j - 1];
+                            //上一步是j+1
+                            if (j < n - 1) {
+                                dp[i][j] |= dp[k][j + 1];
+                            }
+                            if (dp[i][j] == true) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (i == n - 1) {
+                    ans |= dp[i][j];
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        Leetcode403 leetcode403 = new Leetcode403();
+        int[] stones = new int[]{0, 1, 3, 5, 6, 8, 12, 17};
+        leetcode403.canCross___(stones);
     }
 }

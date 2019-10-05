@@ -102,4 +102,79 @@ public class Leetcode639 {
         //c2='*' c1='*'
         return 15;
     }
+
+
+    public int numDecodings__(String s) {
+        int mod=1000000000+7;
+        char[] array=s.toCharArray();
+        int len=array.length;
+        long[] dp=new long[len+1];
+        dp[0]=1;
+        for(int i=1;i<=len;i++){
+
+            dp[i]=dp[i-1]*cnt1__(array[i-1]);
+
+            if(i>1){
+                dp[i]+=dp[i-2]*cnt2__(array[i-2],array[i-1]);
+            }
+            dp[i]=dp[i]%mod;
+        }
+
+        return (int)dp[len];
+    }
+
+    public int cnt1__(char val){
+        if(val=='0'){
+            return 0;
+        }
+        else if(val>='1'&&val<='9'){
+            return 1;
+        }else if(val=='*'){
+            return 9;
+        }
+
+        return 0;
+    }
+
+    public int cnt2__(char c2,char c1){
+        if(c2=='0'){
+            return 0;
+        }
+
+        if(c2=='1'){
+            if(c1>='0'&&c1<='9'){
+                return 1;
+            }
+            if(c1=='*'){
+                return 9;
+            }
+        }
+
+        if(c2=='2'){
+            if(c1>='0'&&c1<='6'){
+                return 1;
+            }
+            if(c1=='*'){
+                return 6;
+            }
+        }
+
+
+        if(c2>='3'&&c2<='9'){
+            return 0;
+        }
+
+        if(c2=='*'){
+            if(c1>='0'&&c1<='6'){
+                return 2;
+            }
+            if(c1>='7'&&c1<='9'){
+                return 1;
+            }
+            if(c1=='*'){
+                return 15;
+            }
+        }
+        return 0;
+    }
 }

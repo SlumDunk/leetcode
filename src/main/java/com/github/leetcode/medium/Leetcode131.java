@@ -70,4 +70,57 @@ public class Leetcode131 {
         return true;
     }
 
+
+    public List<List<String>> partition__(String s) {
+        List<List<String>> result = new ArrayList<>();
+        if (s == null || s.length() == 0) {
+            return result;
+        } else {
+            char[] array = s.toCharArray();
+            List<String> temp = new ArrayList<>();
+            helper__(array, 0, result, temp);
+
+            return result;
+        }
+    }
+
+    /**
+     * @param array
+     * @param start
+     * @param result
+     * @param temp
+     */
+    public void helper__(char[] array, int start, List<List<String>> result, List<String> temp) {
+        if (start == array.length) {
+            result.add(new ArrayList<String>(temp));
+        } else {
+            StringBuilder buffer = new StringBuilder();
+            for (int i = start; i < array.length; i++) {
+                buffer.append(array[i]);
+                if (isPalindrome__(buffer.toString())) {
+                    temp.add(buffer.toString());
+                    helper__(array, i + 1, result, temp);
+                    temp.remove(temp.size() - 1);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param str
+     * @return
+     */
+    public boolean isPalindrome__(String str) {
+        int left = 0, right = str.length() - 1;
+        while (left <= right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+
+    }
+
 }
