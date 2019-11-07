@@ -3,6 +3,7 @@ package com.github.leetcode.easy;
 import com.github.leetcode.vo.Node;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -64,5 +65,45 @@ public class Leetcode590 {
         }
         resultList.add(root.val);
         return resultList;
+    }
+
+
+    public List<Integer> postorder__(Node root) {
+        LinkedList<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return result;
+        } else {
+            // helper(root,result);
+            Stack<Node> stack = new Stack<Node>();
+            while (!stack.isEmpty() || root != null) {
+                if (root != null) {
+                    result.addFirst(root.val);
+                    if (root.children != null) {
+                        for (Node child : root.children) {
+                            stack.push(child);
+                        }
+                    }
+                    root = null;
+                }
+                if (!stack.isEmpty()) {
+                    root = stack.pop();
+                }
+            }
+            return result;
+        }
+    }
+
+
+    public void helper(Node node, List<Integer> result) {
+        if (node == null) {
+            return;
+        } else {
+            if (node.children != null) {
+                for (Node child : node.children) {
+                    helper(child, result);
+                }
+            }
+            result.add(node.val);
+        }
     }
 }

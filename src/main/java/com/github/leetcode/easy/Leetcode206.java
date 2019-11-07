@@ -31,4 +31,19 @@ public class Leetcode206 {
         }
         return prev;
     }
+
+    public ListNode reverseList__(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        } else {
+            ListNode prev = null;
+            while (head != null) {
+                ListNode tmp = head.next;
+                head.next = prev;
+                prev = head;
+                head = tmp;
+            }
+            return prev;
+        }
+    }
 }

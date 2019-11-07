@@ -63,4 +63,42 @@ public class Leetcode110 {
             return 1 + Math.max(getDepth(root.left), getDepth(root.right));
         }
     }
+
+
+    class Result {
+        int height;
+        boolean isBalance;
+
+        public Result(int height, boolean isBalance) {
+            this.height = height;
+            this.isBalance = isBalance;
+        }
+    }
+
+    public boolean isBalanced__(TreeNode root) {
+        if (root == null) {
+            return true;
+        } else {
+            return helper(root).isBalance;
+        }
+    }
+
+    public Result helper(TreeNode node) {
+        if (node == null) {
+            return new Result(0, true);
+        } else {
+            Result left = helper(node.left);
+            Result right = helper(node.right);
+            int height = 1 + Math.max(left.height, right.height);
+            if (!left.isBalance || !right.isBalance) {
+                return new Result(height, false);
+            } else {
+                if (Math.abs(left.height - right.height) <= 1) {
+                    return new Result(height, true);
+                } else {
+                    return new Result(height, false);
+                }
+            }
+        }
+    }
 }

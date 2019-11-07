@@ -49,4 +49,36 @@ public class Leetcode74 {
         }
         return false;
     }
+
+    public boolean searchMatrix__(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int start = 0, end = m * n - 1;
+        int mid = 0;
+        int i = 0, j = 0;
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            i = mid / n;
+            j = mid % n;
+            if (matrix[i][j] == target) {
+                return true;
+            } else if (matrix[i][j] > target) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+
+        if (matrix[start / n][start % n] == target) {
+            return true;
+        } else if (matrix[end / n][end % n] == target) {
+            return true;
+        }
+
+        return false;
+    }
 }

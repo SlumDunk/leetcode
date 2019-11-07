@@ -27,6 +27,11 @@ import java.util.LinkedList;
  * Output: 3
  */
 public class Leetcode200 {
+    /**
+     * O(N)
+     * @param grid
+     * @return
+     */
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length == 0
                 || grid[0].length == 0)

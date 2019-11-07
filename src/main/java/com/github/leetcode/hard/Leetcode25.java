@@ -62,6 +62,52 @@ public class Leetcode25 {
         head.next = prev;
         return nextHead;
 
+    }
 
+    public ListNode reverseKGroup__(ListNode head, int k) {
+        if (head == null || k <= 1) {
+            return head;
+        } else {
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            head = dummy;
+            while (head.next != null) {
+                head = reverseK(head, k);
+            }
+            return dummy.next;
+        }
+    }
+
+    /**
+     * 每次翻转k个节点，返回第(n+1)*k个节点, 作为下一次翻转的前置节点
+     *
+     * @param head 第nk个节点
+     * @param k
+     * @return
+     */
+    public ListNode reverseK(ListNode head, int k) {
+        ListNode next = head;
+        for (int i = 0; i < k; i++) {
+            if (next.next == null) {
+                return next;
+            }
+            next = next.next;
+        }
+        //需要保留第一个节点的信息
+        ListNode n1 = head.next;
+        ListNode pre = null;
+        ListNode cur = head.next;
+        while (cur != null && k > 0) {
+            ListNode tmp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = tmp;
+            k--;
+        }
+        //第一个节点指向k+1个节点
+        n1.next = cur;
+        //翻转开始的前一节点指向原来的k节点
+        head.next = pre;
+        return n1;
     }
 }

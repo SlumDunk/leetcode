@@ -5,6 +5,7 @@ import com.github.leetcode.vo.TreeNode;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @Author: zerongliu
@@ -65,5 +66,40 @@ public class Leetcode103 {
         levelRecursion(node.left, result, level + 1);
         //对右子树进行递归
         levelRecursion(node.right, result, level + 1);
+    }
+
+    public List<List<Integer>> zigzagLevelOrder__(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        } else {
+            int level = 1;
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                LinkedList<Integer> temp = new LinkedList<>();
+                while (size > 0) {
+                    TreeNode cur = queue.poll();
+                    if (cur.left != null) {
+                        queue.add(cur.left);
+                    }
+                    if (cur.right != null) {
+                        queue.add(cur.right);
+                    }
+
+                    if (level % 2 == 1) {
+                        temp.addLast(cur.val);
+                    } else {
+                        temp.addFirst(cur.val);
+                    }
+                    size--;
+                }
+                level++;
+                result.add(temp);
+
+            }
+            return result;
+        }
     }
 }

@@ -104,4 +104,46 @@ public class Leetcode988 {
 
         return s.reverse().toString();
     }
+
+
+    String result = null;
+
+    public String smallestFromLeaf__(TreeNode root) {
+        //找最短路径
+        if (root == null) {
+            return result;
+        } else {
+            List<Integer> temp = new ArrayList<Integer>();
+            helper(root, temp);
+            return result;
+        }
+    }
+
+    public void helper(TreeNode root, List<Integer> temp) {
+        if (root != null && root.left == null && root.right == null) {
+            temp.add(root.val);
+            String tempstr = list2str(temp);
+            if (result == null || result.compareTo(tempstr) > 0) {
+                result = tempstr;
+            }
+            temp.remove(temp.size() - 1);
+        } else {
+            if (root == null) {
+                return;
+            } else {
+                temp.add(root.val);
+                helper(root.left, temp);
+                helper(root.right, temp);
+                temp.remove(temp.size() - 1);
+            }
+        }
+    }
+
+    public String list2str(List<Integer> temp) {
+        StringBuilder buffer = new StringBuilder("");
+        for (int i = temp.size() - 1; i >= 0; i--) {
+            buffer.append((char) (temp.get(i) + 'a'));
+        }
+        return buffer.toString();
+    }
 }

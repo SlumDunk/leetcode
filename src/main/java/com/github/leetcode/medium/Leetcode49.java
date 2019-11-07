@@ -48,4 +48,41 @@ public class Leetcode49 {
         }
         return list;
     }
+
+
+    /**
+     * O(n*mlgm)
+     * @param strs
+     * @return
+     */
+    public List<List<String>> groupAnagrams__(String[] strs) {
+        List<List<String>> result = new ArrayList<>();
+        if (strs == null || strs.length == 0) {
+            return result;
+        } else {
+            Map<String, List<String>> map = new HashMap<>();
+            for (String str : strs) {
+                String key = reorder(str);
+                if (map.containsKey(key)) {
+                    map.get(key).add(str);
+                } else {
+                    map.put(key, new ArrayList<>());
+                    map.get(key).add(str);
+                }
+
+            }
+
+            for (List<String> value : map.values()) {
+                result.add(value);
+            }
+
+            return result;
+        }
+    }
+
+    private String reorder(String str) {
+        char[] array = str.toCharArray();
+        Arrays.sort(array);
+        return new String(array);
+    }
 }

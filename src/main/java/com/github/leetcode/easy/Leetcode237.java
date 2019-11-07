@@ -37,4 +37,31 @@ public class Leetcode237 {
             node.next = node.next.next;
         }
     }
+
+    public void deleteNode__(ListNode node) {
+        //直接改变节点的值
+        while (node != null && node.next != null) {
+            node.val = node.next.val;
+            if (node.next.next == null) {
+                node.next = null;
+                return;
+            } else {
+                node = node.next;
+            }
+
+        }
+
+        if (node != null && node.next != null) {
+            node.val = node.next.val;
+            node.next = node.next.next;
+        }
+    }
+
+    public void deleteNode___(ListNode node) {
+        //直接改变节点的值
+        if (node != null && node.next != null) {
+            node.val = node.next.val;
+            node.next = node.next.next;
+        }
+    }
 }

@@ -38,4 +38,21 @@ public class Leetcode83 {
             return head;
         }
     }
+
+
+    public ListNode deleteDuplicates__(ListNode head) {
+        if (head == null) {
+            return null;
+        } else {
+            ListNode node = head;
+            while (node.next != null) {
+                if (node.val == node.next.val) {
+                    node.next = node.next.next;
+                } else {
+                    node = node.next;
+                }
+            }
+            return head;
+        }
+    }
 }

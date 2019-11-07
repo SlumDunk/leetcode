@@ -1,5 +1,7 @@
 package com.github.lintcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 1/9/19 10:37
@@ -71,5 +73,64 @@ public class Lintcode61 {
             bound[0] = bound[1] = -1;
         }
         return bound;
+    }
+
+
+    /**
+     * @param A: an integer sorted array
+     * @param target: an integer to be inserted
+     * @return: a list of length 2, [index1, index2]
+     */
+    public int[] searchRange__(int[] A, int target) {
+        // write your code here
+        int n=A.length;
+
+        int start=0,end=n-1;
+        int mid=0;
+        int[] ans=new int[2];
+        Arrays.fill(ans,-1);
+        if(n==0){
+            return ans;
+        }
+
+        //寻找第一次出现的位置
+        while(start+1<end){
+            mid=start+(end-start)/2;
+            if(A[mid]==target){
+                end=mid;
+            }else if(A[mid]>target){
+                end=mid;
+            }else{
+                start=mid;
+            }
+        }
+
+        if(A[start]==target){
+            ans[0]=start;
+        }else if(A[end]==target){
+            ans[0]=end;
+        }
+
+        start=0;
+        end=n-1;
+        //寻找最后一次出现的位置
+        while(start+1<end){
+            mid=start+(end-start)/2;
+            if(A[mid]==target){
+                start=mid;
+            }else if(A[mid]>target){
+                end=mid;
+            }else{
+                start=mid;
+            }
+        }
+
+        if(A[end]==target){
+            ans[1]=end;
+        }else if(A[start]==target){
+            ans[1]=start;
+        }
+
+        return ans;
     }
 }

@@ -70,4 +70,57 @@ public class Leetcode52 {
         return true;
     }
 
+
+    int result=0;
+
+    /**
+     * O(N!)
+     * @param n
+     * @return
+     */
+    public int totalNQueens_(int n) {
+        if (n == 0) {
+            return result;
+        } else {
+            List<Integer> temp = new ArrayList<Integer>();
+            helper(temp, n);
+
+            return result;
+        }
+    }
+
+    public void helper(List<Integer> temp, int n) {
+        if (temp.size() == n) {
+            result++;
+        } else {
+            for (int i = 0; i < n; i++) {
+                if (isValid(i, temp)) {
+                    temp.add(i);
+                    helper(temp, n);
+                    temp.remove(temp.size() - 1);
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+
+    private boolean isValid(Integer position, List<Integer> list) {
+        int row = list.size();
+
+        if (list.contains(position)) {
+            return false;
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            if (position - row == list.get(i) - i) {
+                return false;
+            }
+            if (position + row == list.get(i) + i) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

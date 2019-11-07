@@ -73,4 +73,48 @@ public class Leetcode148 {
         cur.next = headA == null ? headB : headA;
         return fakeNode.next;
     }
+
+
+    public ListNode sortList__(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        //先找中间节点的前一节点
+        ListNode middle = findMiddle(head);
+        ListNode right = middle.next;
+        //切断原有关系
+        middle.next = null;
+
+        return merge(sortList__(head), sortList__(right));
+    }
+
+    private ListNode findMiddle(ListNode head) {
+        //找到的是中间节点的前一节点，所以fast先走一步
+        ListNode slow = head, fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    private ListNode merge(ListNode left, ListNode right) {
+        ListNode dummy = new ListNode(0);
+        ListNode pre = dummy;
+        while (left != null && right != null) {
+            if (left.val <= right.val) {
+                pre.next = left;
+                pre = left;
+                left = left.next;
+            } else {
+                pre.next = right;
+                pre = right;
+                right = right.next;
+            }
+        }
+
+        pre.next = left == null ? right : left;
+
+        return dummy.next;
+    }
 }

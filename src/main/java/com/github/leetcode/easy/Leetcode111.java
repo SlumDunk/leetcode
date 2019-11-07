@@ -35,4 +35,28 @@ public class Leetcode111 {
             }
         }
     }
+
+    public int minDepth__(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            return helper(root);
+        }
+    }
+
+    int INF = (int) (1e9 + 7);
+
+    public int helper(TreeNode node) {
+        if (node == null) {
+            return INF;
+        } else {
+            int left = helper(node.left);
+            int right = helper(node.right);
+            if (left == INF && right == INF) {
+                return 1;
+            } else {
+                return 1 + Math.min(left, right);
+            }
+        }
+    }
 }

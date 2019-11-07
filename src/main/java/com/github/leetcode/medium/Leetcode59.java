@@ -60,4 +60,57 @@ public class Leetcode59 {
         }
         return matrix;
     }
+
+
+    /**
+     * O(N^2)
+     *
+     * @param n
+     * @return
+     */
+    public int[][] generateMatrix_(int n) {
+        if (n == 0) {
+            return null;
+        }
+
+        int[][] matrix = new int[n][n];
+
+        int left = 0, right = n - 1, up = 0, down = n - 1;
+
+        int currentItem = 1;
+
+        while (left <= right && up <= down) {
+            //left to right
+            for (int i = left; i <= right; i++) {
+                matrix[up][i] = currentItem++;
+            }
+
+            //up to down
+            for (int i = up + 1; i <= down; i++) {
+                matrix[i][right] = currentItem++;
+            }
+
+            //right to left
+            if (down > up) {
+                for (int i = right - 1; i >= left; i--) {
+                    matrix[down][i] = currentItem++;
+                }
+            }
+
+            //down to up
+            if (right > left) {
+                for (int i = down - 1; i > up; i--) {
+                    matrix[i][left] = currentItem++;
+                }
+            }
+
+
+            left++;
+            right--;
+            up++;
+            down--;
+        }
+
+        return matrix;
+    }
 }

@@ -59,4 +59,38 @@ public class Lintcode126 {
         }
         return root;
     }
+
+
+    public TreeNode maxTree_(int[] A) {
+        if (A == null || A.length == 0) {
+            return null;
+        }
+        int len = A.length;
+        //维护一个递减栈 不符合的统一拉出来作为当前点的左子树， 符合的进栈，作为当前栈顶的右子树
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+
+
+        for (int i = 0; i < len; i++) {
+            TreeNode temp = new TreeNode(A[i]);
+
+            while (!stack.isEmpty() && stack.peek().val < A[i]) {
+                temp.left = stack.pop();
+            }
+
+            if (stack.isEmpty()) {
+                stack.peek().right = temp;
+            }
+
+            stack.push(temp);
+        }
+
+
+        TreeNode root = null;
+
+        while (!stack.isEmpty()) {
+            root = stack.pop();
+        }
+
+        return root;
+    }
 }

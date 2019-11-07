@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 10/13/18 11:13
@@ -61,5 +63,61 @@ public class Leetcode34 {
         } else {
             return binarySearch(nums, target, mid + 1, right);
         }
+    }
+
+
+    public int[] searchRange__(int[] nums, int target) {
+        int n = nums.length;
+
+        int[] ans = new int[2];
+        Arrays.fill(ans, -1);
+
+        if (n == 0) {
+            return ans;
+        }
+        int start = 0, end = n - 1;
+        int mid = 0;
+
+        //寻找第一个出现的位置
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] == target) {
+                end = mid;
+            } else if (nums[mid] > target) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+
+        if (nums[start] == target) {
+            ans[0] = start;
+        } else if (nums[end] == target) {
+            ans[0] = end;
+        }
+
+        //寻找最后一次出现的位置
+        start = 0;
+        end = n - 1;
+        mid = 0;
+
+        //寻找最后一个出现的位置
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] == target) {
+                start = mid;
+            } else if (nums[mid] > target) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+
+        if (nums[end] == target) {
+            ans[1] = end;
+        } else if (nums[start] == target) {
+            ans[1] = start;
+        }
+        return ans;
     }
 }

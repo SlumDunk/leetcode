@@ -72,4 +72,34 @@ public class Leetcode113 {
         }
 
     }
+
+
+    public List<List<Integer>> pathSum__(TreeNode root, int sum) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        } else {
+            List<Integer> temp = new ArrayList<>();
+
+            helper(root, temp, result, sum);
+            return result;
+        }
+    }
+
+
+    public void helper(TreeNode node, List<Integer> temp, List<List<Integer>> result, int sum) {
+        if (node == null) {
+            return;
+        }
+        if (sum == node.val && node.left == null && node.right == null) {
+            temp.add(node.val);
+            result.add(new ArrayList<Integer>(temp));
+            temp.remove(temp.size() - 1);
+        } else {
+            temp.add(node.val);
+            helper(node.left, temp, result, sum - node.val);
+            helper(node.right, temp, result, sum - node.val);
+            temp.remove(temp.size() - 1);
+        }
+    }
 }

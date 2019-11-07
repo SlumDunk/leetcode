@@ -64,4 +64,64 @@ public class Lintcode139 {
 
         return result;
     }
+
+
+    /*
+    * @param nums: A list of integers
+    * @return: A list of integers includes the index of the first number and the index of the last number
+    */
+    public int[] subarraySumClosest_(int[] nums) {
+        // write your code here
+        int[] result = new int[2];
+
+        if (nums == null || nums.length == 0) {
+            return result;
+        }
+
+        int len = nums.length;
+        if (len == 1) {
+            result[0] = result[1] = 0;
+            return result;
+        }
+
+        Pair_[] prefixSum = new Pair_[len + 1];
+        prefixSum[0] = new Pair_(0, 0);
+        for (int i = 1; i <= len; i++) {
+            prefixSum[i] = new Pair_(prefixSum[i - 1].sum + nums[i - 1], i);
+        }
+
+        Arrays.sort(prefixSum, new Comparator<Pair_>() {
+                    public int compare(Pair_ a, Pair_ b) {
+                        if (a.sum != b.sum) {
+                            return a.sum - b.sum;
+                        } else {
+                            return a.idx - b.idx;
+                        }
+                    }
+                }
+        );
+
+        int diff = Integer.MAX_VALUE;
+        for (int i = 1; i <= len; i++) {
+            int cur = prefixSum[i].sum - prefixSum[i - 1].sum;
+            if (diff > cur) {
+                diff = cur;
+                int[] temp = new int[]{prefixSum[i].idx - 1, prefixSum[i - 1].idx - 1};
+                Arrays.sort(temp);
+                result[0] = temp[0] + 1;
+                result[1] = temp[1];
+            }
+        }
+        return result;
+    }
+
+    class Pair_ {
+        int sum;
+        int idx;
+
+        public Pair_(int sum, int idx) {
+            this.sum = sum;
+            this.idx = idx;
+        }
+    }
 }

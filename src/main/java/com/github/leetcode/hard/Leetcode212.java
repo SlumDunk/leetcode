@@ -29,6 +29,14 @@ public class Leetcode212 {
     //上 右 下 左， 顺时针
     int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
+    /**
+     * O(k*l + m*n*4^l)
+     * k is length of words, l is the average length of word, m is size of rows, n is size of columns
+     *
+     * @param board
+     * @param words
+     * @return
+     */
     public List<String> findWords(char[][] board, String[] words) {
         //根据words构造Trie树
         List<String> result = new ArrayList<>();
@@ -104,5 +112,68 @@ public class Leetcode212 {
         TrieNode[] children = new TrieNode[26];
         //存储节点的单词值
         String word;
+    }
+
+
+    int[][] dirs = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+    class TrieNode_ {
+        TrieNode_[] children = new TrieNode_[26];
+        String word;
+    }
+
+    public List<String> findWords_(char[][] board, String[] words) {
+        List<String> result = new ArrayList<>();
+        TrieNode_ root = buildTrieTree_(words);
+        int row = board.length;
+        int col = board[0].length;
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                helper(board, i, j, root, result);
+            }
+        }
+        return result;
+    }
+
+    public void helper(char[][] board, int row, int col, TrieNode_ parent, List<String> result) {
+        if (row >= board.length || row < 0 || col >= board[0].length || col < 0) {
+            return;
+        }
+
+        char val = board[row][col];
+        if (val == '#' || parent.children[val - 'a'] == null) {
+            return;
+        }
+
+        parent = parent.children[val - 'a'];
+
+        if (parent.word != null) {
+            result.add(parent.word);
+            parent.word = null;
+        }
+
+        board[row][col] = '#';
+        for (int[] dir : dirs) {
+            helper(board, row + dir[0], col + dir[1], parent, result);
+        }
+        board[row][col] = val;
+
+    }
+
+    private TrieNode_ buildTrieTree_(String[] words) {
+        TrieNode_ root = new TrieNode_();
+        for (String word : words) {
+            TrieNode_ cur = root;
+            for (char c : word.toCharArray()) {
+                if (cur.children[c - 'a'] == null) {
+                    cur.children[c - 'a'] = new TrieNode_();
+                }
+                cur = cur.children[c - 'a'];
+            }
+            cur.word = word;
+        }
+
+        return root;
     }
 }

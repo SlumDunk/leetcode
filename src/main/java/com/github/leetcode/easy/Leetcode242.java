@@ -36,4 +36,29 @@ public class Leetcode242 {
 
 
     }
+
+    /**
+     * O(n)
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isAnagram__(String s, String t) {
+        if (s == null || t == null || s.length() != t.length()) {
+            return false;
+        }
+        int[] count = new int[26];
+
+        for (char item : s.toCharArray()) {
+            count[item - 'a']++;
+        }
+
+        for (char item : t.toCharArray()) {
+            count[item - 'a']--;
+            if (count[item - 'a'] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

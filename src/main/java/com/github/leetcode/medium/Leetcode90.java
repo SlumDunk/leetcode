@@ -55,4 +55,35 @@ public class Leetcode90 {
         }
         return;
     }
+
+
+    /**
+     * O(2^N)
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsetsWithDup__(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return result;
+        } else {
+            List<Integer> temp = new ArrayList<>();
+            Arrays.sort(nums);
+            helper(nums, result, temp, 0);
+            return result;
+        }
+    }
+
+    public void helper(int[] nums, List<List<Integer>> result, List<Integer> temp, int start) {
+        result.add(new ArrayList<>(temp));
+
+        for (int i = start; i < nums.length; i++) {
+            temp.add(nums[i]);
+            helper(nums, result, temp, i + 1);
+            temp.remove(temp.size() - 1);
+            while (i < nums.length - 1 && nums[i] == nums[i + 1]) {
+                i++;
+            }
+        }
+    }
 }

@@ -33,10 +33,10 @@ package com.github.leetcode.hard;
  * The signature of the C++ function had been updated. If you still see your function signature accepts a const char * argument, please click the reload button to reset your code definition.
  */
 public class Leetcode65 {
-    public static void main(String[] args) {
-        Leetcode65 leetcode65 = new Leetcode65();
-        System.out.println(leetcode65.isNumber("1 "));
-    }
+//    public static void main(String[] args) {
+//        Leetcode65 leetcode65 = new Leetcode65();
+//        System.out.println(leetcode65.isNumber("1 "));
+//    }
 
     public boolean isNumber(String s) {
         if (s == null || s.length() == 0) {
@@ -84,6 +84,66 @@ public class Leetcode65 {
                 }
                 i++;
             }
+            return num;
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Leetcode65 leetcode65 = new Leetcode65();
+        String s = "3.5e+3.5e+3.5";
+        System.out.println(leetcode65.isNumber_(s));
+    }
+
+    /**
+     * O(N)
+     *
+     * @param s
+     * @return
+     */
+    public boolean isNumber_(String s) {
+        if (s == null || s.length() == 0) {
+            return false;
+        } else {
+            // numbers, '.', 'e/E'
+            // before or after '.' there should be a number
+            // before and after 'e/E' there should be a number, and after e, the number could not be float type
+            // at the begining of str, can have '+' or '-'
+            s = s.trim();
+            if (s.length() == 0) {
+                return false;
+            }
+            boolean num = false;
+            boolean dot = false;
+            boolean exp = false;
+
+            int start = 0, end = s.length() - 1;
+            if (s.charAt(start) == '+' || s.charAt(start) == '-') {
+                start++;
+            }
+
+            while (start <= end) {
+                char c = s.charAt(start);
+                if (Character.isDigit(c)) {
+                    num = true;
+                } else if (c == '.') {
+                    if (dot || exp) return false;
+                    dot = true;
+                } else if (c == 'e') {
+                    if (exp || !num) return false;
+                    exp = true;
+                    //reset the flag of num to indicate the number status after e
+                    num = false;
+                } else {
+                    if ((c == '+' || c == '-') && s.charAt(start - 1) == 'e') {
+
+                    } else {
+                        return false;
+                    }
+                }
+                start++;
+            }
+            //just one '.'
             return num;
         }
     }

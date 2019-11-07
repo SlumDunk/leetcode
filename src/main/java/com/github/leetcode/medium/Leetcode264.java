@@ -72,4 +72,30 @@ public class Leetcode264 {
         Long value = pq.poll();
         return value.intValue();
     }
+
+    public int nthUglyNumber___(int n) {
+        Queue<Long> queue = new PriorityQueue<Long>();
+        queue.add(1l);
+        queue.add(2l);
+        queue.add(3l);
+        queue.add(5l);
+
+        while (!queue.isEmpty()) {
+            Long val = queue.poll();
+            if (!queue.contains(val * 2)) {
+                queue.add(val * 2);
+            }
+            if (!queue.contains(val * 3)) {
+                queue.add(val * 3);
+            }
+            if (!queue.contains(val * 5)) {
+                queue.add(val * 5);
+            }
+            if (n == 1) {
+                return val.intValue();
+            }
+            n--;
+        }
+        return -1;
+    }
 }

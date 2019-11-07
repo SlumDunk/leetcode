@@ -36,4 +36,43 @@ public class Leetcode56 {
         }
         return res;
     }
+
+
+    public int[][] merge(int[][] intervals) {
+        List<int[]> res = new LinkedList<>();
+
+        List<int[]> intervalList = Arrays.asList(intervals);
+
+        if (intervals.length == 0) {
+            return intervals;
+        }
+
+        Collections.sort(intervalList, new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return Integer.compare(a[0], b[0]);
+            }
+        });
+
+        res.add(intervalList.get(0));
+
+        for (int i = 1; i < intervalList.size(); i++) {
+            int[] top = res.get(res.size() - 1);
+
+            if (top[1] >= intervalList.get(i)[0]) {
+                top[1] = Math.max(top[1], intervalList.get(i)[1]);
+            } else {
+                res.add(intervalList.get(i));
+            }
+        }
+        int[][] ans = new int[res.size()][2];
+        int index = 0;
+        for (int[] interval : res) {
+            ans[index][0] = interval[0];
+            ans[index][1] = interval[1];
+            index++;
+        }
+
+        return ans;
+
+    }
 }

@@ -56,4 +56,9 @@ public class TopologicalSort {
 
         return resultList.size() == n ? resultList : new ArrayList<>();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

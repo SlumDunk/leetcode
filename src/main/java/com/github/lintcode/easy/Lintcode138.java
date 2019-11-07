@@ -43,4 +43,38 @@ public class Lintcode138 {
         }
         return result;
     }
+
+
+    /**
+     * @param nums: A list of integers
+     * @return: A list of integers includes the index of the first number and the index of the last number
+     */
+    public List<Integer> subarraySum_(int[] nums) {
+        // write your code here
+        int n = nums.length;
+
+        int[] preSum = new int[n + 1];
+        preSum[0] = 0;
+
+        for (int i = 1; i <= n; i++) {
+            preSum[i] = preSum[i - 1] + nums[i - 1];
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 0);
+
+        List<Integer> result = new ArrayList<>();
+
+        for (int i = 1; i <= n; i++) {
+            if (map.containsKey(preSum[i])) {
+                result.add(map.get(preSum[i]));
+                result.add(i - 1);
+                return result;
+            } else {
+                map.put(preSum[i], i);
+            }
+        }
+
+        return result;
+    }
 }

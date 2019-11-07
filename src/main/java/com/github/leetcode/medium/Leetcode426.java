@@ -78,4 +78,35 @@ public class Leetcode426 {
         last.right = first;
         return first;
     }
+
+    public Node treeToDoublyList__(Node root) {
+        //中序遍历
+        if (root == null) {
+            return null;
+        } else {
+            Stack<Node> stack = new Stack<Node>();
+            Node first = null, last = null;
+            while (!stack.isEmpty() || root != null) {
+                while (root != null) {
+                    stack.push(root);
+                    root = root.left;
+                }
+                Node cur = stack.pop();
+                if (first == null) {
+                    first = cur;
+                }
+                if (last != null) {
+                    last.right = cur;
+                    cur.left = last;
+                }
+                last = cur;
+                if (cur.right != null) {
+                    root = cur.right;
+                }
+            }
+            first.left = last;
+            last.right = first;
+            return first;
+        }
+    }
 }

@@ -52,4 +52,29 @@ public class Leetcode162 {
         }
     }
 
+    public int findPeakElement__(int[] nums) {
+        int n = nums.length;
+        int start = 0;
+        int end = n - 1;
+        int mid = 0;
+        //nums[-1] = nums[n] = -∞
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] < nums[mid - 1]) {//下降边，峰值在左边
+                end = mid;
+            } else if (nums[mid] < nums[mid + 1]) {//上升边，峰值在右
+                start = mid;
+            } else {//峰值点
+                return mid;
+            }
+        }
+
+        if (nums[start] < nums[end]) {
+            return end;
+        } else {
+            return start;
+        }
+
+    }
+
 }

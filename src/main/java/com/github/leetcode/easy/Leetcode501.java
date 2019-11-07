@@ -72,4 +72,43 @@ public class Leetcode501 {
         }
         return res;
     }
+
+
+    List<Integer> ans = new ArrayList<>();
+    Integer pre = null;
+    int maxFreq = 0, curFreq = 0;
+
+    public int[] findMode__(TreeNode root) {
+        helper(root);
+        int[] result = new int[ans.size()];
+        int idx = 0;
+        for (Integer item : ans) {
+            result[idx++] = item;
+        }
+        return result;
+    }
+
+
+    public void helper(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        helper(node.left);
+        if (pre == null || pre == node.val) {
+            curFreq++;
+        } else {
+            curFreq = 1;
+        }
+        pre = node.val;
+
+        if (maxFreq == curFreq) {
+            ans.add(node.val);
+        } else if (maxFreq < curFreq) {
+            ans.clear();
+            ans.add(node.val);
+            maxFreq = curFreq;
+        }
+
+        helper(node.right);
+    }
 }

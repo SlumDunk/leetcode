@@ -72,4 +72,39 @@ public class Leetcode47 {
     }
 
 
+    public List<List<Integer>> permuteUnique__(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return result;
+        } else {
+            List<Integer> temp = new ArrayList<>();
+            Arrays.sort(nums);
+            //加个状态数组
+            boolean[] visited = new boolean[nums.length];
+            helper(nums, result, temp, visited);
+            return result;
+        }
+    }
+
+    public void helper(int[] nums, List<List<Integer>> result, List<Integer> temp, boolean[] visited) {
+        if (temp.size() == nums.length) {
+            result.add(new ArrayList<>(temp));
+        } else {
+            for (int i = 0; i < nums.length; i++) {
+                if (visited[i]) {
+                    continue;
+                }
+                visited[i] = true;
+                temp.add(nums[i]);
+                helper(nums, result, temp, visited);
+                temp.remove(temp.size() - 1);
+                visited[i] = false;
+                while (i < nums.length - 1 && nums[i] == nums[i + 1]) {
+                    i++;
+                }
+            }
+        }
+    }
+
+
 }

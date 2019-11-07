@@ -1,9 +1,6 @@
 package com.github.leetcode.hard;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -11,7 +8,7 @@ import java.util.Set;
  * @Description: Design and implement a data structure for Least Frequently Used (LFU) cache. It should support the following operations: get and put.
  * <p>
  * get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
- * put(key, value) - Set or insert the value if the key is not already present. When the cache reaches its capacity, it should invalidate the least frequently used item before inserting a new item. For the purpose of this problem, when there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be evicted.
+ * put(key, value) - Set or insert the value if the key is not already present. When the cache reaches its capacity, it should invalidate the least frequently used item before inserting a new item. For the purpose of this problem, when there is a tie (i.e., two or more keys that have the same freq), the least recently used key would be evicted.
  * <p>
  * Follow up:
  * Could you do both operations in O(1) time complexity?
@@ -97,6 +94,78 @@ public class Leetcode460 {
             minFreq = 1;
             freqs.get(1).add(key);
             count++;
+        }
+    }
+
+
+    class LFUCache_ {
+        int capacity;
+        Deque<Node> deque = new LinkedList<>();
+        Map<Integer, Node> map = new HashMap<>();
+        Map<Integer, List<Node>> freqMap = new HashMap<>();
+        int min = 1;
+
+        public LFUCache_(int capacity) {
+            this.capacity = capacity;
+        }
+
+        public int get(int key) {
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                List<Node> oldValueList = freqMap.get(node.freq);
+                oldValueList.remove(node);
+                node.freq++;
+
+                List<Node> valueList = freqMap.getOrDefault(node.freq, new ArrayList<Node>());
+                valueList.add(node);
+                freqMap.put(node.freq, valueList);
+
+                if (freqMap.getOrDefault(min, new ArrayList<>()).size() == 0 && node.freq == min + 1) {
+                    min = node.freq;
+                }
+                return node.val;
+            } else {
+                return -1;
+            }
+        }
+
+        public void put(int key, int value) {
+            if (capacity == 0) {
+                return;
+            }
+            if (map.containsKey(key)) {
+                map.get(key).val = value;
+                get(key);
+                return;
+            }
+            map.put(key, new Node(key, value));
+            addNode(map.get(key));
+            min = 1;
+        }
+
+        public void addNode(Node node) {
+            if (deque.size() == capacity) {
+                List<Node> value = freqMap.get(min);
+                Node cur = value.remove(0);
+                deque.remove(cur);
+                map.remove(cur.key);
+            }
+            List<Node> valueList = freqMap.getOrDefault(node.freq, new ArrayList<Node>());
+            valueList.add(node);
+            freqMap.put(node.freq, valueList);
+            deque.offer(node);
+        }
+
+        class Node {
+            int key;
+            int val;
+            int freq;
+
+            public Node(int key, int val) {
+                this.key = key;
+                this.val = val;
+                this.freq = 1;
+            }
         }
     }
 }

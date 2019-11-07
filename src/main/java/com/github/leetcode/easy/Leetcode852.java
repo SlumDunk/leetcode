@@ -34,5 +34,28 @@ public class Leetcode852 {
         }
         return left;
     }
+
+
+    public int peakIndexInMountainArray__(int[] A) {
+        int n = A.length;
+        int start = 0, end = n - 1;
+        int mid = 0;
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (A[mid] > A[mid - 1]) {//上升边
+                start = mid;
+            } else if (A[mid] > A[mid + 1]) {//下降边
+                end = mid;
+            } else {
+                end = mid;
+            }
+        }
+
+        if (A[start] >= A[end]) {
+            return start;
+        } else {
+            return end;
+        }
+    }
 }
 

@@ -43,4 +43,77 @@ public class Leetcode94 {
         }
         return res;
     }
+
+
+    public List<Integer> inorderTraversal__(TreeNode root) {
+        List<Integer> resultList = new ArrayList<Integer>();
+        if (root == null) {
+            return resultList;
+        } else {
+            //helper(root,resultList);
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode current = root;
+            while (!stack.isEmpty() || current != null) {
+                //先处理左子树
+                while (current != null) {
+                    stack.push(current);
+                    current = current.left;
+                }
+                //处理当前节点
+                current = stack.pop();
+                resultList.add(current.val);
+                //根节点取到了，处理他的右子树
+                current = current.right;
+            }
+            return resultList;
+        }
+    }
+
+
+    public List<Integer> inorderTraversal___(TreeNode root) {
+        List<Integer> resultList = new ArrayList<Integer>();
+        if (root == null) {
+            return resultList;
+        } else {
+            //helper(root,resultList);
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            while (!stack.isEmpty() || root != null) {
+                while (root != null) {
+                    stack.push(root);
+                    root = root.left;
+                }
+                TreeNode cur = stack.pop();
+                resultList.add(cur.val);
+                root = cur.right;
+
+            }
+            return resultList;
+        }
+    }
+
+    /**
+     * 递归版本
+     *
+     * @param node
+     * @param resultList
+     */
+    public void helper(TreeNode node, List<Integer> resultList) {
+        if (node == null) {
+            return;
+        }
+        helper(node.left, resultList);
+
+        resultList.add(node.val);
+
+        helper(node.right, resultList);
+    }
+
+    public static void main(String[] args) {
+        Leetcode94 leetcode94 = new Leetcode94();
+        TreeNode root = new TreeNode(1);
+        TreeNode right = new TreeNode(2);
+        right.left = new TreeNode(3);
+        root.right = right;
+        leetcode94.inorderTraversal___(root);
+    }
 }

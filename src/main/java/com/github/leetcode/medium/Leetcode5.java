@@ -57,6 +57,11 @@ public class Leetcode5 {
         return s.substring(start, end + 1);
     }
 
+    /**
+     * O(N^2)
+     * @param s
+     * @return
+     */
     public String longestPalindrome__(String s) {
         int n = s.length();
         char[] array = s.toCharArray();

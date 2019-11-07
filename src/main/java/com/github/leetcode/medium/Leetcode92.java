@@ -78,4 +78,72 @@ public class Leetcode92 {
         return newHead;
 
     }
+
+    public ListNode reverseBetween__(ListNode head, int m, int n) {
+        //prem postn
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        head = dummy;
+        for (int i = 1; i < m; i++) {
+            head = head.next;
+        }
+        ListNode prem = head;
+        ListNode nodeM = head.next;
+        head = nodeM;
+        for (int i = m; i < n; i++) {
+            head = head.next;
+        }
+        ListNode nodeN = head;
+
+        //postn 作为nodeM的前置节点
+        ListNode prev = head.next;
+        //翻转
+        while (nodeM != null && m <= n) {
+            ListNode tmp = nodeM.next;
+            nodeM.next = prev;
+            prev = nodeM;
+            nodeM = tmp;
+            m++;
+        }
+
+        //翻转结束，调整prem的next指针
+        prem.next = nodeN;
+
+        return dummy.next;
+
+    }
+
+
+    public ListNode reverseBetween___(ListNode head, int m, int n) {
+        //prem postn
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        head = dummy;
+        for (int i = 1; i < m; i++) {
+            if (head == null) {
+                return null;
+            }
+            head = head.next;
+        }
+        ListNode prem = head;
+        ListNode nodeM = head.next;
+
+        ListNode nodeN = nodeM, postN = nodeN.next;
+
+        //走到第n个节点
+        for (int i = m; i < n; i++) {
+            if (postN == null) {
+                return null;
+            }
+            ListNode tmp = postN.next;
+            postN.next = nodeN;
+            nodeN = postN;
+            postN = tmp;
+        }
+        nodeM.next = postN;
+        prem.next = nodeN;
+
+        return dummy.next;
+
+    }
 }

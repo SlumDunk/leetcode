@@ -86,4 +86,75 @@ public class Leetcode51 {
         }
         return chessboard;
     }
+
+
+    /**
+     * O(N!)
+     * @param n
+     * @return
+     */
+    public List<List<String>> solveNQueens_(int n) {
+        List<List<String>> result = new ArrayList<>();
+        if (n == 0) {
+            return result;
+        } else {
+            List<Integer> temp = new ArrayList<Integer>();
+            helper(result, temp, n);
+
+            return result;
+        }
+    }
+
+    public void helper(List<List<String>> result, List<Integer> temp, int n) {
+        if (temp.size() == n) {
+            result.add(generateList(temp));
+        } else {
+            for (int i = 0; i < n; i++) {
+                if (isValid(i, temp)) {
+                    temp.add(i);
+                    helper(result, temp, n);
+                    temp.remove(temp.size() - 1);
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+
+    private List<String> generateList(List<Integer> list) {
+        List<String> result = new ArrayList<>();
+        int len = list.size();
+
+        for (Integer item : list) {
+            StringBuilder buffer = new StringBuilder("");
+            for (int i = 0; i < len; i++) {
+                if (i == item) {
+                    buffer.append("Q");
+                } else {
+                    buffer.append(".");
+                }
+            }
+            result.add(buffer.toString());
+        }
+
+        return result;
+    }
+
+    private boolean isValid(Integer position, List<Integer> list) {
+        int row = list.size();
+
+        if (list.contains(position)) {
+            return false;
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            if (position - row == list.get(i) - i) {
+                return false;
+            }
+            if (position + row == list.get(i) + i) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -2,6 +2,9 @@ package com.github.leetcode.medium;
 
 import com.github.leetcode.vo.TreeNode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author: zerongliu
  * @Date: 10/24/18 20:34
@@ -43,7 +46,7 @@ public class Leetcode129 {
     /**
      * 全局和值
      */
-    int sum;
+    int sum=0;
 
     public int sumNumbers(TreeNode root) {
         if (root == null) {
@@ -70,6 +73,43 @@ public class Leetcode129 {
         if (root.right != null) {
             dfs(root.right, preSum * 10 + root.right.val);
         }
+    }
+
+
+    public int sumNumbers__(TreeNode root) {
+        if (root == null) {
+            return sum;
+        } else {
+            List<Integer> temp = new ArrayList<Integer>();
+            helper(root, temp);
+            return sum;
+        }
+    }
+
+    public void helper(TreeNode node, List<Integer> temp) {
+        if (node != null && node.left == null && node.right == null) {
+            temp.add(node.val);
+            sum += list2sum(temp);
+            temp.remove(temp.size() - 1);
+        } else {
+            if (node == null) {
+                return;
+            } else {
+                temp.add(node.val);
+                helper(node.left, temp);
+                helper(node.right, temp);
+                temp.remove(temp.size() - 1);
+            }
+        }
+    }
+
+    public int list2sum(List<Integer> temp) {
+        int subsum = 0;
+
+        for (Integer val : temp) {
+            subsum = (subsum * 10 + val);
+        }
+        return subsum;
     }
 
 }

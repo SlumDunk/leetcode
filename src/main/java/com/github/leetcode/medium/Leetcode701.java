@@ -58,4 +58,27 @@ public class Leetcode701 {
         }
         return root;
     }
+
+
+    public TreeNode insertIntoBST__(TreeNode root, int val) {
+        helper(root, val);
+        return root;
+    }
+
+    public TreeNode helper(TreeNode node, int val) {
+        if (node.val > val) {
+            if (node.left != null) {
+                helper(node.left, val);
+            } else {
+                node.left = new TreeNode(val);
+            }
+        } else if (node.val < val) {
+            if (node.right != null) {
+                helper(node.right, val);
+            } else {
+                node.right = new TreeNode(val);
+            }
+        }
+        return null;
+    }
 }

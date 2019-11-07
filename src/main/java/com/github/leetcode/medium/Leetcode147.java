@@ -50,4 +50,24 @@ public class Leetcode147 {
         return sortedHead.next;
     }
 
+
+    public ListNode insertionSortList__(ListNode head) {
+
+        ListNode dummy = new ListNode(0);
+        while (head != null) {
+            ListNode node = dummy;
+
+            while (node.next != null && node.next.val < head.val) {
+                node = node.next;
+            }
+            ListNode tmp = head.next;
+            ListNode tmp2 = node.next;
+            node.next = head;
+            head.next = tmp2;
+            head = tmp;
+        }
+
+        return dummy.next;
+    }
+
 }

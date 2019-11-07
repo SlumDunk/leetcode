@@ -41,4 +41,25 @@ public class Leetcode151 {
         return buffer.toString();
     }
 
+    public String reverseWords_(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        } else {
+            s = s.trim();
+            String[] words = s.split(" ");
+            StringBuilder buffer = new StringBuilder();
+
+            for (int i = words.length - 1; i >= 0; i--) {
+                if (words[i].equals("")) {
+                    continue;
+                }
+                buffer.append(words[i]);
+                if (i != 0) {
+                    buffer.append(" ");
+                }
+            }
+            return buffer.toString();
+        }
+    }
+
 }

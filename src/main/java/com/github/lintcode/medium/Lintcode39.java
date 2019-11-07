@@ -52,4 +52,60 @@ public class Lintcode39 {
             end--;
         }
     }
+
+
+    /**
+     * @param nums: An integer array
+     * @return: nothing
+     */
+    public void recoverRotatedSortedArray__(List<Integer> nums) {
+        // write your code here
+        int n = nums.size();
+        int index = -1;
+        //先找到rotate的位置
+        for (int i = 0; i < n - 1; i++) {
+            if (nums.get(i) > nums.get(i + 1)) {
+                index = i;
+            }
+        }
+
+        if (index == -1) {
+            return;
+        }
+
+        //翻转左半部分
+        int start = 0, end = index;
+        Integer temp;
+        while (start < end) {
+            temp = nums.get(end);
+            nums.set(end, nums.get(start));
+            nums.set(start, temp);
+            start++;
+            end--;
+        }
+
+        //翻转右半部分
+        start = index + 1;
+        end = n - 1;
+        while (start < end) {
+            temp = nums.get(end);
+            nums.set(end, nums.get(start));
+            nums.set(start, temp);
+            start++;
+            end--;
+        }
+
+
+        //翻转整个串
+        start = 0;
+        end = n - 1;
+        while (start < end) {
+            temp = nums.get(end);
+            nums.set(end, nums.get(start));
+            nums.set(start, temp);
+            start++;
+            end--;
+        }
+
+    }
 }

@@ -3,7 +3,7 @@ package com.github.leetcode.hard;
 /**
  * @Author: zerongliu
  * @Date: 3/19/19 19:29
- * @Description: The Numbers table keeps the value of number and its frequency.
+ * @Description: The Numbers table keeps the value of number and its freq.
  * <p>
  * +----------+-------------+
  * |  Number  |  Frequency  |

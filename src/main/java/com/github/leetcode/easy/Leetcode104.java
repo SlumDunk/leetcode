@@ -31,4 +31,20 @@ public class Leetcode104 {
             return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
         }
     }
+
+    public int maxDepth__(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            return helper(root);
+        }
+    }
+
+    public int helper(TreeNode node) {
+        if (node == null) {
+            return 0;
+        } else {
+            return 1 + Math.max(helper(node.left), helper(node.right));
+        }
+    }
 }

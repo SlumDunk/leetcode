@@ -38,4 +38,20 @@ public class Leetcode186 {
             str[right--] = temp;
         }
     }
+
+    public void reverseWords_(char[] s) {
+        //先翻转整个串， 再逐个翻转单词
+        reverse(s, 0, s.length - 1);
+
+        int nxt = 0;
+        while (nxt < s.length) {
+            int l = nxt;
+            while (nxt < s.length && s[nxt] != ' ') {
+                nxt++;
+            }
+            reverse(s, l, nxt - 1);
+            //跳过空格
+            nxt++;
+        }
+    }
 }

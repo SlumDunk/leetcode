@@ -63,4 +63,43 @@ public class Leetcode170 {
         }
     }
 
+    class TwoSum_ {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        /**
+         * Initialize your data structure here.
+         */
+        public TwoSum_() {
+
+        }
+
+        /**
+         * Add the number to an internal data structure..
+         */
+        public void add(int number) {
+            map.put(number, map.getOrDefault(number, 0) + 1);
+        }
+
+        /**
+         * Find if there exists any pair of numbers which sum is equal to the value.
+         */
+        public boolean find(int value) {
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                Integer key = entry.getKey();
+                Integer val = entry.getValue();
+                if (value - key == key) {
+                    if (val > 1) {
+                        return true;
+                    }
+                } else if (map.containsKey(value - key)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+
 }

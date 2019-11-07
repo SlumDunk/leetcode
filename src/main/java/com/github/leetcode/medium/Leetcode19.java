@@ -45,4 +45,58 @@ public class Leetcode19 {
         }
         return head;
     }
+
+    public ListNode removeNthFromEnd_(ListNode head, int n) {
+        //传统做法，先根据长度找到位置，然后再干掉
+        //遍历一遍那就两个指针配合
+        if (head == null) {
+            return head;
+        } else {
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            ListNode preDelete = dummy;
+            for (int i = 0; i < n; i++) {
+                if (head == null) {
+                    return null;
+                }
+                head = head.next;
+            }
+
+            while (head != null) {
+                head = head.next;
+                preDelete = preDelete.next;
+            }
+
+            preDelete.next = preDelete.next.next;
+            return dummy.next;
+
+        }
+    }
+
+    public ListNode removeNthFromEnd__(ListNode head, int n) {
+        //传统做法，先根据长度找到位置，然后再干掉
+        //遍历一遍那就两个指针配合
+        if (head == null) {
+            return head;
+        } else {
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            ListNode preDelete = dummy;
+            for (int i = 1; i < n; i++) {
+                if (head == null) {
+                    return null;
+                }
+                head = head.next;
+            }
+
+            while (head.next != null) {
+                head = head.next;
+                preDelete = preDelete.next;
+            }
+
+            preDelete.next = preDelete.next.next;
+            return dummy.next;
+
+        }
+    }
 }

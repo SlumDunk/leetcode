@@ -48,6 +48,7 @@ public class Leetcode876 {
         }
         return slow;
     }
+
     static class ListNode {
 
         int val;
@@ -58,6 +59,22 @@ public class Leetcode876 {
             val = x;
         }
 
+    }
+
+    public ListNode middleNode__(ListNode head) {
+        if (head == null) {
+            return head;
+        } else {
+            ListNode slow = head;
+            ListNode fast = head;
+
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+
+            return slow;
+        }
     }
 }
 

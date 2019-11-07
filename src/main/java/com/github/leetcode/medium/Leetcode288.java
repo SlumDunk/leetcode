@@ -1,7 +1,9 @@
 package com.github.leetcode.medium;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author: zerongliu
@@ -63,4 +65,48 @@ public class Leetcode288 {
             return !map.containsKey(getKey(word)) || map.get(getKey(word)).equals(word);
         }
     }
+
+    class ValidWordAbbr_ {
+        Map<String, Set<String>> map = new HashMap<>();
+
+        /**
+         * O(n)
+         * @param dictionary
+         */
+        public ValidWordAbbr_(String[] dictionary) {
+            if (dictionary == null || dictionary.length == 0) {
+                return;
+            } else {
+                for (String word : dictionary) {
+                    String key = getKey(word);
+                    Set<String> value = map.getOrDefault(key, new HashSet<String>());
+                    value.add(word);
+                    map.put(key, value);
+                }
+            }
+        }
+
+        public boolean isUnique(String word) {
+            Set<String> valueSet = map.get(getKey(word));
+            if (valueSet == null) {
+                return true;
+            }
+            if (valueSet.size() > 1 || (valueSet.size() == 1 && !valueSet.contains(word))) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        private String getKey(String word) {
+            if (word == null || word.length() == 0) {
+                return "";
+            }
+            char[] array = word.toCharArray();
+            int count = array.length >= 2 ? array.length - 2 : 0;
+            String key = "" + array[0] + count + array[array.length - 1];
+            return key;
+        }
+    }
+
 }

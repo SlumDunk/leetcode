@@ -64,4 +64,35 @@ public class Leetcode216 {
         find(1, n, temp, 0, results, k);
         return results;
     }
+
+
+    /**
+     * O(n^k)
+     * @param k
+     * @param n
+     * @return
+     */
+    public List<List<Integer>> combinationSum3__(int k, int n) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+
+        helper(result, temp, k, n, 1);
+        return result;
+    }
+
+    public void helper(List<List<Integer>> result, List<Integer> temp, int k, int n, int pos) {
+        if (temp.size() == k && n == 0) {
+            result.add(new ArrayList<>(temp));
+        } else {
+            for (int i = pos; i <= 9; i++) {
+                if (i > n) {
+                    return;
+                } else {
+                    temp.add(i);
+                    helper(result, temp, k, n - i, i + 1);
+                    temp.remove(temp.size() - 1);
+                }
+            }
+        }
+    }
 }

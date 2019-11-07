@@ -91,4 +91,69 @@ public class Leetcode1001 {
         }
         return ans;
     }
+
+
+    /**
+     * 包括本体 9个方向
+     */
+    int[][] dirs_ = new int[][]{
+            {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {0, 0}
+    };
+
+    public int[] gridIllumination__(int N, int[][] lamps, int[][] queries) {
+        Map<Integer, Integer> m1 = new HashMap<>();
+
+        Map<Integer, Integer> m2 = new HashMap<>();
+
+        Map<Integer, Integer> m3 = new HashMap<>();
+
+        Map<Integer, Integer> m4 = new HashMap<>();
+
+        Map<Integer, Boolean> position = new HashMap<>();
+
+        for (int[] lamp : lamps) {
+            int x = lamp[0];
+            int y = lamp[1];
+
+            m1.put(x, m1.getOrDefault(x, 0) + 1);
+            m2.put(y, m2.getOrDefault(y, 0) + 1);
+            m3.put(x - y, m3.getOrDefault(x - y, 0) + 1);
+            m4.put(x + y, m4.getOrDefault(x + y, 0) + 1);
+
+            position.put(x * N + y, true);
+        }
+
+        int[] result = new int[queries.length];
+        int idx = 0;
+        for (int[] query : queries) {
+            int x = query[0];
+            int y = query[1];
+
+            if (m1.getOrDefault(x, 0) > 0 || m2.getOrDefault(y, 0) > 0 || m3.getOrDefault(x - y, 0) > 0 || m4.getOrDefault(x + y, 0) > 0) {
+                result[idx++] = 1;
+            } else {
+                result[idx++] = 0;
+            }
+
+            for (int i = 0; i < dirs.length; i++) {
+                int nx = x + dirs[i][0];
+                int ny = y + dirs[i][1];
+
+                if (nx < 0 || nx >= N || ny < 0 || ny >= N) {
+                    continue;
+                }
+
+                if (position.getOrDefault(nx * N + ny, false)) {
+                    m1.put(nx, m1.getOrDefault(nx, 0) - 1);
+                    m2.put(ny, m2.getOrDefault(ny, 0) - 1);
+                    m3.put(nx - ny, m3.getOrDefault(nx - ny, 0) - 1);
+                    m4.put(nx + ny, m4.getOrDefault(nx + ny, 0) - 1);
+
+                    position.put(nx * N + ny, false);
+                }
+            }
+
+        }
+        return result;
+    }
 }

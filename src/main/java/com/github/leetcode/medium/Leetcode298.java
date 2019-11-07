@@ -41,7 +41,7 @@ import com.github.leetcode.vo.TreeNode;
  * Explanation: Longest consecutive sequence path is 2-3, not 3-2-1, so return 2.
  */
 public class Leetcode298 {
-    private int longest;
+//    private int longest;
 
     public int longestConsecutive(TreeNode root) {
         longest = 0;
@@ -66,6 +66,43 @@ public class Leetcode298 {
         longest = Math.max(longest, subtreeLongest);
 
         return subtreeLongest;
+    }
+
+
+    int longest = 1;
+
+    public int longestConsecutive_(TreeNode root) {
+        //from parent to child
+        if (root == null) {
+            return 0;
+        } else {
+            helper_(root);
+            return longest;
+        }
+    }
+
+    public int helper_(TreeNode node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int left = helper_(node.left);
+            int right = helper_(node.right);
+
+            int len = 1;
+            //
+            if (left != 0 && node.left.val == node.val + 1) {
+                len = Math.max(len, left + 1);
+
+
+            }
+            if (right != 0 && node.right.val == node.val + 1) {
+                len = Math.max(len, right + 1);
+
+            }
+            longest = Math.max(longest, len);
+
+            return len;
+        }
     }
 
 }

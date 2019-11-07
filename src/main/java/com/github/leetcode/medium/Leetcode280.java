@@ -20,4 +20,25 @@ public class Leetcode280 {
             }
         }
     }
+
+    public void wiggleSort__(int[] nums) {
+
+        for (int i = 1; i < nums.length; i++) {
+            if (i % 2 == 1) {//偶数位置
+                if (nums[i] < nums[i - 1]) {
+                    swap(nums, i, i - 1);
+                }
+            } else {//奇数位置
+                if (nums[i] > nums[i - 1]) {
+                    swap(nums, i, i - 1);
+                }
+            }
+        }
+    }
+
+    private void swap(int[] nums, int idx1, int idx2) {
+        int temp = nums[idx2];
+        nums[idx2] = nums[idx1];
+        nums[idx1] = temp;
+    }
 }

@@ -42,7 +42,7 @@ import java.util.*;
 public class Leetcode126 {
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         List<List<String>> result = new ArrayList<>();
-        if (wordList == null||!wordList.contains(endWord)) {
+        if (wordList == null || !wordList.contains(endWord)) {
             result.add(new ArrayList<>());
             return result;
         }
@@ -151,5 +151,105 @@ public class Leetcode126 {
         char[] chars = current.toCharArray();
         chars[index] = c;
         return new String(chars);
+    }
+
+
+    /**
+     * O(N*26^l) l is the average length of word
+     * @param beginWord
+     * @param endWord
+     * @param wordList
+     * @return
+     */
+    public List<List<String>> findLadders_(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> result = new ArrayList<>();
+        if (wordList == null || !wordList.contains(endWord)) {
+            return result;
+        }
+
+        wordList.add(beginWord);
+
+        Set<String> wordSet = new HashSet<>(wordList);
+
+        Map<String, List<String>> map = new HashMap<>();
+
+        Map<String, Integer> distance = new HashMap<>();
+
+        bfs(map, distance, beginWord, wordSet);
+
+        List<String> temp = new ArrayList<>();
+
+        dfs_(result, temp, endWord, beginWord, distance, map);
+
+        return result;
+    }
+
+
+    public void dfs_(List<List<String>> result, List<String> temp, String current, String beginWord, Map<String, Integer> distance, Map<String, List<String>> map) {
+        temp.add(current);
+        if (current.equals(beginWord)) {
+            result.add(reverse(temp));
+        } else {
+            for (String previous : map.getOrDefault(current, new ArrayList<>())) {
+                if (distance.containsKey(previous) && distance.get(current) == distance.get(previous) + 1) {
+                    dfs_(result, temp, previous, beginWord, distance, map);
+                }
+            }
+        }
+        temp.remove(temp.size() - 1);
+    }
+
+    public void bfs(Map<String, List<String>> map, Map<String, Integer> distance, String beginWord, Set<String> wordSet) {
+        Queue<String> queue = new LinkedList<>();
+
+        queue.add(beginWord);
+        distance.put(beginWord, 0);
+
+        while (!queue.isEmpty()) {
+            String current = queue.poll();
+
+            for (String word : getWordList(current, wordSet)) {
+                List<String> prevWords = map.getOrDefault(word, new ArrayList<>());
+                prevWords.add(current);
+                map.put(word, prevWords);
+                if (!distance.containsKey(word)) {
+                    distance.put(word, distance.get(current) + 1);
+                    queue.add(word);
+                }
+            }
+        }
+
+
+    }
+
+    private List<String> getWordList(String current, Set<String> wordSet) {
+        List<String> words = new ArrayList<String>();
+        for (int i = 0; i < current.length(); i++) {
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (c == current.charAt(i)) {
+                    continue;
+                } else {
+                    String word = replace_(current, i, c);
+                    if (wordSet.contains(word)) {
+                        words.add(word);
+                    }
+                }
+            }
+        }
+        return words;
+    }
+
+    private String replace_(String current, int i, char c) {
+        char[] array = current.toCharArray();
+        array[i] = c;
+        return new String(array);
+    }
+
+    private List<String> reverse(List<String> list) {
+        List<String> result = new ArrayList<>();
+        for (int i = list.size() - 1; i >= 0; i--) {
+            result.add(list.get(i));
+        }
+        return result;
     }
 }

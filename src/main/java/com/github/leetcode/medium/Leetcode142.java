@@ -43,4 +43,35 @@ public class Leetcode142 {
         }
     }
 
+    public ListNode detectCycle_(ListNode head) {
+        if (head == null || head.next == null) {
+            return null;
+        } else {
+            //先找环
+            ListNode slow = head, fast = head;
+            Boolean flag = false;
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+
+                if (slow == fast) {
+                    flag = true;
+                    break;
+                }
+            }
+
+            //再找环开始的位置
+            if (flag) {
+                slow = head;
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return fast;
+            } else {
+                return null;
+            }
+        }
+    }
+
 }

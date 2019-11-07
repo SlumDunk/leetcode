@@ -2,6 +2,7 @@ package com.github.leetcode.hard;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: zerongliu
@@ -74,5 +75,72 @@ public class Leetcode76 {
             }
             return flag == true ? s.substring(left, right + 1) : "";
         }
+    }
+
+
+    /**
+     * O(N)
+     * @param s
+     * @param t
+     * @return
+     */
+    public String minWindow_(String s, String t) {
+        if (t == null || t.length() == 0) {
+            return "";
+        }
+        char[] arrayS = s.toCharArray();
+        char[] arrayT = t.toCharArray();
+
+        Map<Character, Integer> mapS = new HashMap<>();
+        Map<Character, Integer> mapT = new HashMap<>();
+
+        //number of unique characters in t
+        int k = 0;
+
+        for (char c : arrayT) {
+            mapT.put(c, mapT.getOrDefault(c, 0) + 1);
+            if (mapT.get(c) == 1) {
+                k++;
+            }
+        }
+
+        //number of unique character the current window contains
+        int now = 0;
+
+        int ansl = -1, ansr = -1;
+
+        int l, r = 0;
+        for (l = 0; l < arrayS.length; l++) {
+            while (r < arrayS.length && now < k) {
+                char c = arrayS[r];
+                mapS.put(c, mapS.getOrDefault(c, 0) + 1);
+
+                if (mapS.get(c).equals(mapT.get(c))) {
+                    now++;
+                }
+                r++;
+            }
+
+            if (now == k) {
+                if (ansl == -1 || r - l < ansr - ansl) {
+                    ansl = l;
+                    ansr = r;
+                }
+            }
+
+            //slide window
+            mapS.put(arrayS[l], mapS.get(arrayS[l]) - 1);
+            //if element l is the critical one
+            if (mapS.get(arrayS[l]) == mapT.getOrDefault(arrayS[l], 0) - 1) {
+                now--;
+            }
+        }
+
+        if (ansl == -1) {
+            return "";
+        } else {
+            return s.substring(ansl, ansr);
+        }
+
     }
 }

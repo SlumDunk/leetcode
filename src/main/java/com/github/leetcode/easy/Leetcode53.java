@@ -18,7 +18,7 @@ public class Leetcode53 {
             return 0;
         } else {
             int len = nums.length;
-            //[][0]加上第n-1个数的累积和，[][1]不加上第n-1个数的累积和
+            //跟前面拼一起的累积和，以及不跟前面拼一起的累积和
             int[][] dp = new int[len][2];
             dp[0][0] = nums[0];
             dp[0][1] = nums[0];
@@ -26,12 +26,20 @@ public class Leetcode53 {
             for (int i = 1; i < len; i++) {
                 dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]) + nums[i];
                 dp[i][1] = nums[i];
-                max = Math.max(dp[i][1],Math.max(dp[i][0], max));
+                max = Math.max(dp[i][1], Math.max(dp[i][0], max));
             }
             return max;
         }
     }
 
+    /**
+     * O(NlgN) left sub sum, right sub sum, cross sub sum
+     *
+     * @param nums
+     * @param left
+     * @param right
+     * @return
+     */
     private int maxSubArraySum(int[] nums, int left, int right) {
         if (left == right) {
             return nums[left];
@@ -59,5 +67,65 @@ public class Leetcode53 {
         int subResult = Math.max(leftSub, rightSub);
 
         return Math.max(subResult, leftSum + rightSum);
+    }
+
+
+    /**
+     * O(N) TC
+     * O(1) SC
+     *
+     * @param nums
+     * @return
+     */
+    public int maxSubArray_(int[] nums) {
+        int len = nums.length;
+        int max = nums[0];
+        int curSum = nums[0];
+
+        for (int i = 1; i < len; i++) {
+            curSum = Math.max(nums[i], curSum + nums[i]);
+            max = Math.max(max, curSum);
+        }
+        return max;
+    }
+
+
+    /**
+     * Initialize:
+     * max_so_far = 0
+     * max_ending_here = 0
+     * <p>
+     * Loop for each element of the array
+     * (a) max_ending_here = max_ending_here + a[i]
+     * (b) if(max_ending_here < 0)
+     * max_ending_here = 0
+     * (c) if(max_so_far < max_ending_here)
+     * max_so_far = max_ending_here
+     * return max_so_far
+     *
+     * @param nums
+     * @return
+     */
+    public int maxSubArray__(int[] nums) {
+        int maxSoFar = Integer.MIN_VALUE;
+        int maxEndHere = 0;
+        int start = 0, end = 0;
+
+        int s = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            maxEndHere += nums[i];
+            if (maxSoFar < maxEndHere) {
+                maxSoFar = maxEndHere;
+                start = s;
+                end = i;
+            }
+            if (maxEndHere < 0) {
+                maxEndHere = 0;
+                s = i + 1;
+            }
+        }
+        System.out.println("start:" + start + ", end:" + end);
+        return maxSoFar;
     }
 }

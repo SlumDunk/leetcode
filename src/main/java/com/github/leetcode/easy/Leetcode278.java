@@ -42,4 +42,31 @@ public class Leetcode278 {
     private boolean isBadVersion(int mid) {
         return true;
     }
+
+
+    /**
+     * @param n
+     * @return
+     */
+    public int firstBadVersion__(int n) {
+        //找到第一个坏的version
+        int start = 0, end = n;
+        int mid = 0;
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (isBadVersion(mid)) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+
+        if (isBadVersion(start)) {
+            return start;
+        } else if (isBadVersion(end)) {
+            return end;
+        }
+
+        return -1;
+    }
 }

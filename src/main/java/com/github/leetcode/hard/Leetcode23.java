@@ -2,6 +2,10 @@ package com.github.leetcode.hard;
 
 import com.github.leetcode.vo.ListNode;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /**
  * @Author: zerongliu
  * @Date: 1/4/19 14:53
@@ -72,5 +76,31 @@ public class Leetcode23 {
             curNode = curNode.next;
         }
         return dummyHead.next;
+    }
+
+    public ListNode mergeKLists__(ListNode[] lists) {
+        Queue<ListNode> queue = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
+            public int compare(ListNode a, ListNode b) {
+                return Integer.compare(a.val, b.val);
+            }
+        });
+
+        ListNode dummy = new ListNode(0);
+        for (ListNode head : lists) {
+            if (head != null) {
+                queue.add(head);
+            }
+        }
+        ListNode node = dummy;
+        while (!queue.isEmpty()) {
+            ListNode head = queue.poll();
+            node.next = head;
+            node = head;
+            if (head.next != null) {
+                queue.add(head.next);
+            }
+        }
+
+        return dummy.next;
     }
 }

@@ -29,4 +29,22 @@ public class Leetcode203 {
         currentNode.next = null;
         return newHead.next;
     }
+
+    public ListNode removeElements__(ListNode head, int val) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode pre = dummy;
+        while (head != null) {
+            if (head.val == val) {
+                head = head.next;
+            } else {
+                pre.next = head;
+                pre = head;
+                head = head.next;
+            }
+        }
+        pre.next = null;
+        return dummy.next;
+    }
 }

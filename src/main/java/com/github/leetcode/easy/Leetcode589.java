@@ -39,4 +39,66 @@ public class Leetcode589 {
         return result;
     }
 
+
+    public List<Integer> preorder__(Node root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        } else {
+            // helper(root,result);
+            Stack<Node> stack = new Stack<Node>();
+            stack.push(root);
+            while (!stack.isEmpty()) {
+                Node node = stack.pop();
+                result.add(node.val);
+                if (node.children != null) {
+                    for (int i = node.children.size() - 1; i >= 0; i--) {
+                        stack.push(node.children.get(i));
+                    }
+                }
+            }
+            return result;
+        }
+    }
+
+    public void helper(Node node, List<Integer> result) {
+        if (node == null) {
+            return;
+        }
+        result.add(node.val);
+        if (node.children != null) {
+            for (Node child : node.children) {
+                helper(child, result);
+            }
+        }
+
+    }
+
+    public List<Integer> preorder___(Node root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        } else {
+            // helper(root,result);
+            Stack<Node> stack = new Stack<Node>();
+            while (!stack.isEmpty() || root != null) {
+
+                if (root != null) {
+                    result.add(root.val);
+                    if (root.children != null) {
+                        for (int i = root.children.size() - 1; i >= 0; i--) {
+                            stack.push(root.children.get(i));
+                        }
+                    }
+                    root = null;
+                }
+
+                if (!stack.isEmpty()) {
+                    root = stack.pop();
+                }
+            }
+            return result;
+        }
+    }
+
 }

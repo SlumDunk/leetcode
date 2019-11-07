@@ -55,4 +55,48 @@ public class Leetcode33 {
             return -1;
         }
     }
+
+
+    public int search__(int[] nums, int target) {
+        int n = nums.length;
+        if (n == 0) {
+            return -1;
+        }
+        int start = 0, end = n - 1;
+        int mid = 0;
+
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            //先判断当前mid位于哪一段
+            if (nums[mid] > nums[start] && nums[mid] > nums[end]) {
+                if (nums[mid] >= target && nums[start] <= target) {
+                    end = mid;
+                } else {
+                    start = mid;
+                }
+            } else if (nums[mid] < nums[start] && nums[mid] < nums[end]) {
+                if (target >= nums[mid] && target <= nums[end]) {
+                    start = mid;
+                } else {
+                    end = mid;
+                }
+            } else {
+                if (nums[mid] > target) {
+                    end = mid;
+                } else if (nums[mid] < target) {
+                    start = mid;
+                } else {
+                    return mid;
+                }
+            }
+        }
+
+        if (nums[start] == target) {
+            return start;
+        } else if (nums[end] == target) {
+            return end;
+        } else {
+            return -1;
+        }
+    }
 }

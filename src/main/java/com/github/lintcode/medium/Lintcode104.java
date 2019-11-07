@@ -14,6 +14,7 @@ import java.util.Queue;
  */
 public class Lintcode104 {
     /**
+     * O(M*N*lg(M*N))
      * @param lists: a list of ListNode
      * @return: The head of one sorted list.
      */

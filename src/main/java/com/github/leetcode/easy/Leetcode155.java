@@ -78,4 +78,43 @@ public class Leetcode155 {
             return min;
         }
     }
+
+
+    class MinStack_ {
+
+        Stack<Integer> stack = new Stack<Integer>();
+        /**
+         * int 和 Integer比较不同
+         */
+        int min = Integer.MAX_VALUE;
+
+        /**
+         * initialize your data structure here.
+         */
+        public MinStack_() {
+
+        }
+
+        public void push(int x) {
+            if (x <= min) {
+                stack.push(min);
+                min = x;
+            }
+            stack.push(x);
+        }
+
+        public void pop() {
+            if (stack.pop() == min) {
+                min = stack.pop();
+            }
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+            return min;
+        }
+    }
 }

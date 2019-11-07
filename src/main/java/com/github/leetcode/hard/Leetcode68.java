@@ -110,4 +110,63 @@ public class Leetcode68 {
         }
         return result;
     }
+
+
+    /**
+     * O(N)
+     *
+     * @param words
+     * @param maxWidth
+     * @return
+     */
+    public List<String> fullJustify_(String[] words, int maxWidth) {
+        List<String> result = new ArrayList<>();
+        int len = words.length;
+        //length of current line
+        int curLen = 0;
+        int startWord = 0;
+
+        for (int i = 0; i <= len; i++) {
+            //fill in one line first
+            if (i == len || curLen + words[i].length() + i - startWord > maxWidth) {
+                StringBuilder buffer = new StringBuilder();
+                int spaceCnt = maxWidth - curLen;
+                int spaceSlots = i - startWord - 1;
+
+                //only one word or the last word
+                if (spaceSlots == 0 || i == len) {
+                    for (int j = startWord; j < i; j++) {
+                        buffer.append(words[j]);
+                        if (j != i - 1) {
+                            appendSpace(buffer, 1);
+                        }
+                    }
+                    appendSpace(buffer, maxWidth - buffer.length());
+                } else {
+                    int spaceEach = spaceCnt / spaceSlots;
+                    //could not divide evenly
+                    int spaceExtra = spaceCnt % spaceSlots;
+                    for (int j = startWord; j < i; j++) {
+                        buffer.append(words[j]);
+                        if (j != i - 1) {
+                            appendSpace(buffer, spaceEach + (j - startWord < spaceExtra ? 1 : 0));
+                        }
+                    }
+                }
+                result.add(buffer.toString());
+                curLen = 0;
+                startWord = i;
+            }
+            if (i < len) {
+                curLen += words[i].length();
+            }
+        }
+        return result;
+    }
+
+    private void appendSpace(StringBuilder buffer, int cnt) {
+        for (int i = 0; i < cnt; i++) {
+            buffer.append(" ");
+        }
+    }
 }

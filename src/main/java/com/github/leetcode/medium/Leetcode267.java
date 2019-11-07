@@ -70,4 +70,92 @@ public class Leetcode267 {
             }
         }
     }
+
+
+    public List<String> generatePalindromes_(String s) {
+        List<String> result = new ArrayList<>();
+        if (s == null || s.length() == 0) {
+            return result;
+        } else {
+            List<Character> temp = new ArrayList<>();
+            Map<Character, Integer> map = new HashMap<>();
+            List<Character> list = new ArrayList<>();
+
+            char[] array = s.toCharArray();
+            int odd = 0;
+            //count the number of each Character
+            for (char item : array) {
+                if (map.containsKey(item)) {
+                    map.put(item, map.get(item) + 1);
+                } else {
+                    map.put(item, 1);
+                }
+                odd += (map.get(item) % 2 == 0 ? -1 : 1);
+            }
+
+            if (odd > 1) {
+                return result;
+            }
+            String mid = "";
+            for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+                Character key = entry.getKey();
+                Integer value = entry.getValue();
+                if (value % 2 == 1) {
+                    mid += key;
+                }
+
+                for (int i = 0; i < value / 2; i++) {
+                    list.add(key);
+                }
+
+            }
+
+            boolean[] visited = new boolean[list.size()];
+            helper(result, list, temp, visited, mid);
+            return result;
+        }
+    }
+
+    public void helper(List<String> result, List<Character> list, List<Character> temp, boolean[] visited, String mid) {
+        if (temp.size() == list.size()) {
+            result.add(list2str(temp, mid));
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                if (visited[i]) {
+                    continue;
+                }
+                visited[i] = true;
+                temp.add(list.get(i));
+                helper(result, list, temp, visited, mid);
+                temp.remove(temp.size() - 1);
+                visited[i] = false;
+
+                while (i < list.size() - 1 && list.get(i) == list.get(i + 1)) {
+                    i++;
+                }
+            }
+        }
+    }
+
+    private boolean isPalindorme(List<Character> list) {
+        int left = 0, right = list.size() - 1;
+
+        while (left < right) {
+            if (list.get(left) != list.get(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    private String list2str(List<Character> list, String mid) {
+        StringBuilder buffer = new StringBuilder("");
+        for (Character item : list) {
+            buffer.append(item);
+        }
+
+        return buffer.toString() + mid + buffer.reverse().toString();
+    }
 }

@@ -58,4 +58,45 @@ public class Leetcode79 {
         isVisited[row][column] = false;
         return false;
     }
+
+    int[][] dirs = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+    /**
+     * O(m*n*4^k) k为最大的递归深度，为word的长度
+     *
+     * @param board
+     * @param word
+     * @return
+     */
+    public boolean exist_(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+
+        boolean[][] visited = new boolean[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (helper(board, word, i, j, 0, visited)) return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean helper(char[][] board, String word, int row, int col, int index, boolean[][] visited) {
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length
+                || visited[row][col] || board[row][col] != word.charAt(index))
+            return false;
+        if (index == word.length() - 1) return true;
+
+        index++;
+        visited[row][col] = true;
+        for (int[] dir : dirs) {
+            if (helper(board, word, row + dir[0], col + dir[1], index, visited)) {
+                return true;
+            }
+        }
+        visited[row][col] = false;
+        return false;
+    }
 }

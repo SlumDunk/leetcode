@@ -77,4 +77,42 @@ public class Leetcode257 {
         }
         return buffer.toString();
     }
+
+
+    public List<String> binaryTreePaths__(TreeNode root) {
+        List<String> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        } else {
+            List<Integer> temp = new ArrayList<>();
+            helper(root, temp, result);
+            return result;
+        }
+    }
+
+    public void helper(TreeNode node, List<Integer> temp, List<String> result) {
+        if (node != null && node.left == null && node.right == null) {
+            temp.add(node.val);
+            result.add(list2str(temp));
+            temp.remove(temp.size() - 1);
+        } else {
+            if (node == null) {
+                return;
+            } else {
+                temp.add(node.val);
+                helper(node.left, temp, result);
+                helper(node.right, temp, result);
+                temp.remove(temp.size() - 1);
+            }
+        }
+    }
+
+    public String list2str(List<Integer> temp) {
+        StringBuilder buffer = new StringBuilder("");
+        for (Integer item : temp) {
+            buffer.append(item);
+            buffer.append("->");
+        }
+        return buffer.substring(0, buffer.length() - 2);
+    }
 }

@@ -64,4 +64,35 @@ public class Leetcode38 {
         }
         return curRes;
     }
+
+
+    /**
+     * O(n*l) l is the average length of str
+     * @param n
+     * @return
+     */
+    public String countAndSay_(int n) {
+        String oldStr = "1";
+
+        while (n > 1) {
+            StringBuilder buffer = new StringBuilder();
+
+            char[] oldArray = oldStr.toCharArray();
+
+            for (int i = 0; i < oldArray.length; i++) {
+                int cnt = 1;
+                while (i < oldArray.length - 1 && oldArray[i] == oldArray[i + 1]) {
+                    cnt++;
+                    i++;
+                }
+
+                buffer.append(cnt);
+                buffer.append(oldArray[i]);
+            }
+            oldStr = buffer.toString();
+            n--;
+        }
+
+        return oldStr;
+    }
 }

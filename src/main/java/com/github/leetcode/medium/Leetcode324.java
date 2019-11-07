@@ -36,4 +36,19 @@ public class Leetcode324 {
             if (j < nums.length) nums[j] = nums_copy[q--];
         }
     }
+
+    public void wiggleSort__(int[] nums) {
+        Arrays.sort(nums);
+        int[] copy = new int[nums.length];
+        System.arraycopy(nums, 0, copy, 0, nums.length);
+
+        int p = (nums.length - 1) / 2, q = nums.length - 1;
+
+        for (int i = 0, j = 1; i < nums.length; i += 2, j += 2) {
+            nums[i] = copy[p--];
+            if (j < nums.length) {
+                nums[j] = copy[q--];
+            }
+        }
+    }
 }

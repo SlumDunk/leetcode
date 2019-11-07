@@ -54,4 +54,35 @@ public class Leetcode557 {
         }
         return new String(newarrayChar);
     }
+
+
+    public String reverseWords_(String s) {
+        //先对字符串按空格做切分
+        char[] array = s.toCharArray();
+
+        int nxt = 0;
+        while (nxt < array.length) {
+            int l = nxt;
+
+            while (nxt < array.length && array[nxt] != ' ') {
+                nxt++;
+            }
+
+            reverse(array, l, nxt - 1);
+            //skip space
+            nxt++;
+        }
+
+        return new String(array);
+    }
+
+    public void reverse(char[] array, int l, int r) {
+        while (l < r) {
+            char temp = array[r];
+            array[r] = array[l];
+            array[l] = temp;
+            l++;
+            r--;
+        }
+    }
 }

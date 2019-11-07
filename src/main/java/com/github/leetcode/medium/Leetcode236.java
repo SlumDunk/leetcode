@@ -52,4 +52,31 @@ public class Leetcode236 {
         }
 
     }
+
+    public TreeNode lowestCommonAncestor__(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        } else {
+            return helper(root, p, q);
+        }
+    }
+
+    public TreeNode helper(TreeNode node, TreeNode p, TreeNode q) {
+        if (node == null) {
+            return null;
+        } else {
+            if (node == p || node == q) {
+                return node;
+            } else {
+                TreeNode left = helper(node.left, p, q);
+                TreeNode right = helper(node.right, p, q);
+
+                if (left != null && right != null) {
+                    return node;
+                } else {
+                    return left != null ? left : right;
+                }
+            }
+        }
+    }
 }

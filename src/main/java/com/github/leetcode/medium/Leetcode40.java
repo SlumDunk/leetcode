@@ -62,4 +62,42 @@ public class Leetcode40 {
             }
         }
     }
+
+    /**
+     * O(n^m)
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        Arrays.sort(candidates);
+
+        List<Integer> temp = new ArrayList<>();
+
+        helper(candidates, result, temp, target, 0);
+
+        return result;
+    }
+
+    public void helper(int[] candidates, List<List<Integer>> result, List<Integer> temp, int target, int pos) {
+        if (target == 0) {
+            result.add(new ArrayList<>(temp));
+        } else {
+            for (int i = pos; i < candidates.length; i++) {
+                if (candidates[i] > target) {
+                    return;
+                } else {
+                    temp.add(candidates[i]);
+                    helper(candidates, result, temp, target - candidates[i], i + 1);
+                    temp.remove(temp.size() - 1);
+
+                    while (i < candidates.length - 1 && candidates[i] == candidates[i + 1]) {
+                        i++;
+                    }
+                }
+            }
+        }
+    }
 }

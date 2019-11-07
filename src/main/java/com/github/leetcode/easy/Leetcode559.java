@@ -54,4 +54,27 @@ public class Leetcode559 {
         return maxSubDepth + 1;
     }
 
+
+    public int maxDepth__(Node root) {
+        if (root == null) {
+            return 0;
+        } else {
+            return helper(root);
+        }
+    }
+
+    public int helper(Node node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int maxChildHeight = 0;
+            if (node.children != null) {
+                for (Node child : node.children) {
+                    maxChildHeight = Math.max(maxChildHeight, helper(child));
+                }
+            }
+            return 1 + maxChildHeight;
+        }
+    }
+
 }

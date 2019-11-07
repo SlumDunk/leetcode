@@ -42,4 +42,40 @@ public class Lintcode8 {
             end--;
         }
     }
+
+
+    /**
+     * @param str:    An array of char
+     * @param offset: An integer
+     * @return: nothing
+     */
+    public void rotateString__(char[] str, int offset) {
+        // write your code here
+        if (offset == 0) {
+            return;
+        } else {
+            int n = str.length;
+            if (n == 0) {
+                return;
+            }
+            offset = offset % n;
+            //翻转左半部分
+            rotate(str, 0, n - 1 - offset);
+            //翻转右半部分
+            rotate(str, n - offset, n - 1);
+            //翻转整个串
+            rotate(str, 0, n - 1);
+        }
+    }
+
+    private void rotate(char[] str, int start, int end) {
+        char temp;
+        while (start < end) {
+            temp = str[end];
+            str[end] = str[start];
+            str[start] = temp;
+            start++;
+            end--;
+        }
+    }
 }

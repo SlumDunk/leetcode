@@ -75,4 +75,41 @@ public class Leetcode46 {
             }
         }
     }
+
+
+    /**
+     * O(n*n!)
+     * 最后copy耗时n,总共有n!
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permute__(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return result;
+        } else {
+            List<Integer> temp = new ArrayList<>();
+            helper(nums, result, temp);
+
+            return result;
+        }
+
+    }
+
+    private void helper(int[] nums, List<List<Integer>> result, List<Integer> temp) {
+        if (temp.size() == nums.length) {
+            result.add(new ArrayList<Integer>(temp));
+        } else {
+            for (int i = 0; i < nums.length; i++) {
+                if (temp.contains(nums[i])) {
+                    continue;
+                } else {
+                    temp.add(nums[i]);
+                    helper(nums, result, temp);
+                    temp.remove(temp.size() - 1);
+                }
+            }
+        }
+    }
 }

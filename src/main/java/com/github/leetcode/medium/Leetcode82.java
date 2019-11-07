@@ -60,4 +60,27 @@ public class Leetcode82 {
         return fakeHead.next;
 
     }
+
+
+    public ListNode deleteDuplicates__(ListNode head) {
+        if (head == null) {
+            return null;
+        } else {
+            ListNode dummyNode = new ListNode(1);
+            dummyNode.next = head;
+            head = dummyNode;
+            while (head.next != null && head.next.next != null) {
+                if (head.next.val == head.next.next.val) {
+                    int val = head.next.val;
+                    while (head.next != null && head.next.val == val) {
+                        head.next = head.next.next;
+                    }
+                } else {
+                    head = head.next;
+                }
+            }
+
+            return dummyNode.next;
+        }
+    }
 }

@@ -50,4 +50,51 @@ public class Lintcode927 {
             end--;
         }
     }
+
+
+    /**
+     * @param str: a string
+     * @return: return a string
+     */
+    public char[] reverseWords__(char[] str) {
+        // write your code here
+        //先挨个单词翻转
+        int n = str.length;
+        if (n == 0) {
+            return str;
+        }
+        int fromIndex = 0;
+        int endIndex = 0;
+
+        // how are you?
+        // woh era ?uoy
+        while (endIndex <= n - 1) {
+            if (str[endIndex] == ' ') {
+                rotate(str, fromIndex, endIndex - 1);
+                fromIndex = endIndex + 1;
+                endIndex++;
+            } else {
+                endIndex++;
+            }
+        }
+        //翻转最后一个单词
+        rotate(str, fromIndex, n - 1);
+
+        rotate(str, 0, n - 1);
+
+        return str;
+    }
+
+
+    private void rotate(char[] array, int start, int end) {
+        char temp;
+
+        while (start < end) {
+            temp = array[end];
+            array[end] = array[start];
+            array[start] = temp;
+            start++;
+            end--;
+        }
+    }
 }

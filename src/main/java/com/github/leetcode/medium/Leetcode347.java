@@ -130,4 +130,46 @@ public class Leetcode347 {
         }
         return result;
     }
+
+
+    class Pair {
+        int val;
+        int cnt;
+
+        public Pair(int val, int cnt) {
+            this.val = val;
+            this.cnt = cnt;
+        }
+    }
+
+    Map<Integer, Pair> map = new HashMap<>();
+
+    public List<Integer> topKFrequent_(int[] nums, int k) {
+        // Arrays.sort(nums);
+        for (int num : nums) {
+            Pair pair = map.getOrDefault(num, new Pair(num, 0));
+            pair.cnt++;
+            map.put(num, pair);
+        }
+
+        Queue<Pair> pq = new PriorityQueue<Pair>(new Comparator<Pair>() {
+            public int compare(Pair a, Pair b) {
+                return Integer.compare(a.cnt, b.cnt);
+            }
+        });
+
+        for (Integer key : map.keySet()) {
+            pq.offer(map.get(key));
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+        List<Integer> result = new ArrayList<>();
+
+        while (!pq.isEmpty()) {
+            result.add(pq.poll().val);
+        }
+
+        return result;
+    }
 }

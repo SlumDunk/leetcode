@@ -34,4 +34,51 @@ public class Leetcode270 {
         }
         return res;
     }
+
+    class Result {
+        double diff = Double.MAX_VALUE;
+        TreeNode node;
+
+        public Result() {
+
+        }
+    }
+
+
+    public int closestValue__(TreeNode root, double target) {
+        Result ans = helper(root, target);
+        return ans.node.val;
+    }
+
+    /**
+     * 通用做法
+     *
+     * @param node
+     * @param target
+     * @return
+     */
+    public Result helper(TreeNode node, double target) {
+        Result result = new Result();
+        if (node == null) {
+            return result;
+        }
+        if (node.val == target) {
+            result.node = node;
+            result.diff = 0;
+            return result;
+        } else {
+            double local = Math.abs(node.val - target);
+            Result left = helper(node.left, target);
+            Result right = helper(node.right, target);
+
+            if (local < left.diff && local < right.diff) {
+                result.diff = local;
+                result.node = node;
+                return result;
+            } else {
+                return left.diff > right.diff ? right : left;
+            }
+
+        }
+    }
 }

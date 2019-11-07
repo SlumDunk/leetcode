@@ -55,4 +55,40 @@ public class Leetcode173 {
             return res;
         }
     }
+
+
+    class BSTIterator__ {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+
+        public BSTIterator__(TreeNode root) {
+            initiate(root);
+        }
+
+        private void initiate(TreeNode node) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+
+        /**
+         * @return the next smallest number
+         */
+        public int next() {
+            if (!stack.isEmpty()) {
+                TreeNode cur = stack.pop();
+                initiate(cur.right);
+                return cur.val;
+            } else {
+                return -1;
+            }
+        }
+
+        /**
+         * @return whether we have a next smallest number
+         */
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+    }
 }

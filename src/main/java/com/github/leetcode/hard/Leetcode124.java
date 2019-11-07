@@ -52,4 +52,46 @@ public class Leetcode124 {
             return Math.max(Math.max(left, right), 0) + root.val;
         }
     }
+
+
+
+    class Result {
+        int singlePathSum;
+        int pathSum;
+
+        public Result() {
+
+        }
+
+        public Result(int singlePathSum, int pathSum) {
+            this.singlePathSum = singlePathSum;
+            this.pathSum = pathSum;
+        }
+    }
+
+    public int maxPathSum__(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            helper(root);
+            return max;
+        }
+    }
+
+    public Result helper(TreeNode node) {
+        if (node == null) {
+            return new Result(Integer.MIN_VALUE, 0);
+        } else {
+            Result left = helper(node.left);
+            Result right = helper(node.right);
+
+            Result result = new Result();
+            result.singlePathSum = Math.max(Math.max(left.singlePathSum, 0), Math.max(right.singlePathSum, 0)) + node.val;
+
+            result.pathSum = Math.max(left.singlePathSum, 0) + Math.max(right.singlePathSum, 0) + node.val;
+            max = Math.max(max, result.pathSum);
+
+            return result;
+        }
+    }
 }

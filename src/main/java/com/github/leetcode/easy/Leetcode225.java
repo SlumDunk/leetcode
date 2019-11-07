@@ -81,5 +81,59 @@ public class Leetcode225 {
             return queue.isEmpty();
         }
     }
+
+
+    class MyStack_ {
+        Queue<Integer> queue = new LinkedList<Integer>();
+
+        /**
+         * Initialize your data structure here.
+         */
+        public MyStack_() {
+
+        }
+
+        /**
+         * Push element x onto stack.
+         */
+        public void push(int x) {
+            int size = queue.size();
+            queue.offer(x);
+            while (size > 0) {
+                queue.offer(queue.poll());
+                size--;
+            }
+        }
+
+        /**
+         * Removes the element on top of the stack and returns that element.
+         */
+        public int pop() {
+            if (!queue.isEmpty()) {
+                return queue.poll();
+            } else {
+                return -1;
+            }
+        }
+
+        /**
+         * Get the top element.
+         */
+        public int top() {
+            if (!queue.isEmpty()) {
+                return queue.peek();
+            } else {
+                return -1;
+            }
+        }
+
+        /**
+         * Returns whether the stack is empty.
+         */
+        public boolean empty() {
+            return queue.isEmpty();
+        }
+    }
+
 }
 

@@ -40,4 +40,44 @@ public class Lintcode129 {
             return newTable;
         }
     }
+
+
+    /**
+     * @param hashTable: A list of The first node of linked list
+     * @return: A list of The first node of linked list which have twice size
+     */
+    public ListNode[] rehashing_(ListNode[] hashTable) {
+        // write your code here
+        if (hashTable == null || hashTable.length == 0) {
+            return null;
+        } else {
+            int capacity = hashTable.length;
+            int newCapacity = 2 * capacity;
+            ListNode[] newHashTable = new ListNode[newCapacity];
+
+            for (ListNode cur : hashTable) {
+                if (cur == null) {
+                    continue;
+                } else {
+                    ListNode temp = cur;
+                    while (temp != null) {
+                        //negative
+                        int idx = (temp.val % newCapacity + newCapacity) % newCapacity;
+                        if (newHashTable[idx] == null) {
+                            newHashTable[idx] = new ListNode(temp.val);
+                        } else {
+                            ListNode head = newHashTable[idx];
+                            while (head.next != null) {
+                                head = head.next;
+                            }
+                            head.next = new ListNode(temp.val);
+                        }
+                        temp = temp.next;
+                    }
+
+                }
+            }
+            return newHashTable;
+        }
+    }
 }

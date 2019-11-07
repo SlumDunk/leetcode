@@ -40,4 +40,34 @@ public class Leetcode611 {
             return count;
         }
     }
+
+    /**
+     * O(N^2)
+     * @param nums
+     * @return
+     */
+    public int triangleNumber__(int[] nums) {
+        int len = nums.length;
+        if (len < 3) {
+            return 0;
+        } else {
+            int count = 0;
+            Arrays.sort(nums);
+            //固定第三边
+            for (int c = len - 1; c >= 2; c--) {
+                int a = 0, b = c - 1;
+                //
+                while (a < b) {
+                    //a和b之间能和b,c组成三角形的边数
+                    if (nums[a] + nums[b] > nums[c]) {
+                        count += (b - a);
+                        b--;
+                    } else {
+                        a++;
+                    }
+                }
+            }
+            return count;
+        }
+    }
 }

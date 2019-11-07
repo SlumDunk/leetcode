@@ -34,10 +34,10 @@ public class Leetcode78 {
     }
 
     /**
-     * @param res  结果集
-     * @param temp 中间结果
-     * @param nums 数组
-     * @param startIndex    开始位置
+     * @param res        结果集
+     * @param temp       中间结果
+     * @param nums       数组
+     * @param startIndex 开始位置
      */
     private void backTrack(List<List<Integer>> res, List<Integer> temp, int[] nums, int startIndex) {
         res.add(new ArrayList<Integer>(temp));
@@ -67,4 +67,35 @@ public class Leetcode78 {
 //        return res;
 //
 //    }
+
+
+    /**
+     * O(2^n) 划分树，每次取和不取，二叉树结构， 叶子节点个数
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets__(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        helper(nums, result, temp, 0);
+
+        return result;
+    }
+
+    /**
+     * @param nums
+     * @param result
+     * @param temp
+     * @param start
+     */
+    public void helper(int[] nums, List<List<Integer>> result, List<Integer> temp, int start) {
+        result.add(new ArrayList<>(temp));
+
+        for (int i = start; i < nums.length; i++) {
+            temp.add(nums[i]);
+            helper(nums, result, temp, i + 1);
+            temp.remove(temp.size() - 1);
+        }
+    }
 }

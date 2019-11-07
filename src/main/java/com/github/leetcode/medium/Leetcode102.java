@@ -61,4 +61,32 @@ public class Leetcode102 {
 
         return result;
     }
+
+    public List<List<Integer>> levelOrder__(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        } else {
+            Queue<TreeNode> queue = new LinkedList<TreeNode>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                List<Integer> temp = new ArrayList<>();
+                while (size > 0) {
+                    TreeNode cur = queue.poll();
+                    temp.add(cur.val);
+                    if (cur.left != null) {
+                        queue.add(cur.left);
+                    }
+                    if (cur.right != null) {
+                        queue.add(cur.right);
+                    }
+                    size--;
+                }
+
+                result.add(temp);
+            }
+        }
+        return result;
+    }
 }

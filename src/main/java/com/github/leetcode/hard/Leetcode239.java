@@ -1,9 +1,6 @@
 package com.github.leetcode.hard;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -91,6 +88,74 @@ public class Leetcode239 {
         for (int i = 0; i < result.size(); i++) {
             ans[i] = result.get(i);
         }
+        return ans;
+    }
+
+    public int[] maxSlidingWindow_(int[] nums, int k) {
+        int n = nums.length;
+        List<Integer> result = new ArrayList<>();
+        Deque<Integer> queue = new ArrayDeque<>();
+
+        for (int i = 0; i < n; i++) {
+            //remove elements outside the boundary
+            while (!queue.isEmpty() && queue.peek() < i - k + 1) {
+                queue.poll();
+            }
+            //compare the one come after the current maximum, just keep the max one
+            while (!queue.isEmpty() && nums[queue.peekLast()] < nums[i]) {
+                queue.pollLast();
+            }
+            queue.offer(i);
+
+            if (i >= k - 1) {
+                result.add(queue.peek());
+            }
+        }
+
+        int[] ans = new int[result.size()];
+
+        for (int i = 0; i < result.size(); i++) {
+            ans[i] = nums[result.get(i)];
+        }
+
+        return ans;
+    }
+
+
+    /**
+     * O(N)
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow___(int[] nums, int k) {
+        int n = nums.length;
+        List<Integer> result = new ArrayList<>();
+        // head of the queue is the maximum one in each window
+        Deque<Integer> deque = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            //handle elements that out of boundary
+            while (!deque.isEmpty() && (i - k + 1 > deque.peek())) {
+                deque.poll();
+            }
+            //just keep the elements that greater than current num
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+
+            deque.offer(i);
+            if (i >= k - 1) {
+                result.add(deque.peek());
+            }
+        }
+
+        int[] ans = new int[result.size()];
+
+        for (int i = 0; i < result.size(); i++) {
+            ans[i] = nums[result.get(i)];
+        }
+
         return ans;
     }
 }

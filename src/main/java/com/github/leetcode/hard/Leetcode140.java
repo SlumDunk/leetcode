@@ -1,9 +1,6 @@
 package com.github.leetcode.hard;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -87,5 +84,52 @@ public class Leetcode140 {
             }
             return res;
         }
+    }
+
+
+    Map<Integer, List<String>> cache = new HashMap<>();
+
+    public List<String> wordBreak_(String s, List<String> wordDict) {
+        List<String> result = new ArrayList<>();
+        if (s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) {
+            return result;
+        } else {
+            List<String> temp = new ArrayList<>();
+            Set<String> wordSet = new HashSet<>(wordDict);
+            return helper(s, wordSet, 0);
+        }
+    }
+
+    /**
+     * O(2^n)
+     * @param s
+     * @param wordSet
+     * @param start
+     * @return
+     */
+    public List<String> helper(String s, Set<String> wordSet, int start) {
+        if (cache.containsKey(start)) {
+            return cache.get(start);
+        }
+        List<String> res = new ArrayList<>();
+        if (start == s.length()) {
+            res.add("");
+            return res;
+        }
+        for (int end = start + 1; end <= s.length(); end++) {
+            String prefix = s.substring(start, end);
+            if (wordSet.contains(prefix)) {
+                List<String> subList = helper(s, wordSet, end);
+                for (String subSentence : subList) {
+                    String gap = subSentence.equals("") ? "" : " ";
+                    res.add(prefix + gap + subSentence);
+                }
+            }
+
+        }
+        cache.put(start, res);
+
+        return res;
+
     }
 }

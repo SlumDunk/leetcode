@@ -96,4 +96,71 @@ public class Leetcode232 {
         }
     }
 
+
+    class MyQueue_ {
+        Stack<Integer> s1 = new Stack<Integer>();
+
+        Stack<Integer> s2 = new Stack<Integer>();
+
+        /**
+         * Initialize your data structure here.
+         */
+        public MyQueue_() {
+
+        }
+
+        /**
+         * O(1)
+         * Push element x to the back of queue.
+         */
+        public void push(int x) {
+            s1.push(x);
+        }
+
+        /**
+         * O(1)每个元素只操作2次
+         * Removes the element from in front of queue and returns that element.
+         */
+        public int pop() {
+            if (!s2.isEmpty()) {
+                return s2.pop();
+            } else {
+                while (!s1.isEmpty()) {
+                    s2.push(s1.pop());
+                }
+                if (!s2.isEmpty()) {
+                    return s2.pop();
+                } else {
+                    return -1;
+                }
+            }
+        }
+
+        /**
+         * O(1)
+         * Get the front element.
+         */
+        public int peek() {
+            if (!s2.isEmpty()) {
+                return s2.peek();
+            } else {
+                while (!s1.isEmpty()) {
+                    s2.push(s1.pop());
+                }
+                if (!s2.isEmpty()) {
+                    return s2.peek();
+                } else {
+                    return -1;
+                }
+            }
+        }
+
+        /**
+         * Returns whether the queue is empty.
+         */
+        public boolean empty() {
+            return s1.isEmpty() && s2.isEmpty();
+        }
+    }
+
 }

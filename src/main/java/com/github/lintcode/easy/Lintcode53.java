@@ -40,4 +40,53 @@ public class Lintcode53 {
         }
         return buffer.toString();
     }
+
+    /*
+        * @param s: A string
+        * @return: A string
+        */
+    public String reverseWords__(String s) {
+        // write your code here
+        //先挨个单词翻转
+        int n = s.length();
+        char[] array = s.toCharArray();
+        int fromIndex = 0;
+        int endIndex = -1;
+
+        // how are you?
+        // woh era ?uoy
+        while ((endIndex = s.indexOf(" ", fromIndex)) != -1) {
+            rotate(array, fromIndex, endIndex - 1);
+            fromIndex = endIndex + 1;
+        }
+        //翻转最后一个单词
+        rotate(array, fromIndex, n - 1);
+
+        rotate(array, 0, n - 1);
+        StringBuilder buffer = new StringBuilder("");
+        for (char item : array) {
+            if (buffer.length() > 0 && buffer.charAt(buffer.length() - 1) == ' ' && item == ' ') {
+                continue;
+            } else {
+                if (buffer.length() == 0 && item == ' ') {
+                    continue;
+                }
+                buffer.append(item);
+            }
+        }
+
+        return buffer.toString();
+    }
+
+    private void rotate(char[] array, int start, int end) {
+        char temp;
+
+        while (start < end) {
+            temp = array[end];
+            array[end] = array[start];
+            array[start] = temp;
+            start++;
+            end--;
+        }
+    }
 }

@@ -34,4 +34,36 @@ public class Leetcode320 {
             helper(result, word, pos + 1, cur + (count > 0 ? count : "") + word.charAt(pos), 0);
         }
     }
+
+    /**
+     * O(2^n)
+     * @param word
+     * @return
+     */
+    public List<String> generateAbbreviations__(String word) {
+        List<String> result = new ArrayList<>();
+        if (word == null || word.length() == 0) {
+            result.add("");
+            return result;
+        } else {
+            int len = word.length();
+            String prev = "";
+            helper(word, result, prev, 0, 0);
+            return result;
+        }
+    }
+
+    public void helper(String word, List<String> result, String prev, int position, int count) {
+        if (position == word.length()) {
+            String countStr = count > 0 ? String.valueOf(count) : "";
+            result.add(prev + countStr);
+        } else {
+            //和前面的合在一起
+            helper(word, result, prev, position + 1, count + 1);
+
+            String countStr = count > 0 ? String.valueOf(count) : "";
+            //和前面的不合在一起
+            helper(word, result, prev + countStr + word.charAt(position), position + 1, 0);
+        }
+    }
 }

@@ -77,4 +77,61 @@ public class Leetcode143 {
         }
         return prev;
     }
+
+
+    public void reorderList__(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        //切成两半,找到中间节点的前一节点
+        ListNode mid = findMiddle(head);
+        ListNode right = mid.next;
+        mid.next = null;
+        //翻转后半段
+        right = reverse(right);
+        //合并
+        merge(head, right);
+    }
+
+    private ListNode findMiddle(ListNode head) {
+        ListNode slow = head, fast = head.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    private ListNode reverse(ListNode head) {
+        ListNode pre = null;
+        while (head != null) {
+            ListNode tmp = head.next;
+            head.next = pre;
+            pre = head;
+            head = tmp;
+        }
+        return pre;
+    }
+
+    private ListNode merge(ListNode h1, ListNode h2) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+
+        while (h1 != null && h2 != null) {
+            ListNode tmp1 = h1.next;
+            ListNode tmp2 = h2.next;
+
+            cur.next = h1;
+            cur.next.next = h2;
+            cur = h2;
+
+            h1 = tmp1;
+            h2 = tmp2;
+        }
+
+        cur.next = h1 == null ? h2 : h1;
+
+        return dummy.next;
+    }
 }

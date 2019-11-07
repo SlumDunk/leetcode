@@ -43,4 +43,39 @@ public class Leetcode154 {
             return nums[right];
         }
     }
+
+
+    /**                 /|
+     *                 / |
+     *                /  |
+     * --------------    |   --------------------
+     *                   |  /
+     *                   | /
+     *                   |/
+     * @param nums
+     * @return
+     */
+    public int findMin__(int[] nums) {
+        int n = nums.length;
+        int start = 0, end = n - 1;
+        int mid = 0;
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] == nums[end]) {
+                end--;
+            } else if (nums[mid] >= nums[start] && nums[mid] > nums[end]) {
+                start = mid;
+            } else if (nums[mid] < nums[start] && nums[mid] < nums[end]) {
+                end = mid;
+            } else {
+                end = mid;
+            }
+        }
+
+        if (nums[start] <= nums[end]) {
+            return nums[start];
+        } else {
+            return nums[end];
+        }
+    }
 }

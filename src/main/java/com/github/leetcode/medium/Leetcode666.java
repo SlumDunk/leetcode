@@ -67,7 +67,8 @@ public class Leetcode666 {
 
     /**
      * DFS
-     * @param node 当前节点
+     *
+     * @param node    当前节点
      * @param map
      * @param current 当前累计前缀路径的和
      */
@@ -84,6 +85,7 @@ public class Leetcode666 {
 
     /**
      * 返回当前节点的子节点
+     *
      * @param node
      * @param map
      * @return
@@ -100,5 +102,54 @@ public class Leetcode666 {
         if (map.containsKey(key1)) childs.add(key1);
         if (map.containsKey(key2)) childs.add(key2);
         return childs;
+    }
+
+
+    class TreeNode {
+        int idx;
+        int val;
+
+        public TreeNode(int idx, int val) {
+            this.idx = idx;
+            this.val = val;
+        }
+    }
+
+    Map<Integer, TreeNode> map = new HashMap<>();
+
+
+    public int pathSum__(int[] nums) {
+        //找到父节点 full binary tree
+        //113-> idx 1, value 3
+        //215-> idx 2^(h-1)-1+1=2 -> parent id= 1
+        //221-> idx 2^(h-1)-1+2=3 -> parent id= 1
+        //314-> idx 2^(3-1)-1+1=4 -> parent id=4/2=2
+
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        for (int num : nums) {
+            int h = num / 100;
+            int position = num % 100 / 10;
+            int val = num % 10;
+            int idx = (int) Math.pow(2, h - 1) - 1 + position;
+
+            map.put(idx, new TreeNode(idx, val));
+        }
+        helper(map.get(1), 0);
+        return sum;
+    }
+
+    public void helper(TreeNode node, int presum) {
+        if (node != null && !map.containsKey(node.idx * 2) && !map.containsKey(node.idx * 2 + 1)) {
+            sum += presum + node.val;
+        } else {
+            if (node == null) {
+                return;
+            } else {
+                helper(map.get(node.idx * 2), presum + node.val);
+                helper(map.get(node.idx * 2 + 1), presum + node.val);
+            }
+        }
     }
 }

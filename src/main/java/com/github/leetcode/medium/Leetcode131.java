@@ -123,4 +123,50 @@ public class Leetcode131 {
 
     }
 
+
+    /**
+     * O(2^N)
+     * @param s
+     * @return
+     */
+    public List<List<String>> partition___(String s) {
+        List<List<String>> result=new ArrayList<>();
+        if(s==null||s.length()==0){
+            return result;
+        }else{
+            List<String> temp=new ArrayList<>();
+            helper(s,result,temp,0);
+
+            return result;
+        }
+    }
+
+    public void helper(String s, List<List<String>> result,List<String> temp,int start){
+        if(start==s.length()){
+            result.add(new ArrayList<>(temp));
+        }else{
+            for(int end=start+1;end<=s.length();end++){
+                String str=s.substring(start,end);
+                if(isValid(str)){
+                    temp.add(str);
+                    helper(s,result,temp,end);
+                    temp.remove(temp.size()-1);
+                }
+            }
+        }
+    }
+
+    public boolean isValid(String str){
+        int left=0,right=str.length()-1;
+        while(left<right){
+            if(str.charAt(left)!=str.charAt(right)){
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+
 }

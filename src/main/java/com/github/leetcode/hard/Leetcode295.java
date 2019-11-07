@@ -71,4 +71,35 @@ public class Leetcode295 {
             }
         }
     }
+
+    class MedianFinder_ {
+
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(1024, Collections.reverseOrder());
+
+        /**
+         * initialize your data structure here.
+         */
+        public MedianFinder_() {
+
+        }
+
+        public void addNum(int num) {
+            maxHeap.offer(num);
+            minHeap.offer(maxHeap.poll());
+            if (minHeap.size() > maxHeap.size()) {
+                maxHeap.offer(minHeap.poll());
+            }
+        }
+
+        public double findMedian() {
+            if (maxHeap.size() == minHeap.size()) {
+                return (maxHeap.peek() + minHeap.peek()) / 2.0;
+            } else {
+                return maxHeap.peek();
+            }
+        }
+    }
+
 }

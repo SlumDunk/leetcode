@@ -1,6 +1,8 @@
 package com.github.leetcode.hard;
 
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -159,6 +161,54 @@ public class Leetcode146 {
         private void remove(Node node) {
             node.pre.next = node.next;
             node.next.pre = node.pre;
+        }
+    }
+
+    class LRUCache_ {
+        Deque<Node> dequeue = new LinkedList<Node>();
+        int capacity;
+        Map<Integer, Node> map = new HashMap<>();
+
+        public LRUCache_(int capacity) {
+            this.capacity = capacity;
+        }
+
+        public int get(int key) {
+            if (map.containsKey(key)) {
+                addNode(map.get(key));
+                return map.get(key).val;
+            } else {
+                return -1;
+            }
+        }
+
+        public void put(int key, int value) {
+            if (map.containsKey(key)) {
+                dequeue.remove(map.get(key));
+            }
+            map.put(key, new Node(key, value));
+            addNode(map.get(key));
+        }
+
+        public void addNode(Node node) {
+            if (dequeue.contains(node)) {
+                dequeue.remove(node);
+            }
+            while (dequeue.size() >= capacity) {
+                Node temp = dequeue.pollFirst();
+                map.remove(temp.key);
+            }
+            dequeue.offerLast(node);
+        }
+
+        class Node {
+            int key;
+            int val;
+
+            public Node(int key, int val) {
+                this.key = key;
+                this.val = val;
+            }
         }
     }
 }

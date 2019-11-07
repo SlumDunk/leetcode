@@ -1,6 +1,8 @@
 package com.github.leetcode.easy;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -33,5 +35,22 @@ public class Leetcode266 {
             }
         }
         return set.size() <= 1;
+    }
+
+    public boolean canPermutePalindrome__(String s) {
+        char[] array = s.toCharArray();
+
+        Map<Character, Integer> map = new HashMap<>();
+        int odd = 0;
+        for (char item : array) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
+            odd += (map.get(item) % 2 == 1 ? 1 : -1);
+        }
+
+        if (odd > 1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

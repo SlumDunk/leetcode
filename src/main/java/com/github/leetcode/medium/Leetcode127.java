@@ -78,4 +78,74 @@ public class Leetcode127 {
         }
         return 0;
     }
+
+    public static void main(String[] args) {
+        Leetcode127 leetcode127 = new Leetcode127();
+        List<String> wordList = new ArrayList<>();
+        wordList.add("a");
+        wordList.add("b");
+        wordList.add("c");
+
+        System.out.println(leetcode127.ladderLength("a", "c", wordList));
+    }
+
+    /**
+     * O(N*26)
+     * @param beginWord
+     * @param endWord
+     * @param wordList
+     * @return
+     */
+    public int ladderLength__(String beginWord, String endWord, List<String> wordList) {
+        if (wordList == null || !wordList.contains(endWord)) {
+            return 0;
+        }
+
+        Queue<String> queue = new LinkedList<>();
+        HashSet<String> wordSet = new HashSet<>(wordList);
+
+        Set<String> visited = new HashSet<>();
+
+        queue.add(beginWord);
+        int level = 1;
+        visited.add(beginWord);
+
+        while (!queue.isEmpty()) {
+
+            int size = queue.size();
+            while (size > 0) {
+                String current = queue.poll();
+
+                if (current.equals(endWord)) {
+                    return level;
+                }
+
+                for (int i = 0; i < current.length(); i++) {
+                    char[] array = current.toCharArray();
+                    for (char j = 'a'; j <= 'z'; j++) {
+                        if (j != array[i]) {
+                            array[i] = j;
+                            String word = new String(array);
+                            if (wordSet.contains(word)) {
+                                if (word.equals(endWord)) {
+                                    return level + 1;
+                                } else if (!visited.contains(word)) {
+                                    queue.add(word);
+                                    visited.add(word);
+                                }
+                            }
+
+                        } else {
+                            continue;
+                        }
+                    }
+                }
+                size--;
+            }
+            level++;
+        }
+
+        return 0;
+
+    }
 }

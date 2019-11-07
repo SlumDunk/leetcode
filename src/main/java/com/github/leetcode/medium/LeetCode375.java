@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 11/4/18 19:19
@@ -27,8 +29,10 @@ package com.github.leetcode.medium;
 public class LeetCode375 {
     public static void main(String[] args) {
         LeetCode375 leetCode375 = new LeetCode375();
-        leetCode375.getMoneyAmount(10);
+//        leetCode375.getMoneyAmount(10);
+        System.out.println(leetCode375.getMoneyAmount__(3));
     }
+
 
     public int getMoneyAmount(int n) {
         //存储保证能猜赢某个范围内的数字的最小金额
@@ -56,4 +60,31 @@ public class LeetCode375 {
         }
         return minPay[1][n];
     }
+
+
+    public int getMoneyAmount__(int n) {
+        //保证能猜赢范围i到j的数字的最低成本
+        int[][] dp = new int[n + 1][n + 1];
+        int INF = (int) (1e9 + 7);
+        for (int[] sub :
+                dp) {
+            Arrays.fill(sub, INF);
+        }
+        for (int l = 1; l <= n; l++) {
+            for (int i = 1; i <= n + 1 - l; i++) {
+                int j = i + l - 1;
+                if (i == j) {
+                    dp[i][j] = 0;
+                } else {
+                    for (int k = i; k <= j; k++) {
+                        //成本高的那半段
+                        dp[i][j] = Math.min(dp[i][j], k + Math.max((k == i ? 0 : dp[i][k - 1]), (k == j ? 0 : dp[k + 1][j])));
+                    }
+                }
+            }
+        }
+
+        return dp[1][n];
+    }
+
 }

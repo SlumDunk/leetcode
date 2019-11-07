@@ -34,4 +34,72 @@ public class Leetcode138 {
         }
         return newMap.get(head);
     }
+
+    class Node {
+        public int val;
+        public Node next;
+        public Node random;
+
+        public Node() {
+        }
+
+        public Node(int _val, Node _next, Node _random) {
+            val = _val;
+            next = _next;
+            random = _random;
+        }
+    }
+
+
+    public Node copyRandomList(Node head) {
+        if (head == null) {
+            return null;
+        }
+        //先拷贝next
+        copyNext(head);
+
+        //再拷贝边
+        copyRandom(head);
+        //split list
+        return splitList(head);
+
+    }
+
+    private void copyNext(Node head) {
+        while (head != null) {
+            Node node = new Node();
+            node.random = head.random;
+            node.val = head.val;
+            node.next = head.next;
+            head.next = node;
+            head = head.next.next;
+        }
+    }
+
+    private void copyRandom(Node head) {
+        while (head != null) {
+            if (head.next.random != null) {
+                head.next.random = head.random.next;
+            }
+            head = head.next.next;
+        }
+    }
+
+    private Node splitList(Node head) {
+        Node head2 = head.next;
+
+        while (head != null) {
+            //指向的是当前节点的copy节点
+            Node tmp = head.next;
+            //还原原来List的关系
+            head.next = tmp.next;
+            head = head.next;
+
+            //新list的节点建立关联关系
+            if (tmp.next != null) {
+                tmp.next = tmp.next.next;
+            }
+        }
+        return head2;
+    }
 }

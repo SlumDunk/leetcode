@@ -73,4 +73,40 @@ public class Leetcode39 {
             }
         }
     }
+
+
+    /**
+     * O(n^m) n是小于target得number个数， m是构成target的最大次数， m/最小值
+     *
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum__(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        Arrays.sort(candidates);
+
+        List<Integer> temp = new ArrayList<>();
+
+        helper(candidates, result, temp, target, 0);
+
+        return result;
+    }
+
+    public void helper(int[] candidates, List<List<Integer>> result, List<Integer> temp, int target, int pos) {
+        if (target == 0) {
+            result.add(new ArrayList<>(temp));
+        } else {
+            for (int i = pos; i < candidates.length; i++) {
+                if (candidates[i] > target) {
+                    return;
+                } else {
+                    temp.add(candidates[i]);
+                    helper(candidates, result, temp, target - candidates[i], i);
+                    temp.remove(temp.size() - 1);
+                }
+            }
+        }
+    }
 }

@@ -49,4 +49,70 @@ public class Leetcode144 {
         }
         return list;
     }
+
+
+    public List<Integer> preorderTraversal__(TreeNode root) {
+        List<Integer> resultList = new ArrayList<>();
+        if (root == null) {
+            return resultList;
+        }
+        //helper(root,resultList);
+
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                resultList.add(root.val);
+                root = root.left;
+            }
+
+            TreeNode cur = stack.pop();
+            root = cur.right;
+        }
+
+        return resultList;
+    }
+
+    /**
+     * 递归版本
+     *
+     * @param node
+     * @param resultList
+     */
+    public void helper(TreeNode node, List<Integer> resultList) {
+
+        resultList.add(node.val);
+        if (node.left != null) {
+            helper(node.left, resultList);
+        }
+
+        if (node.right != null) {
+            helper(node.right, resultList);
+        }
+    }
+
+
+    public List<Integer> preorderTraversal___(TreeNode root) {
+        List<Integer> resultList = new ArrayList<>();
+        if (root == null) {
+            return resultList;
+        }
+        //helper(root,resultList);
+
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        while (!stack.isEmpty() || root != null) {
+            if (root != null) {
+                resultList.add(root.val);
+                stack.push(root.right);
+                stack.push(root.left);
+                root = null;
+            }
+            if (!stack.isEmpty()) {
+                root = stack.pop();
+            }
+        }
+
+        return resultList;
+    }
+
 }

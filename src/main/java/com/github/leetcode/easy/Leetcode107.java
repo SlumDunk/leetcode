@@ -2,9 +2,7 @@ package com.github.leetcode.easy;
 
 import com.github.leetcode.vo.TreeNode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -37,5 +35,32 @@ public class Leetcode107 {
         levelOrderBottom(root.left, level + 1, result);
         levelOrderBottom(root.right, level + 1, result);
 
+    }
+
+    public List<List<Integer>> levelOrderBottom__(TreeNode root) {
+        LinkedList<List<Integer>> result = new LinkedList<List<Integer>>();
+        if (root == null) {
+            return result;
+        } else {
+            Queue<TreeNode> queue = new LinkedList<TreeNode>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                List<Integer> temp = new ArrayList<>();
+                while (size > 0) {
+                    TreeNode cur = queue.poll();
+                    temp.add(cur.val);
+                    if (cur.left != null) {
+                        queue.add(cur.left);
+                    }
+                    if (cur.right != null) {
+                        queue.add(cur.right);
+                    }
+                    size--;
+                }
+                result.addFirst(temp);
+            }
+        }
+        return result;
     }
 }

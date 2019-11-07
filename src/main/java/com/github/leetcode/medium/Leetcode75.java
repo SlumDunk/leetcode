@@ -47,4 +47,30 @@ public class Leetcode75 {
         }
 
     }
+
+    public void sortColors__(int[] nums) {
+        int n = nums.length;
+        //counting sort
+        int i = 0, j = 0, k = 0;
+
+        for (int num : nums) {
+            if (num == 0) {
+                i++;
+            } else if (num == 1) {
+                j++;
+            } else {
+                k++;
+            }
+        }
+
+        for (int idx = 0; idx < n; idx++) {
+            if (idx < i) {
+                nums[idx] = 0;
+            } else if (idx >= i && idx < i + j) {
+                nums[idx] = 1;
+            } else {
+                nums[idx] = 2;
+            }
+        }
+    }
 }

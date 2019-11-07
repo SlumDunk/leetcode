@@ -57,4 +57,28 @@ public class Leetcode153 {
             return Integer.MAX_VALUE;
         }
     }
+
+
+    public int findMin__(int[] nums) {
+        //分割点的左右两部分各自递增
+        int n = nums.length;
+        int start = 0, end = n - 1;
+        int mid = 0;
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] > nums[start] && nums[mid] > nums[end]) {
+                start = mid;
+            } else if (nums[mid] < nums[start] && nums[mid] < nums[end]) {
+                end = mid;
+            } else {//正常顺序
+                end = mid;
+            }
+        }
+
+        if (nums[start] < nums[end]) {
+            return nums[start];
+        } else {
+            return nums[end];
+        }
+    }
 }

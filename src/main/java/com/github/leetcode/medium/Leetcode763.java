@@ -41,4 +41,29 @@ public class Leetcode763 {
         }
         return result;
     }
+
+
+    public List<Integer> partitionLabels_(String S) {
+        int[] lastPosition = new int[26];
+        char[] array = S.toCharArray();
+
+        for (int i = 0; i < array.length; i++) {
+            lastPosition[array[i] - 'a'] = i;
+        }
+
+        List<Integer> result = new ArrayList<>();
+        int maxIndex = 0;
+        int left = 0;
+
+        for (int right = 0; right < array.length; right++) {
+            int lastIdx = lastPosition[array[right] - 'a'];
+            if (maxIndex < lastIdx) maxIndex = lastIdx;
+            if (right == maxIndex) {
+                result.add(right - left + 1);
+                left = right + 1;
+            }
+        }
+
+        return result;
+    }
 }

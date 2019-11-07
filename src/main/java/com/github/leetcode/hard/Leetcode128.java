@@ -1,6 +1,7 @@
 package com.github.leetcode.hard;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * @Author: zerongliu
@@ -38,5 +39,37 @@ public class Leetcode128 {
         //防止漏掉最后一个元素
         max = Math.max(count, max);
         return max;
+    }
+
+    public int longestConsecutive_(int[] nums) {
+        HashSet<Integer> set = new HashSet<Integer>();
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        int n = nums.length;
+        int longest = 0;
+
+        for (int i = 0; i < n; i++) {
+            int cur = nums[i];
+
+            int down = cur - 1;
+            while (set.contains(down)) {
+                set.remove(down);
+                down--;
+            }
+
+            int up = cur + 1;
+
+            while (set.contains(up)) {
+                set.remove(up);
+                up++;
+            }
+
+            longest = Math.max(longest, up - down - 1);
+        }
+
+        return longest;
+
     }
 }

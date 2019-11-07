@@ -25,6 +25,8 @@ package com.github.lintcode.medium;
  */
 public class Lintcode130 {
     /*
+    https://www.geeksforgeeks.org/time-complexity-of-building-a-heap/
+    O(n)
      * @param A: Given an integer array
      * @return: nothing
      */

@@ -45,4 +45,27 @@ public class Leetcode240 {
         return false;
 
     }
+
+    public boolean searchMatrix__(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int startRow = m - 1, startCol = 0;
+
+        while (startRow >= 0 && startCol < n) {
+            int val = matrix[startRow][startCol];
+            if (val == target) {
+                return true;
+            } else if (val > target) {
+                startRow--;
+            } else if (val < target) {
+                startCol++;
+            }
+        }
+
+        return false;
+    }
 }

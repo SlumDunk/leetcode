@@ -1,5 +1,7 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+
 /**
  * @Author: zerongliu
  * @Date: 11/4/18 20:21
@@ -46,6 +48,32 @@ public class Leetcode377 {
             for (int j = 0; j < nums.length; j++) {
                 if (i >= nums[j]) {
                     dp[i] += dp[i - nums[j]];
+                }
+            }
+        }
+
+        return dp[target];
+    }
+
+
+    /**
+     * O(target*N)
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int combinationSum4__(int[] nums, int target) {
+        int[] dp=new int[target+1];
+        dp[0]=1;
+
+        Arrays.sort(nums);
+
+        for(int i=1;i<=target;i++){
+            for(int num:nums){
+                if(num>i){
+                    break;
+                }else{
+                    dp[i]+=dp[i-num];
                 }
             }
         }

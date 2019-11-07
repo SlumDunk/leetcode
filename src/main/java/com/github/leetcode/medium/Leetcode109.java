@@ -48,4 +48,47 @@ public class Leetcode109 {
         return root;
 
     }
+
+    public TreeNode sortedListToBST__(ListNode head) {
+        if (head == null) {
+            return null;
+        } else {
+            return helper(head);
+        }
+    }
+
+    public TreeNode helper(ListNode node) {
+        if (node == null) {
+            return null;
+        }
+        if (node.next == null) {
+            return new TreeNode(node.val);
+        }
+        //找中点的前置节点
+        ListNode middle = findMiddle(node);
+        TreeNode root = null;
+        if (middle.next != null) {
+            root = new TreeNode(middle.next.val);
+        }
+        ListNode right = null;
+        if (middle.next != null) {
+            right = middle.next.next;
+        }
+        middle.next = null;
+        if (root != null) {
+            root.left = helper(node);
+            root.right = helper(right);
+        }
+        return root;
+    }
+
+    public ListNode findMiddle(ListNode head) {
+        //先走两步
+        ListNode slow = head, fast = head.next.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
 }

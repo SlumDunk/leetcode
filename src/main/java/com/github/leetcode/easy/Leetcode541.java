@@ -35,4 +35,34 @@ public class Leetcode541 {
     }
 
 
+    public String reverseStr_(String s, int k) {
+        char[] array = s.toCharArray();
+        int nxt = 0;
+
+        while (nxt + 2 * k - 1 < array.length) {
+            reverse(array, nxt, nxt + k - 1);
+
+            nxt += (2 * k);
+        }
+        if (nxt + k < array.length) {
+            reverse(array, nxt, nxt + k - 1);
+        } else {
+            reverse(array, nxt, array.length - 1);
+        }
+
+
+        return new String(array);
+    }
+
+    public void reverse(char[] array, int l, int r) {
+        while (l < r) {
+            char temp = array[r];
+            array[r] = array[l];
+            array[l] = temp;
+            l++;
+            r--;
+        }
+    }
+
+
 }

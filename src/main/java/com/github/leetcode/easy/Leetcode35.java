@@ -45,4 +45,32 @@ public class Leetcode35 {
             return right + 1;
         }
     }
+
+
+    public int searchInsert__(int[] nums, int target) {
+        int n = nums.length;
+        //寻找第一个大于target的位置
+        int start = 0, end = n - 1;
+        int mid = 0;
+
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] > target) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+
+        if (nums[start] >= target) {
+            return start;
+        } else if (nums[end] >= target) {
+            return end;
+        } else {
+            return end + 1;
+        }
+
+    }
 }

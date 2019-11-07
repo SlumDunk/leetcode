@@ -42,4 +42,60 @@ public class Leetcode81 {
         }
         return false;
     }
+
+    public boolean search__(int[] nums, int target) {
+        int n = nums.length;
+        if (n == 0) {
+            return false;
+        }
+        int start = 0, end = n - 1;
+        int mid = 0;
+        //先确定在哪一段
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] == nums[end]) {
+                if (nums[mid] == target) {
+                    return true;
+                } else {
+                    end--;
+                }
+            } else if (nums[mid] == nums[start] && nums[mid] < nums[end]) {
+                if (nums[mid] == target) {
+                    return true;
+                } else if (nums[mid] > target) {
+                    end = mid;
+                } else if (nums[mid] < target) {
+                    start = mid;
+                }
+            } else if (nums[mid] >= nums[start] && nums[mid] >= nums[end]) {
+                if (nums[start] <= target && nums[mid] >= target) {
+                    end = mid;
+                } else {
+                    start = mid;
+                }
+            } else if (nums[mid] <= nums[start] && nums[mid] <= nums[end]) {
+                if (nums[mid] <= target && nums[end] >= target) {
+                    start = mid;
+                } else {
+                    end = mid;
+                }
+            } else {
+                if (nums[mid] > target) {
+                    end = mid;
+                } else if (nums[mid] < target) {
+                    start = mid;
+                } else if (nums[mid] == target) {
+                    return true;
+                }
+            }
+        }
+
+        if (nums[start] == target) {
+            return true;
+        } else if (nums[end] == target) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

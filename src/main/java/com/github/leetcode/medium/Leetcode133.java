@@ -2,8 +2,7 @@ package com.github.leetcode.medium;
 
 import com.github.leetcode.vo.UndirectedGraphNode;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -63,4 +62,137 @@ public class Leetcode133 {
 
         }
     }
+
+
+    class Node {
+        public int val;
+        public List<Node> neighbors;
+
+        public Node() {
+        }
+
+        public Node(int _val, List<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+
+    ;
+
+    /**
+     * O(V+E)
+     * 每个节点访问一次，每条边访问一次， map.get()是O(1)忽略不计
+     *
+     * @param node
+     * @return
+     */
+    public Node cloneGraph(Node node) {
+        //generate the edges and vertexs
+
+        // clone nodes
+        Map<Integer, Node> map = new HashMap<>();
+        Node root = cloneNodes(node, map);
+
+        return root;
+
+    }
+
+    private Node cloneNodes(Node node, Map<Integer, Node> map) {
+        if (node == null) {
+            return null;
+        }
+        if (map.containsKey(node.val)) {
+            return map.get(node.val);
+        }
+        if (!map.containsKey(node.val)) {
+            map.put(node.val, new Node(node.val, new ArrayList<>()));
+        }
+        if (node.neighbors != null && node.neighbors.size() > 0) {
+            for (Node neighbor : node.neighbors) {
+                map.get(node.val).neighbors.add(cloneNodes(neighbor, map));
+            }
+        }
+        return map.get(node.val);
+    }
+
+    /**
+     * BFS
+     *
+     * @param node
+     * @return
+     */
+    private Node clone2(Node node) {
+        if (node == null) {
+            return null;
+        } else {
+            Queue<Node> queue = new LinkedList<>();
+            queue.add(node);
+            Map<Integer, Node> map = new HashMap<>();
+            int root = node.val;
+            while (!queue.isEmpty()) {
+                Node cur = queue.poll();
+                if (!map.containsKey(cur.val)) {
+                    map.put(cur.val, new Node(cur.val, new ArrayList<>()));
+                }
+                if (cur.neighbors != null && cur.neighbors.size() > 0) {
+                    for (Node neighbor : cur.neighbors) {
+                        if (!map.containsKey(neighbor.val)) {
+                            map.put(neighbor.val, new Node(neighbor.val, new ArrayList<>()));
+                            queue.add(neighbor);
+                        }
+
+                        map.get(cur.val).neighbors.add(map.get(neighbor.val));
+                    }
+                }
+            }
+
+            return map.get(root);
+        }
+    }
+
+
+    private Node clone3(Node node) {
+        Map<Integer, Node> map = new HashMap<>();
+        Map<Integer, List<Integer>> edgeMap = new HashMap<>();
+
+        //clone nodes
+        helper(node, map, edgeMap);
+        //clone edge
+        for (Map.Entry<Integer, Node> entry : map.entrySet()) {
+            Integer key = entry.getKey();
+            Node copy = entry.getValue();
+
+            if (edgeMap.get(key) != null && edgeMap.get(key).size() > 0) {
+                for (Integer neighbor : edgeMap.get(key)) {
+                    copy.neighbors.add(map.get(neighbor));
+                }
+            }
+        }
+        return map.get(node.val);
+    }
+
+    private void helper(Node node, Map<Integer, Node> map, Map<Integer, List<Integer>> edgeMap) {
+        if (node == null) {
+            return;
+        } else {
+            if (!map.containsKey(node.val)) {
+                map.put(node.val, new Node(node.val, new ArrayList<>()));
+            } else {
+                return;
+            }
+
+            if (!edgeMap.containsKey(node.val)) {
+                edgeMap.put(node.val, new ArrayList<>());
+            }
+
+
+            if (node.neighbors != null && node.neighbors.size() > 0) {
+                for (Node neighbor : node.neighbors) {
+                    edgeMap.get(node.val).add(neighbor.val);
+                    helper(neighbor, map, edgeMap);
+                }
+            }
+        }
+    }
+
 }

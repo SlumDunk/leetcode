@@ -51,5 +51,29 @@ public class Leetcode86 {
             return bigHead;
         }
     }
+
+
+    public ListNode partition__(ListNode head, int x) {
+        ListNode head1 = new ListNode(0);
+        ListNode head2 = new ListNode(0);
+
+
+        ListNode tmp1 = head1;
+        ListNode tmp2 = head2;
+
+        while (head != null) {
+            if (head.val < x) {
+                tmp1.next = head;
+                tmp1 = tmp1.next;
+            } else {
+                tmp2.next = head;
+                tmp2 = tmp2.next;
+            }
+            head = head.next;
+        }
+        tmp2.next = null;
+        tmp1.next = head2.next;
+        return head1.next;
+    }
 }
 

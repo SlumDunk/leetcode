@@ -2,6 +2,9 @@ package com.github.leetcode.easy;
 
 import com.github.leetcode.vo.TreeNode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * You are given a binary tree in which each node contains an integer value.
  * <p>
@@ -57,5 +60,48 @@ public class Leetcode437 {
             curSum += root.val;
             return (curSum == sum ? 1 : 0) + findPath(root.left, sum, curSum) + findPath(root.right, sum, curSum);
         }
+    }
+
+
+    int ans = 0;
+    int sum = 0;
+
+    public int pathSum__(TreeNode root, int sum) {
+        if (root == null) {
+            return ans;
+        } else {
+            this.sum = sum;
+            //存储前缀和
+            List<Integer> temp = new ArrayList<Integer>();
+            temp.add(0);
+            helper(root, 0, temp);
+            return ans;
+        }
+    }
+
+    public void helper(TreeNode node, int current, List<Integer> temp) {
+        if (node == null) {
+            return;
+        } else {
+            current += node.val;
+            if (temp.contains(current - sum)) {
+                ans += count(temp, current - sum);
+            }
+
+            temp.add(current);
+            helper(node.left, current, temp);
+            helper(node.right, current, temp);
+            temp.remove(temp.size() - 1);
+        }
+    }
+
+    public int count(List<Integer> list, int target) {
+        int count = 0;
+        for (Integer val : list) {
+            if (val == target) {
+                count++;
+            }
+        }
+        return count;
     }
 }

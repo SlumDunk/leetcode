@@ -52,4 +52,25 @@ public class Leetcode112 {
             }
         }
     }
+
+    public boolean hasPathSum__(TreeNode root, int sum) {
+        if (root == null) {
+            return false;
+        } else {
+            return helper(root, sum);
+        }
+    }
+
+    public boolean helper(TreeNode node, int sum) {
+        if (node == null) {
+            return false;
+        }
+        if (sum == node.val) {
+            if (node.left == null && node.right == null) {
+                return true;
+            }
+        }
+
+        return helper(node.left, sum - node.val) || helper(node.right, sum - node.val);
+    }
 }

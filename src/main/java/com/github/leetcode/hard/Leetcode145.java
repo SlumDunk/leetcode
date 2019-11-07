@@ -3,6 +3,7 @@ package com.github.leetcode.hard;
 import com.github.leetcode.vo.TreeNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -53,6 +54,66 @@ public class Leetcode145 {
                 }
                 prev = currentNode;
             }
+            return result;
+        }
+    }
+
+
+    public List<Integer> postorderTraversal__(TreeNode root) {
+        LinkedList<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return result;
+        } else {
+            // helper(root,result);
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+
+            while (!stack.isEmpty() || root != null) {
+                while (root != null) {
+                    stack.push(root);
+                    result.addFirst(root.val);
+                    root = root.right;
+                }
+
+                TreeNode cur = stack.pop();
+                root = cur.left;
+
+            }
+
+            return result;
+        }
+    }
+
+    public void helper(TreeNode node, List<Integer> result) {
+        if (node == null) {
+            return;
+        } else {
+            helper(node.left, result);
+            helper(node.right, result);
+            result.add(node.val);
+        }
+    }
+
+    public List<Integer> postorderTraversal___(TreeNode root) {
+        LinkedList<Integer> result = new LinkedList<>();
+        if (root == null) {
+            return result;
+        } else {
+            // helper(root,result);
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+
+            while (!stack.isEmpty() || root != null) {
+                if (root != null) {
+                    result.addFirst(root.val);
+                    stack.push(root.left);
+                    stack.push(root.right);
+                    root = null;
+                }
+                if (!stack.isEmpty()) {
+                    root = stack.pop();
+                }
+
+            }
+
             return result;
         }
     }

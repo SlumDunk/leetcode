@@ -47,4 +47,47 @@ public class Leetcode287 {
         }
         return left;//left和right同样大
     }
+
+
+    public int findDuplicate__(int[] nums) {
+        //缩小范围查找
+        int len = nums.length;
+        int start = 1, end = len - 1;
+        int mid = 1;
+
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            int count = 0;
+            for (int i = 0; i < len; i++) {
+                if (nums[i] <= mid) {
+                    count++;
+                }
+            }
+            if (count > mid) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+        int count = 0;
+
+        for (int i = 0; i < len; i++) {
+            if (nums[i] == start) {
+                count++;
+            }
+            if (count == 2) {
+                return start;
+            }
+        }
+        count = 0;
+        for (int i = 0; i < len; i++) {
+            if (nums[i] == end) {
+                count++;
+            }
+            if (count == 2) {
+                return end;
+            }
+        }
+        return -1;
+    }
 }

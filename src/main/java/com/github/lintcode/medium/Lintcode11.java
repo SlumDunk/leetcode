@@ -52,4 +52,40 @@ public class Lintcode11 {
             }
         }
     }
+
+
+    List<Integer> ans = new ArrayList<>();
+
+    /**
+     * @param root: param root: The root of the binary search tree
+     * @param k1:   An integer
+     * @param k2:   An integer
+     * @return: return: Return all keys that k1<=key<=k2 in ascending order
+     */
+    public List<Integer> searchRange__(TreeNode root, int k1, int k2) {
+        // write your code here
+        if (root == null) {
+            return ans;
+        } else {
+            helper(root, k1, k2);
+            return ans;
+        }
+    }
+
+    public void helper(TreeNode node, int k1, int k2) {
+        if (node == null) {
+            return;
+        } else {
+            if (node.val > k1) {
+                helper(node.left, k1, k2);
+            }
+            if (node.val >= k1 && node.val <= k2) {
+                ans.add(node.val);
+            }
+            if (node.val < k2) {
+                helper(node.right, k1, k2);
+            }
+
+        }
+    }
 }

@@ -52,4 +52,116 @@ public class Leetcode235 {
         }
         return null;
     }
+
+
+    class Result {
+        TreeNode parent;
+        boolean isExists;
+
+        public Result(TreeNode parent, boolean isExists) {
+            this.parent = parent;
+            this.isExists = isExists;
+        }
+    }
+
+    TreeNode lowestCommonAncestor = null;
+
+    public TreeNode lowestCommonAncestor__(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        } else {
+            // helper(root,p,q);
+            // return lowestCommonAncestor;
+            return helper2(root, p, q);
+        }
+    }
+
+    /**
+     * 利用binary search tree特点
+     *
+     * @param node
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode helper2(TreeNode node, TreeNode p, TreeNode q) {
+        if (node == null) {
+            return null;
+        } else {
+            if (node.val > p.val && node.val > q.val) {
+                return helper2(node.left, p, q);
+            } else if (node.val < p.val && node.val < q.val) {
+                return helper2(node.right, p, q);
+            } else {
+                return node;
+            }
+        }
+    }
+
+    /**
+     * 通用做法
+     *
+     * @param node
+     * @param p
+     * @param q
+     * @return
+     */
+    public Result helper(TreeNode node, TreeNode p, TreeNode q) {
+        if (node == null) {
+            return new Result(null, false);
+        } else {
+            Result current = null;
+            if (node == p) {
+                current = new Result(node, true);
+            } else if (node == q) {
+                current = new Result(node, true);
+            }
+            Result left = helper(node.left, p, q);
+            Result right = helper(node.right, p, q);
+
+            if (left.isExists && right.isExists) {
+                if (lowestCommonAncestor == null) {
+                    lowestCommonAncestor = node;
+                }
+            }
+            if ((left.isExists || right.isExists) && current != null) {
+                if (lowestCommonAncestor == null) {
+                    lowestCommonAncestor = node;
+                }
+            }
+            if (left.isExists || right.isExists || current != null) {
+                return new Result(node, true);
+            } else {
+                return new Result(null, false);
+            }
+        }
+    }
+
+
+    /**
+     * helper 简化版
+     *
+     * @param node
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode helper3(TreeNode node, TreeNode p, TreeNode q) {
+        if (node == null) {
+            return null;
+        } else {
+            if (node == p || node == q) {
+                return node;
+            } else {
+                TreeNode left = helper3(node.left, p, q);
+                TreeNode right = helper3(node.right, p, q);
+
+                if (left != null && right != null) {
+                    return node;
+                } else {
+                    return left != null ? left : right;
+                }
+            }
+        }
+    }
 }
