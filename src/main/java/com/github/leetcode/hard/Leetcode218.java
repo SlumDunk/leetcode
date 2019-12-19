@@ -49,7 +49,7 @@ public class Leetcode218 {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
         int curMaxHeight = 0;
         maxHeap.add(0);
-        //水平方向从做到右
+        //水平方向从左到右
         for (int[] point : points) {
             System.out.println(point[0] + " " + point[1]);
             if (point[1] > 0) {//开始节点
@@ -60,7 +60,49 @@ public class Leetcode218 {
             //检查最大高度是否发生变化
             if (!maxHeap.isEmpty() && curMaxHeight != maxHeap.peek()) {
                 curMaxHeight = maxHeap.peek();
+
                 result.add(new int[]{point[0], curMaxHeight});
+            }
+        }
+        return result;
+    }
+
+    /**
+     * O(nlgn)
+     *
+     * @param buildings
+     * @return
+     */
+    public List<List<Integer>> getSkyline_(int[][] buildings) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<int[]> points = new ArrayList<>();
+
+        for (int[] building : buildings) {
+            points.add(new int[]{building[0], building[2]});
+            points.add(new int[]{building[1], -building[2]});
+        }
+
+        Collections.sort(points, new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return a[0] == b[0] ? Integer.compare(b[1], a[1]) : Integer.compare(a[0], b[0]);
+            }
+        });
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        int curMaxHeight = 0;
+        maxHeap.add(0);
+        for (int[] point : points) {
+            if (point[1] > 0) {
+                maxHeap.add(point[1]);
+            } else {
+                maxHeap.remove(-point[1]);
+            }
+
+            if (!maxHeap.isEmpty() && curMaxHeight != maxHeap.peek()) {
+                curMaxHeight = maxHeap.peek();
+                List<Integer> keyPoint = new ArrayList<>();
+                keyPoint.add(point[0]);
+                keyPoint.add(curMaxHeight);
+                result.add(keyPoint);
             }
         }
         return result;

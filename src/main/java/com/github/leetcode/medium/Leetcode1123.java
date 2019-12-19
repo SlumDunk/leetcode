@@ -48,7 +48,7 @@ public class Leetcode1123 {
     }
 
     /**
-     * DFS
+     * helper
      *
      * @param root      当前节点
      * @param prevDepth 前面路径深度

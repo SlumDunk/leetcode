@@ -36,6 +36,12 @@ import java.util.PriorityQueue;
  * -10000 < points[i][1] < 10000
  */
 public class Leetcode973 {
+    /**
+     * O(n)
+     * @param points
+     * @param K
+     * @return
+     */
     public int[][] kClosest(int[][] points, int K) {
         int[][] result = new int[K][2];
         if (points == null || K <= 0) {

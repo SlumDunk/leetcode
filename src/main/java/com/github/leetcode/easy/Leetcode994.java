@@ -3,6 +3,8 @@ package com.github.leetcode.easy;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @Author: zerongliu
@@ -95,6 +97,56 @@ public class Leetcode994 {
             for (int v :
                     row) {
                 if (v == 1) return -1;
+            }
+        }
+        return level;
+    }
+
+
+    /**
+     * O(m*n)
+     *
+     * @param grid
+     * @return
+     */
+    public int orangesRotting_(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        Queue<Pos> queue = new LinkedList<>();
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    queue.add(new Pos(i, j));
+                }
+            }
+        }
+
+        int level = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size > 0) {
+                Pos cur = queue.poll();
+                for (int[] dir : dirs) {
+                    int x = cur.x + dir[0];
+                    int y = cur.y + dir[1];
+                    if (x >= 0 && x < m && y < n && y >= 0 && grid[x][y] == 1) {
+                        grid[x][y] = 2;
+                        queue.add(new Pos(x, y));
+                    }
+                }
+                size--;
+            }
+            if (queue.size() == 0) {
+                break;
+            }
+            level++;
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    return -1;
+                }
             }
         }
         return level;

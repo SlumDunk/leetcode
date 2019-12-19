@@ -162,7 +162,7 @@ public class Leetcode749 {
     }
 
     /**
-     * 对这块感染区域的点都打上标签2,说明已经被围堵了 DFS
+     * 对这块感染区域的点都打上标签2,说明已经被围堵了 helper
      *
      * @param grid
      * @param p

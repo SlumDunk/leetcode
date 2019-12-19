@@ -66,7 +66,7 @@ public class Leetcode666 {
     }
 
     /**
-     * DFS
+     * helper
      *
      * @param node    当前节点
      * @param map

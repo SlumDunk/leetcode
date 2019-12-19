@@ -24,62 +24,102 @@ import java.util.List;
  * The returned elements order does not matter.
  */
 public class Leetcode472 {
-    public List<String> findAllConcatenatedWordsInADict(String[] words) {
-        List<String> res = new ArrayList<>();
-        if (words == null || words.length == 0) {
-            return res;
-        }
-        Trie root = new Trie();
-        for (String word :
-                words) {
-            if (!word.isEmpty()) root.add(word, 0);
-        }
 
-        for (String word :
-                words) {
-            if (root.match(word, 0)) res.add(word);
-        }
-        return res;
+    public static void main(String[] args) {
+        String[] words = new String[]{"cat", "cats", "catsdogcats", "dog", "dogcatsdog", "hippopotamuses", "rat", "ratcatdogcat"};
+        Leetcode472 leetcode472 = new Leetcode472();
+        System.out.println(leetcode472.findAllConcatenatedWordsInADict(words));
     }
 
-
-    class Trie {
-        boolean end;
-        int level;
-        Trie[] next;
-        /**
-         * 根节点
-         */
-        Trie root;
-
-        Trie() {
-            this(null, 0);
+    /**
+     * O(n*l)
+     * @param words
+     * @return
+     */
+    public static List<String> findAllConcatenatedWordsInADict(String[] words) {
+        Trie trie = new Trie();
+        for (String word : words) {
+            trie.insert(word);
         }
 
-        Trie(Trie root, int level) {
-            end = false;
-            next = new Trie[26];
-            this.root = root;
-            this.level = level;
-        }
-
-        void add(String s, int idx) {
-            if (idx == s.length()) end = true;
-            else {
-                int i = s.charAt(idx) - 'a';
-                if (next[i] == null) next[i] = new Trie(root == null ? this : root, level + 1);
-                next[i].add(s, idx + 1);
+        List<String> concatenated = new ArrayList<>();
+        for (String word : words) {
+            if (isConcatenated(trie, word, 0) > 1) {
+                concatenated.add(word);
             }
         }
 
-        boolean match(String s, int idx) {
-            //排除本身就等于这字符串的单词
-            if (idx == s.length()) return end && idx != level;
-            int i = s.charAt(idx) - 'a';
-            if (next[i] != null && next[i].match(s, idx + 1)) return true;
-            if (end && root.match(s, idx)) return true;
-            return false;
+        return concatenated;
+    }
+
+    private static int isConcatenated(Trie trie, String word, int i) {
+        if (i == word.length()) {
+            return 0;
         }
 
+        Node node = trie.head;
+        while (i < word.length()) {
+            node = node.getChildAt(word.charAt(i++));
+            if (node == null) {
+                return 0;
+            } else if (node.terminal) {
+                int subCount = isConcatenated(trie, word, i);
+                if (subCount > 0) {
+                    return subCount + 1;
+                }
+            }
+        }
+
+        return node.terminal ? 1 : 0;
+    }
+
+    private static class Trie {
+
+        static final int CHAR_COUNT = 'z' - 'a' + 1;
+
+        final Node head = new Node(false, new Node[CHAR_COUNT]);
+
+        Trie() {
+        }
+
+        void insert(String word) {
+            Node node = head;
+            int i = 0;
+            while (i < word.length()) {
+                char c = word.charAt(i++);
+                node = node.getOrCreateChildAt(c);
+            }
+
+            node.terminal = true;
+        }
+    }
+
+    private static class Node {
+        boolean terminal;
+        Node[] children;
+
+        Node(boolean terminal, Node[] children) {
+            this.terminal = terminal;
+            this.children = children;
+        }
+
+        Node getChildAt(char c) {
+            return children[index(c)];
+        }
+
+        Node getOrCreateChildAt(char c) {
+            int i = index(c);
+            Node child = children[i];
+            if (child == null) {
+                child = new Node(false, new Node[Trie.CHAR_COUNT]);
+                children[i] = child;
+            }
+
+            return child;
+        }
+
+        int index(char c) {
+            return c - 'a';
+        }
     }
 }

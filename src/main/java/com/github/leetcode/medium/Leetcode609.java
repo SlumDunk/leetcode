@@ -40,7 +40,7 @@ import java.util.Map;
  * <p>
  * <p>
  * Follow-up beyond contest:
- * Imagine you are given a real file system, how will you search files? DFS or BFS?
+ * Imagine you are given a real file system, how will you search files? helper or BFS?
  * If the file content is very large (GB level), how will you modify your solution?
  * If you can only read the file by 1kb each time, how will you modify your solution?
  * What is the time complexity of your modified solution? What is the most time-consuming part and memory consuming part of it? How to optimize?
@@ -49,8 +49,8 @@ import java.util.Map;
 public class Leetcode609 {
     /**
      * Follow up questions:
-     * 1. Imagine you are given a real file system, how will you search files? DFS or BFS ?
-     * In general, BFS will use more memory then DFS. However BFS can take advantage of the locality of files in inside directories, and therefore will probably be faster
+     * 1. Imagine you are given a real file system, how will you search files? helper or BFS ?
+     * In general, BFS will use more memory then helper. However BFS can take advantage of the locality of files in inside directories, and therefore will probably be faster
      * <p>
      * 2. If the file content is very large (GB level), how will you modify your solution?
      * In a real life solution we will not hash the entire file content, since it's not practical. Instead we will first map all the files according to size. Files with different sizes are guaranteed to be different. We will than hash a small part of the files with equal sizes (using MD5 for example). Only if the md5 is the same, we will compare the files byte by byte

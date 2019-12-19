@@ -1,6 +1,6 @@
 package com.github.leetcode.easy;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -28,5 +28,22 @@ public class Leetcode1 {
             }
         }
         return null;
+    }
+
+    public int[] twoSum_(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        int[] ans = new int[2];
+        int i = 0;
+        for (int num : nums) {
+            if (map.containsKey(target - num)) {
+                ans[0] = map.get(target - num);
+                ans[1] = i;
+            }
+            map.put(num, i);
+            i++;
+        }
+
+        return ans;
     }
 }

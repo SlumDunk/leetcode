@@ -28,7 +28,7 @@ import java.util.LinkedList;
  */
 public class Leetcode200 {
     /**
-     * O(N)
+     * O(m*n)
      * @param grid
      * @return
      */

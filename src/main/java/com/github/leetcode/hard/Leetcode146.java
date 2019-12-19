@@ -194,6 +194,7 @@ public class Leetcode146 {
             if (dequeue.contains(node)) {
                 dequeue.remove(node);
             }
+            //超过容量 把最老的节点出队，并从map中移除
             while (dequeue.size() >= capacity) {
                 Node temp = dequeue.pollFirst();
                 map.remove(temp.key);
@@ -201,6 +202,9 @@ public class Leetcode146 {
             dequeue.offerLast(node);
         }
 
+        /**
+         * 数据节点
+         */
         class Node {
             int key;
             int val;
@@ -208,6 +212,11 @@ public class Leetcode146 {
             public Node(int key, int val) {
                 this.key = key;
                 this.val = val;
+            }
+
+            public boolean equals(Node obj) {
+                super.equals(obj);
+                return key == obj.key && val == obj.val;
             }
         }
     }

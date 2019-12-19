@@ -34,15 +34,30 @@ public class Leetcode1192 {
         Leetcode1192 leetcode1192 = new Leetcode1192();
         List<List<Integer>> connections = new ArrayList<>();
         connections.add(Arrays.asList(0, 1));
+        connections.add(Arrays.asList(0, 2));
         connections.add(Arrays.asList(1, 2));
-        connections.add(Arrays.asList(2, 0));
-        connections.add(Arrays.asList(1, 3));
-        leetcode1192.criticalConnections(4, connections);
+        connections.add(Arrays.asList(2, 3));
+        connections.add(Arrays.asList(3, 4));
+        connections.add(Arrays.asList(3, 5));
+        connections.add(Arrays.asList(4, 5));
+        connections.add(Arrays.asList(4, 6));
+        connections.add(Arrays.asList(5, 6));
+        connections.add(Arrays.asList(6, 7));
+        connections.add(Arrays.asList(7, 8));
+        connections.add(Arrays.asList(7, 9));
+        connections.add(Arrays.asList(8, 9));
+        leetcode1192.criticalConnections(10, connections);
 
     }
 
     int time = 0;
 
+    /**
+     * O(VE)
+     * @param n
+     * @param connections
+     * @return
+     */
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
         //找不在环上面的边,不在强连通边量上的边
         int[] disc = new int[n], low = new int[n];

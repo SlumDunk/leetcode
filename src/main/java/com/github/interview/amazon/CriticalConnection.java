@@ -32,21 +32,31 @@ public class CriticalConnection {
 
         discTime = new int[n + 1];
         low = new int[n + 1];
+        Arrays.fill(discTime, -1);
         List<List<Integer>> result = new ArrayList<>();
-        visit(1, -1, result);
+        for (int i = 1; i <= n; i++) {
+            if (discTime[i] == -1) {
+                visit(i, -1, result);
+            }
+        }
         return result;
     }
 
+    /**
+     * @param currNode
+     * @param parent
+     * @param bridges
+     */
     private static void visit(int currNode, int parent, List<List<Integer>> bridges) {
-        low[currNode] = discTime[currNode] = time++;
+        low[currNode] = discTime[currNode] = ++time;
 
         // Loop through, dfs.
         for (int tempNode : graph[currNode]) {
-            if (discTime[tempNode] == 0) { // not visited
+            if (discTime[tempNode] == -1) { // not visited
                 visit(tempNode, currNode, bridges);
                 low[currNode] = Math.min(low[currNode], low[tempNode]);
 
-                if (low[tempNode] > low[currNode]) {
+                if (low[tempNode] > discTime[currNode]) {
                     bridges.add(Arrays.asList(currNode, tempNode));
                 }
 
@@ -59,18 +69,18 @@ public class CriticalConnection {
     }
 
     public static void main(String[] args) {
-        int[] n = {5, 6, 9, 90, 10};
+        int[] n = {5, 6, 10, 90, 10};
         int[][][] edges = {
                 // given
-                {{1, 2}, {1, 3}, {3, 4}, {1, 4}, {4, 5}},
-                {{1, 2}, {1, 3}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, {5, 6}},
-                {{1, 2}, {1, 3}, {2, 3}, {3, 4}, {3, 6}, {4, 5}, {6, 7}, {6, 9}, {7, 8}, {8, 9}},
+//                {{1, 2}, {1, 3}, {3, 4}, {1, 4}, {4, 5}},
+//                {{1, 2}, {1, 3}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, {5, 6}},
+                {{1, 2}, {1, 3}, {2, 3}, {3, 4}, {4, 6}, {4, 5}, {5, 6}, {6, 7}, {5, 7}, {7, 8}, {8, 9}, {8, 10}, {9, 10}},
 
                 // Empty
-                {}
+//                {}
         };
         for (int i = 0; i < n.length; i++) {
-            List<List<Integer>> ans = findBridges(n[i], edges[i]);
+            List<List<Integer>> ans = findBridges(10, edges[i]);
             System.out.println(ans);
         }
 

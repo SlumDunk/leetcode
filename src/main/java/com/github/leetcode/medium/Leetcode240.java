@@ -46,6 +46,12 @@ public class Leetcode240 {
 
     }
 
+    /**
+     * O(m+n)
+     * @param matrix
+     * @param target
+     * @return
+     */
     public boolean searchMatrix__(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return false;
