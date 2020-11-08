@@ -24,16 +24,22 @@ public class Leetcode695 {
 
     }
 
+    /**
+     * O(mn)
+     *
+     * @param grid
+     * @return
+     */
     public int maxAreaOfIsland(int[][] grid) {
         //深度优先遍历数组
-        int row = grid.length;
-        int col = grid[0].length;
+        int m = grid.length;
+        int n = grid[0].length;
         int max = 0;
         //遍历数组
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (grid[i][j] == 1) {
-                    max = Math.max(max, findArea(grid, i, j, row, col));
+                    max = Math.max(max, findArea(grid, i, j, m, n));
                 }
             }
         }

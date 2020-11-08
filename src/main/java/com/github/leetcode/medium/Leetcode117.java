@@ -10,11 +10,11 @@ import com.github.leetcode.vo.TreeLinkNode;
  * struct TreeLinkNode {
  * TreeLinkNode *left;
  * TreeLinkNode *right;
- * TreeLinkNode *next;
+ * TreeLinkNode *children;
  * }
- * Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+ * Populate each children pointer to point to its children right node. If there is no children right node, the children pointer should be set to NULL.
  * <p>
- * Initially, all next pointers are set to NULL.
+ * Initially, all children pointers are set to NULL.
  * <p>
  * Note:
  * <p>

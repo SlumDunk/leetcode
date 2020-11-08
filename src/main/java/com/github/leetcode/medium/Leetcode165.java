@@ -44,4 +44,38 @@ public class Leetcode165 {
 
         return 0;
     }
+
+
+    /**
+     * O(n) n is the length of the longer string
+     *
+     * @param version1
+     * @param version2
+     * @return
+     */
+    public int compareVersion_(String version1, String version2) {
+        if (version1 == null || version2 == null) return 0;
+        //先对两个字符串进行切割，再进行比较
+        String[] array1 = version1.split("\\.");
+        String[] array2 = version2.split("\\.");
+
+        int len1 = array1.length;
+        int len2 = array2.length;
+
+        int i = 0;
+        while (i < len1 || i < len2) {
+            Integer v1 = i >= len1 ? 0 : Integer.valueOf(array1[i]);
+            Integer v2 = i >= len2 ? 0 : Integer.valueOf(array2[i]);
+            i++;
+            if (Integer.compare(v1, v2) == 0) {
+                continue;
+            } else {
+                return Integer.compare(v1, v2);
+            }
+
+        }
+
+        return 0;
+
+    }
 }

@@ -5,6 +5,7 @@ import com.github.leetcode.vo.Interval;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * @Author: zerongliu
@@ -48,6 +49,38 @@ public class Leetcode253 {
                 minHeap.poll();
             }
         }
+        return rooms;
+    }
+
+
+    /**
+     * O(nlgn)
+     * @param intervals
+     * @return
+     */
+    public int minMeetingRooms_(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return Integer.compare(a[0], b[0]);
+            }
+        });
+
+        int rooms = 0;
+        Queue<Integer> pq = new PriorityQueue<Integer>();
+
+        for (int[] interval : intervals) {
+            if (!pq.isEmpty()) {
+                if (interval[0] < pq.peek()) {
+                    rooms++;
+                } else {//有会议室可以复用
+                    pq.poll();
+                }
+            } else {
+                rooms++;
+            }
+            pq.offer(interval[1]);
+        }
+
         return rooms;
     }
 }

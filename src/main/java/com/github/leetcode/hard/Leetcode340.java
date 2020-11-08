@@ -1,9 +1,6 @@
 package com.github.leetcode.hard;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -18,11 +15,11 @@ import java.util.Set;
  * 拥有K个distinct字符的子串的最大长度
  */
 public class Leetcode340 {
-    public static void main(String[] args) {
-        Leetcode340 leetcode340 = new Leetcode340();
-        String s = "ecebeea";
-        System.out.println(leetcode340.lengthOfLongestSubstringKDistinct(s, 2));
-    }
+//    public static void main(String[] args) {
+//        Leetcode340 leetcode340 = new Leetcode340();
+//        String s = "ecebeea";
+//        System.out.println(leetcode340.lengthOfLongestSubstringKDistinct(s, 2));
+//    }
 
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         if (s == null || s.length() <= k) {
@@ -62,5 +59,49 @@ public class Leetcode340 {
             index++;
         }
         return max;
+    }
+
+
+    /**
+     * @param s
+     * @param k
+     * @return
+     */
+    public int lengthOfLongestSubstringKDistinct_(String s, int k) {
+        if (s == null || s.length() == 0 || k == 0) {
+            return 0;
+        }
+        //滑动窗口
+        int n = s.length();
+        List<Character> window = new ArrayList<>();
+        Set<Character> set = new HashSet<>();
+        Map<Character, Integer> countMap = new HashMap<>();
+
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < n; i++) {
+            Character key = s.charAt(i);
+            countMap.put(key, countMap.getOrDefault(key, 0) + 1);
+
+            while (countMap.keySet().size() > k) {
+                Character val = window.remove(0);
+                if (countMap.get(val) == 1) {
+                    countMap.remove(val);
+                } else {
+                    countMap.put(val, countMap.get(val) - 1);
+                }
+            }
+
+            window.add(key);
+
+            max = Math.max(window.size(), max);
+        }
+
+        return max;
+    }
+
+    public static void main(String[] args) {
+        Leetcode340 leetcode340 = new Leetcode340();
+        leetcode340.lengthOfLongestSubstringKDistinct_("eceba", 2);
     }
 }

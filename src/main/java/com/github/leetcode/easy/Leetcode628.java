@@ -21,7 +21,6 @@ public class Leetcode628 {
         Arrays.sort(nums);
         int len = nums.length;
         //需要考虑都是负数，都是正数，有正数有负数的情况
-        int max = 0;
         if (nums[0] < 0) {//有负数
             if (nums[len - 1] < 0) {//都是负数
                 return nums[len - 1] * nums[len - 2] * nums[len - 3];
@@ -31,5 +30,20 @@ public class Leetcode628 {
         } else {//都是正数
             return nums[len - 1] * nums[len - 2] * nums[len - 3];
         }
+    }
+
+    /**
+     * O(nlgn)
+     *
+     * @param nums
+     * @return
+     */
+    public int maximumProduct_(int[] nums) {
+        Arrays.sort(nums);
+        int len = nums.length;
+
+
+        return Math.max(nums[len - 1] * nums[len - 2] * nums[len - 3], nums[len - 1] * nums[0] * nums[1]);
+
     }
 }

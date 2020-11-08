@@ -64,4 +64,45 @@ public class Leetcode986 {
         }
         return ans;
     }
+
+
+    /**
+     * O(m+n)
+     *
+     * @param A
+     * @param B
+     * @return
+     */
+    public int[][] intervalIntersection_(int[][] A, int[][] B) {
+        if (A == null || A.length == 0 || B == null || B.length == 0) {
+            return new int[][]{};
+        }
+        int m = A.length, n = B.length;
+        int i = 0, j = 0;
+        List<int[]> res = new ArrayList<>();
+        while (i < m && j < n) {
+            int startMax = Math.max(A[i][0], B[j][0]);
+            int endMin = Math.min(A[i][1], B[j][1]);
+
+            if (endMin >= startMax) {
+                res.add(new int[]{startMax, endMin});
+            }
+
+            if (A[i][1] == endMin) {
+                i++;
+            }
+
+            if (B[j][1] == endMin) {
+                j++;
+            }
+        }
+
+        int[][] ans = new int[res.size()][2];
+        int index = 0;
+        for (int[] item : res) {
+            ans[index] = item;
+            index++;
+        }
+        return ans;
+    }
 }

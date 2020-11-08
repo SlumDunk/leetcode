@@ -61,7 +61,6 @@ public class Leetcode445 {
             currentNode.next = next;
             next = currentNode;
             add = sum / 10;
-            sum = 0;
         }
         if (add > 0) {//还有进位
             currentNode = new ListNode(add);
@@ -70,5 +69,53 @@ public class Leetcode445 {
         return currentNode;
     }
 
+
+    /**
+     * O(m+n) 涉及到后进先操作，采用栈
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbers_(ListNode l1, ListNode l2) {
+        Stack<Integer> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+
+        while (l1 != null) {
+            stack1.push(l1.val);
+            l1 = l1.next;
+        }
+
+        while (l2 != null) {
+            stack2.push(l2.val);
+            l2 = l2.next;
+        }
+
+        ListNode next = null;
+        //进位
+        Integer add = 0;
+        while (!stack1.isEmpty() || !stack2.isEmpty()) {
+            Integer sum = 0;
+            if (!stack1.isEmpty() && !stack2.isEmpty()) {
+                sum = stack1.pop() + stack2.pop() + add;
+            } else if (!stack1.isEmpty()) {
+                sum = stack1.pop() + add;
+            } else {
+                sum = stack2.pop() + add;
+            }
+            ListNode node = new ListNode(sum % 10);
+            node.next = next;
+            next = node;
+            add = sum / 10;
+        }
+
+        if (add > 0) {
+            ListNode node = new ListNode(add);
+            node.next = next;
+            next = node;
+        }
+
+        return next;
+    }
 
 }

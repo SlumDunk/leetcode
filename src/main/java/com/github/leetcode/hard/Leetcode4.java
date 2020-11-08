@@ -97,7 +97,13 @@ public class Leetcode4 {
     }
 
 
-    //1 2 3 4
+    /**
+     * O(lg(m+n))
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public double findMedianSortedArrays__(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
@@ -121,7 +127,9 @@ public class Leetcode4 {
         }
         int index1 = start1 + k / 2 - 1;
         int index2 = start2 + k / 2 - 1;
+        //长度不足k/2
         int a = index1 >= nums1.length ? Integer.MAX_VALUE : nums1[index1];
+        //长度不足k/2
         int b = index2 >= nums2.length ? Integer.MAX_VALUE : nums2[index2];
         if (a <= b) {
             return findKth(nums1, nums2, start1 + k / 2, start2, k - k / 2);

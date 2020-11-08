@@ -135,12 +135,17 @@ public class Leetcode353 {
             }
 
             int head = rowHead * width + colHead;
+            //贪食蛇是以当前长度先前行 若吃到食物才向后扩展
             set.remove(deque.peekLast());
+            //越界或者是撞车了
             if (rowHead < 0 || rowHead == height || colHead < 0 || colHead == width || set.contains(head)) {
                 return score = -1;
             }
+            //队头加进去
             set.add(head);
+            //队头插入
             deque.offerFirst(head);
+            //吃到食物，队列+1，队尾不需要出队
             if (foodIndex < food.length && rowHead == food[foodIndex][0] && colHead == food[foodIndex][1]) {
                 foodIndex++;
                 ++score;

@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * @Author: zerongliu
  * @Date: 3/23/19 15:52
- * @Description: On an N x N board, the numbers from 1 to N*N are written boustrophedonically starting from the bottom left of the board, and alternating direction each row.  For example, for a 6 x 6 board, the numbers are written as follows:
+ * @Description: On an N x N board, the numbers from 1 to N*N are written boustrophedonically starting from the bottom left of the board, and alternating directs each row.  For example, for a 6 x 6 board, the numbers are written as follows:
  * <p>
  * <p>
  * You start on square 1 of the board (which is always in the last row and first column).  Each move, starting from square x, consists of the following:
@@ -81,8 +81,67 @@ public class Leetcode909 {
         int r = (next - 1) / n;
         //数组中第几行
         int x = n - 1 - r;
-        //倒数行为偶，从左到右扫，奇数行，从右到左扫
-        int y = r % 2 == 0 ? next - 1 - r * n : n + r * n - next;
+
+        int len = next - r * n;
+
+        //倒数行 为偶，从左到右扫，为奇，从右到左扫
+        int y = r % 2 == 0 ? len - 1 : n - len;
+        return board[x][y];
+    }
+
+
+    /**
+     * O(n)
+     *
+     * @param board
+     * @return
+     */
+    public int snakesAndLadders_(int[][] board) {
+        int n = board.length;
+        Queue<Integer> queue = new LinkedList<Integer>();
+        queue.offer(1);
+        boolean[] visited = new boolean[n * n + 1];
+        visited[1] = true;
+        int move = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size > 0) {
+                int num = queue.poll();
+                if (num == n * n) return move;
+                for (int i = 1; i <= 6 && num + i <= n * n; i++) {
+                    int next = num + i;
+                    int value = getBoardValue_(board, next);
+                    if (value > 0) next = value;
+                    if (!visited[next]) {
+                        queue.offer(next);
+                        visited[next] = true;
+                    }
+                }
+                size--;
+            }
+            move++;
+        }
+        return -1;
+    }
+
+    /**
+     * 根据当前位置有没有ladder判断下个有效位置
+     *
+     * @param board
+     * @param next
+     * @return
+     */
+    private int getBoardValue_(int[][] board, int next) {
+        int n = board.length;
+        //倒数第几行
+        int r = (next - 1) / n;
+        //数组中第几行
+        int x = n - 1 - r;
+
+        int len = next - r * n;
+
+        //倒数行 为偶，从左到右扫，为奇，从右到左扫
+        int y = r % 2 == 0 ? len - 1 : n - len;
         return board[x][y];
     }
 }

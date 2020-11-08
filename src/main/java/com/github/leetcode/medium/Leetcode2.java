@@ -70,7 +70,7 @@ public class Leetcode2 {
                 previousNode = curNode;
             } else {
                 previousNode.next = curNode;
-                previousNode=curNode;
+                previousNode = curNode;
             }
             //进位
             tmp = (tmp1 + tmp2 + tmp) / 10;
@@ -87,5 +87,48 @@ public class Leetcode2 {
             }
         }
         return headNode;
+    }
+
+
+    /**
+     * O(n) n为Math.max(len(l1),len(l2))
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbers_(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+
+        int tmp = 0;
+        int tmp1 = 0;
+        int tmp2 = 0;
+
+        ListNode curNode = dummy;
+        while (l1 != null || l2 != null) {
+
+            if (l1 != null) {
+                tmp1 = l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                tmp2 = l2.val;
+                l2 = l2.next;
+            }
+
+            ListNode node = new ListNode((tmp1 + tmp2 + tmp) % 10);
+
+            curNode.next = node;
+            curNode = node;
+
+            tmp = (tmp1 + tmp2 + tmp) / 10;
+            tmp1 = 0;
+            tmp2 = 0;
+        }
+        if (tmp != 0) {
+            ListNode node = new ListNode(tmp);
+            curNode.next = node;
+
+        }
+        return dummy.next;
     }
 }

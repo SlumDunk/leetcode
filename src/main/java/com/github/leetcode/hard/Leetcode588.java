@@ -46,6 +46,9 @@ public class Leetcode588 {
         }
 
         class DirNode implements Node {
+            /**
+             * 保证有顺序输出
+             */
             TreeMap<String, Node> children;
 
             DirNode() {
@@ -83,43 +86,30 @@ public class Leetcode588 {
         private Node root = null;
 
         public FileSystem() {
+
             root = new DirNode();
         }
 
         public List<String> ls(String path) {
             String[] nodes = path.split("/");
-            Node tmp = goToNode(nodes, nodes.length - 1);
+            int depth = nodes.length - 1;
+            Node tmp = goToNode(nodes, depth);
             return tmp.list();
-        }
-
-        private Node goToNode(String[] path, int end) {
-            Node tmp = root;
-            for (int i = 0; i <= end; i++) {
-                String n = path[i];
-                //跳过根节点
-                if (n.length() == 0) continue;
-                if (tmp instanceof DirNode) {
-                    DirNode x = (DirNode) tmp;
-                    if (x.children.get(n) == null) {
-                        x.children.put(n, new DirNode());
-                    }
-                    tmp = x.children.get(n);
-                }
-            }
-            return tmp;
         }
 
         public void mkdir(String path) {
             String[] nodes = path.split("/");
-            goToNode(nodes, nodes.length - 1);
+            int depth = nodes.length - 1;
+            goToNode(nodes, depth);
         }
 
         public void addContentToFile(String filePath, String content) {
             String[] nodes = filePath.split("/");
             //找到文件的父节点
-            Node tmp = goToNode(nodes, nodes.length - 2);
-            if (tmp instanceof DirNode) {
-                DirNode x = (DirNode) tmp;
+            int depth = nodes.length - 2;
+            Node parent = goToNode(nodes, depth);
+            if (parent instanceof DirNode) {
+                DirNode x = (DirNode) parent;
                 String fileName = nodes[nodes.length - 1];
                 if (x.children.containsKey(fileName)) {
                     ((FileNode) x.children.get(fileName)).content.append(content);
@@ -133,12 +123,37 @@ public class Leetcode588 {
 
         public String readContentFromFile(String filePath) {
             String[] nodes = filePath.split("/");
-            Node tmp = goToNode(nodes, nodes.length - 1);
+            int depth = nodes.length - 1;
+            Node tmp = goToNode(nodes, depth);
             if (tmp instanceof FileNode) {
                 return ((FileNode) tmp).content.toString();
             } else {
                 return null;
             }
+        }
+
+
+        /**
+         * @param path  从根节点开始走过的路径
+         * @param depth 子节点深度
+         * @return
+         */
+        private Node goToNode(String[] path, int depth) {
+            Node cur = root;
+            for (int i = 0; i <= depth; i++) {
+                String name = path[i];
+                //跳过根节点
+                if (name.length() == 0) continue;
+                if (cur instanceof DirNode) {
+                    DirNode x = (DirNode) cur;
+                    //不存在，那么创建一个空目录
+                    if (x.children.get(name) == null) {
+                        x.children.put(name, new DirNode());
+                    }
+                    cur = x.children.get(name);
+                }
+            }
+            return cur;
         }
     }
 }

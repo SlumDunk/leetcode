@@ -85,6 +85,7 @@ public class Leetcode1000 {
 
 
     /**
+     *
      * @param stones
      * @param K
      * @return
@@ -98,6 +99,7 @@ public class Leetcode1000 {
 
         //i到j切成k堆的最小成本
         int[][][] dp = new int[n][n][K + 1];
+        //求前缀和
         int[] prefix = new int[n + 1];
         for (int i = 0; i < n; i++) {
             prefix[i + 1] = prefix[i] + stones[i];

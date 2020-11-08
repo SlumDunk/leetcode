@@ -45,26 +45,26 @@ import java.util.Set;
  * All strings in wordlist and queries consist only of english letters.
  */
 public class Leetcode966 {
-    class Node {
-        Node[] next;
-        char now;
+    class Trie {
+        Trie[] children;
+        char val;
         /**
          * 当前是否是单词
          */
-        boolean flag;
+        boolean isWord;
         /**
          * 在wordList中的位置
          */
         int index;
 
-        public Node(char now) {
-            this.now = now;
-            this.next = new Node[52];
+        public Trie(char val) {
+            this.val = val;
+            this.children = new Trie[52];
         }
     }
 
     public String[] spellchecker(String[] wordlist, String[] queries) {
-        Node root = new Node(' ');
+        Trie root = new Trie(' ');
         buildTree(wordlist, root);
         String[] res = new String[queries.length];
         for (int i = 0; i < queries.length; i++) {
@@ -97,24 +97,25 @@ public class Leetcode966 {
      * @param index
      * @return
      */
-    private int vowelSearch(char[] word, Node root, int index) {
-        if (index == word.length) return root.flag ? root.index : Integer.MAX_VALUE;//如果这个词是单词 就返回下标 否则没有匹配上
+    private int vowelSearch(char[] word, Trie root, int index) {
+        if (index == word.length) return root.isWord ? root.index : Integer.MAX_VALUE;//如果这个词是单词 就返回下标 否则没有匹配上
         int res = Integer.MAX_VALUE;
         if (word[index] == 'a' || word[index] == 'e' || word[index] == 'i' || word[index] == 'o' || word[index] == 'u' ||
                 word[index] == 'A' || word[index] == 'E' || word[index] == 'I' || word[index] == 'O' || word[index] == 'U') {
-            int[] may = new int[]{26, 30, 34, 40, 46, 0, 4, 8, 14, 20};
-            for (int i : may) {
-                Node next = root.next[i];
+            char[] may = new char[]{'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+            for (char c : may) {
+                int idx = c >= 'a' ? 26 + c - 'a' : c - 'A';
+                Trie next = root.children[idx];
                 if (next != null) res = Math.min(res, vowelSearch(word, next, index + 1));
             }
         } else {//否则不是元音字母 仅触发大小写敏感匹配
             int may = word[index] >= 'a' ? word[index] - 'a' : word[index] - 'A' + 26;
             int now = word[index] >= 'a' ? word[index] - 'a' + 26 : word[index] - 'A';
-            Node next = root.next[now];
+            Trie next = root.children[now];
             if (next != null) {
                 res = vowelSearch(word, next, index + 1);
             }
-            next = root.next[may];
+            next = root.children[may];
             if (next != null) {//有这个节点
                 res = Math.min(res, vowelSearch(word, next, index + 1));
             }
@@ -130,16 +131,16 @@ public class Leetcode966 {
      * @param index
      * @return
      */
-    private int likeSearch(char[] word, Node root, int index) {
-        if (index == word.length) return root.flag ? root.index : Integer.MAX_VALUE;
+    private int likeSearch(char[] word, Trie root, int index) {
+        if (index == word.length) return root.isWord ? root.index : Integer.MAX_VALUE;
         int may = word[index] >= 'a' ? word[index] - 'a' : word[index] - 'A' + 26;
         int now = word[index] >= 'a' ? word[index] - 'a' + 26 : word[index] - 'A';
         int res = Integer.MAX_VALUE;
-        Node next = root.next[now];
+        Trie next = root.children[now];
         if (next != null) {
             res = likeSearch(word, next, index + 1);
         }
-        next = root.next[may];
+        next = root.children[may];
         if (next != null) {
             res = Math.min(res, likeSearch(word, next, index + 1));
         }
@@ -153,35 +154,41 @@ public class Leetcode966 {
      * @param root
      * @return
      */
-    private int matchSearch(String word, Node root) {
-        Node now = root;
+    private int matchSearch(String word, Trie root) {
+        Trie current = root;
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             int id = c >= 'a' ? 26 + c - 'a' : c - 'A';
-            Node next = now.next[id];
+            Trie next = current.children[id];
             if (next == null) return -1;
-            now = next;
+            current = next;
         }
-        return now.flag ? now.index : -1;
+        return current.isWord ? current.index : -1;
     }
 
-    private void buildTree(String[] wordlist, Node root) {
-        Node now = root;
+    /**
+     * O(m*l1) m is the number of words, l1 is the average length of word
+     *
+     * @param wordlist
+     * @param root
+     */
+    private void buildTree(String[] wordlist, Trie root) {
+        Trie now = root;
         for (int i = 0; i < wordlist.length; i++) {
             char[] chars = wordlist[i].toCharArray();
             for (int j = 0; j < chars.length; j++) {
                 int id = 0;
                 if (chars[j] >= 'a') id = 26 + chars[j] - 'a';
                 else id = chars[j] - 'A';
-                Node next = now.next[id];
+                Trie next = now.children[id];
                 if (next == null) {
-                    now.next[id] = new Node(chars[j]);
-                    next = now.next[id];
+                    now.children[id] = new Trie(chars[j]);
+                    next = now.children[id];
                 }
                 now = next;
             }
-            if (!now.flag) {
-                now.flag = true;
+            if (!now.isWord) {
+                now.isWord = true;
                 now.index = i;
             }
             now = root;
@@ -190,6 +197,8 @@ public class Leetcode966 {
 
     /**
      * 用hashMap实现
+     * <p>
+     * O(m*l1+n*l2)
      *
      * @param wordlist
      * @param queries

@@ -12,6 +12,13 @@ package com.github.leetcode.medium;
  * Note: There will be exactly one celebrity if he/she is in the party. Return the celebrity's label if there is a celebrity in the party. If there is no celebrity, return -1.
  */
 public class Leetcode277 {
+
+    /**
+     * O(n)
+     *
+     * @param n
+     * @return
+     */
     public int findCelebrity(int n) {
         //名人就是所有人都认识他，他不认识任何人
         int k = 0;

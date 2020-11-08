@@ -60,4 +60,39 @@ public class Leetcode456 {
 
         return false;
     }
+
+
+    /**
+     * O(nlgn)
+     * @param nums
+     * @return
+     */
+    public boolean find132pattern_(int[] nums) {
+        int len = nums.length;
+        //以每个元素为中心，存储左右两边的最小值
+        int[] left = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            if (i == 0) {
+                left[i] = nums[i];
+            } else {
+                left[i] = Math.min(left[i - 1], nums[i - 1]);
+            }
+        }
+
+        TreeSet<Integer> bst = new TreeSet<>();
+
+        for (int i = len - 1; i >= 0; i--) {
+            int num = nums[i];
+            if (bst.lower(num) != null) {
+                int right = bst.lower(num);
+                if (left[i] < right && left[i] < num) {
+                    return true;
+                }
+            }
+            bst.add(num);
+        }
+        return false;
+
+    }
 }

@@ -4,6 +4,7 @@ import com.github.leetcode.vo.Interval;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -59,6 +60,45 @@ public class Leetcode759 {
                 prev.end = Math.max(prev.end, cur.end);
             }
         }
+        return result;
+    }
+
+
+    /**
+     * O(nlgn)
+     *
+     * @param schedule
+     * @return
+     */
+    public List<Interval> employeeFreeTime_(List<List<Interval>> schedule) {
+        List<Interval> flattened = new ArrayList<>();
+        for (List<Interval> list : schedule) {
+            flattened.addAll(list);
+        }
+
+        if (flattened.size() == 0) {
+            return Collections.emptyList();
+        }
+
+        Collections.sort(flattened, new Comparator<Interval>() {
+            public int compare(Interval a, Interval b) {
+                return Integer.compare(a.start, b.start);
+            }
+        });
+
+        List<Interval> result = new ArrayList<>();
+        Interval prev = flattened.get(0);
+
+        for (int i = 1; i < flattened.size(); i++) {
+            Interval cur = flattened.get(i);
+            if (cur.start > prev.end) {
+                result.add(new Interval(prev.end, cur.start));
+                prev = cur;
+            } else {//merge 成一个区间
+                prev.end = Math.max(prev.end, cur.end);
+            }
+        }
+
         return result;
     }
 }

@@ -49,6 +49,12 @@ public class Leetcode91 {
         return count[s.length()];
     }
 
+    /**
+     * O(n)
+     *
+     * @param s
+     * @return
+     */
     public int numDecodings__(String s) {
         int len = s.length();
         char[] array = s.toCharArray();

@@ -27,10 +27,19 @@ import java.util.Queue;
  * 0 <= routes[i][j] < 10 ^ 6.
  */
 public class Leetcode815 {
+
+    /**
+     * O(n*m) n is the number of routes, m is the average number of stops for each routes
+     *
+     * @param routes
+     * @param S
+     * @param T
+     * @return
+     */
     public int numBusesToDestination(int[][] routes, int S, int T) {
         if (routes == null || routes.length == 0 || S == T) return 0;
         //站为key, 站关联的route集合为value
-        HashMap<Integer, HashSet<Integer>> map = new HashMap<Integer, HashSet<Integer>>();  //  <key: stop, value: set of routes>
+        HashMap<Integer, HashSet<Integer>> map = new HashMap<Integer, HashSet<Integer>>();
         for (int i = 0; i < routes.length; i++) {
             for (int stop : routes[i]) {
                 if (!map.containsKey(stop)) map.put(stop, new HashSet<Integer>());
@@ -43,27 +52,26 @@ public class Leetcode815 {
 
         for (int route : map.get(S)) {
             queue.add(route);
+            visited.add(route);
         }
 
         int step = 1;
 
         while (!queue.isEmpty()) {
-            int size=queue.size();
-            for (int i = 0; i < size; i++) {
-
-                int curRouteId = queue.poll();
-
-                if (visited.contains(curRouteId)) continue;
-                visited.add(curRouteId);
-
-                int[] curStops = routes[curRouteId];
-                for (int stop : curStops) {
+            int size = queue.size();
+            while (size > 0) {
+                int routeId = queue.poll();
+                int[] stops = routes[routeId];
+                for (int stop : stops) {
                     if (stop == T) return step;
                     for (int route : map.get(stop)) {
-
-                        queue.add(route);
+                        if (!visited.contains(route)) {
+                            queue.add(route);
+                            visited.add(route);
+                        }
                     }
                 }
+                size--;
             }
             step++;
         }

@@ -1,5 +1,6 @@
 package com.github.leetcode.medium;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -25,6 +26,12 @@ public class Leetcode394 {
         System.out.println(leetcode394.decodeString("3[a]2[bc]"));
     }
 
+    /**
+     * O(n)
+     *
+     * @param s
+     * @return
+     */
     public String decodeString(String s) {
         Stack<Integer> countStack = new Stack<Integer>();
         Stack<String> strStack = new Stack<String>();
@@ -58,5 +65,64 @@ public class Leetcode394 {
             i++;
         }
         return strStack.pop();
+    }
+
+
+    /**
+     * O(n)
+     *
+     * @param s
+     * @return
+     */
+    public String decodeString_(String s) {
+        Stack<Integer> countStack = new Stack<Integer>();
+        Stack<String> strStack = new Stack<String>();
+        int i = 0, len = s.length();
+
+        while (i < len) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {//当前字符是数字
+                int val = c - '0';
+                while (i + 1 < len && Character.isDigit(s.charAt(i + 1))) {
+                    i++;
+                    val = val * 10 + (s.charAt(i) - '0');
+                }
+                countStack.push(val);
+            } else if ('[' == c) {//开启新的嵌套
+                strStack.push("" + c);
+            } else if (']' == c) {
+                LinkedList<String> tmp = new LinkedList<>();
+                while (!strStack.isEmpty() && !strStack.peek().equals("[")) {
+                    tmp.addFirst(strStack.pop());
+                }
+                if (!strStack.isEmpty()) {
+                    strStack.pop();
+                }
+                StringBuilder substr = new StringBuilder();
+                for (String item : tmp) {
+                    substr.append(item);
+                }
+                int counts = countStack.pop();
+                StringBuilder buffer = new StringBuilder();
+                for (int j = 0; j < counts; j++) {
+                    buffer.append(substr);
+                }
+
+                strStack.push(buffer.toString());
+            } else {
+                strStack.push("" + c);
+            }
+            i++;
+        }
+        StringBuilder ans = new StringBuilder();
+        LinkedList<String> tmp = new LinkedList<>();
+        while (!strStack.isEmpty()) {
+            tmp.addFirst(strStack.pop());
+        }
+
+        for (String item : tmp) {
+            ans.append(item);
+        }
+        return ans.toString();
     }
 }

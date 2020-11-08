@@ -13,7 +13,7 @@ package com.github.leetcode.medium;
  * <p>
  * Here, fronts[i] and backs[i] represent the number on the front and back of card i.
  * <p>
- * A flip swaps the front and back numbers, so the value on the front is now on the back and vice versa.
+ * A flip swaps the front and back numbers, so the value on the front is val on the back and vice versa.
  * <p>
  * Example:
  * <p>

@@ -17,7 +17,7 @@ package com.github.leetcode.medium;
  * Input: search("leetcoded"), Output: False
  * Note:
  * You may assume that all the inputs are consist of lowercase letters a-z.
- * For contest purpose, the test data is rather small by now. You could think about highly efficient algorithm after the contest.
+ * For contest purpose, the test data is rather small by val. You could think about highly efficient algorithm after the contest.
  * Please remember to RESET your class variables declared in class MagicDictionary, as static/class variables are persisted across multiple test cases. Please see here for more details.
  */
 public class Leetcode676 {

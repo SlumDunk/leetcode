@@ -61,4 +61,44 @@ public class Leetcode498 {
         return result;
 
     }
+
+
+    /**
+     * O(m*n)
+     *
+     * @param matrix
+     * @return
+     */
+    public int[] findDiagonalOrder_(int[][] matrix) {
+        int m = matrix.length;
+        if (m == 0) {
+            return new int[]{};
+        }
+
+        int n = matrix[0].length;
+        int[] result = new int[m * n];
+        int index = 0;
+        boolean down = false;
+        for (int code = 0, x = 0; code <= (m - 1 + n - 1); code++) {
+            int i = x;
+            //向上 || 向下
+            while ((!down && i >= 0 && code - i < n) || (down && i < m && code - i >= 0)) {
+                result[index++] = matrix[i][code - i];
+                i = down ? i + 1 : i - 1;
+            }
+
+            if (down) {
+                x = Math.min(i, m - 1);
+            } else {
+                if (code - i < n) {
+                    x = 0;
+                } else {
+                    x = i + 2;
+                }
+            }
+
+            down = down ? false : true;
+        }
+        return result;
+    }
 }

@@ -82,6 +82,11 @@ public class Leetcode109 {
         return root;
     }
 
+    /**
+     * 寻找中间节点的前一节点，所以这里快指针先走了一轮
+     * @param head
+     * @return
+     */
     public ListNode findMiddle(ListNode head) {
         //先走两步
         ListNode slow = head, fast = head.next.next;

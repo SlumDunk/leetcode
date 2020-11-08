@@ -1,6 +1,8 @@
 package com.github.leetcode.medium;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * @Author: zerongliu
@@ -52,6 +54,31 @@ public class Leetcode1100 {
             if (len == K) {
                 res++;
                 cur.remove(S.charAt(i++));
+            }
+        }
+        return res;
+    }
+
+    /**
+     * O(n)
+     *
+     * @param S
+     * @param K
+     * @return
+     */
+    public int numKLenSubstrNoRepeats_(String S, int K) {
+        //保证不出现重复
+        List<Character> window = new ArrayList<>();
+        int res = 0;
+
+        for (int i = 0; i < S.length(); ++i) {
+            while (window.contains(S.charAt(i))) {
+                window.remove(0);
+            }
+            window.add(S.charAt(i));
+            if (window.size() == K) {
+                res++;
+                window.remove(window.remove(0));
             }
         }
         return res;

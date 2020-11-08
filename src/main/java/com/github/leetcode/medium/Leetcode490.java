@@ -3,7 +3,7 @@ package com.github.leetcode.medium;
 /**
  * @Author: zerongliu
  * @Date: 5/9/19 14:15
- * @Description: There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by rolling up, down, left or right, but it won't stop rolling until hitting a wall. When the ball stops, it could choose the next direction.
+ * @Description: There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by rolling up, down, left or right, but it won't stop rolling until hitting a wall. When the ball stops, it could choose the next directs.
  * <p>
  * Given the ball's start position, the destination and the maze, determine whether the ball could stop at the destination.
  * <p>
@@ -57,6 +57,14 @@ package com.github.leetcode.medium;
 public class Leetcode490 {
     int[][] steps = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
+    /**
+     * O(mn*(m+n))
+     *
+     * @param maze
+     * @param start
+     * @param destination
+     * @return
+     */
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {
         int rows = maze.length;
         int cols = maze[0].length;
@@ -64,6 +72,15 @@ public class Leetcode490 {
         return dfs(maze, start, destination, visited, rows, cols);
     }
 
+    /**
+     * @param maze
+     * @param start
+     * @param destination
+     * @param visited
+     * @param rows
+     * @param cols
+     * @return
+     */
     private boolean dfs(int[][] maze, int[] start, int[] destination, boolean[][] visited, int rows, int cols) {
         if (visited[start[0]][start[1]]) {
             return false;
@@ -76,6 +93,7 @@ public class Leetcode490 {
                 ) {
             int dx = start[0];
             int dy = start[1];
+            //一直走直到撞到墙
             while (dx + step[0] >= 0 && dx + step[0] < rows && dy + step[1] >= 0 && dy + step[1] < cols && maze[dx + step[0]][dy + step[1]] != 1) {
                 dx += step[0];
                 dy += step[1];

@@ -54,3 +54,4 @@ hs_err_pid*
 ###IDE template
 *.iml
 .idea/*
+/target/*

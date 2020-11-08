@@ -32,19 +32,20 @@ import java.util.TreeMap;
  */
 public class Leetcode729 {
     class MyCalendar {
-        TreeMap<Integer, Integer> calendar;
+        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
 
         public MyCalendar() {
-            calendar = new TreeMap<>();
         }
 
         public boolean book(int start, int end) {
-            Integer pre = calendar.floorKey(start);
-            Integer next = calendar.ceilingKey(start);
-            if ((pre == null || calendar.get(pre) <= start) && (next == null || end <= next)) {
-                calendar.put(start, end);
+            Integer preStart = treeMap.floorKey(start);
+            Integer nextStart = treeMap.ceilingKey(start);
+
+            if ((preStart == null || treeMap.get(preStart) <= start) && (nextStart == null || nextStart >= end)) {
+                treeMap.put(start, end);
                 return true;
             }
+
             return false;
         }
     }

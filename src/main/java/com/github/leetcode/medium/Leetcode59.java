@@ -19,6 +19,13 @@ import java.util.List;
  * ]
  */
 public class Leetcode59 {
+
+    /**
+     * O(n^2)
+     *
+     * @param n
+     * @return
+     */
     public int[][] generateMatrix(int n) {
         if (n == 0) {
             return null;
@@ -110,6 +117,58 @@ public class Leetcode59 {
             up++;
             down--;
         }
+
+        return matrix;
+    }
+
+
+    /**
+     * O(n^2)
+     *
+     * @param n
+     * @return
+     */
+    public int[][] generateMatrix__(int n) {
+        if (n == 0) {
+            return null;
+        }
+
+        int[][] matrix = new int[n][n];
+        int current = 1;
+
+        int left = 0, right = n - 1, up = 0, down = n - 1;
+
+        while (left <= right && up <= down) {
+            for (int i = left; i <= right; i++) {
+                matrix[up][i] = current;
+                current++;
+            }
+
+            for (int i = up + 1; i <= down; i++) {
+                matrix[i][right] = current;
+                current++;
+            }
+
+            if (down > up) {
+                for (int i = right - 1; i >= left; i--) {
+                    matrix[down][i] = current;
+                    current++;
+                }
+            }
+
+            if (right > left) {
+                for (int i = down - 1; i > up; i--) {
+                    matrix[i][left] = current;
+                    current++;
+                }
+            }
+
+            left++;
+            right--;
+            up++;
+            down--;
+        }
+
 
         return matrix;
     }

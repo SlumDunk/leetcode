@@ -84,4 +84,47 @@ public class Leetcode99 {
         first.val = second.val;
         second.val = temp;
     }
+
+
+    /**
+     * O(n)
+     *
+     * @param root
+     */
+    public void recoverTree_(TreeNode root) {
+        //通过中序遍历寻找异常点
+        if (root == null) return;
+
+        TreeNode first = null;
+
+        TreeNode second = null;
+
+        TreeNode pre = null;
+
+        Stack<TreeNode> stack = new Stack<>();
+
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+
+            TreeNode cur = stack.pop();
+            if (pre != null && cur.val <= pre.val) {
+                if (first == null) {
+                    first = pre;
+                }
+                second = cur;
+            }
+
+            pre = cur;
+            root = cur.right;
+        }
+
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+
+
+    }
 }

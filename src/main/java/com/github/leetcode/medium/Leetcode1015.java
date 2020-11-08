@@ -55,7 +55,7 @@ public class Leetcode1015 {
         while (N % K != 0) {
             /**
              * returns false if this remainder is already calculated,
-             * because now it essentially runs into a loop.
+             * because val it essentially runs into a loop.
              **/
             if (remainders.contains(N % K))
                 return -1;

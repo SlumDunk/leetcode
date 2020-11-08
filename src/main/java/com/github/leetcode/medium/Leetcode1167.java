@@ -40,7 +40,7 @@ public class Leetcode1167 {
      * 2 3 4 (3) 5
      * 5 4 (2) 9
      * 9 (1)
-     *
+     * <p>
      * 1 3 5 8 (4) 4
      * 4 5 8 (3) 9
      * 9 8 (2) 17
@@ -56,7 +56,6 @@ public class Leetcode1167 {
             pq.offer(stick);
         }
         int result = 0;
-        int index = 0;
         while (pq.size() > 1) {
             Integer val1 = pq.poll();
             Integer val2 = pq.poll();

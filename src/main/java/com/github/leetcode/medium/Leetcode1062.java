@@ -63,7 +63,6 @@ public class Leetcode1062 {
                 maxCount++;
                 known.clear();
                 i = 0;
-                continue;
             } else {
                 known.add(x);
                 i++;
@@ -71,5 +70,39 @@ public class Leetcode1062 {
         }
 
         return maxCount;
+    }
+
+
+    /**
+     * O(nlgn)
+     *
+     * @param S
+     * @return
+     */
+    public int longestRepeatingSubstring_(String S) {
+        int n = S.length();
+        int left = 1, right = n;
+
+        int len;
+        while (left <= right) {
+            len = left + (right - left) / 2;
+            if (search(len, n, S) != -1) left = len + 1;
+            else right = len - 1;
+        }
+
+        return left - 1;
+    }
+
+    public int search(int len, int n, String s) {
+        HashSet<String> seen = new HashSet<>();
+
+        String tmp;
+        for (int start = 0; start < n - len + 1; start++) {
+            tmp = s.substring(start, start + len);
+            if (seen.contains(tmp)) return start;
+            seen.add(tmp);
+        }
+
+        return -1;
     }
 }

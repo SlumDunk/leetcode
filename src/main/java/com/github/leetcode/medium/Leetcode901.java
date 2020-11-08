@@ -16,7 +16,7 @@ import java.util.List;
  * <p>
  * Example 1:
  * <p>
- * Input: ["StockSpanner","next","next","next","next","next","next","next"], [[],[100],[80],[60],[70],[60],[75],[85]]
+ * Input: ["StockSpanner","children","children","children","children","children","children","children"], [[],[100],[80],[60],[70],[60],[75],[85]]
  * Output: [null,1,1,1,2,1,4,6]
  * Explanation:
  * First, S = StockSpanner() is initialized.  Then:

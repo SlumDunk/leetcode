@@ -68,6 +68,10 @@ public class Leetcode85 {
 
     /**
      * 动态规划实现
+     * <p>
+     * O(mn)
+     * <p>
+     * 底边经过(i,j)的最大长方形长度
      *
      * @param matrix
      * @return
@@ -81,10 +85,10 @@ public class Leetcode85 {
             int[][] up = new int[m][n];
             int[][] left = new int[m][n];
             int[][] right = new int[m][n];
-            int i, j, k, l, r, res = 0;
-            for (i = 0; i < m; i++) {
+            int l, r, res = 0;
+            for (int i = 0; i < m; i++) {
                 //计算高度
-                for (j = 0; j < n; j++) {
+                for (int j = 0; j < n; j++) {
                     if (matrix[i][j] == '1') {
                         up[i][j] = i == 0 ? 1 : up[i - 1][j] + 1;
                     } else {
@@ -93,35 +97,35 @@ public class Leetcode85 {
                 }
                 //计算最左边界位置
                 l = 0;
-                for (j = 0; j < n; j++) {
+                for (int j = 0; j < n; j++) {
                     if (matrix[i][j] == '0') {
                         l = left[i][j] = 0;
                     } else {
                         l++;
                         left[i][j] = l;
-                        if (i > 0 && matrix[i - 1][j] == '1' && left[i - 1][j] < left[i][j]) {
-                            left[i][j] = left[i - 1][j];
+                        if (i > 0 && matrix[i - 1][j] == '1') {
+                            left[i][j] = Math.min(left[i - 1][j], left[i][j]);
                         }
                     }
                 }
 
                 //计算最右边界位置
                 r = 0;
-                for (j = n - 1; j >= 0; j--) {
+                for (int j = n - 1; j >= 0; j--) {
                     if (matrix[i][j] == '0') {
                         r = right[i][j] = 0;
                     } else {
                         r++;
                         right[i][j] = r;
-                        if (i > 0 && matrix[i - 1][j] == '1' && right[i - 1][j] < right[i][j]) {
-                            right[i][j] = right[i - 1][j];
+                        if (i > 0 && matrix[i - 1][j] == '1') {
+                            right[i][j] = Math.min(right[i - 1][j], right[i][j]);
                         }
                     }
                 }
             }
 
-            for (i = 0; i < m; ++i) {
-                for (j = 0; j < n; ++j) {
+            for (int i = 0; i < m; ++i) {
+                for (int j = 0; j < n; ++j) {
                     res = Math.max(res, up[i][j] * (left[i][j] + right[i][j] - 1));
                 }
             }

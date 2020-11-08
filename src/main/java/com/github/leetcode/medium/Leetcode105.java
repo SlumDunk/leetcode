@@ -50,7 +50,6 @@ public class Leetcode105 {
                     index = i;
                     break;
                 }
-
             }
             //inStart...index-1构成左子树，index+1...inEnd构成右子树
             if (index != -1) {
@@ -58,6 +57,40 @@ public class Leetcode105 {
                 root.left = build(preOrder, inOrder, preStart + 1, inStart, index - 1);
                 //中序根节点右侧构造右子树,先根排序数组中右侧子树的起始位置
                 root.right = build(preOrder, inOrder, preStart + index - inStart + 1, index + 1, inEnd);
+            }
+            return root;
+        }
+    }
+
+
+    /**
+     * O(n)
+     *
+     * @param preorder
+     * @param inorder
+     * @return
+     */
+    public TreeNode buildTree_(int[] preorder, int[] inorder) {
+        return helper(preorder, inorder, 0, 0, inorder.length - 1);
+    }
+
+    public TreeNode helper(int[] preorder, int[] inorder, int prestart, int instart, int inend) {
+        if (prestart >= preorder.length || instart > inend) {
+            return null;
+        } else {
+            TreeNode root = new TreeNode(preorder[prestart]);
+            int index = -1;
+            for (int i = instart; i <= inend; i++) {
+                if (inorder[i] == preorder[prestart]) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1) {
+                root.left = helper(preorder, inorder, prestart + 1, instart, index - 1);
+
+                root.right = helper(preorder, inorder, prestart + index - instart + 1, index + 1, inend);
             }
             return root;
         }

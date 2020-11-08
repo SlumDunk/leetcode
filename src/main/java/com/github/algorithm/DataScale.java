@@ -30,13 +30,32 @@ public class DataScale {
     }
 
     public static void main(String[] args) {
-        String str = "hello";
-        System.out.println(str.substring(0, 0));
-        //dataScale();
-        Integer max = Integer.MAX_VALUE;
-        System.out.println(max + 1);
+//        String str = "hello";
+//        System.out.println(str.substring(0, 0));
+//        //dataScale();
+//        Integer max = Integer.MAX_VALUE;
+//        System.out.println(max + 1);
+//
+//        Integer min = Integer.MIN_VALUE;
+//        System.out.println(min - 1);
 
-        Integer min = Integer.MIN_VALUE;
-        System.out.println(min - 1);
+        System.out.println(isPalindrome("abcba"));
     }
+
+    public static boolean isPalindrome(String text) {
+        if (text.length() == 0) {
+            return true;
+        }
+        else if (text.length() == 1) {
+            return true;
+        }
+        else {
+            if (text.charAt(0) == text.charAt(text.length()-1)) {
+                return isPalindrome(text.substring(1, text.length()-1));
+            }
+        }
+        return false;
+    }
+
+
 }

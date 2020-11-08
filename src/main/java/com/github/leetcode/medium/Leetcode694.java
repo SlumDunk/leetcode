@@ -33,6 +33,12 @@ import java.util.Set;
  * Note: The length of each dimension in the given grid does not exceed 50.
  */
 public class Leetcode694 {
+    /**
+     * O(m*n)
+     *
+     * @param grid
+     * @return
+     */
     public int numDistinctIslands(int[][] grid) {
         Set<String> set = new HashSet<>();
         for (int i = 0; i < grid.length; i++) {
@@ -50,21 +56,54 @@ public class Leetcode694 {
 
     /**
      * @param grid
-     * @param i
-     * @param j
+     * @param row
+     * @param col
      * @param buffer
      * @param dir
      */
-    private void dfs(int[][] grid, int i, int j, StringBuilder buffer, String dir) {
-        if (i < 0 || i == grid.length || j < 0 || j == grid[i].length||grid[i][j]==0) {
+    private void dfs(int[][] grid, int row, int col, StringBuilder buffer, String dir) {
+        if (row < 0 || row == grid.length || col < 0 || col == grid[row].length || grid[row][col] == 0) {
             return;
         }
         buffer.append(dir);
-        grid[i][j] = 0;
-        dfs(grid, i - 1, j, buffer, "u");
-        dfs(grid, i + 1, j, buffer, "d");
-        dfs(grid, i, j - 1, buffer, "l");
-        dfs(grid, i, j + 1, buffer, "r");
+        grid[row][col] = 0;
+        dfs(grid, row - 1, col, buffer, "u");
+        dfs(grid, row + 1, col, buffer, "d");
+        dfs(grid, row, col - 1, buffer, "l");
+        dfs(grid, row, col + 1, buffer, "r");
+        buffer.append("b");
+    }
+
+
+    public int numDistinctIslands_(int[][] grid) {
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] != 0) {
+                    StringBuilder buffer = new StringBuilder();
+                    helper(grid, i, j, buffer, "o");
+                    set.add(buffer.toString());
+                    System.out.println(buffer.toString());
+                }
+            }
+        }
+
+        return set.size();
+    }
+
+    public void helper(int[][] grid, int row, int col, StringBuilder buffer, String dir) {
+        if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length || grid[row][col] == 0) {
+            return;
+        }
+        grid[row][col] = 0;
+
+        buffer.append(dir);
+
+        helper(grid, row - 1, col, buffer, "u");
+        helper(grid, row + 1, col, buffer, "d");
+        helper(grid, row, col - 1, buffer, "l");
+        helper(grid, row, col + 1, buffer, "r");
+        //代表一层递归结束
         buffer.append("b");
     }
 }

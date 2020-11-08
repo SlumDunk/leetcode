@@ -33,6 +33,7 @@ import java.util.List;
 public class Leetcode1104 {
     /**
      * 每一层对称交换子节点
+     *
      * @param label
      * @return
      */
@@ -68,4 +69,31 @@ public class Leetcode1104 {
         }
         return height;
     }
+
+
+    /**
+     * O(lgn)
+     *
+     * @param label
+     * @return
+     */
+    public List<Integer> pathInZigZagTree_(int label) {
+        List<Integer> result = new LinkedList<>();
+        result.add(label);
+        int height = findHeight(label);
+
+        while (label != 1) {
+            int parent = label / 2;
+            //height of parent
+            --height;
+            int start = (int) (Math.pow(2, height));
+            int end = start + (int) (Math.pow(2, height)) - 1;
+
+            int distance = end - parent;
+            label = start + distance;
+            result.add(0, label);
+        }
+        return result;
+    }
+
 }

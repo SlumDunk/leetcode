@@ -21,12 +21,21 @@ public class Leetcode732 {
     }
 
     static class MyCalendarThree {
+        //保证按时间顺序排列
         private TreeMap<Integer, Integer> map;
 
         public MyCalendarThree() {
+
             map = new TreeMap<>();
         }
 
+        /**
+         * O(n)
+         *
+         * @param start
+         * @param end
+         * @return
+         */
         public int book(int start, int end) {
             map.put(start, map.getOrDefault(start, 0) + 1);
             map.put(end, map.getOrDefault(end, 0) - 1);

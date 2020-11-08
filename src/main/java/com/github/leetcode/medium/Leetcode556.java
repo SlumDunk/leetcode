@@ -60,4 +60,57 @@ public class Leetcode556 {
         }
         return num > Integer.MAX_VALUE - 1 ? -1 : (int) num;
     }
+
+
+    /**
+     * O(n)
+     *
+     * @param n
+     * @return
+     */
+    public int nextGreaterElement_(int n) {
+        char[] a = ("" + n).toCharArray();
+        int len = a.length;
+        int i = len - 2;
+
+        //后半段倒序
+        while (i >= 0 && a[i + 1] <= a[i]) {
+            i--;
+        }
+
+        if (i < 0) {
+            return -1;
+        }
+
+        //从后面的数字中找到大于i位置的值
+        int j = len - 1;
+        while (j >= i && a[j] <= a[i]) {
+            j--;
+        }
+
+        swap(a, i, j);
+        //翻转即可完成排序
+        reverse(a, i + 1);
+
+        try {
+            return Integer.parseInt(new String(a));
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    private void reverse(char[] a, int start) {
+        int left = start, right = a.length - 1;
+        while (left < right) {
+            swap(a, left, right);
+            left++;
+            right--;
+        }
+    }
+
+    private void swap(char[] a, int i, int j) {
+        char temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
 }

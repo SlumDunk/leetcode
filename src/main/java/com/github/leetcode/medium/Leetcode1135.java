@@ -72,6 +72,13 @@ public class Leetcode1135 {
      */
     int[] parent;
 
+    /**
+     * O(VE)
+     *
+     * @param N
+     * @param connections
+     * @return
+     */
     public int minimumCost(int N, int[][] connections) {
         parent = new int[N + 1];
         for (int i = 1; i <= N; i++) {

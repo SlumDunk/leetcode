@@ -124,6 +124,7 @@ public class Leetcode239 {
 
     /**
      * O(N)
+     *
      * @param nums
      * @param k
      * @return
@@ -147,6 +148,39 @@ public class Leetcode239 {
             deque.offer(i);
             if (i >= k - 1) {
                 result.add(deque.peek());
+            }
+        }
+
+        int[] ans = new int[result.size()];
+
+        for (int i = 0; i < result.size(); i++) {
+            ans[i] = nums[result.get(i)];
+        }
+
+        return ans;
+    }
+
+    public int[] maxSlidingWindow____(int[] nums, int k) {
+        int n = nums.length;
+        List<Integer> result = new ArrayList<>();
+        //最长维护一个长度为k的双向队列 维护一个递减队列
+        Deque<Integer> deque = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            //处理越界问题
+            while (!deque.isEmpty() && i - k + 1 > deque.peek()) {
+                deque.pollFirst();
+            }
+
+            //是否需要调整窗口内的最大值,队列头部放置的始终是窗口内的最大值
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                //因为都在同一个大小为k的窗口内
+                deque.pollLast();
+            }
+            //i进入队列
+            deque.offerLast(i);
+            if (i >= k - 1) {
+                result.add(deque.peekFirst());
             }
         }
 

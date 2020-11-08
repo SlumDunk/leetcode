@@ -144,6 +144,12 @@ public class Leetcode347 {
 
     Map<Integer, Pair> map = new HashMap<>();
 
+    /**
+     * O(NlgK)
+     * @param nums
+     * @param k
+     * @return
+     */
     public List<Integer> topKFrequent_(int[] nums, int k) {
         // Arrays.sort(nums);
         for (int num : nums) {

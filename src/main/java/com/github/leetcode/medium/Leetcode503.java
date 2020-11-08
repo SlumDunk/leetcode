@@ -1,9 +1,11 @@
 package com.github.leetcode.medium;
 
+import java.util.Stack;
+
 /**
  * @Author: zerongliu
  * @Date: 5/27/19 14:55
- * @Description: Given a circular array (the next element of the last element is the first element of the array), print the Next Greater Number for every element. The Next Greater Number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn't exist, output -1 for this number.
+ * @Description: Given a circular array (the children element of the last element is the first element of the array), print the Next Greater Number for every element. The Next Greater Number of a number x is the first greater number to its traversing-order children in the array, which means you could search circularly to find its children greater number. If it doesn't exist, output -1 for this number.
  * <p>
  * Example 1:
  * Input: [1,2,1]
@@ -34,6 +36,30 @@ public class Leetcode503 {
             }
             current--;
             index[current] = i;
+        }
+        return result;
+
+    }
+
+
+    /**
+     * O(n)
+     *
+     * @param nums
+     * @return
+     */
+    public int[] nextGreaterElements_(int[] nums) {
+        int length = nums.length;
+        int[] result = new int[length];
+        Stack<Integer> stack = new Stack<>();
+        //从右到左，递减栈
+        for (int i = 2 * length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && nums[stack.peek()] <= nums[i % length]) {
+                stack.pop();
+            }
+
+            result[i % length] = stack.isEmpty() ? -1 : nums[stack.peek()];
+            stack.push(i % length);
         }
         return result;
 

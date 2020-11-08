@@ -137,6 +137,11 @@ public class Leetcode980 {
         leetcode980.uniquePaths(grid);
     }
 
+    /**
+     * O(4^(m*n))
+     * @param grid
+     * @return
+     */
     public int uniquePaths(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;

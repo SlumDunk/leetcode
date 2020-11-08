@@ -38,9 +38,9 @@ package com.github.leetcode.medium;
  * <p>
  * <p>
  * <p>
- * Node '1' is root node, because its parent node is NULL and it has child node '2' and '3'.
- * Node '2' is inner node, because it has parent node '1' and child node '4' and '5'.
- * Node '3', '4' and '5' is Leaf node, because they have parent node and they don't have child node.
+ * Trie '1' is root node, because its parent node is NULL and it has child node '2' and '3'.
+ * Trie '2' is inner node, because it has parent node '1' and child node '4' and '5'.
+ * Trie '3', '4' and '5' is Leaf node, because they have parent node and they don't have child node.
  * <p>
  * And here is the image of the sample tree as below:
  * <p>

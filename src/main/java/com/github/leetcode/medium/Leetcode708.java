@@ -47,9 +47,9 @@ public class Leetcode708 {
         Node pre = head;
         Node next = head.next;
         while (next != head) {
-            if ((insertVal < next.val && pre.val <= insertVal)//e.g [1 -> 3] with val=1 or 2      (same as pre OR between pre and next)
+            if ((insertVal < next.val && pre.val <= insertVal)//e.g [1 -> 3] with val=1 or 2      (same as pre OR between pre and children)
                     || (pre.val <= insertVal && pre.val > next.val)// e.g [3 -> 1] with val=3 or higher (same as pre OR higher than pre)
-                    || (pre.val > next.val && insertVal <= next.val)) {// e.g [3 -> 1] with val=1 or lower  (same as next OR lower than next)
+                    || (pre.val > next.val && insertVal <= next.val)) {// e.g [3 -> 1] with val=1 or lower  (same as children OR lower than children)
                 break;
             }
             pre = next;

@@ -207,11 +207,11 @@ public class Leetcode770 {
                 i++;
                 continue;
             }
-            if (expression.charAt(i) == '(') {
+            if (expression.charAt(i) == '(') {//递归调用
                 i++;
                 Sequence sq = helper(expression, map);
                 addToStack(stack, sq, flag);
-            } else if (expression.charAt(i) == ')') {
+            } else if (expression.charAt(i) == ')') {//递归结束条件
                 break;
             } else if (expression.charAt(i) == '+') {
                 flag = 1;
@@ -219,7 +219,7 @@ public class Leetcode770 {
                 flag = -1;
             } else if (expression.charAt(i) == '*') {
                 flag = 0;
-            } else if (Character.isDigit(expression.charAt(i))) {
+            } else if (Character.isDigit(expression.charAt(i))) {//数字
                 int j = i + 1;
                 while (j < expression.length() && Character.isDigit(expression.charAt(j))) {
                     j++;
@@ -227,7 +227,7 @@ public class Leetcode770 {
                 int coef = Integer.valueOf(expression.substring(i, j));
                 i = j - 1;
                 addToStack(stack, new Sequence(coef), flag);
-            } else {
+            } else {//非数字
                 int j = i + 1;
                 while (j < expression.length() && expression.charAt(j) != ' ' && expression.charAt(j) != ')') {
                     j++;

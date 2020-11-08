@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Author: zerongliu
  * @Date: 10/11/18 21:45
- * @Description: Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+ * @Description: Implement children permutation, which rearranges numbers into the lexicographically children greater permutation of numbers.
  * <p>
  * If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
  * <p>
@@ -46,6 +46,11 @@ public class Leetcode31 {
     }
 
 
+    /**
+     * O(n^2)
+     *
+     * @param nums
+     */
     public void nextPermutation__(int[] nums) {
         if (nums == null || nums.length < 2) {
             return;
@@ -70,5 +75,41 @@ public class Leetcode31 {
         int temp = nums[idx1];
         nums[idx1] = nums[idx2];
         nums[idx2] = temp;
+    }
+
+
+    /**
+     * O(n)
+     *
+     * @param nums
+     */
+    public void nextPermutation___(int[] nums) {
+        if (nums == null || nums.length < 2) {
+            return;
+        }
+        int n = nums.length;
+        int i = n - 2;
+
+        while (i >= 0 && nums[i + 1] <= nums[i]) {
+            i--;
+        }
+
+        if (i >= 0) {
+            int j = n - 1;
+            while (j >= 0 && nums[j] <= nums[i]) {
+                j--;
+            }
+            swap(nums, i, j);
+        }
+
+        reverse(nums, i + 1, n - 1);
+    }
+
+    private void reverse(int[] nums, int left, int right) {
+        while (left < right) {
+            swap(nums, left, right);
+            left++;
+            right--;
+        }
     }
 }

@@ -21,13 +21,13 @@ import java.util.*;
  * // Returns false as 2 does not exist in the set.
  * randomSet.remove(2);
  * <p>
- * // Inserts 2 to the set, returns true. Set now contains [1,2].
+ * // Inserts 2 to the set, returns true. Set val contains [1,2].
  * randomSet.insert(2);
  * <p>
  * // getRandom should return either 1 or 2 randomly.
  * randomSet.getRandom();
  * <p>
- * // Removes 1 from the set, returns true. Set now contains [2].
+ * // Removes 1 from the set, returns true. Set val contains [2].
  * randomSet.remove(1);
  * <p>
  * // 2 was already in the set, so return false.
@@ -122,6 +122,84 @@ public class Leetcode380 {
             Random rand = new Random();
             //返回随机索引位置
             int idx = rand.nextInt(lastIndex);
+            return list.get(idx);
+        }
+    }
+
+    class RandomizedSet_ {
+
+        /**
+         * 存储元素和元素在list中对应的位置索引
+         */
+        Map<Integer, Integer> map;
+        /**
+         * 存储元素
+         */
+        List<Integer> list;
+
+
+        /**
+         * Initialize your data structure here.
+         */
+        public RandomizedSet_() {
+            map = new HashMap<>();
+            list = new LinkedList<>();
+        }
+
+        /**
+         * Inserts a value to the set. Returns true if the set did not already contain the specified element.
+         */
+        public boolean insert(int val) {
+            if (map.containsKey(val)) {
+                return false;
+            }
+
+            list.add(val);
+            map.put(val, list.size() - 1);
+
+            return true;
+        }
+
+        /**
+         * Removes a value from the set. Returns true if the set contained the specified element.
+         */
+        public boolean remove(int val) {
+            if (!map.containsKey(val)) {
+                return false;
+            }
+
+            //维护元素的索引位置信息
+            //把最后一个元素放到要删除元素的位置
+            map.put(list.get(list.size() - 1), map.get(val));
+            //将要删除的元素交换到list的末尾
+            swap(list.size() - 1, map.get(val));
+            //将该元素从map中移除
+            map.remove(val);
+            //将末尾元素移除
+            list.remove(list.size() - 1);
+
+            return true;
+        }
+
+        /**
+         * 交换元素
+         *
+         * @param tail   末尾元素
+         * @param target 要删除的元素
+         */
+        private void swap(int tail, int target) {
+            int temp = list.get(tail);
+            list.set(tail, list.get(target));
+            list.set(target, temp);
+        }
+
+        /**
+         * Get a random element from the set.
+         */
+        public int getRandom() {
+            Random rand = new Random();
+            //返回随机索引位置
+            int idx = rand.nextInt(list.size());
             return list.get(idx);
         }
     }

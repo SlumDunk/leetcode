@@ -24,6 +24,12 @@ import java.util.Queue;
  * 5     4       <---
  */
 public class Leetcode199 {
+    /**
+     * O(n)
+     *
+     * @param root
+     * @return
+     */
     public List<Integer> rightSideView(TreeNode root) {
         //广度优先遍历，记住每一层的最后一个元素
         List<Integer> result = new LinkedList<Integer>();

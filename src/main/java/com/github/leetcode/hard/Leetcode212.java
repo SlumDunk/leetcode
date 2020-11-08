@@ -30,7 +30,7 @@ public class Leetcode212 {
     int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
     /**
-     * O(k*l + m*n*4^l)
+     * O(k*l + m*n*4*3^l)
      * k is length of words, l is the average length of word, m is size of rows, n is size of columns
      *
      * @param board

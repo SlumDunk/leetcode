@@ -26,6 +26,14 @@ import java.util.Map;
  * Output: []
  */
 public class Leetcode30 {
+
+    /**
+     * O((l-m*n)*m)
+     *
+     * @param s
+     * @param words
+     * @return
+     */
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> resultList = new ArrayList<>();
         if (s == null || s.length() == 0 || words == null || words.length == 0 || words[0].length() == 0) {
@@ -56,6 +64,42 @@ public class Leetcode30 {
                 } else {
                     found.put(sub, found.get(sub) + 1);
                 }
+
+                if (found.get(sub) > toFind.get(sub)) {
+                    break;
+                }
+            }
+            if (j == m) {
+                resultList.add(i);
+            }
+        }
+
+        return resultList;
+    }
+
+    public List<Integer> findSubstring_(String s, String[] words) {
+        List<Integer> resultList = new ArrayList<>();
+        if (s == null || s.length() == 0 || words == null || words.length == 0 || words[0].length() == 0) {
+            return resultList;
+        }
+        Map<String, Integer> toFind = new HashMap<>();
+        Map<String, Integer> found = new HashMap<>();
+        int m = words.length, n = words[0].length();
+        for (int i = 0; i < m; i++) {
+            toFind.put(words[i], toFind.getOrDefault(words[i], 0) + 1);
+        }
+
+        for (int i = 0; i <= s.length() - m * n; i++) {
+            found.clear();
+            int j = 0;
+            for (; j < m; j++) {
+                int k = i + j * n;
+                String sub = s.substring(k, k + n);
+                if (!toFind.containsKey(sub)) {
+                    break;
+                }
+
+                found.put(sub, found.getOrDefault(sub, 0) + 1);
 
                 if (found.get(sub) > toFind.get(sub)) {
                     break;

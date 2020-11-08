@@ -41,6 +41,18 @@ import java.util.Map;
  * 1 <= workers.length <= bikes.length <= 10
  */
 public class Leetcode1066 {
+
+    //key是状态，value是当前状态到最终状态的成本
+    Map<Integer, Integer> memo = new HashMap<>();
+
+    /**
+     * O(m!)->
+     * O(nm+2^m)
+     *
+     * @param workers
+     * @param bikes
+     * @return
+     */
     public int assignBikes(int[][] workers, int[][] bikes) {
         int N = workers.length;
         int M = bikes.length;
@@ -50,25 +62,24 @@ public class Leetcode1066 {
                 dist[i][j] = getManhattanDistance(workers[i], bikes[j]);
             }
         }
-        return backtrack(N, new boolean[M], dist, 0, new HashMap<>());
+        return helper(N, new boolean[M], dist, 0);
     }
 
     /**
      * @param N        工人总数
      * @param bikeUsed 标志单车是否被使用
      * @param dist     距离数组
-     * @param i        当前处理的工人下标
-     * @param map      缓存 key为当前单车的使用状态， value为使用这批单车的最小成本
+     * @param worker   当前处理的工人下标
      * @return
      */
-    private int backtrack(int N, boolean[] bikeUsed, int[][] dist, int i, Map<Integer, Integer> map) {
-        if (i >= N) {
+    private int helper(int N, boolean[] bikeUsed, int[][] dist, int worker) {
+        if (worker >= N) {
             return 0;
         }
         //获取单车的使用状态
         int key = convert(bikeUsed);
-        if (map.containsKey(key)) {
-            return map.get(key);
+        if (memo.containsKey(key)) {
+            return memo.get(key);
         }
         int min = Integer.MAX_VALUE;
         for (int j = 0; j < bikeUsed.length; j++) {
@@ -78,11 +89,11 @@ public class Leetcode1066 {
             }
             //打上标记
             bikeUsed[j] = true;
-            min = Math.min(min, dist[i][j] + backtrack(N, bikeUsed, dist, i + 1, map));
+            min = Math.min(min, dist[worker][j] + helper(N, bikeUsed, dist, worker + 1));
             //重新置位
             bikeUsed[j] = false;
         }
-        map.put(key, min);
+        memo.put(key, min);
         return min;
     }
 

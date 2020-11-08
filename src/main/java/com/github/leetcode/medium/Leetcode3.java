@@ -1,8 +1,6 @@
 package com.github.leetcode.medium;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -29,7 +27,7 @@ import java.util.Map;
 public class Leetcode3 {
     public static void main(String[] args) {
         Leetcode3 leetcode3 = new Leetcode3();
-        System.out.println(leetcode3.lengthOfLongestSubstring("abba"));
+        System.out.println(leetcode3.lengthOfLongestSubstring_("abcabcbb"));
     }
 
     public int lengthOfLongestSubstring(String s) {
@@ -46,5 +44,33 @@ public class Leetcode3 {
         }
 
         return max;
+    }
+
+
+    /**
+     * O(n)
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring_(String s) {
+        if(s==null||s.length()==0){
+            return 0;
+        }else{
+            int max=0;
+            List<Character> window=new ArrayList<>();
+            char[] array=s.toCharArray();
+            for(char c:array){
+                if(window.contains(c)){
+                    while(window.get(0)!=c){
+                        window.remove(0);
+                    }
+                    window.remove(0);
+                }
+                window.add(c);
+                max=Math.max(max,window.size());
+            }
+
+            return max;
+        }
     }
 }

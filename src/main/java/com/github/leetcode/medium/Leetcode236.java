@@ -53,6 +53,14 @@ public class Leetcode236 {
 
     }
 
+    /**
+     * O(n)
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
     public TreeNode lowestCommonAncestor__(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
             return null;

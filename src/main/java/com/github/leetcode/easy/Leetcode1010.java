@@ -30,6 +30,14 @@ package com.github.leetcode.easy;
  * 1 <= time[i] <= 500
  */
 public class Leetcode1010 {
+
+    /**
+     * O(n)
+     * 余数和加起来能被60整除
+     *
+     * @param time
+     * @return
+     */
     public int numPairsDivisibleBy60(int[] time) {
         int ans = 0;
         int[] hash = new int[60];

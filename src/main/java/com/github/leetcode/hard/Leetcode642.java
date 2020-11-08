@@ -100,6 +100,11 @@ public class Leetcode642 {
          */
         String prefix;
 
+        /**
+         * O(k*l)
+         * @param sentences
+         * @param times
+         */
         public AutocompleteSystem(String[] sentences, int[] times) {
             root = new TrieNode();
             prefix = "";
@@ -108,6 +113,11 @@ public class Leetcode642 {
             }
         }
 
+        /**
+         * O(p+q+mlgm)
+         * @param c
+         * @return
+         */
         public List<String> input(char c) {
             if (c == '#') {
                 add(prefix, 1);
@@ -140,6 +150,7 @@ public class Leetcode642 {
         }
 
         /**
+         *
          * 往树上添加节点
          *
          * @param word

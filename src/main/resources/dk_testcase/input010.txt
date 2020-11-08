@@ -1,0 +1,18 @@
+17
+add,1,Johnson Drye,-1
+add,2,Cristy Sprow,1
+add,3,Natacha Seligman,2
+add,4,Brittny Wicks,2
+add,5,Crissy Carden,2
+add,6,Maribel Lettieri,2
+add,7,Patrice Seawood,3
+add,8,Audrea Deshazo,3
+add,9,Emely Skoglund,3
+add,10,Krista Dugan,4
+add,11,Marilu Foos,4
+add,12,Cherilyn Brinegar,4
+add,13,Linn Caroll,1
+add,14,Sang Coffer,1
+add,15,Hilma Mehan,1
+remove,3
+print

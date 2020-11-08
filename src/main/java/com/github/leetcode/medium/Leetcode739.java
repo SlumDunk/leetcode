@@ -24,4 +24,36 @@ public class Leetcode739 {
         }
         return ret;
     }
+
+
+    class Pair {
+        int temp;
+        int idx;
+
+        public Pair(int temp, int idx) {
+            this.temp = temp;
+            this.idx = idx;
+        }
+    }
+
+    /**
+     * O(n)
+     *
+     * @param T
+     * @return
+     */
+    public int[] dailyTemperatures_(int[] T) {
+        //递减栈
+        Stack<Pair> stack = new Stack<Pair>();
+        int len = T.length;
+        int[] result = new int[len];
+        for (int i = 0; i < len; i++) {
+            while (!stack.isEmpty() && stack.peek().temp < T[i]) {
+                Pair prev = stack.pop();
+                result[prev.idx] = i - prev.idx;
+            }
+            stack.push(new Pair(T[i], i));
+        }
+        return result;
+    }
 }

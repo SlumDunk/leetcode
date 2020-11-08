@@ -17,6 +17,12 @@ public class Leetcode387 {
 
     }
 
+    /**
+     * O(n)
+     *
+     * @param s
+     * @return
+     */
     public int firstUniqChar(String s) {
         //第一次出现的位置和最后一次出现的位置是否一致
         int len = s.length();

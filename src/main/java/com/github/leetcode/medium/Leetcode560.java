@@ -43,21 +43,31 @@ public class Leetcode560 {
         return total;
     }
 
-    public int optimizeSubarraySum(int[] nums, int k) {
-        if (nums.length == 0) {
+    /**
+     * O(n)
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int subarraySum_(int[] nums, int k) {
+        //前缀和
+        if (nums == null || nums.length == 0) {
             return 0;
         }
+
         int total = 0;
         int sum = 0;
         Map<Integer, Integer> map = new HashMap<>();
+
         map.put(0, 1);
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
             if (map.containsKey(sum - k)) {
                 total += map.get(sum - k);
-            } else {
-                map.put(sum, map.getOrDefault(sum, 0) + 1);
             }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+
         }
         return total;
     }

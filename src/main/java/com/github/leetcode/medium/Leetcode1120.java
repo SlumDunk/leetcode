@@ -72,4 +72,45 @@ public class Leetcode1120 {
             return new Pair(sum, count);
         }
     }
+
+
+    class Pair_ {
+        double subsum;
+        double avgsum;
+        int size;
+
+        public Pair_(double subsum, double avgsum, int size) {
+            this.subsum = subsum;
+            this.avgsum = avgsum;
+            this.size = size;
+        }
+    }
+
+
+    public double maximumAverageSubtree_(TreeNode root) {
+        if (root == null) {
+            return max;
+        } else {
+            helper_(root);
+            return max;
+        }
+    }
+
+    public Pair_ helper_(TreeNode root) {
+        if (root == null) {
+            return new Pair_(0, 0, 0);
+        } else {
+            Pair_ left = helper_(root.left);
+            Pair_ right = helper_(root.right);
+
+            double subsum = left.subsum + right.subsum + root.val;
+
+            int size = left.size + right.size + 1;
+            double avgsum = subsum / (size);
+
+            max = Math.max(max, avgsum);
+
+            return new Pair_(subsum, avgsum, size);
+        }
+    }
 }

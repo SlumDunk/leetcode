@@ -90,7 +90,9 @@ public class Leetcode127 {
     }
 
     /**
-     * O(N*26)
+     * O(N*M) N is the number of words,
+     * M is the length of words
+     *
      * @param beginWord
      * @param endWord
      * @param wordList
@@ -111,15 +113,12 @@ public class Leetcode127 {
         visited.add(beginWord);
 
         while (!queue.isEmpty()) {
-
             int size = queue.size();
             while (size > 0) {
                 String current = queue.poll();
-
                 if (current.equals(endWord)) {
                     return level;
                 }
-
                 for (int i = 0; i < current.length(); i++) {
                     char[] array = current.toCharArray();
                     for (char j = 'a'; j <= 'z'; j++) {

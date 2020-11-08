@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class Leetcode1171 {
     /**
-     * delete samPreSumNode.next->curNode
+     * delete samPreSumNode.children->curNode
      * @param head
      * @return
      */

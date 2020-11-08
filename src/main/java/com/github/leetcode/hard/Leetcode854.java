@@ -57,10 +57,17 @@ public class Leetcode854 {
         return new String(cs);
     }
 
+    /**
+     * O(n!)
+     *
+     * @param A
+     * @param B
+     * @return
+     */
     public int kSimilarity(String A, String B) {
         if (A.equals(B)) return 0;
         int res = 0;
-        //记忆住访问过的单词，防止dead lock
+        //记住访问过的单词
         Set<String> used = new HashSet<>();
         Deque<String> queue = new LinkedList<>();
         queue.add(A);
@@ -70,9 +77,12 @@ public class Leetcode854 {
         while (A.charAt(start) == B.charAt(start)) start++;
 
         while (!queue.isEmpty()) {
-            int n = queue.size();
-            for (int i = 0; i < n; i++) {
-                String s = queue.removeLast();
+            int size = queue.size();
+            while (size > 0) {
+                String s = queue.poll();
+                if (s.equals(B)) {
+                    return res;
+                }
                 int j = start;
                 while (s.charAt(j) == B.charAt(j)) j++;
                 //往前走，寻找s中跟B的j字符相等的位置字符
@@ -80,11 +90,11 @@ public class Leetcode854 {
                     if (s.charAt(k) == B.charAt(j)) {
                         String ss = swap(s, j, k);
                         if (used.contains(ss)) continue;
-                        if (ss.equals(B)) return res + 1;
-                        queue.addFirst(ss);
+                        queue.offer(ss);
                         used.add(ss);
                     }
                 }
+                size--;
             }
             res++;
             start++;

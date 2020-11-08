@@ -34,6 +34,14 @@ package com.github.leetcode.medium;
  * 1 <= K <= 1e8
  */
 public class Leetcode1060 {
+
+    /**
+     * O(n)
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
     public int missingElement(int[] nums, int k) {
         //前一数字
         int prev = nums[0];
@@ -55,6 +63,13 @@ public class Leetcode1060 {
         return prev;
     }
 
+    /**
+     * O(lgn)
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
     public int bsMissingElement(int[] nums, int k) {
         int left = 0;
         int right = nums.length - 1;

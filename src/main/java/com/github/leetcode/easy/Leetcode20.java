@@ -35,6 +35,12 @@ import java.util.Stack;
  * Output: true
  */
 public class Leetcode20 {
+    /**
+     * O(n)
+     *
+     * @param s
+     * @return
+     */
     public boolean isValid(String s) {
         //利用堆栈来做，左边括号进栈，遇到右括号出栈，不配对返回false
         Stack<Character> stack = new Stack<Character>();

@@ -34,6 +34,11 @@ import java.util.Queue;
  * 1 <= stones[i] <= 1000
  */
 public class Leetcode1046 {
+    /**
+     * O(nlgn)
+     * @param stones
+     * @return
+     */
     public int lastStoneWeight(int[] stones) {
         Queue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
             @Override

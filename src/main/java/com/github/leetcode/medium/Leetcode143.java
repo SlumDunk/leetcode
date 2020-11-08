@@ -80,7 +80,7 @@ public class Leetcode143 {
 
 
     public void reorderList__(ListNode head) {
-        if (head == null) {
+        if (head == null || head.next == null) {
             return;
         }
         //切成两半,找到中间节点的前一节点
@@ -94,7 +94,7 @@ public class Leetcode143 {
     }
 
     private ListNode findMiddle(ListNode head) {
-        ListNode slow = head, fast = head.next;
+        ListNode slow = head, fast = head.next.next;
 
         while (fast != null && fast.next != null) {
             slow = slow.next;

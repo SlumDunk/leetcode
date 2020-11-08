@@ -96,7 +96,7 @@ public class Leetcode218 {
             } else {
                 maxHeap.remove(-point[1]);
             }
-
+            //关注高度
             if (!maxHeap.isEmpty() && curMaxHeight != maxHeap.peek()) {
                 curMaxHeight = maxHeap.peek();
                 List<Integer> keyPoint = new ArrayList<>();

@@ -44,6 +44,13 @@ public class Leetcode538 {
      */
     private int sum = 0;
 
+
+    /**
+     * O(n)
+     *
+     * @param root
+     * @return
+     */
     public TreeNode convertBST(TreeNode root) {
         //从右边处理到左边
         if (root != null) {

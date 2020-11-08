@@ -64,4 +64,41 @@ public class Leetcode1091 {
         }
         return -1;
     }
+
+
+    /**
+     * bfs O(m*n)
+     * @param grid
+     * @return
+     */
+    public int shortestPathBinaryMatrix_(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+
+        if (grid[0][0] == 1 || grid[m - 1][n - 1] == 1) return -1;
+
+        grid[0][0] = -1; // mark as visited
+        Queue<int[]> q = new LinkedList<>();
+        //row, column, len
+        q.add(new int[]{0, 0});
+        int level = 1;
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                int[] cur = q.poll();
+                if (cur[0] == m - 1 && cur[1] == n - 1) return level;
+
+                for (int j = 0; j < 8; j++) {
+                    int nx = cur[0] + dirs[j][0], ny = cur[1] + dirs[j][1];
+                    //不越界且合法
+                    if (nx < m && nx >= 0 && ny < n && ny >= 0 && grid[nx][ny] == 0) {
+                        grid[nx][ny] = -1;
+                        q.add(new int[]{nx, ny});
+                    }
+                }
+            }
+            level++;
+        }
+        return -1;
+    }
 }

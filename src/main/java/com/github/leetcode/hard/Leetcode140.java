@@ -89,6 +89,13 @@ public class Leetcode140 {
 
     Map<Integer, List<String>> cache = new HashMap<>();
 
+    /**
+     * O(n*2^(n-1))
+     *
+     * @param s
+     * @param wordDict
+     * @return
+     */
     public List<String> wordBreak_(String s, List<String> wordDict) {
         List<String> result = new ArrayList<>();
         if (s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) {
@@ -101,7 +108,6 @@ public class Leetcode140 {
     }
 
     /**
-     * O(2^n)
      * @param s
      * @param wordSet
      * @param start
@@ -113,6 +119,7 @@ public class Leetcode140 {
         }
         List<String> res = new ArrayList<>();
         if (start == s.length()) {
+            //表明遍历完字符串 标记是否正常遍历完整个字符串结束
             res.add("");
             return res;
         }
@@ -121,8 +128,12 @@ public class Leetcode140 {
             if (wordSet.contains(prefix)) {
                 List<String> subList = helper(s, wordSet, end);
                 for (String subSentence : subList) {
-                    String gap = subSentence.equals("") ? "" : " ";
-                    res.add(prefix + gap + subSentence);
+                    if ("".equals(subSentence)) {
+                        res.add(prefix);
+                    } else {
+                        String gap = " ";
+                        res.add(prefix + gap + subSentence);
+                    }
                 }
             }
 

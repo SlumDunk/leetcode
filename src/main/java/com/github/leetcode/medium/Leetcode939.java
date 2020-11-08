@@ -30,6 +30,13 @@ import java.util.Set;
  * All points are distinct.
  */
 public class Leetcode939 {
+
+    /**
+     * O(n^2)
+     *
+     * @param points
+     * @return
+     */
     public int minAreaRect(int[][] points) {
         Set<Integer> pointSet = new HashSet<>();
         int minArea = Integer.MAX_VALUE;
@@ -57,5 +64,59 @@ public class Leetcode939 {
 
     private Integer code(int i, int j) {
         return (40000 * i) + j;
+    }
+
+    class Point {
+        int x;
+        int y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            super.equals(obj);
+            return this.x == ((Point) obj).x && this.y == ((Point) obj).y;
+        }
+
+        @Override
+        public int hashCode() {
+            super.hashCode();
+            return (40000 * this.x) + this.y;
+        }
+    }
+
+
+    /**
+     * O(n^2)
+     *
+     * @param points
+     * @return
+     */
+    public int minAreaRect_(int[][] points) {
+        Set<Point> pointSet = new HashSet<>();
+        int minArea = Integer.MAX_VALUE;
+        for (int i = 0; i < points.length; i++) {
+            pointSet.add(new Point(points[i][0], points[i][1]));
+        }
+
+        for (int i = 0; i < points.length; i++) {
+            for (int j = i + 1; j < points.length; j++) {
+                if (points[i][0] == points[j][0] || points[i][1] == points[j][1]) {
+                    continue;
+                }
+                //检测副对角线上的两个点
+                Point code1 = new Point(points[i][0], points[j][1]);
+                Point code2 = new Point(points[j][0], points[i][1]);
+
+                if (pointSet.contains(code1) && pointSet.contains(code2)) {
+                    int area = Math.abs(points[i][0] - points[j][0]) * Math.abs(points[i][1] - points[j][1]);
+                    minArea = Math.min(minArea, area);
+                }
+            }
+        }
+        return minArea == Integer.MAX_VALUE ? 0 : minArea;
     }
 }

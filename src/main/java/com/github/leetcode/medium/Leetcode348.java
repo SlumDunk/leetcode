@@ -90,7 +90,8 @@ public class Leetcode348 {
         }
 
         /**
-         * 下期
+         * 下棋
+         * O(1)
          *
          * @param row
          * @param col

@@ -38,7 +38,7 @@ package com.github.leetcode.medium;
 public class Leetcode388 {
     public static void main(String[] args) {
         Leetcode388 leetcode388 = new Leetcode388();
-        System.out.println(leetcode388.lengthLongestPath("dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"));
+        System.out.println(leetcode388.lengthLongestPath_("dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"));
     }
 
     public int lengthLongestPath(String input) {
@@ -49,6 +49,35 @@ public class Leetcode388 {
             int lev = s.lastIndexOf("\t") + 1;
             int curLen = stack[lev + 1] = stack[lev] + s.length() - lev + 1;
             if (s.contains(".")) maxLen = Math.max(maxLen, curLen - 1);
+        }
+        return maxLen;
+    }
+
+
+    /**
+     * O(n) '\t'只占一个字符位置
+     *
+     * @param input
+     * @return
+     */
+    public int lengthLongestPath_(String input) {
+        //整个字符串是深度优先
+        String[] paths = input.split("\n");
+        int[] stack = new int[paths.length + 1];
+        int maxLen = 0;
+        //后面相同的level会覆盖前面的
+        for (String s : paths) {
+            //当前所属的层级 最顶级是0
+            int t_idx = s.lastIndexOf("\t");
+            int level = t_idx + 1;
+
+            //前缀目录的长度
+            int prev = level >= 1 ? stack[level - 1] : 0;
+            stack[level] = prev + s.length() - level;
+            //包含文件的路径
+            if (s.contains(".")) {
+                maxLen = Math.max(maxLen, stack[level] + level);
+            }
         }
         return maxLen;
     }

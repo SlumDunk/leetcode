@@ -18,7 +18,7 @@ package com.github.leetcode.medium;
  * root = {"$id":"1","left":{"$id":"2","left":null,"parent":{"$ref":"1"},"right":null,"val":1},"parent":null,"right":{"$id":"3","left":null,"parent":{"$ref":"1"},"right":null,"val":3},"val":2}
  * p = 1
  * Output: 2
- * Explanation: 1's in-order successor node is 2. Note that both p and the return value is of Node type.
+ * Explanation: 1's in-order successor node is 2. Note that both p and the return value is of Trie type.
  * Example 2:
  * <p>
  * <p>
@@ -47,7 +47,7 @@ package com.github.leetcode.medium;
  * <p>
  * If the given node has no in-order successor in the tree, return null.
  * It's guaranteed that the values of the tree are unique.
- * Remember that we are using the Node type instead of TreeNode type so their string representation are different.
+ * Remember that we are using the Trie type instead of TreeNode type so their string representation are different.
  * <p>
  * <p>
  * Follow up:

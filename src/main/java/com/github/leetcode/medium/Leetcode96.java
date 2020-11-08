@@ -39,7 +39,29 @@ public class Leetcode96 {
         dp[1] = 1;//单个节点的树
         for (int i = 2; i <= n; i++) {
             for (int j = 0; j < i; j++) {
-                //j个数构成子树，i-j-1个数构成祖先树
+                //j个数构成左子树，i-j-1个数构成右子树
+                dp[i] += dp[j] * dp[i - j - 1];
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * O(n^2)
+     *
+     * @param n
+     * @return
+     */
+    public int numTrees_(int n) {
+        if (n == 0 || n == 1) {
+            return 1;
+        }
+
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
                 dp[i] += dp[j] * dp[i - j - 1];
             }
         }

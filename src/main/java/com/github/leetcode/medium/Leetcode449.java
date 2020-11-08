@@ -46,4 +46,38 @@ public class Leetcode449 {
             return root;
         }
     }
+
+    public class Codec_ {
+
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            if (root == null) {
+                return "#";
+            } else {
+                return String.valueOf(root.val) + "," + serialize(root.left) + "," + serialize(root.right);
+            }
+        }
+
+        private int idx = 0;
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            String[] nodes = data.split(",");
+            return deserialize(nodes);
+        }
+
+        private TreeNode deserialize(String[] nodes) {
+            if ("#".equals(nodes[idx])) {
+                idx++;
+                return null;
+            } else {
+                TreeNode root = new TreeNode(Integer.valueOf(nodes[idx]));
+                idx++;
+                root.left = deserialize(nodes);
+                root.right = deserialize(nodes);
+
+                return root;
+            }
+        }
+    }
 }

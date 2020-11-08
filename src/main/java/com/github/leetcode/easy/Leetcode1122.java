@@ -27,6 +27,14 @@ import java.util.TreeMap;
  * Each arr2[i] is in arr1.
  */
 public class Leetcode1122 {
+
+    /**
+     * O(n)
+     *
+     * @param arr1
+     * @param arr2
+     * @return
+     */
     public int[] relativeSortArray(int[] arr1, int[] arr2) {
         if (arr1 == null || arr1.length == 0 || arr2 == null || arr2.length == 0) {
             return null;
@@ -41,7 +49,7 @@ public class Leetcode1122 {
             int index = 0;
             for (int key :
                     arr2) {
-                int value = countMap.get(key);
+                Integer value = countMap.get(key);
                 while (value > 0) {
                     result[index++] = key;
                     value--;

@@ -1,8 +1,6 @@
 package com.github.leetcode.medium;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -129,6 +127,55 @@ public class Leetcode207 {
             return true;
         else
             return false;
+    }
+
+
+    /**
+     * O(n)
+     *
+     * @param numCourses
+     * @param prerequisites
+     * @return
+     */
+    public boolean canFinish_(int numCourses, int[][] prerequisites) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        int[] degree = new int[numCourses];
+
+        for (int[] pre : prerequisites) {
+            int v = pre[0];
+            int u = pre[1];
+
+            degree[v]++;
+            List<Integer> valueList = graph.getOrDefault(u, new ArrayList<>());
+            valueList.add(v);
+            graph.put(u, valueList);
+        }
+        int count = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < degree.length; i++) {
+            if (degree[i] == 0) {
+                queue.add(i);
+                count++;
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            Integer course = queue.poll();
+            List<Integer> edges = graph.getOrDefault(course, new ArrayList<>());
+            for (int i = 0; i < edges.size(); i++) {
+                int v = edges.get(i);
+                if (--degree[v] == 0) {
+                    queue.add(v);
+                    count++;
+                }
+            }
+        }
+
+        if (count == numCourses) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

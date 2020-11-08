@@ -55,7 +55,7 @@ public class MergeSort {
         for (int k = left; k <= right; k++) {
             if (i > mid) {//右半部分是有剩余元素
                 nums[k] = aux[j++];
-            } else if (j > right) {//左半部分是否有剩余元素
+            } else if (j > right) {//左半部分是否有剩余元素M
                 nums[k] = aux[i++];
             } else if (aux[j] < aux[i]) {//正常情况 比较大小
                 nums[k] = aux[j++];

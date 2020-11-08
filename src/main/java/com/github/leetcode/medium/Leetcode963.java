@@ -53,10 +53,18 @@ import java.util.Map;
  * Answers within 10^-5 of the actual value will be accepted as correct.
  */
 public class Leetcode963 {
+
+    /**
+     * O(n^3)
+     *
+     * @param points
+     * @return
+     */
     public double minAreaFreeRect(int[][] points) {
         int len = points.length;
         double res = Double.MAX_VALUE;
         if (len < 4) return 0.0;
+        //key为长方形对角线中心点的标志，value为对应的对角线 长方形的对角线相等
         Map<String, List<int[]>> map = new HashMap<>();
         for (int i = 0; i < len; i++) {
             for (int j = i + 1; j < len; j++) {

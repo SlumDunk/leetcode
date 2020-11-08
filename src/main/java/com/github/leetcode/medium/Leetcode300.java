@@ -92,20 +92,29 @@ public class Leetcode300 {
         return max;
     }
 
+    /**
+     * O(nlgn)
+     *
+     * @param nums
+     * @return
+     */
     public int lengthOfLIS___(int[] nums) {
         int n = nums.length;
         if (n == 0) {
             return 0;
         }
-        //多一个冗余，也刚好代表长度
+        //长度加1，保证单个元素也能找到目标元素的前一位置
+        //维持一个递增数组 最长递增子序列即为最终的递增数组有效数据的长度
         int[] b = new int[n + 1];
         b[0] = Integer.MIN_VALUE;
+        //b数组当前最顶部元素的下标
         int top = 0;
         for (int i = 0; i < n; i++) {
             int start = 0, stop = top;
             int mid;
-            //存储目标位置的前一位置
+            //存储目标元素的前一位置
             int j = 0;
+            //二分查找
             while (start <= stop) {
                 mid = start + (stop - start) / 2;
                 if (b[mid] < nums[i]) {
@@ -117,33 +126,37 @@ public class Leetcode300 {
             }
 
             b[j + 1] = nums[i];
-            if (j + 1 > top) {
-                top = j + 1;
-            }
+            top = Math.max(top, j + 1);
         }
         return top;
 
     }
 
+    /**
+     * O(n^2)
+     *
+     * @param nums
+     * @return
+     */
     public int lengthOfLIS____(int[] nums) {
         int n = nums.length;
         if (n == 0) {
             return 0;
         }
-        int[] dp = new int[n + 1];
-        int longest = 1;
 
+        int[] dp = new int[n];
+        int longest = 1;
         Arrays.fill(dp, 1);
-        dp[0] = 0;
-        for (int i = 1; i <= n; i++) {
-            for (int j = 0; j < i - 1; j++) {
-                if (nums[j] < nums[i - 1]) {
-                    dp[i] = Math.max(dp[i], dp[j + 1] + 1);
+        //以元素nums[i]结尾的sequence
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
-
             longest = Math.max(longest, dp[i]);
         }
+
         return longest;
     }
 

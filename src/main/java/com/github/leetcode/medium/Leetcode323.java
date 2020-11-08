@@ -27,6 +27,14 @@ package com.github.leetcode.medium;
  * You can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.
  */
 public class Leetcode323 {
+    /**
+     * O(EV)
+     * union find
+     *
+     * @param n
+     * @param edges
+     * @return
+     */
     public int countComponents(int n, int[][] edges) {
         int res = n;
         int[] roots = new int[n];

@@ -44,8 +44,14 @@ import java.util.Queue;
  * The cells are adjacent in only four directions: up, down, left and right.
  */
 public class Leetcode542 {
-    int[][] direction = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    int[][] directs = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
+    /**
+     * O(mn)
+     *
+     * @param matrix
+     * @return
+     */
     public int[][] updateMatrix(int[][] matrix) {
         if (matrix == null || matrix.length == 0) {
             return matrix;
@@ -74,11 +80,13 @@ public class Leetcode542 {
 
             int curr = matrix[i][j];
 
-            for (int k = 0; k < direction.length; k++) {
-                if (i + direction[k][0] >= 0 && i + direction[k][0] < m && j + direction[k][1] >= 0 && j + direction[k][1] < n) {
-                    if (matrix[i + direction[k][0]][j + direction[k][1]] == unvisited) {
-                        matrix[i + direction[k][0]][j + direction[k][1]] = curr + 1;
-                        queue.offer(new int[]{i + direction[k][0], j + direction[k][1]});
+            for (int k = 0; k < directs.length; k++) {
+                int newX = i + directs[k][0];
+                int newY = j + directs[k][1];
+                if (newX >= 0 && newX < m && newY >= 0 && newY < n) {
+                    if (matrix[newX][newY] == unvisited) {
+                        matrix[newX][newY] = curr + 1;
+                        queue.offer(new int[]{newX, newY});
                     }
                 }
             }

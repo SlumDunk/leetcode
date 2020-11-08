@@ -30,6 +30,7 @@ public class Leetcode273 {
     public String numberToWords(int num) {
         if (num == 0) return "Zero";
         String res = "";
+        //3位一体
         int i = 0;
         while (num > 0) {
             if (num % 1000 != 0) {
@@ -41,6 +42,10 @@ public class Leetcode273 {
         return res.trim();
     }
 
+    /**
+     * @param num
+     * @return
+     */
     public String helper(int num) {
         if (num == 0) return "";
         if (num < 20) {

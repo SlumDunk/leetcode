@@ -25,6 +25,13 @@ import java.util.PriorityQueue;
  * You may assume k is always valid, 1 ≤ k ≤ n2.
  */
 public class Leetcode378 {
+    /**
+     * O(klgn+n)
+     *
+     * @param matrix
+     * @param k
+     * @return
+     */
     public int kthSmallest(int[][] matrix, int k) {
         //下一个最小元素只可能在当前行或下一行行首出现
         //求最小的
@@ -64,5 +71,27 @@ public class Leetcode378 {
         public int compareTo(Cell cell) {
             return Integer.compare(val, cell.val);
         }
+    }
+
+    public int kthSmallest_(int[][] matrix, int k) {
+        //下一个最小元素只可能在当前行或下一行行首出现
+        if (k == 1) return matrix[0][0];
+        int n = matrix.length;
+        if (k == n * n) return matrix[n - 1][n - 1];
+        List<Cell> list = new ArrayList<>(n);
+        //将每行行首加入list
+        for (int i = 0; i < n; i++) {
+            list.add(new Cell(i, 0, matrix[i][0]));
+        }
+        //构建最小堆
+        PriorityQueue<Cell> heap = new PriorityQueue<>(list);
+        for (int i = 1; i < k; i++) {
+            //当前最小元素出堆
+            Cell cell = heap.poll();
+            //最小元素右边元素进堆
+            if (cell.y + 1 < n)
+                heap.add(new Cell(cell.x, cell.y + 1, matrix[cell.x][cell.y + 1]));
+        }
+        return heap.peek().val;
     }
 }

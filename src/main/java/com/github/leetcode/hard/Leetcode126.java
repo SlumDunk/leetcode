@@ -155,6 +155,7 @@ public class Leetcode126 {
 
 
     /**
+     *
      * O(N*26^l) l is the average length of word
      * @param beginWord
      * @param endWord
@@ -175,10 +176,12 @@ public class Leetcode126 {
 
         Map<String, Integer> distance = new HashMap<>();
 
+        //构造图
         bfs(map, distance, beginWord, wordSet);
 
         List<String> temp = new ArrayList<>();
 
+        //从后往前找
         dfs_(result, temp, endWord, beginWord, distance, map);
 
         return result;

@@ -57,32 +57,50 @@ import java.util.*;
 public class Leetcode675 {
     int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
+    class Pair {
+        int x;
+        int y;
+        int height;
+
+        public Pair(int x, int y, int height) {
+            this.x = x;
+            this.y = y;
+            this.height = height;
+        }
+    }
+
+    /**
+     * O(mn)^2
+     *
+     * @param forest
+     * @return
+     */
     public int cutOffTree(List<List<Integer>> forest) {
-        List<int[]> trees = new ArrayList<>();
+        List<Pair> trees = new ArrayList<>();
         for (int i = 0; i < forest.size(); i++) {
             for (int j = 0; j < forest.get(0).size(); j++) {
                 int height = forest.get(i).get(j);
                 if (height > 1) {
-                    trees.add(new int[]{i, j, height});
+                    trees.add(new Pair(i, j, height));
                 }
             }
         }
-        Collections.sort(trees, new Comparator<int[]>() {
+        Collections.sort(trees, new Comparator<Pair>() {
             @Override
-            public int compare(int[] a, int[] b) {
-                return a[2] - b[2];
+            public int compare(Pair a, Pair b) {
+                return Integer.compare(a.height, b.height);
             }
         });
         int res = 0, x = 0, y = 0;
-        for (int[] tree :
+        for (Pair tree :
                 trees) {
-            int dist = bfs(forest, x, y, tree[0], tree[1]);
+            int dist = bfs(forest, x, y, tree.x, tree.y);
             if (dist < 0) {
                 return -1;
             } else {
                 res = res + dist;
-                x = tree[0];
-                y = tree[1];
+                x = tree.x;
+                y = tree.y;
             }
         }
         return res;
@@ -108,6 +126,7 @@ public class Leetcode675 {
             for (int i = 0; i < size; i++) {
                 int[] cur = queue.poll();
                 if (cur[0] == tx && cur[1] == ty) {
+                    forest.get(tx).set(ty, 1);
                     return dist;
                 }
                 for (int[] dir :

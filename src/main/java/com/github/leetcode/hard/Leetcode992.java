@@ -1,6 +1,8 @@
 package com.github.leetcode.hard;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,19 +65,21 @@ public class Leetcode992 {
 
 
     public int subarraysWithKDistinct_(int[] A, int K) {
+
         return atMostK(A, K) - atMostK(A, K - 1);
     }
 
     /**
      * O(N)
+     *
      * @param A
      * @param k
      * @return
      */
     private int atMostK_(int[] A, int k) {
         int left = 0, res = 0;
-
         Map<Integer, Integer> count = new HashMap<>();
+
         for (int right = 0; right < A.length; right++) {
             if (count.getOrDefault(A[right], 0) == 0) {
                 k--;
@@ -92,6 +96,35 @@ public class Leetcode992 {
             res += right - left + 1;
         }
         System.out.println(res);
+        return res;
+    }
+
+
+    private int atMostK__(int[] A, int k) {
+        int res = 0;
+        //定义一个滑动窗口
+        List<Integer> window = new ArrayList<>();
+        //记录整个窗口中各个字符出现的次数
+        Map<Integer, Integer> count = new HashMap<>();
+        for (int i = 0; i < A.length; i++) {
+            if (count.getOrDefault(A[i], 0) == 0) {
+                k--;
+            }
+            count.put(A[i], count.getOrDefault(A[i], 0) + 1);
+            //加入窗口
+            window.add(A[i]);
+
+            while (k < 0) {
+                //移除窗口左侧的元素
+                Integer val = window.remove(0);
+                count.put(val, count.get(val) - 1);
+                //出现次数为0, 回写k
+                if (count.get(val) == 0) {
+                    k++;
+                }
+            }
+            res += window.size();
+        }
         return res;
     }
 

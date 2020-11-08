@@ -23,10 +23,16 @@ package com.github.leetcode.medium;
  * The string size will be in the range [1, 100].
  */
 public class Leetcode678 {
+    /**
+     * O(n)
+     *
+     * @param s
+     * @return
+     */
     public boolean checkValidString(String s) {
-        //强制匹配
+        //强制匹配 (
         int min_op = 0;
-        //最多匹配
+        //最多匹配 (*
         int max_op = 0;
         for (char c :
                 s.toCharArray()) {

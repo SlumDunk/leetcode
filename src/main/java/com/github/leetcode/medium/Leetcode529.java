@@ -15,9 +15,18 @@ package com.github.leetcode.medium;
  * Return the board when no more squares will be revealed.
  */
 public class Leetcode529 {
+
+    int[][] directs = {{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
+
+    /**
+     * O(8*mn)
+     *
+     * @param board
+     * @param click
+     * @return
+     */
     public char[][] updateBoard(char[][] board, int[] click) {
-        int[][] adj = {{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
-        dfs(board, click[0], click[1], adj);
+        dfs(board, click[0], click[1]);
         return board;
     }
 
@@ -25,9 +34,8 @@ public class Leetcode529 {
      * @param board
      * @param row
      * @param col
-     * @param adj
      */
-    private void dfs(char[][] board, int row, int col, int[][] adj) {
+    private void dfs(char[][] board, int row, int col) {
         if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) {
             return;
         }
@@ -36,12 +44,11 @@ public class Leetcode529 {
             return;
         } else if (board[row][col] == 'B') {
             return;
-        } else {
+        } else {//'E'
             int mines = 0;
-            for (int[] direction :
-                    adj) {
-                int r = row + direction[0];
-                int c = col + direction[1];
+            for (int[] direct : directs) {
+                int r = row + direct[0];
+                int c = col + direct[1];
                 if (r >= 0 && r < board.length && c >= 0 && c < board[0].length) {
                     if (board[r][c] == 'M' || board[r][c] == 'X') {
                         mines += 1;
@@ -52,11 +59,10 @@ public class Leetcode529 {
                 board[row][col] = (char) ('0' + mines);
             } else {
                 board[row][col] = 'B';
-                for (int[] direction :
-                        adj) {
+                for (int[] direction : directs) {
                     int r = row + direction[0];
                     int c = col + direction[1];
-                    dfs(board, r, c, adj);
+                    dfs(board, r, c);
                 }
             }
         }

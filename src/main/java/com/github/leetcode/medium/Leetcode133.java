@@ -116,7 +116,7 @@ public class Leetcode133 {
     }
 
     /**
-     * BFS
+     * BFS O(V+E)
      *
      * @param node
      * @return
@@ -128,19 +128,16 @@ public class Leetcode133 {
             Queue<Node> queue = new LinkedList<>();
             queue.add(node);
             Map<Integer, Node> map = new HashMap<>();
+            map.put(node.val, new Node(node.val, new ArrayList<>()));
             int root = node.val;
             while (!queue.isEmpty()) {
                 Node cur = queue.poll();
-                if (!map.containsKey(cur.val)) {
-                    map.put(cur.val, new Node(cur.val, new ArrayList<>()));
-                }
                 if (cur.neighbors != null && cur.neighbors.size() > 0) {
                     for (Node neighbor : cur.neighbors) {
                         if (!map.containsKey(neighbor.val)) {
                             map.put(neighbor.val, new Node(neighbor.val, new ArrayList<>()));
                             queue.add(neighbor);
                         }
-
                         map.get(cur.val).neighbors.add(map.get(neighbor.val));
                     }
                 }

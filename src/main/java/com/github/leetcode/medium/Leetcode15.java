@@ -65,4 +65,58 @@ public class Leetcode15 {
             return resultList;
         }
     }
+
+
+    /**
+     * O(n^2)
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> threeSum__(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        if (nums.length < 3) {
+            return result;
+        } else {
+            Arrays.sort(nums);
+            int len = nums.length;
+            for (int i = 0; i < len; i++) {
+                if (i != 0 && nums[i] == nums[i - 1]) {
+                    continue;
+                }
+                if (nums[i] > 0) {
+                    break;
+                }
+
+                int sum = 0;
+                int left = i + 1;
+                int right = len - 1;
+                while (left < right) {
+                    sum = nums[i] + nums[left] + nums[right];
+                    if (sum == 0) {
+                        List<Integer> temp = new ArrayList<>();
+                        temp.add(nums[i]);
+                        temp.add(nums[left]);
+                        temp.add(nums[right]);
+
+                        result.add(temp);
+                        while (++left < right && nums[left] == nums[left - 1]) {
+
+                        }
+
+                        while (--right > left && nums[right] == nums[right + 1]) {
+
+                        }
+                    } else if (sum > 0) {
+                        right--;
+                    } else {
+                        left++;
+                    }
+                }
+
+            }
+            return result;
+        }
+    }
 }

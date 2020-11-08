@@ -1,5 +1,6 @@
 package com.github.leetcode.medium;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -41,27 +42,51 @@ import java.util.PriorityQueue;
  * 0 <= A[i][j] <= 10^9
  */
 public class Leetcode1102 {
+
+    public static void main(String[] args) {
+        Leetcode1102 leetcode1102 = new Leetcode1102();
+        int[][] A = {{5, 4, 5}, {3, 3, 3}, {0, 2, 1}};
+        leetcode1102.maximumMinimumPath(A);
+    }
+
     public int maximumMinimumPath(int[][] A) {
         int n = A.length, m = A[0].length;
         //存储各个元素的位置和这个路径上的当前最小值， 按值倒序排列
-        PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> b[2] - a[2]);
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return Integer.compare(b[2], a[2]);
+            }
+        });
         pq.offer(new int[]{0, 0, A[0][0]});
+        A[0][0] = -1;
         while (!pq.isEmpty()) {
             int[] cell = pq.poll();
             int r = cell[0], c = cell[1];
             if (r == n - 1 && c == m - 1)
                 return cell[2];
-            if (r + 1 < n && A[r + 1][c] != -1)
+            if (r + 1 < n && A[r + 1][c] != -1) {
                 pq.offer(new int[]{r + 1, c, Math.min(cell[2], A[r + 1][c])});
-            if (r - 1 >= 0 && A[r - 1][c] != -1)
+                //访问过的置为-1
+                A[r + 1][c] = -1;
+            }
+            if (r - 1 >= 0 && A[r - 1][c] != -1) {
                 pq.offer(new int[]{r - 1, c, Math.min(cell[2], A[r - 1][c])});
-            if (c + 1 < m && A[r][c + 1] != -1)
+                //访问过的置为-1
+                A[r - 1][c] = -1;
+            }
+            if (c + 1 < m && A[r][c + 1] != -1) {
                 pq.offer(new int[]{r, c + 1, Math.min(cell[2], A[r][c + 1])});
-            if (c - 1 >= 0 && A[r][c - 1] != -1)
+                //访问过的置为-1
+                A[r][c + 1] = -1;
+            }
+            if (c - 1 >= 0 && A[r][c - 1] != -1) {
                 pq.offer(new int[]{r, c - 1, Math.min(cell[2], A[r][c - 1])});
-            //访问过的置为-1
-            A[r][c] = -1;
+                //访问过的置为-1
+                A[r][c - 1] = -1;
+            }
+
         }
         return -1;
+
     }
 }

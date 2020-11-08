@@ -35,6 +35,15 @@ public class Leetcode733 {
         leetcode733.floodFill(image, 1, 1, 1);
     }
 
+    /**
+     * O(mn)
+     *
+     * @param image
+     * @param sr
+     * @param sc
+     * @param newColor
+     * @return
+     */
     public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
         int oldColor = image[sr][sc];
         floodSubFill(image, sr, sc, newColor, oldColor);

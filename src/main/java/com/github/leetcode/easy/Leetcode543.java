@@ -52,4 +52,47 @@ public class Leetcode543 {
             return Math.max(leftHeight, rightHeight) + 1;
         }
     }
+
+
+    class Pair {
+        /**
+         * 代表节点高度
+         */
+        int singlePath;
+        int path;
+
+        public Pair(int singlePath, int path) {
+            this.singlePath = singlePath;
+            this.path = path;
+        }
+    }
+
+    int max = 0;
+
+    public int diameterOfBinaryTree_(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            helper(root);
+            return max;
+        }
+    }
+
+    public Pair helper(TreeNode node) {
+        if (node == null) {
+            return new Pair(-1, Integer.MIN_VALUE);
+        }
+
+        Pair left = helper(node.left);
+        Pair right = helper(node.right);
+
+        int singlePath = Math.max(left.singlePath, right.singlePath) + 1;
+
+        int path = left.singlePath + right.singlePath + 2;
+
+        max = Math.max(max, path);
+
+        return new Pair(singlePath, path);
+
+    }
 }

@@ -35,8 +35,8 @@ public class Leetcode106 {
 
     /**
      * @param postEnd 子树后根序列的起始位置
-     * @param inStart   子树中根序列的起始位置
-     * @param inEnd     子树中根序列的终止位置
+     * @param inStart 子树中根序列的起始位置
+     * @param inEnd   子树中根序列的终止位置
      * @return
      */
     private TreeNode build(int postEnd, int inStart, int inEnd) {
@@ -58,6 +58,40 @@ public class Leetcode106 {
             root.left = build(postEnd - (inEnd - index) - 1, inStart, index - 1);
         }
         return root;
+    }
+
+
+    int[] inorder;
+    int[] postorder;
+
+    public TreeNode buildTree_(int[] inorder, int[] postorder) {
+        this.inorder = inorder;
+        this.postorder = postorder;
+
+        return helper(postorder.length - 1, 0, inorder.length - 1);
+    }
+
+    public TreeNode helper(int postend, int instart, int inend) {
+        if (postend < 0 || instart > inend) {
+            return null;
+        } else {
+            TreeNode root = new TreeNode(postorder[postend]);
+
+            int index = -1;
+            for (int i = instart; i <= inend; i++) {
+                if (inorder[i] == postorder[postend]) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1) {
+                root.right = helper(postend - 1, index + 1, inend);
+                //减去长度
+                root.left = helper(postend - (inend - index + 1), instart, index - 1);
+            }
+            return root;
+        }
     }
 
 }

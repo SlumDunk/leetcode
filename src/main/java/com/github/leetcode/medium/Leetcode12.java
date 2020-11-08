@@ -46,6 +46,11 @@ package com.github.leetcode.medium;
  * Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
  */
 public class Leetcode12 {
+    /**
+     *
+     * @param num
+     * @return
+     */
     public String intToRoman(int num) {
         //采用递归，注意对应关系的先后顺序, 900,400,90,40,9,4
         if (num >= 1000) return "M" + intToRoman(num - 1000);

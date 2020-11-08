@@ -1,8 +1,6 @@
 package com.github.leetcode.hard;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -80,6 +78,7 @@ public class Leetcode76 {
 
     /**
      * O(N)
+     *
      * @param s
      * @param t
      * @return
@@ -142,5 +141,65 @@ public class Leetcode76 {
             return s.substring(ansl, ansr);
         }
 
+    }
+
+
+    public String minWindow___(String s, String t) {
+        if (t == null || t.length() == 0) {
+            return "";
+        }
+        char[] arrayS = s.toCharArray();
+        char[] arrayT = t.toCharArray();
+
+        Map<Character, Integer> mapS = new HashMap<>();
+        Map<Character, Integer> mapT = new HashMap<>();
+
+        //number of unique characters in t
+        int k = 0;
+
+        for (char c : arrayT) {
+            mapT.put(c, mapT.getOrDefault(c, 0) + 1);
+            if (mapT.get(c) == 1) {
+                k++;
+            }
+        }
+
+        String result = null;
+
+        List<Character> window = new ArrayList<>();
+
+        for (int i = 0; i < arrayS.length; i++) {
+            char c = arrayS[i];
+            mapS.put(c, mapS.getOrDefault(c, 0) + 1);
+
+            if (mapS.get(c).equals(mapT.get(c))) {
+                k--;
+            }
+            window.add(c);
+
+            //调整窗口
+            while (k == 0) {
+                if (result == null || result.length() > window.size()) {
+                    result = list2str(window);
+                }
+
+                Character val = window.remove(0);
+                mapS.put(val, mapS.get(val) - 1);
+                if (mapS.get(val) == mapT.getOrDefault(val, 0) - 1) {
+                    k++;
+                }
+            }
+        }
+
+        return result == null ? "" : result;
+
+    }
+
+    private String list2str(List<Character> list) {
+        StringBuilder buffer = new StringBuilder();
+        for (Character c : list) {
+            buffer.append(c);
+        }
+        return buffer.toString();
     }
 }

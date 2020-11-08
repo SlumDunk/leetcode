@@ -1,6 +1,7 @@
 package com.github.leetcode.medium;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 /**
  * @Author: zerongliu
@@ -22,5 +23,25 @@ public class Leetcode215 {
     public int findKthLargest(int[] nums, int k) {
         Arrays.sort(nums);
         return nums[nums.length - k];
+    }
+
+    /**
+     * O(nlgn)
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int findKthLargest_(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        for (int num : nums) {
+            pq.offer(num);
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+
+        return pq.peek();
     }
 }

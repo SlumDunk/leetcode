@@ -43,7 +43,7 @@ public class Leetcode863 {
     Map<TreeNode, List<TreeNode>> map = new HashMap<>();
 
     /**
-     * 图+BFS
+     * 图+BFS O(n)
      *
      * @param root
      * @param target

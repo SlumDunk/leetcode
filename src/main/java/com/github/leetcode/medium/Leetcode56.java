@@ -38,6 +38,12 @@ public class Leetcode56 {
     }
 
 
+    /**
+     * nlg(n)
+     *
+     * @param intervals
+     * @return
+     */
     public int[][] merge(int[][] intervals) {
         List<int[]> res = new LinkedList<>();
 

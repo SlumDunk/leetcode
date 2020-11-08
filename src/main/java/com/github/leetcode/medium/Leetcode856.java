@@ -53,7 +53,7 @@ public class Leetcode856 {
                     while (stack.size() > 0 && !stack.peek().equals("(")) {
                         sum += (Integer.valueOf(stack.pop()));
                     }
-                    stack.pop(); // remove the opening bracket now
+                    stack.pop(); // remove the opening bracket val
                     if (sum == 0) {
                         stack.push("1");
                     } else {

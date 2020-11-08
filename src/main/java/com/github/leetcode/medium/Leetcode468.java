@@ -37,6 +37,13 @@ package com.github.leetcode.medium;
  * Explanation: This is neither a IPv4 address nor a IPv6 address.
  */
 public class Leetcode468 {
+
+    /**
+     * O(n)
+     *
+     * @param IP
+     * @return
+     */
     public String validIPAddress(String IP) {
         if (IP == null || IP.length() == 0) {
             return "Neither";
@@ -97,7 +104,7 @@ public class Leetcode468 {
         try {
             int subNet = Integer.parseInt(token);
             if (subNet < 0 || subNet > 255) return false;
-            if (subNet == 0 && token.charAt(0) != '0') return false;
+            if (subNet == 0 && token.charAt(0) != '0') return false;//"-0"
         } catch (NumberFormatException e) {
             return false;
         }

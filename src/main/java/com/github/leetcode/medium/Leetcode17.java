@@ -29,11 +29,12 @@ public class Leetcode17 {
 
     /**
      * 回溯递归
-     * @param list 结果集
+     *
+     * @param list   结果集
      * @param digits 字符串
-     * @param curr 当前字符串
-     * @param index 当前位置
-     * @param table 数字字母映射表
+     * @param curr   当前字符串
+     * @param index  当前位置
+     * @param table  数字字母映射表
      */
     private void letterCombinations(List<String> list, String digits, String curr, int index, String[] table) {
         //遍历完字符串
@@ -51,6 +52,40 @@ public class Leetcode17 {
             String next = curr + temp.charAt(i);
             //进入下一层
             letterCombinations(list, digits, next, index + 1, table);
+        }
+    }
+
+
+    /**
+     * O(3^n*4^m)
+     *
+     * @param digits
+     * @return
+     */
+    public List<String> letterCombinations_(String digits) {
+        //每个数字上面可以输出的英文字母
+        String[] table = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        List<String> list = new ArrayList<String>();
+        StringBuilder buffer = new StringBuilder("");
+        //从字符串第1个字符开始
+        helper(list, digits, buffer, 0, table);
+        return list;
+    }
+
+    public void helper(List<String> list, String digits, StringBuilder buffer, int index, String[] table) {
+        if (index == digits.length()) {
+            if (buffer.length() != 0) {
+                list.add(buffer.toString());
+            }
+            return;
+        }
+
+        String temp = table[digits.charAt(index) - '0'];
+
+        for (char c : temp.toCharArray()) {
+            buffer.append(c);
+            helper(list, digits, buffer, index + 1, table);
+            buffer.deleteCharAt(buffer.length() - 1);
         }
     }
 }

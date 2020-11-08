@@ -1,5 +1,6 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -90,31 +91,31 @@ public class Leetcode417 {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return res;
         }
-        int n = matrix.length, m = matrix[0].length;
+        int m = matrix.length, n = matrix[0].length;
         //One visited map for each ocean
-        boolean[][] pacific = new boolean[n][m];
-        boolean[][] atlantic = new boolean[n][m];
+        boolean[][] pacific = new boolean[m][n];
+        boolean[][] atlantic = new boolean[m][n];
         Queue<int[]> pQueue = new LinkedList<>();
         Queue<int[]> aQueue = new LinkedList<>();
         //列边界的元素入队
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             pQueue.offer(new int[]{i, 0});
-            aQueue.offer(new int[]{i, m - 1});
+            aQueue.offer(new int[]{i, n - 1});
             pacific[i][0] = true;
-            atlantic[i][m - 1] = true;
+            atlantic[i][n - 1] = true;
         }
         //行边界的元素入队
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < n; i++) {
             pQueue.offer(new int[]{0, i});
-            aQueue.offer(new int[]{n - 1, i});
+            aQueue.offer(new int[]{m - 1, i});
             pacific[0][i] = true;
-            atlantic[n - 1][i] = true;
+            atlantic[m - 1][i] = true;
         }
         //广度优先搜索
         bfs(matrix, pQueue, pacific);
         bfs(matrix, aQueue, atlantic);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (pacific[i][j] && atlantic[i][j])
                     res.add(new int[]{i, j});
             }
@@ -143,6 +144,8 @@ public class Leetcode417 {
                 queue.offer(new int[]{x, y});
             }
         }
+
+
     }
 
 }

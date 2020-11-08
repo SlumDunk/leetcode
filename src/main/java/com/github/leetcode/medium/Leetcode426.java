@@ -8,7 +8,7 @@ import java.util.Stack;
 /**
  * @Author: zerongliu
  * @Date: 3/20/19 19:37
- * @Description: Convert a BST to a sorted circular doubly-linked list in-place. Think of the left and right pointers as synonymous to the previous and next pointers in a doubly-linked list.
+ * @Description: Convert a BST to a sorted circular doubly-linked list in-place. Think of the left and right pointers as synonymous to the previous and children pointers in a doubly-linked list.
  * <p>
  * Let's take the following BST as an example, it may help you understand the problem better:
  * <p>

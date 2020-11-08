@@ -59,4 +59,40 @@ public class Leetcode692 {
         }
         return list;
     }
+
+    /**
+     * O(nlgn)
+     * @param words
+     * @param k
+     * @return
+     */
+    public List<String> topKFrequent_(String[] words, int k) {
+        List<String> result=new ArrayList<>();
+        if(words==null||words.length==0){
+            return result;
+        }
+
+        Map<String,Integer> map=new HashMap<>();
+        for(String word:words){
+            map.put(word,map.getOrDefault(word,0)+1);
+        }
+
+        Queue<Element> pq=new PriorityQueue<>(new Comparator<Element>(){
+            public int compare(Element a, Element b){
+                return Integer.compare(a.frequency,b.frequency)==0?a.word.compareTo(b.word):Integer.compare(b.frequency,a.frequency);
+            }
+        });
+
+        for(Map.Entry<String,Integer> entry:map.entrySet()){
+            Element element=new Element(entry.getKey(),entry.getValue());
+            pq.offer(element);
+        }
+
+        while(k>0&&!pq.isEmpty()){
+            result.add(pq.poll().word);
+            k--;
+        }
+        return result;
+
+    }
 }

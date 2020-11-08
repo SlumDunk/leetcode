@@ -81,4 +81,82 @@ public class Leetcode74 {
 
         return false;
     }
+
+
+    /**
+     * O(lgmn)
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean searchMatrix___(int[][] matrix, int target) {
+
+        //整个数组有序
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int start = 0, end = m * n - 1;
+        int row = 0, col = 0, mid = 0;
+
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            row = mid / n;
+            col = mid % n;
+
+            if (matrix[row][col] == target) {
+                return true;
+            } else if (matrix[row][col] > target) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+
+        if (matrix[start / n][start % n] == target) {
+            return true;
+        } else if (matrix[end / n][end % n] == target) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * O(m+n)
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean searchMatrix____(int[][] matrix, int target) {
+
+        //整个数组有序
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int row = m - 1;
+        int col = 0;
+
+        while (row >= 0 && col < n) {
+            int val = matrix[row][col];
+            if (val == target) {
+                return true;
+            } else if (val > target) {
+                row--;
+            } else {
+                col++;
+            }
+        }
+        return false;
+    }
 }

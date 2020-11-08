@@ -1,5 +1,8 @@
 package com.github.leetcode.medium;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -76,5 +79,86 @@ public class Leetcode227 {
             res += i;
         }
         return res;
+    }
+
+
+    final Set<Character> opSet = new HashSet<>(Arrays.asList('+', '-', '*', '/'));
+
+    public int calculate_(String s) {
+        if (s == null) return 0;
+        int n = s.length();
+
+        Stack<Integer> operands = new Stack<>();
+        Stack<Character> operators = new Stack<>();
+
+        char prevChar = '$';
+
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (ch == ' ') continue;
+
+            if (Character.isDigit(ch)) {
+                int val = ch - '0';
+                while (i + 1 < n && Character.isDigit(s.charAt(i + 1))) {
+                    i++;
+                    val = val * 10 + (s.charAt(i) - '0');
+                }
+                operands.push(val);
+            } else if (ch == '(') {
+                operators.push(ch);
+            } else if (ch == ')') {
+                while (operators.peek() != '(') {
+                    calculate(operands, operators);
+                }
+                operators.pop();
+            } else if (opSet.contains(ch)) {
+                while (!operators.isEmpty() && hasHighPriority(operators.peek(), ch)) {
+                    calculate(operands, operators);
+                }
+                if ((prevChar == '$' || prevChar == '(') && (ch == '+' || ch == '-')) {
+                    operands.push(0);
+                }
+                operators.push(ch);
+            }
+            prevChar = ch;
+        }
+
+        while (!operators.isEmpty()) {
+            calculate(operands, operators);
+        }
+        return operands.pop();
+    }
+
+    private boolean hasHighPriority(char x, char y) {
+        if (x == '(' || x == ')' || y == '(' || y == ')') {
+            return false;
+        }
+
+        if (x == '*' || x == '/') return true;
+
+        if (y == '*' || y == '/') return false;
+
+        return true;
+    }
+
+    private void calculate(Stack<Integer> operands, Stack<Character> operators) {
+        int y = operands.pop();
+        int x = operands.pop();
+
+        operands.push(eval(x, y, operators.pop()));
+    }
+
+    private int eval(int x, int y, char op) {
+        switch (op) {
+            case '+':
+                return x + y;
+            case '-':
+                return x - y;
+            case '*':
+                return x * y;
+            case '/':
+                return x / y;
+        }
+        return 0;
     }
 }

@@ -45,10 +45,33 @@ public class Leetcode518 {
     public int change(int amount, int[] coins) {
         int[] dp = new int[amount + 1];
         dp[0] = 1;
-        //最后一位选择coins，剩下的构成dp[i-coin]
+        //最后一位选择coin，剩下的构成dp[i-coin]
         for (int coin : coins) {
             for (int i = coin; i <= amount; i++) {
                 dp[i] += dp[i - coin];
+            }
+        }
+        return dp[amount];
+    }
+
+
+    /**
+     * @param amount
+     * @param coins
+     * @return
+     */
+    public int change_(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+
+        //先定最后一位的硬币
+        for (int coin : coins) {
+            for (int i = 1; i <= amount; i++) {
+                if (i < coin) {
+                    continue;
+                } else {
+                    dp[i] += dp[i - coin];
+                }
             }
         }
         return dp[amount];

@@ -99,4 +99,59 @@ public class Leetcode33 {
             return -1;
         }
     }
+
+    /**
+     * O(lgN)
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search___(int[] nums, int target) {
+        int n = nums.length;
+        if (n == 0) {
+            return -1;
+        }
+
+        int start = 0, end = n - 1;
+        int mid = 0;
+
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            //[start....end]是否有序
+            if (nums[mid] > nums[start] && nums[mid] < nums[end]) {//有序数组二分查找
+                if (nums[mid] > target) {
+                    end = mid;
+                } else if (nums[mid] < target) {
+                    start = mid;
+                } else {
+                    return mid;
+                }
+            } else {//[start....end]部分有序
+                //peak点左侧
+                if (nums[mid] > nums[start] && nums[mid] > nums[end]) {
+                    //[start..mid] 有序
+                    if (nums[mid] >= target && nums[start] <= target) {
+                        end = mid;
+                    } else {
+                        start = mid;
+                    }
+                } else {//peak点右侧
+                    if (nums[mid] <= target && nums[end] >= target) {
+                        start = mid;
+                    } else {
+                        end = mid;
+                    }
+                }
+            }
+
+        }
+
+        if (nums[start] == target) {
+            return start;
+        } else if (nums[end] == target) {
+            return end;
+        } else {
+            return -1;
+        }
+    }
 }

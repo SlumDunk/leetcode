@@ -72,6 +72,13 @@ public class Leetcode516 {
         return dp[0][n - 1];
     }
 
+
+    /**
+     * O(n^2)
+     *
+     * @param s
+     * @return
+     */
     public int longestPalindromeSubseq___(String s) {
         int n = s.length();
         char[] array = s.toCharArray();

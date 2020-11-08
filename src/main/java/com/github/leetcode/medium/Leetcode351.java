@@ -47,9 +47,42 @@ import java.util.Map;
  */
 public class Leetcode351 {
 
+    /**
+     * key 为关联的两个数字，同column, 同row, 或同diagonal,
+     * value为两个数字串起来要经过的点
+     */
     public Map<Integer, Integer> map = new HashMap<>();
 
+    {
+        //diagonal and anti-diagonal
+        map.put(19, 5);
+        map.put(91, 5);
+        map.put(37, 5);
+        map.put(73, 5);
+        //same column
+        map.put(17, 4);
+        map.put(71, 4);
+        map.put(28, 5);
+        map.put(82, 5);
+        map.put(39, 6);
+        map.put(93, 6);
+        //same row
+        map.put(13, 2);
+        map.put(31, 2);
+        map.put(46, 5);
+        map.put(64, 5);
+        map.put(79, 8);
+        map.put(97, 8);
+    }
+
+    int m;
+    int n;
+
+
+
     /**
+     * O(n!)
+     *
      * @param m: an integer
      * @param n: an integer
      * @return: the total number of unlock patterns of the Android lock screen
@@ -59,46 +92,25 @@ public class Leetcode351 {
             return 0;
         }
 
+        this.m = m;
+        this.n = n;
         boolean[] visited = new boolean[10];
-        initializeMap();
         int res = 0;
         for (int i = 1; i <= 9; i++) {
             visited[i] = true;
-            res += helper(m, n, 1, visited, i);
+            res += helper(1, visited, i);
             visited[i] = false;
         }
         return res;
     }
 
-    public void initializeMap() {
-        map.put(19, 5);
-        map.put(91, 5);
-        map.put(28, 5);
-        map.put(82, 5);
-        map.put(37, 5);
-        map.put(73, 5);
-        map.put(46, 5);
-        map.put(64, 5);
-        map.put(13, 2);
-        map.put(31, 2);
-        map.put(17, 4);
-        map.put(71, 4);
-        map.put(39, 6);
-        map.put(93, 6);
-        map.put(79, 8);
-        map.put(97, 8);
-        return;
-    }
-
     /**
-     * @param m
-     * @param n
      * @param len     当前长度
      * @param visited
      * @param prev    前一个key的位置
      * @return
      */
-    private int helper(int m, int n, int len, boolean[] visited, int prev) {
+    private int helper(int len, boolean[] visited, int prev) {
         int count = 0;
         if (len >= m && len <= n) {
             count++;
@@ -111,15 +123,16 @@ public class Leetcode351 {
             if (visited[i]) {
                 continue;
             }
-            int tmp = 10 * i + prev;
-            if (map.containsKey(tmp) && !visited[map.get(tmp)]) {
+            int key = 10 * i + prev;
+            if (map.containsKey(key) && !visited[map.get(key)]) {
                 continue;
             }
             visited[i] = true;
-            count += helper(m, n, len + 1, visited, i);
+            count += helper(len + 1, visited, i);
             visited[i] = false;
 
         }
+
 
         return count;
     }

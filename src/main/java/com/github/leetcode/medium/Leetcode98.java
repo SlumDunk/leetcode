@@ -70,6 +70,13 @@ public class Leetcode98 {
             this.min = 0;
             this.max = 0;
         }
+
+
+        public Result(Integer min, Integer max) {
+            this.min = min;
+            this.max = max;
+            this.isValid = true;
+        }
     }
 
     public boolean isValidBST__(TreeNode root) {
@@ -82,49 +89,62 @@ public class Leetcode98 {
 
     }
 
+    /**
+     * O(n)
+     *
+     * @param node
+     * @return
+     */
     public Result helper(TreeNode node) {
         Result result = new Result();
+
         if (node.left == null && node.right == null) {
             result.min = node.val;
             result.max = node.val;
             return result;
         }
         //跟右子树最小值比较
+        //跟左子树最大值比较
         if (node.right != null && node.left != null) {
             Result right = helper(node.right);
-            //跟左子树最大值比较
             Result left = helper(node.left);
+            if (!right.isValid || !left.isValid) {
+                result.isValid = false;
+                return result;
+            }
             //左右子树也满足二叉搜索树条件
             if (node.val > left.max && node.val < right.min && left.isValid && right.isValid) {
                 result.min = Math.min(Math.min(node.val, left.min), right.min);
                 result.max = Math.max(Math.max(node.val, left.max), right.max);
             } else {
                 result.isValid = false;
-                result.min = Math.min(Math.min(node.val, left.min), right.min);
-                result.max = Math.max(Math.max(node.val, left.max), right.max);
             }
         } else if (node.left == null) {
             Result right = helper(node.right);
+            if (!right.isValid) {
+                result.isValid = false;
+                return result;
+            }
             //左右子树也满足二叉搜索树条件
             if (node.val < right.min && right.isValid) {
                 result.min = Math.min(node.val, right.min);
                 result.max = Math.max(node.val, right.max);
             } else {
                 result.isValid = false;
-                result.min = Math.min(node.val, right.min);
-                result.max = Math.max(node.val, right.max);
             }
         } else {
             //跟左子树最大值比较
             Result left = helper(node.left);
+            if (!left.isValid) {
+                result.isValid = false;
+                return result;
+            }
             //左右子树也满足二叉搜索树条件
             if (node.val > left.max && left.isValid) {
                 result.min = Math.min(node.val, left.min);
                 result.max = Math.max(node.val, left.max);
             } else {
                 result.isValid = false;
-                result.min = Math.min(node.val, left.min);
-                result.max = Math.max(node.val, left.max);
             }
         }
 

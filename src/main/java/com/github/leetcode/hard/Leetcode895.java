@@ -81,4 +81,40 @@ public class Leetcode895 {
             return x;
         }
     }
+
+
+    class FreqStack_ {
+
+        /**
+         * key是整数，value是出现的次数
+         */
+        HashMap<Integer, Integer> freq = new HashMap<>();
+        /**
+         * key是出现的次数，value是存储的元素栈
+         */
+        HashMap<Integer, Stack<Integer>> m = new HashMap<Integer, Stack<Integer>>();
+        int maxFreq = 0;
+
+        public FreqStack_() {
+
+        }
+
+        public void push(int x) {
+            int f = freq.getOrDefault(x, 0) + 1;
+            freq.put(x, f);
+            maxFreq = Math.max(maxFreq, f);
+            m.putIfAbsent(f, new Stack<>());
+            m.get(f).push(x);
+        }
+
+        public int pop() {
+            int x = m.get(maxFreq).pop();
+            freq.put(x, maxFreq - 1);
+            if (m.get(maxFreq).size() == 0) {
+                maxFreq--;
+            }
+
+            return x;
+        }
+    }
 }

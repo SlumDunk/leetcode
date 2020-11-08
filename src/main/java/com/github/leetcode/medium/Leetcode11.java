@@ -44,4 +44,28 @@ public class Leetcode11 {
             return max;
         }
     }
+
+
+    /**
+     * O(n)
+     *
+     * @param height
+     * @return
+     */
+    public int maxArea_(int[] height) {
+        int n = height.length;
+        int max = Integer.MIN_VALUE;
+        int left = 0, right = n - 1;
+        while (left < right) {
+            int area = Math.min(height[left], height[right]) * (right - left);
+            max = Math.max(max, area);
+
+            if (height[left] <= height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return max;
+    }
 }

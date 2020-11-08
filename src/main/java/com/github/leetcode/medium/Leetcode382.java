@@ -16,8 +16,8 @@ import java.util.Random;
  * <p>
  * // Init a singly linked list [1,2,3].
  * ListNode head = new ListNode(1);
- * head.next = new ListNode(2);
- * head.next.next = new ListNode(3);
+ * head.children = new ListNode(2);
+ * head.children.children = new ListNode(3);
  * Solution solution = new Solution(head);
  * <p>
  * // getRandom() should return either 1, 2, or 3 randomly. Each element should have equal probability of returning.

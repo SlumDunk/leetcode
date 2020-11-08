@@ -33,10 +33,10 @@ package com.github.leetcode.medium;
  */
 public class Leetcode602 {
     public static void main(String[] args) {
-        System.out.println("select ids as id, cnt as num\n" +
+        System.out.println("select ids as id, total as num\n" +
                 "from\n" +
                 "(\n" +
-                "    select ids, count(*) as cnt\n" +
+                "    select ids, count(*) as total\n" +
                 "        from\n" +
                 "        (\n" +
                 "            select requester_id as ids from request_accepted\n" +
@@ -46,7 +46,7 @@ public class Leetcode602 {
                 "        group by ids    \n" +
                 ") as tbl2\n" +
                 "\n" +
-                "order by cnt desc\n" +
+                "order by total desc\n" +
                 "limit 1;");
     }
 }

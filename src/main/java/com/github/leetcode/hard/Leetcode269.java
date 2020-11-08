@@ -32,6 +32,8 @@ public class Leetcode269 {
      * dfs 找到叶子节点，放进stack，再回溯，最后按stack中元素弹出顺序返回
      * bfs 找到入度为0的节点，BFS
      *
+     * O(mn) m is the average length of words
+     *
      * @param words
      * @return
      */

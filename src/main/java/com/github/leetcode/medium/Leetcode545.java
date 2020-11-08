@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @Author: zerongliu
  * @Date: 5/8/19 17:41
- * @Description: Given a binary tree, return the values of its boundary in anti-clockwise direction starting from root. Boundary includes left boundary, leaves, and right boundary in order without duplicate nodes.  (The values of the nodes may still be duplicates.)
+ * @Description: Given a binary tree, return the values of its boundary in anti-clockwise directs starting from root. Boundary includes left boundary, leaves, and right boundary in order without duplicate nodes.  (The values of the nodes may still be duplicates.)
  * <p>
  * Left boundary is defined as the path from root to the left-most node. Right boundary is defined as the path from root to the right-most node. If the root doesn't have left subtree or right subtree, then the root itself is left boundary or right boundary. Note this definition only applies to the input binary tree, and not applies to any subtrees.
  * <p>
@@ -31,7 +31,7 @@ import java.util.List;
  * Explanation:
  * The root doesn't have left subtree, so the root itself is left boundary.
  * The leaves are node 3 and 4.
- * The right boundary are node 1,2,4. Note the anti-clockwise direction means you should output reversed right boundary.
+ * The right boundary are node 1,2,4. Note the anti-clockwise directs means you should output reversed right boundary.
  * So order them in anti-clockwise without duplicates and we have [1,3,4,2].
  * <p>
  * <p>
@@ -56,6 +56,12 @@ import java.util.List;
  * So order them in anti-clockwise without duplicate nodes we have [1,2,4,7,8,9,10,6,3].
  */
 public class Leetcode545 {
+
+    /**
+     * O(n)
+     * @param root
+     * @return
+     */
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         if (root == null) {
@@ -67,60 +73,66 @@ public class Leetcode545 {
         }
         LBTrav(root.left, list);
         LeafTrav(root, list);
-        RBT(root.right, list);
+        RBTrav(root.right, list);
+
         return list;
-
     }
 
     /**
-     * 右边界
-     *
-     * @param root
+     * @param node
      * @param list
      */
-    private void RBT(TreeNode root, List<Integer> list) {
-        if (root != null && root.right != null) {
-            RBT(root.right, list);
-        } else if (root != null && root.left != null) {
-            RBT(root.left, list);
-        }
-        if (root != null && !(root.left == null && root.right == null)) {
-            list.add(root.val);
-        }
-    }
-
-    /**
-     * 叶子节点
-     *
-     * @param root
-     * @param list
-     */
-    private void LeafTrav(TreeNode root, List<Integer> list) {
-        if (root == null) {
+    private void LBTrav(TreeNode node, List<Integer> list) {
+        if (node == null) {
             return;
         }
-        if (root != null && root.left == null && root.right == null) {
-            list.add(root.val);
+        //非叶子节点
+        if (!(node.left == null && node.right == null)) {
+            list.add(node.val);
         }
-        LeafTrav(root.left, list);
-        LeafTrav(root.right, list);
+        if (node.left != null) {
+            LBTrav(node.left, list);
+        } else if (node.right != null) {
+            LBTrav(node.right, list);
+        }
     }
 
     /**
-     * 左边界
-     *
-     * @param root
+     * @param node
      * @param list
      */
-    private void LBTrav(TreeNode root, List<Integer> list) {
-        if (root != null && !(root.left == null && root.right == null)) {
-            list.add(root.val);
-        }
-        if (root != null && root.left != null) {
-            LBTrav(root.left, list);
-        } else if (root != null && root.right != null) {
-            LBTrav(root.right, list);
+    private void LeafTrav(TreeNode node, List<Integer> list) {
+        if (node == null) {
+            return;
         }
 
+        if (node.left == null && node.right == null) {
+            list.add(node.val);
+            return;
+        }
+        LeafTrav(node.left, list);
+        LeafTrav(node.right, list);
+    }
+
+    /**
+     * @param node
+     * @param list
+     */
+    private void RBTrav(TreeNode node, List<Integer> list) {
+        if (node == null) {
+            return;
+        }
+
+        if (node.left == null && node.right == null) {
+            return;
+        }
+
+        if (node.right != null) {
+            RBTrav(node.right, list);
+        } else {
+            RBTrav(node.left, list);
+        }
+
+        list.add(node.val);
     }
 }

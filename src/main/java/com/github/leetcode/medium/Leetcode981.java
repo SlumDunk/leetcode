@@ -47,6 +47,9 @@ import java.util.TreeMap;
  */
 public class Leetcode981 {
 
+    /**
+     * O(1) in average
+     */
     class TimeMap {
         HashMap<String, TreeMap<Integer, String>> map;
 

@@ -1,7 +1,6 @@
 package com.github.leetcode.easy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zerongliu
@@ -75,4 +74,46 @@ public class Leetcode997 {
 
         return res;
     }
+
+
+    /**
+     * O(n)
+     *
+     * @param N
+     * @param trust
+     * @return
+     */
+    public int findJudge_(int N, int[][] trust) {
+
+        if (trust == null || trust.length == 0) {
+            return N;
+        }
+        //key为领导人， value为人民群众
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+
+        for (int[] edge : trust) {
+            int u = edge[0];
+            int v = edge[1];
+            Set<Integer> set = graph.getOrDefault(v, new HashSet<Integer>());
+            set.add(u);
+            graph.put(v, set);
+        }
+        int res = -1;
+
+        for (Integer key : graph.keySet()) {
+            if (graph.get(key).size() == N - 1) {
+                res = key;
+            }
+        }
+
+        //检查一下有没有领导人记住人民群众
+        for (Integer key : graph.keySet()) {
+            if (graph.get(key).contains(res)) {
+                return -1;
+            }
+        }
+
+        return res;
+    }
+
 }

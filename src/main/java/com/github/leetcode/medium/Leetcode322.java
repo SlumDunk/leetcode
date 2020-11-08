@@ -18,6 +18,14 @@ package com.github.leetcode.medium;
  * You may assume that you have an infinite number of each kind of coin.
  */
 public class Leetcode322 {
+
+    /**
+     * O(kN) k is the length of coins, N is the value of amount
+     *
+     * @param coins
+     * @param amount
+     * @return
+     */
     public int coinChange(int[] coins, int amount) {
         int[] dp = new int[amount + 1];
         for (int i = 1; i <= amount; i++) {

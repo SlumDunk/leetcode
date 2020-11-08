@@ -78,6 +78,11 @@ public class Leetcode23 {
         return dummyHead.next;
     }
 
+    /**
+     * nlgn
+     * @param lists
+     * @return
+     */
     public ListNode mergeKLists__(ListNode[] lists) {
         Queue<ListNode> queue = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
             public int compare(ListNode a, ListNode b) {

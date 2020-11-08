@@ -54,4 +54,42 @@ public class Leetcode409 {
         }
         return count;
     }
+
+
+    /**
+     * O(n)
+     *
+     * @param s
+     * @return
+     */
+    public int longestPalindrome_(String s) {
+        //最长的奇数字符放中间，其他奇数减1变偶数，和偶数两侧排开
+        int result = 0;
+        int maxOdd = 0;//记录当前最长的奇数个数字符
+        int[] array = new int[60];
+        for (char value : s.toCharArray()) {
+            array[value - 'A']++;
+        }
+
+        for (int count : array) {
+            if (count % 2 == 1) {
+                maxOdd = Math.max(maxOdd, count);
+            }
+        }
+        //从大往小
+        Arrays.sort(array);
+        for (int i = array.length - 1; i >= 0; i--) {
+            if (array[i] % 2 == 0) {
+                result += array[i];
+            } else {
+                if (array[i] == maxOdd) {
+                    result += maxOdd;
+                    maxOdd = Integer.MAX_VALUE;
+                } else {
+                    result += array[i] - 1;
+                }
+            }
+        }
+        return result;
+    }
 }

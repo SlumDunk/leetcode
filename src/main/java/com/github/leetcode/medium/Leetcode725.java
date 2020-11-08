@@ -20,8 +20,8 @@ import com.github.leetcode.vo.ListNode;
  * Output: [[1],[2],[3],[],[]]
  * Explanation:
  * The input and each element of the output are ListNodes, not arrays.
- * For example, the input root has root.val = 1, root.next.val = 2, \root.next.next.val = 3, and root.next.next.next = null.
- * The first element output[0] has output[0].val = 1, output[0].next = null.
+ * For example, the input root has root.val = 1, root.children.val = 2, \root.children.children.val = 3, and root.children.children.children = null.
+ * The first element output[0] has output[0].val = 1, output[0].children = null.
  * The last element output[4] is null, but it's string representation as a ListNode is [].
  * Example 2:
  * Input:

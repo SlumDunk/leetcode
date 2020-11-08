@@ -59,9 +59,15 @@ public class Leetcode123 {
         return profit;
     }
 
+    /**
+     * O(n)
+     *
+     * @param prices
+     * @return
+     */
     public int maxProfit__(int[] prices) {
 
-        //第一次买之前 0，第一次持有 1，第二次买之前 2，第二次持有 3，第二次卖 4
+        //0 第一次买之前，1 第一次持有，2 第二次买之前，3 第二次持有，4 第二次卖
         int len = prices.length;
         int[][] dp = new int[len + 1][5];
 
@@ -70,22 +76,24 @@ public class Leetcode123 {
 
         for (int i = 1; i <= len; i++) {
             for (int j = 0; j < 5; j++) {
-                if (j % 2 == 0) {//非持有状态
+                if (j % 2 == 0) {//非持有状态 0 2 4 昨天就是非持有状态了
                     dp[i][j] = Math.max(dp[i][j], dp[i - 1][j]);
-                    if (j > 0 && i > 1) {
+                    if (j > 0 && i > 1) {// 昨天持有，今天卖了，赚差价
                         dp[i][j] = Math.max(dp[i - 1][j - 1] + prices[i - 1] - prices[i - 2], dp[i][j]);
                     }
-                } else {//持有状态
+                } else {//持有状态 1 3
+                    //昨天未持有，今天买入
                     dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1]);
-                    if (i > 1) {
+                    if (i > 1) {//昨天就已经是持有状态了，赚差价
                         dp[i][j] = Math.max(dp[i][j], dp[i - 1][j] + prices[i - 1] - prices[i - 2]);
                     }
-                    if (j > 1 && i > 1) {
+                    if (j > 1 && i > 1) {//昨天持有上一次的股票，今天卖出并马上买入
                         dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 2] + prices[i - 1] - prices[i - 2]);
                     }
                 }
             }
         }
+        //比较的是清仓状态的收益
         int max = 0;
         max = Math.max(max, dp[len][0]);
         max = Math.max(max, dp[len][2]);

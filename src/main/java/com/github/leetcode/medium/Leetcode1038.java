@@ -29,6 +29,11 @@ import com.github.leetcode.vo.TreeNode;
  * The given tree is a binary search tree.
  */
 public class Leetcode1038 {
+    /**
+     * O(n)
+     * @param root
+     * @return
+     */
     public TreeNode bstToGst(TreeNode root) {
         ms=0;
         gst(root);

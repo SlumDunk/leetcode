@@ -9,13 +9,13 @@ package com.github.leetcode.medium;
  * <p>
  * Any live cell with fewer than two live neighbors dies, as if caused by under-population.
  * 1:0,1->0
- * Any live cell with two or three live neighbors lives on to the next generation.
+ * Any live cell with two or three live neighbors lives on to the children generation.
  * 1:2,3->1
  * Any live cell with more than three live neighbors dies, as if by over-population.
  * 1:>3->0
  * Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
  * 0:3->1
- * Write a function to compute the next state (after one update) of the board given its current state. The next state is created by applying the above rules simultaneously to every cell in the current state, where births and deaths occur simultaneously.
+ * Write a function to compute the children state (after one update) of the board given its current state. The children state is created by applying the above rules simultaneously to every cell in the current state, where births and deaths occur simultaneously.
  * <p>
  * Example:
  * <p>
@@ -52,6 +52,10 @@ public class Leetcode289 {
         return count;
     }
 
+    /**
+     * O(n)
+     * @param board
+     */
     public void gameOfLife(int[][] board) {
         int row = board.length;
         int col = board[0].length;

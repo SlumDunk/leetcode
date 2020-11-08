@@ -48,7 +48,7 @@ public class Leetcode481 {
         magic[2] = 2;
 
         int result = 1;
-        int next = 1;  // next number, 1 or 2
+        int next = 1;  // children number, 1 or 2
         int countIndex = 2;//计数的索引
         int count = magic[countIndex];  //下一个数字出现的次数
 
